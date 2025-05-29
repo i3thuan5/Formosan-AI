@@ -46,7 +46,7 @@ jobs:
         - export TTS_VIRTUAL_HOST=localhost2
         - export ASR_KALDI_VIRTUAL_HOST=localhost3p
         - docker-compose up -d --build
-        - sleep 1m
+        - sleep 9m
         # 試反應時間
         - >
           EVENT_ID=`curl -X POST http://localhost/call/predict -s -H "Content-Type: application/json"
