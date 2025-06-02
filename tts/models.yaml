@@ -5,8 +5,8 @@
 # all-step-222336: ${load_f5tts:hf://united-link/f5-tts-ami-finetune/model_222336.safetensors,hf://united-link/f5-tts-ami-finetune/vocab.txt}
 # all-step-277920: ${load_f5tts:hf://united-link/f5-tts-ami-finetune/model_277920.safetensors,hf://united-link/f5-tts-ami-finetune/vocab.txt}
 all-formosan-step-1081600: ${load_f5tts:hf://ithuan/f5-tts-formosan-all-finetune/model_1081600.safetensors,hf://ithuan/f5-tts-formosan-all-finetune/vocab.txt,false,false}
-all-formosan-step-811200: ${load_f5tts:hf://ithuan/f5-tts-formosan-all-finetune/model_811200.safetensors,hf://ithuan/f5-tts-formosan-all-finetune/vocab.txt,false,false}
-all-formosan-step-432640: ${load_f5tts:hf://ithuan/f5-tts-formosan-all-finetune/model_432640.safetensors,hf://ithuan/f5-tts-formosan-all-finetune/vocab.txt,false,false}
-all-formosan-with-word-step-324480: ${load_f5tts:hf://ithuan/f5-tts-formosan-all-finetune-with-word/model_324480.safetensors,hf://ithuan/f5-tts-formosan-all-finetune-with-word/vocab.txt,false,false}
-all-formosan-with-word-step-270400: ${load_f5tts:hf://ithuan/f5-tts-formosan-all-finetune-with-word/model_270400.safetensors,hf://ithuan/f5-tts-formosan-all-finetune-with-word/vocab.txt,false,false}
-all-with-trv-step-254016: ${load_f5tts:hf://united-link/f5-tts-ami-finetune-with-ithuan-trv/model_254016.safetensors,hf://united-link/f5-tts-ami-finetune-with-ithuan-trv/vocab.txt,true,true}
+# all-formosan-step-811200: ${load_f5tts:hf://ithuan/f5-tts-formosan-all-finetune/model_811200.safetensors,hf://ithuan/f5-tts-formosan-all-finetune/vocab.txt,false,false}
+# all-formosan-step-432640: ${load_f5tts:hf://ithuan/f5-tts-formosan-all-finetune/model_432640.safetensors,hf://ithuan/f5-tts-formosan-all-finetune/vocab.txt,false,false}
+# all-formosan-with-word-step-324480: ${load_f5tts:hf://ithuan/f5-tts-formosan-all-finetune-with-word/model_324480.safetensors,hf://ithuan/f5-tts-formosan-all-finetune-with-word/vocab.txt,false,false}
+# all-formosan-with-word-step-270400: ${load_f5tts:hf://ithuan/f5-tts-formosan-all-finetune-with-word/model_270400.safetensors,hf://ithuan/f5-tts-formosan-all-finetune-with-word/vocab.txt,false,false}
+# all-with-trv-step-254016: ${load_f5tts:hf://united-link/f5-tts-ami-finetune-with-ithuan-trv/model_254016.safetensors,hf://united-link/f5-tts-ami-finetune-with-ithuan-trv/vocab.txt,true,true}
