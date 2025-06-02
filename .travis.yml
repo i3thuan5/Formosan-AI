@@ -61,7 +61,7 @@ jobs:
       after_failure:
         - docker-compose logs
     - stage: deploy
-      name: deploy
+      name: Deploy
       if: (type = push or type = cron) and (branch = main or branch = asr-docker-cd)
       install:
         - pip install ansible
