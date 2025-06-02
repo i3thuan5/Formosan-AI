@@ -11,7 +11,6 @@ before_install:
 branches:
   only:
     - main
-    - asr-docker-cd
 jobs:
   include:
     - name: Check YAML format
