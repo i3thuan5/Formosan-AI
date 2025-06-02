@@ -60,7 +60,21 @@ jobs:
         - time curl -N "http://localhost/call/predict/${EVENT_ID}"
       after_failure:
         - docker-compose logs
-    - stage: deploy
+    - stage: Prepare for the Deployment
+      name: Build Docker Container
+      if: (type = push or type = cron) and (branch = main or branch = asr-docker-cd)
+      service:
+        - docker
+      before_script:
+        - docker login -u "${DOCKER_USER}" -p "${DOCKER_TOKEN_PUSH}"
+      script:
+        - docker build -t ithuan/formosan-ai:asr ./asr
+        - docker build -t ithuan/formosan-ai:asr-kaldi ./asr-kaldi
+        - docker build -t ithuan/formosan-ai:tts ./tts
+        - docker push ithuan/formosan-ai:asr
+        - docker push ithuan/formosan-ai:asr-kaldi
+        - docker push ithuan/formosan-ai:tts
+    - stage: Deploy
       name: Deploy
       if: (type = push or type = cron) and (branch = main or branch = asr-docker-cd)
       install:
