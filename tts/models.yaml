@@ -1,17 +1,12 @@
----
-yourtts-three-denoised-finetune:
-  model: ${load_model:united-link/yourtts-formosan-three-denoised-finetune}
-  language_mapping:
-    阿美: 阿美
-    賽德克: 賽德克
-    太魯閣: 太魯閣
-  speaker_mapping:  # display_name: id
-    男/阿美/秀姑巒/族語E樂園: klokah_eval_ami_concat#wav_concat/klokah_eval_ami/005060_0.24-4.62.wav
-    女/阿美/南勢/族語E樂園: klokah_eval_ami_concat#wav_concat/klokah_eval_ami/003879_0.0-5.01.wav
-    男/賽德克/都達/族語E樂園: klokah_eval_sdq_concat#wav_concat/klokah_eval_sdq/002414_3.1-8.38.wav
-    男/賽德克/德固達雅/族語E樂園: klokah_eval_sdq_concat#wav_concat/klokah_eval_sdq/003047_13.95-17.19.wav
-    女/賽德克/德鹿谷/族語E樂園: klokah_eval_sdq_concat#wav_concat/klokah_eval_sdq/002443_0.0-3.66.wav
-    男/太魯閣/族語E樂園: klokah_eval_trv_concat#wav_concat/klokah_eval_trv/000899_19.44-23.49.wav
-    女/太魯閣/族語E樂園: klokah_eval_trv_concat#wav_concat/klokah_eval_trv/000771_3.3-8.22.wav
-    女/阿美/秀姑巒/意傳: ithuan_ami
-    女/太魯閣/意傳: ithuan_trv
+# step-24000: ${load_f5tts:hf://united-link/f5-tts-ami-xiuguluan-finetune/model_24000.safetensors,hf://united-link/f5-tts-ami-xiuguluan-finetune/vocab.txt}
+# step-48000: ${load_f5tts:hf://united-link/f5-tts-ami-xiuguluan-finetune/model_48000.safetensors,hf://united-link/f5-tts-ami-xiuguluan-finetune/vocab.txt}
+# step-60000: ${load_f5tts:hf://united-link/f5-tts-ami-xiuguluan-finetune/model_60000.safetensors,hf://united-link/f5-tts-ami-xiuguluan-finetune/vocab.txt}
+# step-76500: ${load_f5tts:hf://united-link/f5-tts-ami-xiuguluan-finetune/model_76500.safetensors,hf://united-link/f5-tts-ami-xiuguluan-finetune/vocab.txt}
+# all-step-222336: ${load_f5tts:hf://united-link/f5-tts-ami-finetune/model_222336.safetensors,hf://united-link/f5-tts-ami-finetune/vocab.txt}
+# all-step-277920: ${load_f5tts:hf://united-link/f5-tts-ami-finetune/model_277920.safetensors,hf://united-link/f5-tts-ami-finetune/vocab.txt}
+all-formosan-step-1081600: ${load_f5tts:hf://ithuan/f5-tts-formosan-all-finetune/model_1081600.safetensors,hf://ithuan/f5-tts-formosan-all-finetune/vocab.txt,false,false}
+all-formosan-step-811200: ${load_f5tts:hf://ithuan/f5-tts-formosan-all-finetune/model_811200.safetensors,hf://ithuan/f5-tts-formosan-all-finetune/vocab.txt,false,false}
+all-formosan-step-432640: ${load_f5tts:hf://ithuan/f5-tts-formosan-all-finetune/model_432640.safetensors,hf://ithuan/f5-tts-formosan-all-finetune/vocab.txt,false,false}
+all-formosan-with-word-step-324480: ${load_f5tts:hf://ithuan/f5-tts-formosan-all-finetune-with-word/model_324480.safetensors,hf://ithuan/f5-tts-formosan-all-finetune-with-word/vocab.txt,false,false}
+all-formosan-with-word-step-270400: ${load_f5tts:hf://ithuan/f5-tts-formosan-all-finetune-with-word/model_270400.safetensors,hf://ithuan/f5-tts-formosan-all-finetune-with-word/vocab.txt,false,false}
+all-with-trv-step-254016: ${load_f5tts:hf://united-link/f5-tts-ami-finetune-with-ithuan-trv/model_254016.safetensors,hf://united-link/f5-tts-ami-finetune-with-ithuan-trv/vocab.txt,true,true}

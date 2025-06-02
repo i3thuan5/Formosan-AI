@@ -1,7 +1,7 @@
-FROM registry.hf.space/ithuan-formosan-tts:latest
+FROM registry.hf.space/ithuan-formosan-f5-tts:latest
 
 COPY requirements.txt ./
-RUN pip install -r requirements.txt
+# RUN pip install -r requirements.txt
 
 COPY models.yaml configs/models.yaml
 
