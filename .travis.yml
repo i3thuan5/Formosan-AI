@@ -11,7 +11,7 @@ before_install:
 branches:
   only:
     - main
-    - Ka-kaldi
+    - asr-docker-cd
 jobs:
   include:
     - name: Check YAML format
@@ -62,7 +62,7 @@ jobs:
         - docker-compose logs
     - stage: deploy
       name: deploy
-      if: (type = push or type = cron) and (branch = main or branch = Ka-kaldi)
+      if: (type = push or type = cron) and (branch = main or branch = asr-docker-cd)
       install:
         - pip install ansible
       before_script:
@@ -84,10 +84,12 @@ jobs:
           --extra-vars "ASR_KALDI_VIRTUAL_HOST=${ASR_KALDI_VIRTUAL_HOST}"
           --extra-vars "TTS_VIRTUAL_HOST=${TTS_VIRTUAL_HOST}"
           --extra-vars "SENTRY_DSN=${SENTRY_DSN}"
-    - name: Online ASR Check
+    - stage: After Deploy
+      name: Online ASR Check
+      if: (type = push or type = cron) and (branch = main or branch = asr-docker-cd)
       script:
         - >
-          EVENT_ID=`curl -X POST http://localhost/call/predict -s -H "Content-Type: application/json"
+          EVENT_ID=`curl -X POST https://${ASR_VIRTUAL_HOST}/call/predict -s -H "Content-Type: application/json"
           -d '{
           "data": [
           "whisper-large-v2-all",
