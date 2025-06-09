@@ -101,10 +101,7 @@ with demo:
     dialect_drop_down = gr.Radio(
         choices=[
             "test"
-            # (k, v)
-            # for k, v in models_config[default_model_id]["dialect_mapping"].items()
         ],
-        # value=list(models_config[default_model_id]["dialect_mapping"].values())[0],
         label="族別",
         visible=False,
     )
