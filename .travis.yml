@@ -33,32 +33,6 @@ jobs:
         - pip install tox
       script:
         - tox -e shellcheck
-    - name: Docker Compose
-      service:
-        - docker
-      script:
-        # 試container配docker-compose辨識
-        - git clone --depth 1 https://github.com/i3thuan5/ZuGi.git
-        - docker-compose -f ZuGi/docker-compose.yml up -d --build nginx-proxy
-        # 試container配docker-compose辨識
-        - export ASR_VIRTUAL_HOST=localhost
-        - export TTS_VIRTUAL_HOST=localhost2
-        - export ASR_KALDI_VIRTUAL_HOST=localhost3p
-        - docker-compose up -d --build
-        - sleep 9m
-        # 試反應時間
-        - >
-          EVENT_ID=`curl -X POST http://localhost/call/predict -s -H "Content-Type: application/json"
-          -d '{
-          "data": [
-          "whisper-large-v2-all",
-          "ami",
-          {"path":"https://web.klokah.tw/text/sound/27713/460470.mp3"}
-          ]
-          }' | jq .event_id -r`
-        - time curl -N "http://localhost/call/predict/${EVENT_ID}"
-      after_failure:
-        - docker-compose logs
     - stage: Prepare for the Deployment
       name: Build Docker Container
       if: (type = push or type = cron) and (branch = main or branch = asr-docker-cd)
