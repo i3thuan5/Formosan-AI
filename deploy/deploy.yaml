@@ -36,6 +36,10 @@
         path: "{{ tsuanan_path }}/model_cache_tts"
         state: directory
         mode: '1777'
+    - name: Log into DockerHub
+      community.docker.docker_login:
+        username: "{{ DOCKER_USER }}"
+        password: "{{ DOCKER_TOKEN }}"
     - name: 開docker compose up -d
       community.docker.docker_compose_v2:
         project_src: "{{ tsuanan_path }}"

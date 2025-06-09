@@ -67,6 +67,8 @@ jobs:
           --extra-vars "DEPLOY_HOST=${DEPLOY_HOST}"
           --extra-vars "DEPLOY_HOST_USER=${DEPLOY_HOST_USER}"
           --extra-vars "TRAVIS_TSUKI_SSH_KEY_PATH=${TRAVIS_TSUKI_SSH_KEY_PATH}"
+          --extra-vars "DOCKER_USER=${DOCKER_USER}"
+          --extra-vars "DOCKER_TOKEN=${DOCKER_TOKEN_PULL}"
           --extra-vars "ASR_VIRTUAL_HOST=${ASR_VIRTUAL_HOST}"
           --extra-vars "ASR_KALDI_VIRTUAL_HOST=${ASR_KALDI_VIRTUAL_HOST}"
           --extra-vars "TTS_VIRTUAL_HOST=${TTS_VIRTUAL_HOST}"
