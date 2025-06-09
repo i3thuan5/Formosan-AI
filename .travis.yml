@@ -35,7 +35,7 @@ jobs:
         - tox -e shellcheck
     - stage: Prepare for the Deployment
       name: Build Docker Container
-      if: (type = push or type = cron) and (branch = main or branch = asr-docker-cd)
+      # if: (type = push or type = cron) and (branch = main or branch = asr-docker-cd)
       service:
         - docker
       before_script:
