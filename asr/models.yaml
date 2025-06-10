@@ -1,0 +1,3 @@
+whisper-large-v2-all:
+  model: ${load_pipe:formospeech/whisper-large-v2-formosan-all}
+  dialect_mapping: null

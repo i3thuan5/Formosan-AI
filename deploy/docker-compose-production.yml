@@ -1,0 +1,28 @@
+---
+services:
+  asr:
+    image: ithuan/formosan-ai:asr
+    build: !reset null
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: always
+  asr-kaldi:
+    image: ithuan/formosan-ai:asr-kaldi
+    build: !reset null
+    restart: always
+  tts:
+    image: ithuan/formosan-ai:tts
+    build: !reset null
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: always

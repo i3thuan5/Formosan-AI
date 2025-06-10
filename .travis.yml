@@ -11,7 +11,7 @@ before_install:
 branches:
   only:
     - main
-    - Ka-kaldi
+    - asr-docker-cd
 jobs:
   include:
     - name: Check YAML format
@@ -34,9 +34,23 @@ jobs:
         - pip install tox
       script:
         - tox -e shellcheck
-    - stage: deploy
-      name: deploy
-      if: (type = push or type = cron) and (branch = main or branch = Ka-kaldi)
+    - stage: Prepare for the Deployment
+      name: Build Docker Container
+      if: (type = push or type = cron) and (branch = main or branch = asr-docker-cd)
+      service:
+        - docker
+      before_script:
+        - docker login -u "${DOCKER_USER}" -p "${DOCKER_TOKEN_PUSH}"
+      script:
+        - docker build -t ithuan/formosan-ai:asr ./asr
+        - docker build -t ithuan/formosan-ai:asr-kaldi ./asr-kaldi
+        - docker build -t ithuan/formosan-ai:tts ./tts
+        - docker push ithuan/formosan-ai:asr
+        - docker push ithuan/formosan-ai:asr-kaldi
+        - docker push ithuan/formosan-ai:tts
+    - stage: Deploy
+      name: Deploy
+      if: (type = push or type = cron) and (branch = main or branch = asr-docker-cd)
       install:
         - pip install ansible
       before_script:
@@ -47,15 +61,30 @@ jobs:
         # Recreate the certificate from the secure environment variable
         - chmod 400 "${TRAVIS_TSUKI_SSH_KEY_PATH}"
       script:
-        - '
+        - >
           ansible-playbook -i deploy/inventory_travis deploy/deploy.yaml
-            --extra-vars "tsuanan_repo=`basename ${TRAVIS_REPO_SLUG}`"
-            --extra-vars "branch=${TRAVIS_BRANCH}"
-            --extra-vars "DEPLOY_HOST=${DEPLOY_HOST}"
-            --extra-vars "DEPLOY_HOST_USER=${DEPLOY_HOST_USER}"
-            --extra-vars "TRAVIS_TSUKI_SSH_KEY_PATH=${TRAVIS_TSUKI_SSH_KEY_PATH}"
-            --extra-vars "ASR_VIRTUAL_HOST=${ASR_VIRTUAL_HOST}"
-            --extra-vars "ASR_KALDI_VIRTUAL_HOST=${ASR_KALDI_VIRTUAL_HOST}"
-            --extra-vars "TTS_VIRTUAL_HOST=${TTS_VIRTUAL_HOST}"
-            --extra-vars "SENTRY_DSN=${SENTRY_DSN}"
-          '
+          --extra-vars "tsuanan_repo=`basename ${TRAVIS_REPO_SLUG}`"
+          --extra-vars "branch=${TRAVIS_BRANCH}"
+          --extra-vars "DEPLOY_HOST=${DEPLOY_HOST}"
+          --extra-vars "DEPLOY_HOST_USER=${DEPLOY_HOST_USER}"
+          --extra-vars "TRAVIS_TSUKI_SSH_KEY_PATH=${TRAVIS_TSUKI_SSH_KEY_PATH}"
+          --extra-vars "DOCKER_USER=${DOCKER_USER}"
+          --extra-vars "DOCKER_TOKEN=${DOCKER_TOKEN_PULL}"
+          --extra-vars "ASR_VIRTUAL_HOST=${ASR_VIRTUAL_HOST}"
+          --extra-vars "ASR_KALDI_VIRTUAL_HOST=${ASR_KALDI_VIRTUAL_HOST}"
+          --extra-vars "TTS_VIRTUAL_HOST=${TTS_VIRTUAL_HOST}"
+          --extra-vars "SENTRY_DSN=${SENTRY_DSN}"
+    - stage: After Deploy
+      name: Online ASR Check
+      if: (type = push or type = cron) and (branch = main or branch = asr-docker-cd)
+      script:
+        - >
+          EVENT_ID=`curl -X POST https://${ASR_VIRTUAL_HOST}/call/predict -s -H "Content-Type: application/json"
+          -d '{
+          "data": [
+          "whisper-large-v2-all",
+          "ami",
+          {"path":"https://web.klokah.tw/text/sound/27713/460470.mp3"}
+          ]
+          }' | jq .event_id -r`
+        - time curl -N "https://${ASR_VIRTUAL_HOST}/call/predict/${EVENT_ID}"
