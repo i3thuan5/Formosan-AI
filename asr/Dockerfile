@@ -6,7 +6,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     git lfs install && \
     apt-get install --no-install-recommends -y curl && \
-    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    curl -fsSL --proto "=https" https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install --no-install-recommends -y nodejs && \
     rm -rf /var/lib/apt/lists/* && apt-get clean
 
