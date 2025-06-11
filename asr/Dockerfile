@@ -2,12 +2,12 @@ FROM python:3.10
 
 WORKDIR /home/user/app
 RUN apt-get update && \
-    apt-get install -y git git-lfs ffmpeg libsm6 libxext6 cmake rsync libgl1-mesa-glx && \
+    apt-get install --no-install-recommends -y git git-lfs ffmpeg libsm6 libxext6 cmake rsync libgl1-mesa-glx && \
     rm -rf /var/lib/apt/lists/* && \
     git lfs install && \
-    apt-get install -y curl && \
+    apt-get install --no-install-recommends -y curl && \
     curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-    apt-get install -y nodejs && \
+    apt-get install --no-install-recommends -y nodejs && \
     rm -rf /var/lib/apt/lists/* && apt-get clean
 
 RUN pip install --no-cache-dir pip -U
