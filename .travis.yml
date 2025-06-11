@@ -34,6 +34,15 @@ jobs:
         - pip install tox
       script:
         - tox -e shellcheck
+    - name: Docker Build
+      service:
+        - docker
+      before_script:
+        - docker login -u "${DOCKER_USER}" -p "${DOCKER_TOKEN_PULL}"
+      script:
+        - docker build -t ithuan/formosan-ai:asr ./asr
+        - docker build -t ithuan/formosan-ai:asr-kaldi ./asr-kaldi
+        - docker build -t ithuan/formosan-ai:tts ./tts
     - stage: Prepare for the Deployment
       name: Build Docker Container
       if: (type = push or type = cron) and (branch = main or branch = asr-docker-cd)
