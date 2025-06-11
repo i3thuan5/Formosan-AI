@@ -1,6 +1,5 @@
 # formosan-asr-cd
 
-
 ## local開發
 
 ### 建立 Python virtual environment
@@ -16,8 +15,6 @@ Ta̍k-kái攏ài開，才來開發。
 ```bash
 source venv/bin/activate
 ```
-
-## 執行Linter排版器
 
 ### 安裝tox
 
