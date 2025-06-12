@@ -1,9 +1,10 @@
-FROM python:3.10
+FROM nvidia/cuda:12.2.2-cudnn8-runtime-ubuntu22.04
 
 WORKDIR /home/user/app
 RUN apt-get update && \
-    apt-get install --no-install-recommends -y git git-lfs ffmpeg libsm6 libxext6 cmake rsync libgl1-mesa-glx && \
-    rm -rf /var/lib/apt/lists/* && \
+    apt-get install --no-install-recommends -y \
+    python3.10 python3-pip python-is-python3 \
+    git git-lfs ffmpeg libsm6 libxext6 cmake rsync libgl1-mesa-glx && \
     git lfs install && \
     apt-get install --no-install-recommends -y curl && \
     curl --proto "=https" --tlsv1.2 -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
