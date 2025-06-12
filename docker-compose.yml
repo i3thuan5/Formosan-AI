@@ -3,11 +3,12 @@ services:
   asr:
     build: ./asr/
     volumes:
-      - "./model_cache_asr:/home/user/.cache:rw"
+      - "./model_cache_asr:/home/nonroot/.cache:rw"
     networks:
       - nginx-bridge
     environment:
       - VIRTUAL_HOST=${ASR_VIRTUAL_HOST:-sapolita.ithuan.tw}
+      - VIRTUAL_PORT=7860
       - LETSENCRYPT_HOST=${ASR_VIRTUAL_HOST:-sapolita.ithuan.tw}
   asr-kaldi:
     build: ./asr-kaldi/
