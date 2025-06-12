@@ -1,0 +1,73 @@
+formosan-kaldi-250514:
+  model:
+    formosan_ami: ${load_vosk:ithuan/kaldi_formosan_250514_Amis}
+    formosan_sdq: ${load_vosk:ithuan/kaldi_formosan_250514_Seediq}
+    formosan_trv: ${load_vosk:ithuan/kaldi_formosan_250514_Truku}
+    formosan_pwn: ${load_vosk:ithuan/kaldi_formosan_250514_Paiwan}
+    formosan_tay: ${load_vosk:ithuan/kaldi_formosan_250514_Atayal}
+    formosan_bnn: ${load_vosk:ithuan/kaldi_formosan_250514_Bunun}
+    formosan_pyu: ${load_vosk:ithuan/kaldi_formosan_250514_Puyuma}
+    formosan_dru: ${load_vosk:ithuan/kaldi_formosan_250514_Rukai}
+    formosan_xsy: ${load_vosk:ithuan/kaldi_formosan_250514_Saisiyat}
+    formosan_tsu: ${load_vosk:ithuan/kaldi_formosan_250514_Tsou}
+    formosan_tao: ${load_vosk:ithuan/kaldi_formosan_250514_Yami}
+    formosan_ckv: ${load_vosk:ithuan/kaldi_formosan_250514_Kavalan}
+    formosan_szy: ${load_vosk:ithuan/kaldi_formosan_250514_Sakizaya}
+    formosan_ssf: ${load_vosk:ithuan/kaldi_formosan_250514_Thao}
+    formosan_sxr: ${load_vosk:ithuan/kaldi_formosan_250514_Saaroa}
+    formosan_xnb: ${load_vosk:ithuan/kaldi_formosan_250514_Kanakanavu}
+    
+  dialect_mapping:
+    阿美: formosan_ami
+    賽德克: formosan_sdq
+    太魯閣: formosan_trv
+    排灣: formosan_pwn
+    泰雅: formosan_tay
+    布農: formosan_bnn
+    卑南: formosan_pyu
+    魯凱: formosan_dru
+    賽夏: formosan_xsy
+    鄒: formosan_tsu
+    雅美: formosan_tao
+    噶瑪蘭: formosan_ckv
+    撒奇萊雅: formosan_szy
+    邵: formosan_ssf
+    拉阿魯哇: formosan_sxr
+    卡那卡那富: formosan_xnb
+
+formosan-kaldi-241014:
+  model:
+    formosan_ami: ${load_vosk:united-link/kaldi-formosan-ami}
+    formosan_sdq: ${load_vosk:united-link/kaldi-formosan-sdq}
+    formosan_trv: ${load_vosk:united-link/kaldi-formosan-trv}
+    formosan_pwn: ${load_vosk:united-link/kaldi-formosan-pwn}
+    formosan_tay: ${load_vosk:united-link/kaldi-formosan-tay}
+    formosan_bnn: ${load_vosk:united-link/kaldi-formosan-bnn}
+    formosan_pyu: ${load_vosk:united-link/kaldi-formosan-pyu}
+    formosan_dru: ${load_vosk:united-link/kaldi-formosan-dru}
+    formosan_xsy: ${load_vosk:united-link/kaldi-formosan-xsy}
+    formosan_tsu: ${load_vosk:united-link/kaldi-formosan-tsu}
+    formosan_tao: ${load_vosk:united-link/kaldi-formosan-tao}
+    formosan_ckv: ${load_vosk:united-link/kaldi-formosan-ckv}
+    formosan_szy: ${load_vosk:united-link/kaldi-formosan-szy}
+    formosan_ssf: ${load_vosk:united-link/kaldi-formosan-ssf}
+    formosan_sxr: ${load_vosk:united-link/kaldi-formosan-sxr}
+    formosan_xnb: ${load_vosk:united-link/kaldi-formosan-xnb}
+    
+  dialect_mapping:
+    阿美: formosan_ami
+    賽德克: formosan_sdq
+    太魯閣: formosan_trv
+    排灣: formosan_pwn
+    泰雅: formosan_tay
+    布農: formosan_bnn
+    卑南: formosan_pyu
+    魯凱: formosan_dru
+    賽夏: formosan_xsy
+    鄒: formosan_tsu
+    雅美: formosan_tao
+    噶瑪蘭: formosan_ckv
+    撒奇萊雅: formosan_szy
+    邵: formosan_ssf
+    拉阿魯哇: formosan_sxr
+    卡那卡那富: formosan_xnb
