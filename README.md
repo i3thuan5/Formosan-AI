@@ -45,9 +45,9 @@ tox -e flake8
 
       ```bash
       # 有必要--ê才更新
-      pip-compile pip-compile asr/requirements.in 
+      pip-compile pip-compile asr/requirements.in
       # 盡量更新
-      pip-compile --upgrade pip-compile asr/requirements.in 
+      pip-compile --upgrade pip-compile asr/requirements.in
       ```
 
 4. 檢查`requirements.txt`更新狀態。
