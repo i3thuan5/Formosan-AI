@@ -55,9 +55,9 @@ def replace_to_list(text: str, g2p: dict) -> Tuple[list, set]:
 
         for key in g2p:
             # 檢查當前位置是否匹配 key
-            if i + len(key) <= len(text) and text[i : i + len(key)] == key:
+            if i + len(key) <= len(text) and text[i:i + len(key)] == key:
                 # 檢查這個範圍是否已有部分被處理過
-                if not any(marked[i : i + len(key)]):
+                if not any(marked[i:i + len(key)]):
                     found_key = key
                     found_pos = i
                     break

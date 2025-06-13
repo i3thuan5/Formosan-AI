@@ -234,7 +234,11 @@ with demo:
             with gr.Accordion("Advanced Settings", open=False):
                 remove_silence = gr.Checkbox(
                     label="Remove Silences",
-                    info="The model tends to produce silences, especially on longer audio. We can manually remove silences if needed. Note that this is an experimental feature and may produce strange results. This will also increase generation time.",
+                    info=(
+                        "The model tends to produce silences, especially on longer audio. "
+                        "We can manually remove silences if needed. Note that this is an experimental feature and may produce strange results. "
+                        "This will also increase generation time."
+                    ),
                     value=False,
                 )
                 speed_slider = gr.Slider(
