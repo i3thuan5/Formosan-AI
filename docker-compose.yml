@@ -22,7 +22,7 @@ services:
   tts:
     build: ./tts/
     volumes:
-      - "./model_cache_tts:/home/user/.cache:rw"
+      - "./model_cache_tts:/home/nonroot/.cache:rw"
     networks:
       - nginx-bridge
     environment:
