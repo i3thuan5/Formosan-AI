@@ -72,9 +72,11 @@ def when_model_selected(model_id: str):
         visible=True,
     )
 
+
 def get_title():
     with open("DEMO.md") as tong:
         return tong.readline().strip('# ')
+
 
 demo = gr.Blocks(
     title=get_title(),
