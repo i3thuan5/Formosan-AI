@@ -1,3 +1,4 @@
+---
 formosan-kaldi-250514:
   model:
     formosan_ami: ${load_vosk:ithuan/kaldi_formosan_250514_Amis}
@@ -16,7 +17,7 @@ formosan-kaldi-250514:
     formosan_ssf: ${load_vosk:ithuan/kaldi_formosan_250514_Thao}
     formosan_sxr: ${load_vosk:ithuan/kaldi_formosan_250514_Saaroa}
     formosan_xnb: ${load_vosk:ithuan/kaldi_formosan_250514_Kanakanavu}
-    
+
   dialect_mapping:
     阿美: formosan_ami
     賽德克: formosan_sdq
@@ -53,7 +54,7 @@ formosan-kaldi-241014:
     formosan_ssf: ${load_vosk:united-link/kaldi-formosan-ssf}
     formosan_sxr: ${load_vosk:united-link/kaldi-formosan-sxr}
     formosan_xnb: ${load_vosk:united-link/kaldi-formosan-xnb}
-    
+
   dialect_mapping:
     阿美: formosan_ami
     賽德克: formosan_sdq
