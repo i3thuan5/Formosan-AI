@@ -1,0 +1,1 @@
+g2p: ${load_g2p:${gh_download:FormoSpeech/FormoG2P, formosan/metadata/g2p_250402.csv}}

@@ -1,1 +1,16 @@
-gradio
+datasets
+huggingface-hub>=0.19
+hf_xet>=1.0.0,<2.0.0
+hf-transfer>=0.1.4
+protobuf<4
+click<8.1
+pydantic
+torch==2.5.1
+
+gradio[oauth]==5.9.1
+uvicorn>=0.14.0
+spaces==0.36.0
+
+omegaconf
+opencc
+git+https://github.com/SWivid/F5-TTS.git
