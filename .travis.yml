@@ -100,3 +100,4 @@ jobs:
           }' | jq .event_id -r`
         - time curl -N "https://${ASR_VIRTUAL_HOST}/call/predict/${ASR_EVENT_ID}"
         - python asr-kaldi/production_test.py
+        - python tts/production_test.py

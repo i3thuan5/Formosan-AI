@@ -1,3 +1,4 @@
+---
 # step-24000: ${load_f5tts:hf://united-link/f5-tts-ami-xiuguluan-finetune/model_24000.safetensors,hf://united-link/f5-tts-ami-xiuguluan-finetune/vocab.txt}
 # step-48000: ${load_f5tts:hf://united-link/f5-tts-ami-xiuguluan-finetune/model_48000.safetensors,hf://united-link/f5-tts-ami-xiuguluan-finetune/vocab.txt}
 # step-60000: ${load_f5tts:hf://united-link/f5-tts-ami-xiuguluan-finetune/model_60000.safetensors,hf://united-link/f5-tts-ami-xiuguluan-finetune/vocab.txt}
