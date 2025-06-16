@@ -1,6 +1,5 @@
 FROM nvidia/cuda:12.2.2-cudnn8-runtime-ubuntu22.04
 
-WORKDIR /home/user/app
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
     python3.10 python3-pip python-is-python3 \
