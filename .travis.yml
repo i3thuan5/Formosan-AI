@@ -90,7 +90,7 @@ jobs:
         - pip install gradio_client
       script:
         - >
-          EVENT_ID=`curl -X POST https://${ASR_VIRTUAL_HOST}/call/predict -s -H "Content-Type: application/json"
+          ASR_EVENT_ID=`curl -X POST https://${ASR_VIRTUAL_HOST}/call/predict -s -H "Content-Type: application/json"
           -d '{
           "data": [
           "whisper-large-v2-all",
@@ -98,5 +98,5 @@ jobs:
           {"path":"https://web.klokah.tw/text/sound/27713/460470.mp3"}
           ]
           }' | jq .event_id -r`
-        - time curl -N "https://${ASR_VIRTUAL_HOST}/call/predict/${EVENT_ID}"
+        - time curl -N "https://${ASR_VIRTUAL_HOST}/call/predict/${ASR_EVENT_ID}"
         - python asr-kaldi/production_test.py
