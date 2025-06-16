@@ -86,6 +86,8 @@ jobs:
     - stage: After Deploy
       name: Online ASR Check
       if: (type = push or type = cron) and (branch = main or branch = asr-docker-cd)
+      install:
+        - pip install gradio_client
       script:
         - >
           EVENT_ID=`curl -X POST https://${ASR_VIRTUAL_HOST}/call/predict -s -H "Content-Type: application/json"
@@ -97,3 +99,4 @@ jobs:
           ]
           }' | jq .event_id -r`
         - time curl -N "https://${ASR_VIRTUAL_HOST}/call/predict/${EVENT_ID}"
+        - python asr-kaldi/production_test.py
