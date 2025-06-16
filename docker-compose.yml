@@ -13,7 +13,7 @@ services:
   asr-kaldi:
     build: ./asr-kaldi/
     volumes:
-      - "./model_cache_asr_kaldi:/home/user/.cache:rw"
+      - "./model_cache_asr_kaldi:/home/nonroot/.cache:rw"
     networks:
       - nginx-bridge
     environment:

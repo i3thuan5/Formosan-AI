@@ -1,0 +1,15 @@
+datasets
+huggingface-hub>=0.19
+hf_xet>=1.0.0,<2.0.0
+hf-transfer>=0.1.4
+protobuf<4
+click<8.1
+pydantic
+
+gradio[oauth,mcp]==5.30.0
+uvicorn>=0.14.0
+spaces
+mcp==1.8.1
+
+vosk
+omegaconf
