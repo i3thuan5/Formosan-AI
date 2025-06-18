@@ -3,6 +3,7 @@ services:
   asr:
     image: registry.hf.space/ithuan-formosan-asr-srt:latest
     build: !reset null
+    command: python app.py
     deploy:
       resources:
         reservations:
