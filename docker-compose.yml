@@ -3,10 +3,11 @@ services:
   asr:
     build: ./asr/
     volumes:
-      - "./model_cache_asr:/home/nonroot/.cache:rw"
+      - "./model_cache_asr:/home/user/.cache:rw"
     networks:
       - nginx-bridge
     environment:
+      - LD_LIBRARY_PATH="/usr/local/lib/python3.10/site-packages/nvidia/cublas/lib:/usr/local/lib/python3.10/site-packages/nvidia/cudnn/lib"
       - VIRTUAL_HOST=${ASR_VIRTUAL_HOST:-sapolita.ithuan.tw}
       - VIRTUAL_PORT=7860
       - LETSENCRYPT_HOST=${ASR_VIRTUAL_HOST:-sapolita.ithuan.tw}

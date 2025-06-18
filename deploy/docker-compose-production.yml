@@ -1,7 +1,7 @@
 ---
 services:
   asr:
-    image: ithuan/formosan-ai:asr
+    image: registry.hf.space/ithuan-formosan-asr-srt:latest
     build: !reset null
     deploy:
       resources:
