@@ -514,7 +514,6 @@ def load_model(
     # Note: manually assigned vad_model has higher priority than vad_method!
     if vad_model is not None:
         print("Use manually assigned vad_model. vad_method is ignored.")
-        vad_model = vad_model
     else:
         if vad_method == "silero":
             vad_model = Silero(**default_vad_options)
