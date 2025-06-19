@@ -5,11 +5,10 @@ hf-transfer>=0.1.4
 protobuf<4
 click<8.1
 pydantic
-torch==2.5.1
 
 gradio[oauth,mcp]==5.32.0
 uvicorn>=0.14.0
 spaces
 
 whisperx
-ctranslate2>=4.5.0
+ctranslate2
