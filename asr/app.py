@@ -1,137 +1,102 @@
-import re
+import tempfile
 
 import gradio as gr
-import spaces
-import torch
-from omegaconf import OmegaConf
-from transformers import pipeline
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
-torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
+from whisper import load_audio, load_model
 
+SAMPLING_RATE = 16000
 
-def load_pipe(model_id: str):
-    return pipeline(
-        "automatic-speech-recognition",
-        model=model_id,
-        max_new_tokens=128,
-        chunk_length_s=30,
-        batch_size=8,
-        torch_dtype=torch_dtype,
-        device=device,
-    )
-
-
-OmegaConf.register_new_resolver("load_pipe", load_pipe)
-
-models_config = OmegaConf.to_object(OmegaConf.load("configs/models.yaml"))
-
-
-@spaces.GPU
-def automatic_speech_recognition(model_id: str, dialect_id: str, audio_file: str):
-    model = models_config[model_id]["model"]
-
-    generate_kwargs = {
-        "task": "transcribe",
-        "language": "id",
-        "num_beams": 5,
-    }
-    if models_config[model_id]["dialect_mapping"] is not None:
-        generate_kwargs["prompt_ids"] = torch.from_numpy(
-            model.tokenizer.get_prompt_ids(dialect_id)
-        ).to(device)
-
-    result = model(audio_file, generate_kwargs=generate_kwargs)["text"].replace(
-        f" {dialect_id}", ""
-    )
-
-    if result[-1] not in ".!?":
-        result = result + "."
-
-    sentences = re.split(r"[.!?] ", result)
-    for i in range(len(sentences)):
-        sentences[i] = sentences[i][0].upper() + sentences[i][1:]
-
-    return " ".join(sentences)
-
-
-def when_model_selected(model_id: str):
-    model_config = models_config[model_id]
-
-    if model_config["dialect_mapping"] is not None:
-        dialect_drop_down_choices = [
-            (k, v) for k, v in model_config["dialect_mapping"].items()
-        ]
-
-        return gr.update(
-            choices=dialect_drop_down_choices,
-            value=dialect_drop_down_choices[0][1],
-        )
-    else:
-        return gr.update(visible=False)
-
-
-def get_title():
-    with open("DEMO.md") as tong:
-        return tong.readline().strip("# ")
-
-
-demo = gr.Blocks(
-    title=get_title(),
-    css="@import url(https://tauhu.tw/tauhu-oo.css);",
-    theme=gr.themes.Default(
-        font=(
-            "tauhu-oo",
-            gr.themes.GoogleFont("Source Sans Pro"),
-            "ui-sans-serif",
-            "system-ui",
-            "sans-serif",
-        )
-    ),
+model = load_model(
+    "formospeech/whisper-large-v2-formosan-all-ct2",
+    device="cuda",
+    asr_options={"word_timestamps": True},
 )
 
-with demo:
-    default_model_id = list(models_config.keys())[0]
-    model_drop_down = gr.Dropdown(
-        models_config.keys(),
-        value=default_model_id,
-        label="模型",
+with gr.Blocks() as demo:
+    gr.Markdown(
+        """
+        # 原住民族語言研究發展基金會族語語音辨識系統
+        本辨識系統在讀取檔案後，可自動判斷族語別，請將檔案拖放到下方上傳處，點擊「開始辨識」，流程請見操作手冊。\\
+        當上傳檔案較大時，請靜待辨識結果產生。
+        """
     )
 
-    dialect_drop_down = gr.Radio(
-        choices=[
-            "test"
-        ],
-        label="族別",
-        visible=False,
-    )
+    with gr.Row():
+        with gr.Tabs():
+            with gr.TabItem("audio"):
+                audio_input = gr.Audio(sources="upload", type="filepath")
+                transcribe_button = gr.Button("開始辨識", variant="primary")
+            with gr.TabItem("video"):
+                video_input = gr.Video(sources="upload")
+                transcribe_button_video = gr.Button("開始辨識", variant="primary")
 
-    model_drop_down.input(
-        when_model_selected,
-        inputs=[model_drop_down],
-        outputs=[dialect_drop_down],
-    )
+        with gr.Column():
+            srt_output = gr.Textbox(label="辨識結果", lines=12)
+            download_srt_button = gr.Button("下載 SRT 字幕檔", variant="primary")
+            download_srt_button_hidden = gr.DownloadButton(
+                visible=False, elem_id="download_srt_button_hidden"
+            )
 
-    with open("DEMO.md") as tong:
-        gr.Markdown(tong.read())
+    def generate_srt(audio):
+        audio = load_audio(audio, sr=SAMPLING_RATE)
 
-    gr.Interface(
-        automatic_speech_recognition,
+        output = model.transcribe(
+            audio,
+            language="id",
+            batch_size=32,
+        )
+
+        segments = output["segments"]
+        print(segments)
+
+        srt_content = ""
+
+        for i, segment in enumerate(segments):
+            start_seconds = segment["start"]
+            end_seconds = segment["end"]
+
+            srt_content += f"{i + 1}\n"
+
+            start_time_srt = f"{int(start_seconds // 3600):02}:{int((start_seconds % 3600) // 60):02}:{int(start_seconds % 60):02},{int((start_seconds % 1) * 1000):03}"
+            end_time_srt = f"{int(end_seconds // 3600):02}:{int((end_seconds % 3600) // 60):02}:{int(end_seconds % 60):02},{int((end_seconds % 1) * 1000):03}"
+            srt_content += f"{start_time_srt} --> {end_time_srt}\n"
+
+            srt_content += f"族語：{segment['text']}\n"
+            srt_content += "華語：\n\n"
+
+        return srt_content.strip()
+
+    transcribe_button.click(
+        fn=generate_srt,
         inputs=[
-            model_drop_down,
-            dialect_drop_down,
-            gr.Audio(
-                label="上傳或錄音",
-                type="filepath",
-                waveform_options=gr.WaveformOptions(
-                    sample_rate=16000,
-                ),
-            ),
+            audio_input,
         ],
-        outputs=[
-            gr.Text(interactive=False, label="辨識結果"),
+        outputs=srt_output,
+    )
+    transcribe_button_video.click(
+        fn=generate_srt,
+        inputs=[
+            video_input,
         ],
-        allow_flagging="auto",
+        outputs=srt_output,
+    )
+
+    def export_srt(srt_content):
+        with tempfile.NamedTemporaryFile(
+            suffix=".srt", delete=False, mode="w", encoding="utf-8"
+        ) as f:
+            f.write(srt_content)
+            return f.name
+
+    download_srt_button.click(
+        fn=export_srt,
+        inputs=srt_output,
+        outputs=download_srt_button_hidden,
+    ).then(
+        fn=None,
+        inputs=None,
+        outputs=None,
+        js="() => document.querySelector('#download_srt_button_hidden').click()",
     )
 
 demo.launch()
