@@ -61,7 +61,7 @@ charset-normalizer==3.4.1
     # via requests
 click==8.0.4
     # via
-    #   -r tts/requirements.in
+    #   -r requirements.in
     #   f5-tts
     #   typer
     #   uvicorn
@@ -74,7 +74,7 @@ cycler==0.12.1
     # via matplotlib
 datasets==3.5.0
     # via
-    #   -r tts/requirements.in
+    #   -r requirements.in
     #   f5-tts
 decorator==5.2.1
     # via librosa
@@ -98,7 +98,7 @@ encodec==0.1.1
 exceptiongroup==1.3.0
     # via anyio
 f5-tts @ git+https://github.com/SWivid/F5-TTS.git@695c7357378c03f25d607cca45f5eb967592ce1a
-    # via -r tts/requirements.in
+    # via -r requirements.in
 fastapi==0.115.12
     # via gradio
 ffmpy==0.5.0
@@ -151,7 +151,7 @@ googleapis-common-protos==1.70.0
     # via google-api-core
 gradio[oauth]==5.9.1
     # via
-    #   -r tts/requirements.in
+    #   -r requirements.in
     #   f5-tts
     #   spaces
 gradio-client==1.5.2
@@ -161,9 +161,9 @@ h11==0.16.0
     #   httpcore
     #   uvicorn
 hf-transfer==0.1.9
-    # via -r tts/requirements.in
+    # via -r requirements.in
 hf-xet==1.0.3
-    # via -r tts/requirements.in
+    # via -r requirements.in
 httpcore==1.0.9
     # via httpx
 httpx==0.28.1
@@ -174,7 +174,7 @@ httpx==0.28.1
     #   spaces
 huggingface-hub==0.30.2
     # via
-    #   -r tts/requirements.in
+    #   -r requirements.in
     #   accelerate
     #   cached-path
     #   datasets
@@ -300,10 +300,10 @@ nvidia-nvtx-cu12==12.6.77
     # via torch
 omegaconf==2.3.0
     # via
-    #   -r tts/requirements.in
+    #   -r requirements.in
     #   hydra-core
 opencc==1.1.9
-    # via -r tts/requirements.in
+    # via -r requirements.in
 orjson==3.10.18
     # via gradio
 packaging==24.2
@@ -342,7 +342,7 @@ proto-plus==1.26.1
     # via google-api-core
 protobuf==3.20.3
     # via
-    #   -r tts/requirements.in
+    #   -r requirements.in
     #   google-api-core
     #   googleapis-common-protos
     #   proto-plus
@@ -364,7 +364,7 @@ pycparser==2.22
     # via cffi
 pydantic==2.10.6
     # via
-    #   -r tts/requirements.in
+    #   -r requirements.in
     #   f5-tts
     #   fastapi
     #   gradio
@@ -403,7 +403,7 @@ pyyaml==6.0.2
     #   wandb
 regex==2024.11.6
     # via transformers
-requests==2.32.3
+requests==2.32.4
     # via
     #   cached-path
     #   datasets
@@ -462,7 +462,7 @@ soundfile==0.13.1
 soxr==0.5.0.post1
     # via librosa
 spaces==0.36.0
-    # via -r tts/requirements.in
+    # via -r requirements.in
 starlette==0.46.2
     # via
     #   fastapi
@@ -481,7 +481,7 @@ tomlkit==0.13.2
     # via gradio
 torch==2.7.0
     # via
-    #   -r tts/requirements.in
+    #   -r requirements.in
     #   accelerate
     #   bitsandbytes
     #   ema-pytorch
@@ -541,7 +541,7 @@ urllib3==2.4.0
     #   sentry-sdk
 uvicorn==0.34.2
     # via
-    #   -r tts/requirements.in
+    #   -r requirements.in
     #   gradio
 vocos==0.1.0
     # via f5-tts
