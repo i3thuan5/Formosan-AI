@@ -22,5 +22,4 @@ WORKDIR /app
 
 EXPOSE 7860
 ENV GRADIO_SERVER_NAME="0.0.0.0"
-ENV LD_LIBRARY_PATH="/usr/local/lib/python3.10/dist-packages/nvidia/cublas/lib:/usr/local/lib/python3.10/dist-packages/nvidia/cudnn/lib"
 CMD ["python", "app.py"]
