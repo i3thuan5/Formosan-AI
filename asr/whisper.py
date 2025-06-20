@@ -38,7 +38,6 @@ class WhisperModel(faster_whisper.WhisperModel):
         features: np.ndarray,
         tokenizer: Tokenizer,
         options: TranscriptionOptions,
-        encoder_output=None,
     ):
         batch_size = features.shape[0]
         all_tokens = []
