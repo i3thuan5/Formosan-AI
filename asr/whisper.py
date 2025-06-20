@@ -75,7 +75,6 @@ class WhisperModel(faster_whisper.WhisperModel):
             res = []
             for tk in tokens:
                 res.append([token for token in tk if token < tokenizer.eot])
-            # text_tokens = [token for token in tokens if token < self.eot]
             return tokenizer.tokenizer.decode_batch(res)
 
         text = decode_batch(tokens_batch)
@@ -168,7 +167,7 @@ class FasterWhisperPipeline(Pipeline):
         }
 
     def _forward(self, model_inputs):
-        encoder_output, text, tokens = self.model.generate_segment_batched(
+        encoder_output, _text, tokens = self.model.generate_segment_batched(
             model_inputs["inputs"], self.tokenizer, self.options
         )
         outputs = [
