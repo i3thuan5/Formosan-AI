@@ -2,7 +2,7 @@ datasets
 huggingface-hub>=0.19
 hf_xet>=1.0.0,<2.0.0
 hf-transfer>=0.1.4
-protobuf<4
+protobuf<5
 click<8.1
 pydantic
 
