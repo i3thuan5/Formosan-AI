@@ -5,7 +5,7 @@ import gradio as gr
 from whisper import load_audio, load_model
 
 SAMPLING_RATE = 16000
-BATCH_SIZE = os.getenv('BATCH_SIZE', 32)
+BATCH_SIZE = int(os.getenv('BATCH_SIZE', 32))
 
 model = load_model(
     "formospeech/whisper-large-v2-formosan-all-ct2",
