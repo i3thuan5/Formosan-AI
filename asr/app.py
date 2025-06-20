@@ -23,14 +23,9 @@ with gr.Blocks() as demo:
     )
 
     with gr.Row():
-        with gr.Tabs():
-            with gr.TabItem("audio"):
-                audio_input = gr.Audio(sources="upload", type="filepath")
-                transcribe_button = gr.Button("開始辨識", variant="primary")
-            with gr.TabItem("video"):
-                video_input = gr.Video(sources="upload")
-                transcribe_button_video = gr.Button("開始辨識", variant="primary")
-
+        with gr.Column():
+            video_input = gr.Video(label="族語影片",sources="upload")
+            transcribe_button_video = gr.Button("開始辨識", variant="primary")
         with gr.Column():
             srt_output = gr.Textbox(label="辨識結果", lines=12)
             download_srt_button = gr.Button("下載 SRT 字幕檔", variant="primary")
@@ -67,13 +62,6 @@ with gr.Blocks() as demo:
 
         return srt_content.strip()
 
-    transcribe_button.click(
-        fn=generate_srt,
-        inputs=[
-            audio_input,
-        ],
-        outputs=srt_output,
-    )
     transcribe_button_video.click(
         fn=generate_srt,
         inputs=[
