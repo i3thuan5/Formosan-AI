@@ -1,5 +1,5 @@
 import os
-import tempfile
+from tempfile import TemporaryDirectory
 import gradio as gr
 
 from whisper import load_audio, load_model
@@ -26,7 +26,7 @@ with gr.Blocks(
 
     with gr.Row():
         with gr.Column():
-            video_input = gr.Video(label="族語影片",sources="upload")
+            video_input = gr.Video(label="族語影片", sources="upload")
             transcribe_button_video = gr.Button("開始辨識", variant="primary")
         with gr.Column():
             srt_output = gr.Textbox(label="辨識結果", lines=12)
@@ -73,11 +73,11 @@ with gr.Blocks(
     )
 
     def export_srt(srt_content):
-        with tempfile.NamedTemporaryFile(
-            suffix=".srt", delete=False, mode="w", encoding="utf-8"
-        ) as f:
-            f.write(srt_content)
-            return f.name
+        with TemporaryDirectory(delete=False) as dir_path:
+            srt_path = os.path.join(dir_path, '族語影片字幕.srt')
+            with open(srt_path, 'wt', encoding="utf-8") as f:
+                print(srt_content, file=f)
+            return srt_path
 
     download_srt_button.click(
         fn=export_srt,
