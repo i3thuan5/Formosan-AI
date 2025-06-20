@@ -13,7 +13,9 @@ model = load_model(
     asr_options={"word_timestamps": True},
 )
 
-with gr.Blocks() as demo:
+with gr.Blocks(
+    title="族語語音辨識系統 - 原住民族語言研究發展基金會",
+) as demo:
     gr.Markdown(
         """
         # 原住民族語言研究發展基金會族語語音辨識系統
