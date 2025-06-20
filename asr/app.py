@@ -5,6 +5,7 @@ import gradio as gr
 from whisper import load_audio, load_model
 
 SAMPLING_RATE = 16000
+BATCH_SIZE = os.getenv('BATCH_SIZE', 32)
 
 model = load_model(
     "formospeech/whisper-large-v2-formosan-all-ct2",
@@ -43,7 +44,7 @@ with gr.Blocks() as demo:
         output = model.transcribe(
             audio,
             language="id",
-            batch_size=32,
+            batch_size=BATCH_SIZE,
         )
 
         segments = output["segments"]
