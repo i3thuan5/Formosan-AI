@@ -1,5 +1,5 @@
 import os
-from tempfile import TemporaryDirectory
+import tempfile
 import gradio as gr
 
 from whisper import load_audio, load_model
@@ -73,11 +73,12 @@ with gr.Blocks(
     )
 
     def export_srt(srt_content):
-        with TemporaryDirectory(delete=False) as dir_path:
-            srt_path = os.path.join(dir_path, '族語影片字幕.srt')
-            with open(srt_path, 'wt', encoding="utf-8") as f:
-                print(srt_content, file=f)
-            return srt_path
+        with tempfile.NamedTemporaryFile(
+            prefix="族語影片字幕-", suffix=".srt",
+            delete=False, mode="w", encoding="utf-8"
+        ) as f:
+            f.write(srt_content)
+            return f.name
 
     download_srt_button.click(
         fn=export_srt,
