@@ -315,7 +315,7 @@ propcache==0.3.2
     # via
     #   aiohttp
     #   yarl
-protobuf==3.20.3
+protobuf==4.25.8
     # via
     #   onnxruntime
     #   tensorboardx
@@ -556,7 +556,7 @@ typing-inspection==0.4.1
     #   pydantic-settings
 tzdata==2025.2
     # via pandas
-urllib3==2.4.0
+urllib3==2.5.0
     # via requests
 uvicorn==0.34.3
     # via
