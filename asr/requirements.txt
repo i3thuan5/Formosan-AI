@@ -317,7 +317,6 @@ propcache==0.3.2
     #   yarl
 protobuf==3.20.3
     # via
-    #   -r requirements.in
     #   onnxruntime
     #   tensorboardx
 psutil==5.9.8
