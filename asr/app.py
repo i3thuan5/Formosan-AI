@@ -59,7 +59,7 @@ with gr.Blocks(
             end_time_srt = f"{int(end_seconds // 3600):02}:{int((end_seconds % 3600) // 60):02}:{int(end_seconds % 60):02},{int((end_seconds % 1) * 1000):03}"
             srt_content += f"{start_time_srt} --> {end_time_srt}\n"
 
-            srt_content += f"族語：{segment['text']}\n"
+            srt_content += f"族語：{segment['text'].strip()}\n"
             srt_content += "華語：\n\n"
 
         return srt_content.strip()
