@@ -14,10 +14,9 @@ RUN pip install --no-cache-dir pip -U
 
 RUN --mount=target=/tmp/requirements.txt,source=requirements.txt pip install --no-cache-dir -r /tmp/requirements.txt
 
-COPY --link app.py DEMO.md /app/
-COPY --link configs/ /app/configs/
 RUN addgroup --gid 1000 nonroot && \
     adduser --uid 1000 --disabled-password --ingroup nonroot --quiet nonroot
+COPY --link app.py whisper.py /app/
 USER nonroot
 WORKDIR /app
 
