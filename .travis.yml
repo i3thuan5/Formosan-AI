@@ -71,6 +71,7 @@ jobs:
         - chmod 400 "${TRAVIS_TSUKI_SSH_KEY_PATH}"
       script:
         - >
+          travis_wait 30
           ansible-playbook -i deploy/inventory_travis deploy/deploy.yaml
           --extra-vars "tsuanan_repo=`basename ${TRAVIS_REPO_SLUG}`"
           --extra-vars "branch=${TRAVIS_BRANCH}"
