@@ -1,7 +1,10 @@
 import os
 import tempfile
 import gradio as gr
-
+import uvicorn
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 from whisper import load_audio, load_model
 
 SAMPLING_RATE = 16000
@@ -19,7 +22,7 @@ with gr.Blocks(
     gr.Markdown(
         """
         # 原住民族語言研究發展基金會族語語音辨識系統
-        本辨識系統在讀取檔案後，可自動判斷族語別，請將檔案拖放到下方上傳處，點擊「開始辨識」，流程請見操作手冊。\\
+        本辨識系統在讀取檔案後，可自動判斷族語別，請將檔案拖放到下方上傳處，點擊「開始辨識」，流程請見[操作手冊](static/操作手冊｜原住民族語言研究發展基金會族語語音辨識系統.pdf)。\\
         當上傳檔案較大時，請靜待辨識結果產生。
         """
     )
@@ -91,4 +94,18 @@ with gr.Blocks(
         js="() => document.querySelector('#download_srt_button_hidden').click()",
     )
 
-demo.launch()
+# create a FastAPI app
+app = FastAPI()
+
+# create a static directory to store the static files
+static_dir = Path('./static')
+
+# mount FastAPI StaticFiles server
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
+# mount Gradio app to FastAPI app
+app = gr.mount_gradio_app(app, demo, path="")
+
+# serve the app
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=7860)
