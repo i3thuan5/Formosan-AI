@@ -104,7 +104,7 @@ static_dir = Path('./static')
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 # mount Gradio app to FastAPI app
-app = gr.mount_gradio_app(app, demo, path="/")
+app = gr.mount_gradio_app(app, demo, path="")
 
 # serve the app
 if __name__ == "__main__":
