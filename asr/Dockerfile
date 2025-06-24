@@ -17,6 +17,8 @@ RUN --mount=target=/tmp/requirements.txt,source=requirements.txt pip install --n
 RUN addgroup --gid 1000 nonroot && \
     adduser --uid 1000 --disabled-password --ingroup nonroot --quiet nonroot
 COPY --link app.py whisper.py /app/
+COPY --link static/ /app/static/
+
 USER nonroot
 WORKDIR /app
 
