@@ -1,7 +1,10 @@
 import os
 import tempfile
 import gradio as gr
-
+import uvicorn
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 from whisper import load_audio, load_model
 
 SAMPLING_RATE = 16000
@@ -91,4 +94,18 @@ with gr.Blocks(
         js="() => document.querySelector('#download_srt_button_hidden').click()",
     )
 
-demo.launch()
+# create a FastAPI app
+app = FastAPI()
+
+# create a static directory to store the static files
+static_dir = Path('./static')
+
+# mount FastAPI StaticFiles server
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
+# mount Gradio app to FastAPI app
+app = gr.mount_gradio_app(app, demo, path="/")
+
+# serve the app
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=7860)
