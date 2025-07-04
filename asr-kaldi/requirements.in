@@ -8,7 +8,7 @@ pydantic
 gradio[oauth,mcp]==5.30.0
 uvicorn>=0.14.0
 spaces
-mcp==1.8.1
+mcp==1.10.0
 
 vosk
 omegaconf
