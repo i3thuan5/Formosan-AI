@@ -128,7 +128,7 @@ markupsafe==3.0.2
     # via
     #   gradio
     #   jinja2
-mcp==1.10.0
+mcp==1.11.0
     # via
     #   -r requirements.in
     #   gradio
