@@ -6,7 +6,7 @@ click<8.1
 pydantic
 torch
 
-gradio[oauth]==5.9.1
+gradio[oauth]==5.32.0
 uvicorn>=0.14.0
 spaces==0.36.0
 
