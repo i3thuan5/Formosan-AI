@@ -32,6 +32,8 @@ attrs==25.3.0
     #   referencing
 authlib==1.5.2
     # via gradio
+brotli==1.1.0
+    # via gradio
 certifi==2025.4.26
     # via
     #   httpcore
@@ -75,11 +77,11 @@ fsspec[http]==2025.3.0
     #   datasets
     #   gradio-client
     #   huggingface-hub
-gradio[mcp,oauth]==5.30.0
+gradio[mcp,oauth]==5.37.0
     # via
     #   -r requirements.in
     #   spaces
-gradio-client==1.10.1
+gradio-client==1.10.4
     # via gradio
 groovy==0.1.2
     # via gradio
@@ -128,7 +130,7 @@ markupsafe==3.0.2
     # via
     #   gradio
     #   jinja2
-mcp==1.11.0
+mcp==1.10.1
     # via
     #   -r requirements.in
     #   gradio
