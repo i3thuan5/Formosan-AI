@@ -5,7 +5,7 @@ hf-transfer>=0.1.4
 click<8.1
 pydantic
 
-gradio[oauth,mcp]==5.32.0
+gradio[oauth,mcp]==5.37.0
 uvicorn>=0.14.0
 spaces
 mcp
