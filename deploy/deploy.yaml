@@ -49,3 +49,10 @@
         build: "never"
         pull: "always"
         remove_orphans: true
+    - name: Log out of DockerHub
+      community.docker.docker_login:
+        state: absent
+    - name: Prune Docker Image
+      community.docker.docker_prune:
+        images: true
+        timeout: 600
