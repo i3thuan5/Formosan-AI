@@ -30,16 +30,11 @@ asteroid-filterbanks==0.4.0
 async-timeout==5.0.1
     # via aiohttp
 attrs==25.3.0
-    # via
-    #   aiohttp
-    #   jsonschema
-    #   referencing
+    # via aiohttp
 authlib==1.6.1
     # via gradio
 av==15.0.0
     # via faster-whisper
-brotli==1.1.0
-    # via gradio
 certifi==2025.8.3
     # via
     #   httpcore
@@ -115,7 +110,7 @@ fsspec[http]==2025.3.0
     #   lightning
     #   pytorch-lightning
     #   torch
-gradio[mcp,oauth]==5.37.0
+gradio[mcp,oauth]==5.35.0
     # via
     #   -r asr/requirements.in
     #   spaces
@@ -178,17 +173,13 @@ joblib==1.5.1
     #   nltk
     #   scikit-learn
     #   speechbrain
-jsonschema==4.25.0
-    # via mcp
-jsonschema-specifications==2025.4.1
-    # via jsonschema
 julius==0.2.7
     # via torch-audiomentations
 kiwisolver==1.4.8
     # via matplotlib
 lightning==2.5.2
     # via pyannote-audio
-lightning-utilities==0.15.0
+lightning-utilities==0.15.1
     # via
     #   lightning
     #   pytorch-lightning
@@ -204,7 +195,7 @@ markupsafe==3.0.2
     #   mako
 matplotlib==3.10.5
     # via pyannote-metrics
-mcp==1.10.1
+mcp==1.9.3
     # via gradio
 mdurl==0.1.2
     # via markdown-it-py
@@ -399,10 +390,6 @@ pyyaml==6.0.2
     #   pyannote-pipeline
     #   pytorch-lightning
     #   transformers
-referencing==0.36.2
-    # via
-    #   jsonschema
-    #   jsonschema-specifications
 regex==2025.7.34
     # via
     #   nltk
@@ -417,10 +404,6 @@ rich==14.1.0
     # via
     #   pyannote-audio
     #   typer
-rpds-py==0.26.0
-    # via
-    #   jsonschema
-    #   referencing
 ruamel-yaml==0.18.14
     # via hyperpyyaml
 ruamel-yaml-clib==0.2.12
@@ -561,7 +544,6 @@ typing-extensions==4.14.1
     #   pydantic
     #   pydantic-core
     #   pytorch-lightning
-    #   referencing
     #   spaces
     #   sqlalchemy
     #   starlette
