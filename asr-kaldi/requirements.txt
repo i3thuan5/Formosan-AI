@@ -30,7 +30,7 @@ attrs==25.3.0
     #   aiohttp
     #   jsonschema
     #   referencing
-authlib==1.5.2
+authlib==1.6.5
     # via gradio
 brotli==1.1.0
     # via gradio

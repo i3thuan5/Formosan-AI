@@ -33,7 +33,7 @@ attrs==25.3.0
     # via aiohttp
 audioread==3.0.1
     # via librosa
-authlib==1.6.0
+authlib==1.6.5
     # via gradio
 bitsandbytes==0.45.5
     # via f5-tts
