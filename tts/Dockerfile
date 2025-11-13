@@ -20,6 +20,14 @@ COPY --link ipa/ /app/ipa/
 COPY --link assets/ /app/assets/
 RUN addgroup --gid 1000 nonroot && \
     adduser --uid 1000 --disabled-password --ingroup nonroot --quiet nonroot
+
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y \
+    libavutil56 libtorch1.8
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y \
+    libpython3.10
+
 USER nonroot
 WORKDIR /app
 

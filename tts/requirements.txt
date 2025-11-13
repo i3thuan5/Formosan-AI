@@ -66,7 +66,6 @@ click==8.0.4
     #   -r requirements.in
     #   f5-tts
     #   typer
-    #   typer-slim
     #   uvicorn
     #   wandb
 contourpy==1.3.2
@@ -452,9 +451,7 @@ sentry-sdk==2.28.0
 setproctitle==1.3.6
     # via wandb
 shellingham==1.5.4
-    # via
-    #   huggingface-hub
-    #   typer
+    # via typer
 six==1.17.0
     # via
     #   docker-pycreds
@@ -504,7 +501,7 @@ torchaudio==2.7.0
     #   encodec
     #   f5-tts
     #   vocos
-torchcodec==0.8.0
+torchcodec==0.5
     # via -r requirements.in
 torchdiffeq==0.2.5
     # via f5-tts
@@ -541,7 +538,6 @@ typing-extensions==4.13.2
     #   spaces
     #   torch
     #   typer
-    #   typer-slim
     #   uvicorn
     #   wandb
 tzdata==2025.2
