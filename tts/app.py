@@ -347,7 +347,7 @@ with demo:
             gen_text_input, language, ignore_punctuation, ipa_with_ng
         )
 
-        audio_out, spectrogram_path = infer(
+        audio_out, _spectrogram_path = infer(
             ref_audio_input,
             ref_text_input,
             gen_text_input,
@@ -410,7 +410,7 @@ with demo:
             gen_text_input, language, ignore_punctuation, ipa_with_ng
         )
 
-        audio_out, spectrogram_path = infer(
+        audio_out, _spectrogram_path = infer(
             ref_audio_input,
             ref_text_input,
             gen_text_input,
