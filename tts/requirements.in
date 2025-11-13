@@ -6,10 +6,11 @@ click<8.1
 pydantic
 torch
 
-gradio[oauth]==5.37.0
+gradio[oauth]==5.49.1
 uvicorn>=0.14.0
 spaces==0.36.0
 
 omegaconf
 opencc
+torchcodec==0.8.0
 f5-tts @ git+https://github.com/SWivid/F5-TTS.git@695c7357378c03f25d607cca45f5eb967592ce1a

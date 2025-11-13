@@ -1,4 +1,5 @@
 import csv
+from io import BytesIO
 
 import requests
 from omegaconf import OmegaConf

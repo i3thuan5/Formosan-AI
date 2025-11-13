@@ -1,10 +1,11 @@
+import re
 import tempfile
 from importlib.resources import files
 
 import gradio as gr
 import soundfile as sf
 import torch
-import torchaudio
+import torchcodec
 from cached_path import cached_path
 from omegaconf import OmegaConf
 
@@ -117,9 +118,13 @@ def load_f5tts(ckpt_path, vocab_path, old=False, fp16=False):
 OmegaConf.register_new_resolver("load_f5tts", load_f5tts)
 
 models_config = OmegaConf.to_object(OmegaConf.load("configs/models.yaml"))
+refs_config = OmegaConf.to_object(OmegaConf.load("configs/refs.yaml"))
+examples_config = OmegaConf.to_object(OmegaConf.load("configs/examples.yaml"))
 
 
 DEFAULT_MODEL_ID = list(models_config.keys())[0]
+
+ETHNICITIES = list(set([k.split("_")[0] for k in g2p_object.keys()]))
 
 
 @gpu_decorator
@@ -128,7 +133,7 @@ def infer(
     ref_text,
     gen_text,
     model,
-    remove_silence,
+    remove_silence=False,
     cross_fade_duration=0.15,
     nfe_step=32,
     speed=1,
@@ -164,7 +169,7 @@ def infer(
         with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as f:
             sf.write(f.name, final_wave, final_sample_rate)
             remove_silence_for_generated_wav(f.name)
-            final_wave, _ = torchaudio.load(f.name)
+            final_wave = torchcodec.decoders.AudioDecoder(f.name).get_all_samples().data
         final_wave = final_wave.squeeze().cpu().numpy()
 
     # Save the spectrogram
@@ -182,7 +187,9 @@ def get_title():
 
 demo = gr.Blocks(
     title=get_title(),
-    css="@import url(https://tauhu.tw/tauhu-oo.css);",
+    css="""@import url(https://tauhu.tw/tauhu-oo.css);
+    .textonly textarea {border-width: 0px !important; }
+    """,
     theme=gr.themes.Default(
         font=(
             "tauhu-oo",
@@ -192,102 +199,143 @@ demo = gr.Blocks(
             "sans-serif",
         )
     ),
+    js="""
+    function addButtonsEvent() {
+        const buttons = document.querySelectorAll("#head-html-block button");
+        buttons.forEach(button => {
+            button.addEventListener("click", () => {
+                navigator.clipboard.writeText(button.innerText);
+            });
+        });
+    }
+    """,
 )
 
 with demo:
     with open("DEMO.md") as tong:
         gr.Markdown(tong.read())
 
-    with gr.Row():
-        with gr.Column():
-            model_drop_down = gr.Dropdown(
-                models_config.keys(),
-                value=DEFAULT_MODEL_ID,
-                label="模型",
-            )
+    gr.HTML(
+        "特殊符號請複製使用（滑鼠點擊即可複製）：<button>é</button> <button>ṟ</button> <button>ɨ</button> <button>ʉ</button>",
+        padding=False,
+        elem_id="head-html-block",
+    )
 
-            language = gr.Dropdown(
-                choices=g2p_object.keys(),
-                label="語言",
-                value="阿美_秀姑巒",
-            )
+    with gr.Tab("預設配音員"):
+        with gr.Row():
+            with gr.Column():
+                default_speaker_ethnicity = gr.Dropdown(
+                    choices=ETHNICITIES,
+                    label="步驟一：選擇族別",
+                    value="阿美",
+                    filterable=False,
+                )
 
-            ref_audio_input = gr.Audio(
-                type="filepath",
-                waveform_options=gr.WaveformOptions(
-                    sample_rate=24000,
-                ),
-                label="Reference Audio",
-            )
-            ref_text_input = gr.Textbox(
-                value="",
-                label="Reference Text",
-            )
+                def get_refs_by_perfix(prefix: str):
+                    return [r for r in refs_config.keys() if r.startswith(prefix)]
 
-            gen_text_input = gr.Textbox(
-                label="Text to Generate",
-                value="",
-            )
+                default_speaker_refs = gr.Dropdown(
+                    choices=get_refs_by_perfix(default_speaker_ethnicity.value),
+                    label="步驟二：選擇配音員",
+                    value=get_refs_by_perfix(default_speaker_ethnicity.value)[0],
+                    filterable=False,
+                )
 
-            generate_btn = gr.Button("Synthesize", variant="primary")
+                default_speaker_gen_text_input = gr.Textbox(
+                    label="步驟三：輸入文字（上限 300 字元）",
+                    value="",
+                )
 
-            with gr.Accordion("Advanced Settings", open=False):
-                remove_silence = gr.Checkbox(
-                    label="Remove Silences",
-                    info=(
-                        "The model tends to produce silences, especially on longer audio. "
-                        "We can manually remove silences if needed. Note that this is an experimental feature and may produce strange results. "
-                        "This will also increase generation time."
+                default_speaker_generate_btn = gr.Button(
+                    "步驟四：開始合成", variant="primary"
+                )
+
+            with gr.Column():
+                default_speaker_audio_output = gr.Audio(
+                    label="合成結果", show_share_button=False, show_download_button=True
+                )
+
+    with gr.Tab("自己當配音員"):
+        with gr.Row():
+            with gr.Column():
+                custom_speaker_ethnicity = gr.Dropdown(
+                    choices=ETHNICITIES,
+                    label="步驟一：選擇族別與語別",
+                    value="阿美",
+                    filterable=False,
+                )
+
+                custom_speaker_language = gr.Dropdown(
+                    choices=[
+                        k
+                        for k in g2p_object.keys()
+                        if k.startswith(custom_speaker_ethnicity.value)
+                    ],
+                    value=[
+                        k
+                        for k in g2p_object.keys()
+                        if k.startswith(custom_speaker_ethnicity.value)
+                    ][0],
+                    filterable=False,
+                    show_label=False,
+                )
+
+                custom_speaker_ref_text_input = gr.Textbox(
+                    value=refs_config[
+                        get_refs_by_perfix(custom_speaker_language.value)[0]
+                    ]["text"],
+                    interactive=False,
+                    label="步驟二：點選🎙️錄製下方句子，或上傳與句子相符的音檔",
+                    elem_classes="textonly",
+                )
+
+                custom_speaker_audio_input = gr.Audio(
+                    type="filepath",
+                    sources=["microphone", "upload"],
+                    waveform_options=gr.WaveformOptions(
+                        sample_rate=24000,
                     ),
-                    value=False,
+                    label="錄製或上傳",
                 )
-                speed_slider = gr.Slider(
-                    label="Speed",
-                    minimum=0.3,
-                    maximum=2.0,
-                    value=1.0,
-                    step=0.1,
-                    info="語速（越小越慢）",
+
+                custom_speaker_gen_text_input = gr.Textbox(
+                    label="步驟三：輸入合成文字（上限 300 字元）",
+                    value="",
                 )
-                nfe_slider = gr.Slider(
-                    label="NFE Steps",
-                    minimum=4,
-                    maximum=64,
-                    value=32,
-                    step=2,
-                    info="Set the number of denoising steps.",
+
+                custom_speaker_generate_btn = gr.Button(
+                    "步驟四：開始合成", variant="primary"
                 )
-                cross_fade_duration_slider = gr.Slider(
-                    label="Cross-Fade Duration (s)",
-                    minimum=0.0,
-                    maximum=1.0,
-                    value=0.15,
-                    step=0.01,
-                    info="Set the duration of the cross-fade between audio clips.",
+
+            with gr.Column():
+                custom_speaker_audio_output = gr.Audio(
+                    label="合成結果", show_share_button=False, show_download_button=True
                 )
-        with gr.Column():
-            audio_output = gr.Audio(label="Synthesized Audio")
-            spectrogram_output = gr.Image(label="Spectrogram")
+
+    default_speaker_ethnicity.change(
+        lambda ethnicity: gr.Dropdown(
+            choices=get_refs_by_perfix(ethnicity),
+            value=get_refs_by_perfix(ethnicity)[0],
+        ),
+        inputs=[default_speaker_ethnicity],
+        outputs=[default_speaker_refs],
+    )
 
     @gpu_decorator
-    def basic_tts(
-        model_drop_down: str,
-        language: str,
-        ref_audio_input: str,
-        ref_text_input: str,
+    def default_speaker_tts(
+        ref: str,
         gen_text_input: str,
-        remove_silence: bool,
-        cross_fade_duration_slider: float,
-        nfe_slider: int,
-        speed_slider: float,
     ):
-        ref_text_input = ref_text_input.strip()
-        if len(ref_text_input) == 0:
-            raise gr.Error("請勿輸入空字串。")
+        language = re.sub(r"_[男女]聲[12]?", "", ref)
+        ref_text_input = refs_config[ref]["text"]
+        ref_audio_input = refs_config[ref]["wav"]
 
         gen_text_input = gen_text_input.strip()
         if len(gen_text_input) == 0:
             raise gr.Error("請勿輸入空字串。")
+
+        if gen_text_input[-1] not in [".", "?", "!", ",", ";", ":"]:
+            gen_text_input += "."
 
         ignore_punctuation = False
         ipa_with_ng = False
@@ -303,57 +351,82 @@ with demo:
             ref_audio_input,
             ref_text_input,
             gen_text_input,
-            models_config[model_drop_down],
-            remove_silence,
-            cross_fade_duration=cross_fade_duration_slider,
-            nfe_step=nfe_slider,
-            speed=speed_slider,
+            models_config[DEFAULT_MODEL_ID],
         )
-        return audio_out, spectrogram_path
+        return audio_out
 
-    generate_btn.click(
-        basic_tts,
+    default_speaker_generate_btn.click(
+        default_speaker_tts,
         inputs=[
-            model_drop_down,
-            language,
-            ref_audio_input,
-            ref_text_input,
-            gen_text_input,
-            remove_silence,
-            cross_fade_duration_slider,
-            nfe_slider,
-            speed_slider,
+            default_speaker_refs,
+            default_speaker_gen_text_input,
         ],
-        outputs=[audio_output, spectrogram_output],
+        outputs=[default_speaker_audio_output],
     )
-    gr.Examples(
-        [
-            [
-                "阿美_秀姑巒",
-                "./ref_wav/E-PV001-0001.wav",
-                "o pakafanaʼ ni akong to pinangan no romiʼad.",
-                "Mafanaʼ kiso a misanoPangcah haw?",
-            ],
-            [
-                "阿美_秀姑巒",
-                "./ref_wav/E-PV001-0001.wav",
-                "o pakafanaʼ ni akong to pinangan no romiʼad.",
-                "Kering sa masoni⌃ to ko pipahanhanan a tatokian, o fe:soc no niyam a tayra i piondoan.",
-            ],
-            [
-                "阿美_秀姑巒",
-                "./ref_wav/cu_practice-0016849.wav",
-                "ano cikasoan to, ano o falangaw to i, malecaday to a matira.",
-                "Pafelien cingra to misapoeneray a falocoʼ, nanay madaʼoc matilid i falocoʼ nira konini.",
-            ],
-        ],
-        label="範例",
-        inputs=[
-            language,
+
+    custom_speaker_ethnicity.change(
+        lambda ethnicity: gr.Dropdown(
+            choices=[k for k in g2p_object.keys() if k.startswith(ethnicity)],
+            value=[k for k in g2p_object.keys() if k.startswith(ethnicity)][0],
+            visible=len([k for k in g2p_object.keys() if k.startswith(ethnicity)]) > 1,
+        ),
+        inputs=[custom_speaker_ethnicity],
+        outputs=[custom_speaker_language],
+    )
+
+    custom_speaker_language.change(
+        lambda lang: gr.Textbox(
+            value=refs_config[get_refs_by_perfix(lang)[0]]["text"],
+        ),
+        inputs=[custom_speaker_language],
+        outputs=[custom_speaker_ref_text_input],
+    )
+
+    @gpu_decorator
+    def custom_speaker_tts(
+        language: str,
+        ref_text_input: str,
+        ref_audio_input: str,
+        gen_text_input: str,
+    ):
+        ref_text_input = ref_text_input.strip()
+        if len(ref_text_input) == 0:
+            raise gr.Error("請勿輸入空字串。")
+
+        gen_text_input = gen_text_input.strip()
+        if len(gen_text_input) == 0:
+            raise gr.Error("請勿輸入空字串。")
+
+        ignore_punctuation = False
+        ipa_with_ng = False
+
+        if gen_text_input[-1] not in [".", "?", "!", ",", ";", ":"]:
+            gen_text_input += "."
+
+        ref_text_input = text_to_ipa(
+            ref_text_input, language, ignore_punctuation, ipa_with_ng
+        )
+        gen_text_input = text_to_ipa(
+            gen_text_input, language, ignore_punctuation, ipa_with_ng
+        )
+
+        audio_out, spectrogram_path = infer(
             ref_audio_input,
             ref_text_input,
             gen_text_input,
+            models_config[DEFAULT_MODEL_ID],
+        )
+        return audio_out
+
+    custom_speaker_generate_btn.click(
+        custom_speaker_tts,
+        inputs=[
+            custom_speaker_language,
+            custom_speaker_ref_text_input,
+            custom_speaker_audio_input,
+            custom_speaker_gen_text_input,
         ],
+        outputs=[custom_speaker_audio_output],
     )
 
 demo.launch()

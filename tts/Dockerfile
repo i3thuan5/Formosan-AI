@@ -17,7 +17,7 @@ RUN --mount=target=/tmp/requirements.txt,source=requirements.txt pip install --n
 COPY --link app.py DEMO.md /app/
 COPY --link configs/ /app/configs/
 COPY --link ipa/ /app/ipa/
-COPY --link ref_wav/ /app/ref_wav/
+COPY --link assets/ /app/assets/
 RUN addgroup --gid 1000 nonroot && \
     adduser --uid 1000 --disabled-password --ingroup nonroot --quiet nonroot
 USER nonroot

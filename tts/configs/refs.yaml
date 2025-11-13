@@ -1,0 +1,138 @@
+阿美_海岸_男聲:
+  text: talacowa kiso?
+  wav: ./assets/ref_wav/con_practice-0000029@0000000-0001434.wav
+阿美_恆春_女聲:
+  text: pacelem kiso kaday tatalacowa?
+  wav: ./assets/ref_wav/con_practice-0000106@0000000-0003294.wav
+阿美_馬蘭_女聲:
+  text: ngaʼayay sa mira haw?
+  wav: ./assets/ref_wav/con_practice-0000041@0000000-0001704.wav
+阿美_南勢_女聲:
+  text: vaw! u ratar a talacuwa kisu?
+  wav: ./assets/ref_wav/con_practice-0000001@0000000-0003324.wav
+阿美_秀姑巒_女聲1:
+  text: o pakafanaʼ ni akong to pinangan no romiʼad.
+  wav: ./assets/ref_wav/E-PV001-0001.wav
+阿美_秀姑巒_女聲2:
+  text: o pakafanaʼ ni akong to pinangan no romiʼad.
+  wav: ./assets/ref_wav/E-PV002-0001.wav
+泰雅_四季_女聲:
+  text: mhyubuq su, musa su inu?
+  wav: ./assets/ref_wav/con_practice-0000109@0000000-0003504.wav
+泰雅_賽考利克_男聲:
+  text: mziboq su! musa su inu?
+  wav: ./assets/ref_wav/con_practice-0000028@0000000-0003204.wav
+泰雅_萬大_女聲:
+  text: maṟbunaʼ suʼ ong!
+  wav: ./assets/ref_wav/con_practice-0000048@0000000-0001944.wav
+泰雅_汶水_男聲:
+  text: babah suʼ ka magabuq cuqang, mausaʼ siʼ inuʼ?
+  wav: ./assets/ref_wav/con_practice-0000055@0000000-0006714.wav
+泰雅_宜蘭澤敖利_女聲:
+  text: mgebu su, mosa su inu?
+  wav: ./assets/ref_wav/con_practice-0000111@0000000-0004004.wav
+泰雅_澤敖利_男聲:
+  text: lawkah su, musa su inu?
+  wav: ./assets/ref_wav/con_practice-0000108@0000000-0003474.wav
+布農_郡群_男聲:
+  text: ali, mihumisang, nakuisa kasu?
+  wav: ./assets/ref_wav/con_practice-0000442@0000000-0005624.wav
+布農_卡群_男聲:
+  text: miqumicang, mun icaq asu?
+  wav: ./assets/ref_wav/con_practice-0000170@0000000-0004604.wav
+布農_巒群_男聲:
+  text: mun isaq asu?
+  wav: ./assets/ref_wav/con_practice-0000167@0000000-0001464.wav
+布農_丹群_男聲:
+  text: miqumisang. mun isaq aas?
+  wav: ./assets/ref_wav/con_practice-0000171@0000000-0004044.wav
+布農_卓群_女聲:
+  text: miqumicang munica asu?
+  wav: ./assets/ref_wav/con_practice-0000162@0000000-0003054.wav
+卡那卡那富_男聲:
+  text: paʼʉ, musuʼʉvʉ tasiarʉ, miaranau cu kita koo ʼarupacʉʼʉra.
+  wav: ./assets/ref_wav/con_practice-0000806@0000000-0008454.wav
+噶瑪蘭_女聲:
+  text: semuRap, qatiw pa isu seni?
+  wav: ./assets/ref_wav/con_practice-0000796@0000000-0002664.wav
+排灣_中_男聲:
+  text: aiyanga sun!
+  wav: ./assets/ref_wav/con_practice-0000436@0000000-0001314.wav
+排灣_東_男聲:
+  text: cuayanga tja sinicevunga.
+  wav: ./assets/ref_wav/con_practice-0000337@0000000-0003084.wav
+排灣_北_女聲:
+  text: aiyanga sun! cuacuaianga ika tjen a marepacucun ri.
+  wav: ./assets/ref_wav/con_practice-0000439@0000000-0005634.wav
+排灣_南_女聲:
+  text: cuacuay ini tje ucevucevung.
+  wav: ./assets/ref_wav/con_practice-0000554@0000000-0004284.wav
+卑南_建和_女聲:
+  text: semavalran. yawa u i iyan?
+  wav: ./assets/ref_wav/con_practice-0011323@0000000-0004014.wav
+卑南_南王_女聲:
+  text: semabalran! auka yu isuwa?
+  wav: ./assets/ref_wav/con_practice-0011320@0000000-0004794.wav
+卑南_西群_女聲:
+  text: semavalran, auwa u i iyan?
+  wav: ./assets/ref_wav/con_practice-0011362@0000000-0004584.wav
+卑南_知本_女聲:
+  text: semavalran! awa u i iyan?
+  wav: ./assets/ref_wav/con_practice-0011359@0000000-0003894.wav
+魯凱_大武_女聲:
+  text: maulaingata kai macacele.
+  wav: ./assets/ref_wav/con_practice-0000239@0000000-0003084.wav
+魯凱_多納_男聲:
+  text: ʼiyakikaynga nitipacengecengelanga.
+  wav: ./assets/ref_wav/con_practice-0000345@0000000-0002934.wav
+魯凱_東_女聲:
+  text: mawlrainga kata ma cecelre.
+  wav: ./assets/ref_wav/con_practice-0000440@0000000-0003384.wav
+魯凱_茂林_男聲:
+  text: médavlinga ipcacnglata, tilorosu.
+  wav: ./assets/ref_wav/con_practice-0000450@0000000-0004944.wav
+魯凱_萬山_女聲:
+  text: sahivoengaʼo?
+  wav: ./assets/ref_wav/con_practice-0000666@0000000-0002034.wav
+魯凱_霧台_女聲:
+  text: mawlayngata kai madradredrele.
+  wav: ./assets/ref_wav/con_practice-0000243@0000000-0003474.wav
+拉阿魯哇_女聲:
+  text: tam mutuvavʉrʉnga iniu ahlukakua?
+  wav: ./assets/ref_wav/con_practice-0000803@0000000-0005154.wav
+賽夏_女聲:
+  text: mayaʼ Soʼo ʼam rimaʼ raynoʼ?
+  wav: ./assets/ref_wav/con_practice-0000107@0000000-0004334.wav
+撒奇萊雅_女聲:
+  text: malanam tu. a tacuwa kisu?
+  wav: ./assets/ref_wav/con_practice-0011340@0000000-0003534.wav
+賽德克_德鹿谷_女聲:
+  text: krbuan! mowsa su inu?
+  wav: ./assets/ref_wav/con_practice-0000166@0000000-0003954.wav
+賽德克_都達_女聲:
+  text: knrbuwan! musa su inu?
+  wav: ./assets/ref_wav/con_practice-0000160@0000000-0002244.wav
+賽德克_德固達雅_男聲:
+  text: kari pnheyu ngayan seediq.
+  wav: ./assets/ref_wav/E-SV001-0001.wav
+賽德克_德固達雅_女聲:
+  text: kari pnheyu ngayan seediq.
+  wav: ./assets/ref_wav/E-SV002-3607.wav
+邵_男聲:
+  text: ihu matinhumhum! amuntua ihu qa?
+  wav: ./assets/ref_wav/con_practice-0000113@0000000-0004094.wav
+太魯閣_女聲:
+  text: psbrinah lmnglung narux brah uhan.
+  wav: ./assets/ref_wav/E-TV001-0001.wav
+太魯閣_男聲1:
+  text: niqan kingal hngkawas smiyan taywang.
+  wav: ./assets/ref_wav/E-TV002-0002.wav
+太魯閣_男聲2:
+  text: niqan kingal hngkawas smiyan taywang.
+  wav: ./assets/ref_wav/E-TV003-0002.wav
+鄒_女聲:
+  text: micu noanaʼo ho mito oʼte yupteʉlʉ.
+  wav: ./assets/ref_wav/con_practice-0000798@0000000-0005214.wav
+雅美_女聲:
+  text: kavakes kong, ka mangey jino simarow?
+  wav: ./assets/ref_wav/con_practice-0011470@0000000-0003864.wav
