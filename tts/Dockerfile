@@ -2,7 +2,7 @@ FROM nvidia/cuda:12.2.2-runtime-ubuntu22.04
 
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
-    python3.10 python3-pip python-is-python3 \
+    python3.10 libpython3.10 python3-pip python-is-python3 \
     git git-lfs ffmpeg libsm6 libxext6 cmake rsync libgl1-mesa-glx && \
     git lfs install && \
     apt-get install --no-install-recommends -y curl && \
@@ -20,13 +20,6 @@ COPY --link ipa/ /app/ipa/
 COPY --link assets/ /app/assets/
 RUN addgroup --gid 1000 nonroot && \
     adduser --uid 1000 --disabled-password --ingroup nonroot --quiet nonroot
-
-RUN apt-get update && \
-    apt-get install --no-install-recommends -y \
-    libavutil56 libtorch1.8
-RUN apt-get update && \
-    apt-get install --no-install-recommends -y \
-    libpython3.10
 
 USER nonroot
 WORKDIR /app
