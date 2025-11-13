@@ -1,42 +1,43 @@
+---
 阿美_海岸:
-- ref: 阿美_海岸_男聲
-  text: na mahofoc to sakacecay a folad pangangan to tadangangan no tireng, ano caayay
-    kafalic tahira sa i patay malongangan no tireng.
-- ref: 阿美_海岸_男聲
-  text: o tatodong nonini midotocay to ngangan no toʼas, papinang o cecayay ko lilengawan,
-    malo saka fanaʼ no cimacima a tamdaw o wawa niira kako sanay.
-- ref: 阿美_海岸_男聲
-  text: no holam a ngangan i, patangican a pangangan, o saka cingangan a mitilid ato
-    malokika no tireng.
+  - ref: 阿美_海岸_男聲
+    text: na mahofoc to sakacecay a folad pangangan to tadangangan no tireng, ano caayay
+      kafalic tahira sa i patay malongangan no tireng.
+  - ref: 阿美_海岸_男聲
+    text: o tatodong nonini midotocay to ngangan no toʼas, papinang o cecayay ko lilengawan,
+      malo saka fanaʼ no cimacima a tamdaw o wawa niira kako sanay.
+  - ref: 阿美_海岸_男聲
+    text: no holam a ngangan i, patangican a pangangan, o saka cingangan a mitilid ato
+      malokika no tireng.
 阿美_恆春:
-- ref: 阿美_恆春_女聲
-  text: o kaʼamiʼamis lidaw, siwkolan tafalong, pasawali fakong ato posong falangaw
-    a niyaniyaroʼan.
-- ref: 阿美_恆春_女聲
-  text: o tafalong a niyaroʼ adihayay ko misangaʼan a tilong, paʼaca⌃ i cowacowa a
-    niyaniyaroʼan, o palengatay mi sangaʼ to tilong a seraʼngaʼwan koʼamis, sa matilid
-    i likisi.
-- ref: 阿美_恆春_女聲
-  text: o sapitalipaʼelal no itiniay i pasawali pariyalay ko ʼorip a ʼamis, sapipaʼicel
-    to falocoʼ no matokaay ato ya cowa pido⌃do to tatokian a matayal a tamdaw.
+  - ref: 阿美_恆春_女聲
+    text: o kaʼamiʼamis lidaw, siwkolan tafalong, pasawali fakong ato posong falangaw
+      a niyaniyaroʼan.
+  - ref: 阿美_恆春_女聲
+    text: o tafalong a niyaroʼ adihayay ko misangaʼan a tilong, paʼaca⌃ i cowacowa a
+      niyaniyaroʼan, o palengatay mi sangaʼ to tilong a seraʼngaʼwan koʼamis, sa matilid
+      i likisi.
+  - ref: 阿美_恆春_女聲
+    text: o sapitalipaʼelal no itiniay i pasawali pariyalay ko ʼorip a ʼamis, sapipaʼicel
+      to falocoʼ no matokaay ato ya cowa pido⌃do to tatokian a matayal a tamdaw.
 阿美_馬蘭:
-- ref: 阿美_馬蘭_女聲
-  text: o fanaʼ ato taneng no liteng ita ko pipangangan hananay a demak. ano mipangangan
-    ko liteng to nihofocan ho a wawa i, ira ko pinapinaay o sasapinangen no mita.
-- ref: 阿美_馬蘭_女聲
-  text: sakacecay i, o makakafitay ko ngangan no wawa ato ama anca ina ato ngasaw.
-- ref: 阿美_馬蘭_女聲
-  text: ona malaliway no kerah hananay a sowal i, o nisidayan no liteng ita to sakangaʼayaw
-    no ʼorip ita a tadangaʼayay a sowal.
+  - ref: 阿美_馬蘭_女聲
+    text: o fanaʼ ato taneng no liteng ita ko pipangangan hananay a demak. ano mipangangan
+      ko liteng to nihofocan ho a wawa i, ira ko pinapinaay o sasapinangen no mita.
+  - ref: 阿美_馬蘭_女聲
+    text: sakacecay i, o makakafitay ko ngangan no wawa ato ama anca ina ato ngasaw.
+  - ref: 阿美_馬蘭_女聲
+    text: ona malaliway no kerah hananay a sowal i, o nisidayan no liteng ita to sakangaʼayaw
+      no ʼorip ita a tadangaʼayay a sowal.
 阿美_南勢:
-- ref: 阿美_南勢_女聲
-  text: yu dademak ku tamdw, caay kanca ira ku nisimsim, anu awaay ku venis malasawadtu
-    awaaytu ku sadak.
-- ref: 阿美_南勢_女聲
-  text: yu malalikid ku pangcah, mikilim tu alesuay ku radiw, mikilim tu mavanaʼay
-    tu lawat, mikilim tu selangawan nu radiw.
-- ref: 阿美_南勢_女聲
-  text: manay ira ku suwal nu pangcah malaliw nu kerah saan.
+  - ref: 阿美_南勢_女聲
+    text: yu dademak ku tamdw, caay kanca ira ku nisimsim, anu awaay ku venis malasawadtu
+      awaaytu ku sadak.
+  - ref: 阿美_南勢_女聲
+    text: yu malalikid ku pangcah, mikilim tu alesuay ku radiw, mikilim tu mavanaʼay
+      tu lawat, mikilim tu selangawan nu radiw.
+  - ref: 阿美_南勢_女聲
+    text: manay ira ku suwal nu pangcah malaliw nu kerah saan.
 阿美_秀姑巒:
   - ref: 阿美_秀姑巒_女聲1
     text: Mafanaʼ kiso a misanoPangcah haw?
@@ -45,347 +46,347 @@
   - ref: 阿美_秀姑巒_女聲2
     text: Pafelien cingra to misapoeneray a falocoʼ, nanay madaʼoc matilid i falocoʼ nira konini.
 泰雅_四季:
-- ref: 泰雅_四季_女聲
-  text: ini sgiy lalu bkis nya hiya, ini ga sgyun ta slalu na lalu nya, pinbaqay ta
-    nyan sbiru mehung.
-- ref: 泰雅_四季_女聲
-  text: skura cquliq tayal kmayal, gaga na pntasan ga kinkrahu calay sinrxan nya qani
-    gaga na hkngyan qani ga pisang pqnesan na tninun qa mrkyas cquliq, nyan pktayux
-    kinkahan ro cinrapal na knblaq nya uyi.
-- ref: 泰雅_四季_女聲
-  text: gaga na cinlalu cqani hiya hintgan llaqi lga knahul yaya ro yaya, ini ga yutas
-    ro yaki naha cpung smi lalu.
+  - ref: 泰雅_四季_女聲
+    text: ini sgiy lalu bkis nya hiya, ini ga sgyun ta slalu na lalu nya, pinbaqay ta
+      nyan sbiru mehung.
+  - ref: 泰雅_四季_女聲
+    text: skura cquliq tayal kmayal, gaga na pntasan ga kinkrahu calay sinrxan nya qani
+      gaga na hkngyan qani ga pisang pqnesan na tninun qa mrkyas cquliq, nyan pktayux
+      kinkahan ro cinrapal na knblaq nya uyi.
+  - ref: 泰雅_四季_女聲
+    text: gaga na cinlalu cqani hiya hintgan llaqi lga knahul yaya ro yaya, ini ga yutas
+      ro yaki naha cpung smi lalu.
 泰雅_賽考利克:
-- ref: 泰雅_賽考利克_男聲
-  text: anuʼ iy rimaʼ mhuqil qu yabaʼ na laqiʼ qasa ru nanak yayaʼ niyaʼ qu baqun
-    na qlqalang nahaʼ lga,
-- ref: 泰雅_賽考利克_男聲
-  text: nanuʼ qu knitaʼ na ʼtayal squ kinblaq ktan na inllungan qani, iy skahul taʼ
-    sa sun kayʼ na thayluw maha iysuʼ lmnglung ga,
-- ref: 泰雅_賽考利克_男聲
-  text: mzyugiʼ sun na tayal hyaʼ ga, aring sa iniʼ uwah naʼ qu gipun hga,
+  - ref: 泰雅_賽考利克_男聲
+    text: anuʼ iy rimaʼ mhuqil qu yabaʼ na laqiʼ qasa ru nanak yayaʼ niyaʼ qu baqun
+      na qlqalang nahaʼ lga,
+  - ref: 泰雅_賽考利克_男聲
+    text: nanuʼ qu knitaʼ na ʼtayal squ kinblaq ktan na inllungan qani, iy skahul taʼ
+      sa sun kayʼ na thayluw maha iysuʼ lmnglung ga,
+  - ref: 泰雅_賽考利克_男聲
+    text: mzyugiʼ sun na tayal hyaʼ ga, aring sa iniʼ uwah naʼ qu gipun hga,
 泰雅_萬大:
-- ref: 泰雅_萬大_女聲
-  text: kumegal ci ralu ni yutas ka galen na uleʼ malikuṟ, minlu kelan na suseuleʼ
-    malikuṟ luṟiy ga, sikalahang naha ci ralu ni mamaʼ la.
-- ref: 泰雅_萬大_女聲
-  text: amol ka ralu ni uleʼ kanel hiya ga, kumegal ci ralu ni yaki, amol ka asuṟan
-    mu kanel ga iwal pawan ka ralu ni, kumegal ci ralu ni yaki mu hiya,
-- ref: 泰雅_萬大_女聲
-  text: tuminuʼ ci capang, ṟibul lu sasamaw, kani ka paskegal ci angṟat ka nabkis.
+  - ref: 泰雅_萬大_女聲
+    text: kumegal ci ralu ni yutas ka galen na uleʼ malikuṟ, minlu kelan na suseuleʼ
+      malikuṟ luṟiy ga, sikalahang naha ci ralu ni mamaʼ la.
+  - ref: 泰雅_萬大_女聲
+    text: amol ka ralu ni uleʼ kanel hiya ga, kumegal ci ralu ni yaki, amol ka asuṟan
+      mu kanel ga iwal pawan ka ralu ni, kumegal ci ralu ni yaki mu hiya,
+  - ref: 泰雅_萬大_女聲
+    text: tuminuʼ ci capang, ṟibul lu sasamaw, kani ka paskegal ci angṟat ka nabkis.
 泰雅_汶水:
-- ref: 泰雅_汶水_男聲
-  text: kiyaʼ kuʼ qutux ka tinqalangan ga, kiyaʼ kuʼ qutux ka ulaqiʼ niyaʼ ka tikay
-    cubalay.
-- ref: 泰雅_汶水_男聲
-  text: payux kuʼ tiniriq nahaʼ ga, musaʼ ʼiʼ siputurahug ru sipaquwas naʼ itaal kuʼ
-    mugumalaq ka lawlawkah.
-- ref: 泰雅_汶水_男聲
-  text: balaiq aʼ tunux niyaʼ ru magabatunux cubalay ru makarux cubalay cuʼ wawaw.
+  - ref: 泰雅_汶水_男聲
+    text: kiyaʼ kuʼ qutux ka tinqalangan ga, kiyaʼ kuʼ qutux ka ulaqiʼ niyaʼ ka tikay
+      cubalay.
+  - ref: 泰雅_汶水_男聲
+    text: payux kuʼ tiniriq nahaʼ ga, musaʼ ʼiʼ siputurahug ru sipaquwas naʼ itaal kuʼ
+      mugumalaq ka lawlawkah.
+  - ref: 泰雅_汶水_男聲
+    text: balaiq aʼ tunux niyaʼ ru magabatunux cubalay ru makarux cubalay cuʼ wawaw.
 泰雅_宜蘭澤敖利:
-- ref: 泰雅_宜蘭澤敖利_女聲
-  text: sʼaras naha kthuy ruma nkan magan ʼsya ru panga naha mwah sali. nanu yaca
-    ku uraw knkyan nku sali alang tayal ga maki babaw yayaw ruma ru maki bʼnux uraw
-    babaw syaw ʼsya gong ru llyung ruma.
-- ref: 泰雅_宜蘭澤敖利_女聲
-  text: ppuyan ga wahan phapuy knerin ru tmahok rami. suruw ppuyan lga pman naha.
-    baʼun mbkis maha mema ta ga hyiʼun nya ru claʼun nya kwara uraw,
-- ref: 泰雅_宜蘭澤敖利_女聲
-  text: kble sali lela tayal ta ga sʼagan naha uraw hnaʼi kble sali, blihun ru tobung
-    ga sʼagan naha khoni. babaw nya lga tmutuw ruma galan naha kble sali. kwara nalang
-    sali, lmuʼiy sali ru ʼbyan ga, knle naha ruma kwara.
+  - ref: 泰雅_宜蘭澤敖利_女聲
+    text: sʼaras naha kthuy ruma nkan magan ʼsya ru panga naha mwah sali. nanu yaca
+      ku uraw knkyan nku sali alang tayal ga maki babaw yayaw ruma ru maki bʼnux uraw
+      babaw syaw ʼsya gong ru llyung ruma.
+  - ref: 泰雅_宜蘭澤敖利_女聲
+    text: ppuyan ga wahan phapuy knerin ru tmahok rami. suruw ppuyan lga pman naha.
+      baʼun mbkis maha mema ta ga hyiʼun nya ru claʼun nya kwara uraw,
+  - ref: 泰雅_宜蘭澤敖利_女聲
+    text: kble sali lela tayal ta ga sʼagan naha uraw hnaʼi kble sali, blihun ru tobung
+      ga sʼagan naha khoni. babaw nya lga tmutuw ruma galan naha kble sali. kwara nalang
+      sali, lmuʼiy sali ru ʼbyan ga, knle naha ruma kwara.
 泰雅_澤敖利:
-- ref: 泰雅_澤敖利_男聲
-  text: sinlalu na tayan ta hiya ga yaba ki laʼi mutuw mtgluw lalu, psʼunun nya sazing
-    lalu, hasa ku laʼi tmalung ki laʼi knerin ga mki sku gleng, suruw hiya ga lalu
-    na yaba ki yaya,
-- ref: 泰雅_澤敖利_男聲
-  text: kwara lalu hani ga mutuw naha sʼagan sku lalu na yaba, kkyalun naha krryax
-    ku lalu nya nanak skayan naha, ini ga sinlalu naha ku blay psyaʼan na lalu, ga
-    mutuw naha inbleʼun mki te suruw hiya.
-- ref: 泰雅_澤敖利_男聲
-  text: kruma ga mutuw sʼagan nku sinlalu naha lalu na yaba nki kin te sazing sinlwan
-    na lalu. mutuw ini ptna lalu tmalung ki lalu knerin nku tayan hiya,
+  - ref: 泰雅_澤敖利_男聲
+    text: sinlalu na tayan ta hiya ga yaba ki laʼi mutuw mtgluw lalu, psʼunun nya sazing
+      lalu, hasa ku laʼi tmalung ki laʼi knerin ga mki sku gleng, suruw hiya ga lalu
+      na yaba ki yaya,
+  - ref: 泰雅_澤敖利_男聲
+    text: kwara lalu hani ga mutuw naha sʼagan sku lalu na yaba, kkyalun naha krryax
+      ku lalu nya nanak skayan naha, ini ga sinlalu naha ku blay psyaʼan na lalu, ga
+      mutuw naha inbleʼun mki te suruw hiya.
+  - ref: 泰雅_澤敖利_男聲
+    text: kruma ga mutuw sʼagan nku sinlalu naha lalu na yaba nki kin te sazing sinlwan
+      na lalu. mutuw ini ptna lalu tmalung ki lalu knerin nku tayan hiya,
 布農_郡群:
-- ref: 布農_郡群_男聲
-  text: tastu taiuan tu incumin siduh, ngaus inghai iapun mas tastu dalahcin hai,
-    siamas kahuzas pasibutbut tu isnganan tu bunun.
-- ref: 布農_郡群_男聲
-  text: maz dau itu mailanhabas iskauni tu hansiap hai patalishut mas bunun tu isihumis,
-- ref: 布農_郡群_男聲
-  text: bunun mais aiza uvaaz taus uvazun hai, adasun mas tamacina kusia ulumahun.
+  - ref: 布農_郡群_男聲
+    text: tastu taiuan tu incumin siduh, ngaus inghai iapun mas tastu dalahcin hai,
+      siamas kahuzas pasibutbut tu isnganan tu bunun.
+  - ref: 布農_郡群_男聲
+    text: maz dau itu mailanhabas iskauni tu hansiap hai patalishut mas bunun tu isihumis,
+  - ref: 布農_郡群_男聲
+    text: bunun mais aiza uvaaz taus uvazun hai, adasun mas tamacina kusia ulumahun.
 布農_卡群:
-- ref: 布農_卡群_男聲
-  text: macia bunun na sintusauc madadengaz qabas sa, nanutu heza makin tau ka singav,
-    tupaun tu mabongbong, madadu, manungkic makintau matiskun istusauc.
-- ref: 布農_卡群_男聲
-  text: mamita bunun na pasibutbut ta, sohan vevi dalaq toʼuquqʼun tu, malmananu dau
-    makisvevi.
-- ref: 布農_卡群_男聲
-  text: uka duma sidoq maqtu paluszangun.
+  - ref: 布農_卡群_男聲
+    text: macia bunun na sintusauc madadengaz qabas sa, nanutu heza makin tau ka singav,
+      tupaun tu mabongbong, madadu, manungkic makintau matiskun istusauc.
+  - ref: 布農_卡群_男聲
+    text: mamita bunun na pasibutbut ta, sohan vevi dalaq toʼuquqʼun tu, malmananu dau
+      makisvevi.
+  - ref: 布農_卡群_男聲
+    text: uka duma sidoq maqtu paluszangun.
 布農_巒群:
-- ref: 布農_巒群_男聲
-  text: ma aq a seduu ki itu bununtuza melanqabasan tu hulus a, tupa amin tu makitvevi
-    sadu an a qaningu, i isaq a ekitvevi an?
-- ref: 布農_巒群_男聲
-  text: mamantuk! madia ka isia kaviaz a qaningu haan tinas i tu hulus ta.
-- ref: 布農_巒群_男聲
-  text: ma aq sia bununtuza ka melanqabasan tu hulus a, malaing as i mataqdung tu
-    patas sia binano az a hulus, masihailit haan kanum a pinenuk,
+  - ref: 布農_巒群_男聲
+    text: ma aq a seduu ki itu bununtuza melanqabasan tu hulus a, tupa amin tu makitvevi
+      sadu an a qaningu, i isaq a ekitvevi an?
+  - ref: 布農_巒群_男聲
+    text: mamantuk! madia ka isia kaviaz a qaningu haan tinas i tu hulus ta.
+  - ref: 布農_巒群_男聲
+    text: ma aq sia bununtuza ka melanqabasan tu hulus a, malaing as i mataqdung tu
+      patas sia binano az a hulus, masihailit haan kanum a pinenuk,
 布農_丹群:
-- ref: 布農_丹群_男聲
-  text: katu panpungulan, aupa maaq aipi a imita maimadadaingaz maisna qabasang ispapatingaan
-    mailalangna tu dailaz.
-- ref: 布農_丹群_男聲
-  text: maaq a matindun hulus a, nanu tu isia binanau az tu iskuzakuza; maaq a bananaz
-    a, mun luludun qaqanup.
-- ref: 布農_丹群_男聲
-  text: maisi uvaz az dau ka binanau az isnavaan i tina matindun hulus; maaq dau ka
-    maqansiap matindun tu binanau aza, kastanun i bunun mazima.
+  - ref: 布農_丹群_男聲
+    text: katu panpungulan, aupa maaq aipi a imita maimadadaingaz maisna qabasang ispapatingaan
+      mailalangna tu dailaz.
+  - ref: 布農_丹群_男聲
+    text: maaq a matindun hulus a, nanu tu isia binanau az tu iskuzakuza; maaq a bananaz
+      a, mun luludun qaqanup.
+  - ref: 布農_丹群_男聲
+    text: maisi uvaz az dau ka binanau az isnavaan i tina matindun hulus; maaq dau ka
+      maqansiap matindun tu binanau aza, kastanun i bunun mazima.
 布農_卓群:
-- ref: 布農_卓群_女聲
-  text: maca matinus huluc a, nanu tu iciat binanau az tu kukuzaun, maszang is bananaz
-    tu asat maqanciap muncaan ludun qanup.
-- ref: 布農_卓群_女聲
-  text: maca inita bunun misna madadaingaz sintusauc, nanutu haiza makin tau ca singav,
-    tupaun tu, mabungbung, maiduduu, mahusngas, tau sing av matiskun tusauc.
-- ref: 布農_卓群_女聲
-  text: maaca malastapang a, mastaan sauqbungun ita a bunun sadu.
+  - ref: 布農_卓群_女聲
+    text: maca matinus huluc a, nanu tu iciat binanau az tu kukuzaun, maszang is bananaz
+      tu asat maqanciap muncaan ludun qanup.
+  - ref: 布農_卓群_女聲
+    text: maca inita bunun misna madadaingaz sintusauc, nanutu haiza makin tau ca singav,
+      tupaun tu, mabungbung, maiduduu, mahusngas, tau sing av matiskun tusauc.
+  - ref: 布農_卓群_女聲
+    text: maaca malastapang a, mastaan sauqbungun ita a bunun sadu.
 卡那卡那富:
-- ref: 卡那卡那富_男聲
-  text: iikita kanakanavu noo matanganai mamanu ia, ʼapacuvunguʉn mataa mamarang tamna
-    nganai.
-- ref: 卡那卡那富_男聲
-  text: ʼurupacaʉn tamu nikianara tamna nganai, makaasua arakacaua cau, pupuiʼiʉn
-    cu nganai ʼuruupaca.
-- ref: 卡那卡那富_男聲
-  text: maatʉa, sua tavaraʼʉ maritapasʉ ia, aritapasʉʉn kee kavangvang nguain tamna
-    nakʉvʉ. cucuru maningcau mataa karanana cʉʼʉrʉʉn!
+  - ref: 卡那卡那富_男聲
+    text: iikita kanakanavu noo matanganai mamanu ia, ʼapacuvunguʉn mataa mamarang tamna
+      nganai.
+  - ref: 卡那卡那富_男聲
+    text: ʼurupacaʉn tamu nikianara tamna nganai, makaasua arakacaua cau, pupuiʼiʉn
+      cu nganai ʼuruupaca.
+  - ref: 卡那卡那富_男聲
+    text: maatʉa, sua tavaraʼʉ maritapasʉ ia, aritapasʉʉn kee kavangvang nguain tamna
+      nakʉvʉ. cucuru maningcau mataa karanana cʉʼʉrʉʉn!
 噶瑪蘭:
-- ref: 噶瑪蘭_女聲
-  text: ta zipun pama meRibun tu lawlaw ta, ngid simunang mesiqet tu lazat ta, semangi
-    ti tu kinsan meniz lazat na lawlaw ta,
-- ref: 噶瑪蘭_女聲
-  text: paqiRi ti tu Ribunan nisuddadan tu nangan, semanu tu yen cu min qa yau hulam
-    ay nangan na punangan zin na,
-- ref: 噶瑪蘭_女聲
-  text: simunang pa subidang tu lazat seRai meRibun tu lazat.
+  - ref: 噶瑪蘭_女聲
+    text: ta zipun pama meRibun tu lawlaw ta, ngid simunang mesiqet tu lazat ta, semangi
+      ti tu kinsan meniz lazat na lawlaw ta,
+  - ref: 噶瑪蘭_女聲
+    text: paqiRi ti tu Ribunan nisuddadan tu nangan, semanu tu yen cu min qa yau hulam
+      ay nangan na punangan zin na,
+  - ref: 噶瑪蘭_女聲
+    text: simunang pa subidang tu lazat seRai meRibun tu lazat.
 排灣_中:
-- ref: 排灣_中_男聲
-  text: makeljang a puzangalan a kiljivak nua tja matjaljaljak nu papungadan tja nuitjen!
-- ref: 排灣_中_男聲
-  text: nu pacun itjen ta inalangan inika amin a pinuliman tuki na qedjeljem tuki
-    na masevec a cinurisan a tja pacunan,
-- ref: 排灣_中_男聲
-  text: titjen a tjara macidicidilj ika amin a tja matjaljaljak a tja vuvu a napuzangal
-    tja nuitjen, aljak itjen vuvu itjen nua tja sikadaqaljan uta.
+  - ref: 排灣_中_男聲
+    text: makeljang a puzangalan a kiljivak nua tja matjaljaljak nu papungadan tja nuitjen!
+  - ref: 排灣_中_男聲
+    text: nu pacun itjen ta inalangan inika amin a pinuliman tuki na qedjeljem tuki
+      na masevec a cinurisan a tja pacunan,
+  - ref: 排灣_中_男聲
+    text: titjen a tjara macidicidilj ika amin a tja matjaljaljak a tja vuvu a napuzangal
+      tja nuitjen, aljak itjen vuvu itjen nua tja sikadaqaljan uta.
 排灣_東:
-- ref: 排灣_東_男聲
-  text: a sinipapungadan tu paiwan a caucau nuaya,
-- ref: 排灣_東_男聲
-  text: venecekadan ta kavulungan a gadu, izua pasa kacedas, izua za napasa kaledep.
-- ref: 排灣_東_男聲
-  text: mavan azua sinikingkingkiu tua maretimalji a caucau a mareka hakasi a napenetj,
-    seljudjen anga a na tjaivilivililj.
+  - ref: 排灣_東_男聲
+    text: a sinipapungadan tu paiwan a caucau nuaya,
+  - ref: 排灣_東_男聲
+    text: venecekadan ta kavulungan a gadu, izua pasa kacedas, izua za napasa kaledep.
+  - ref: 排灣_東_男聲
+    text: mavan azua sinikingkingkiu tua maretimalji a caucau a mareka hakasi a napenetj,
+      seljudjen anga a na tjaivilivililj.
 排灣_北:
-- ref: 排灣_北_女聲
-  text: sipiliq yitjen ta tjaljananguaqan a ngadan, manasika aicu a pairang madjuludjulu
-    nu papungadan.
-- ref: 排灣_北_女聲
-  text: mavan a mamazangiljan kata mare vetjevetjk nu sinikaljavar anga nu pakasedjaljep
-    anga pai sipapungadan anga.
-- ref: 排灣_北_女聲
-  text: izua masanmusalj a sipiliqan ta ngadan na paiwanzuku, a sangasangasan kemasi
-    tua sevalitan a ngadan,
+  - ref: 排灣_北_女聲
+    text: sipiliq yitjen ta tjaljananguaqan a ngadan, manasika aicu a pairang madjuludjulu
+      nu papungadan.
+  - ref: 排灣_北_女聲
+    text: mavan a mamazangiljan kata mare vetjevetjk nu sinikaljavar anga nu pakasedjaljep
+      anga pai sipapungadan anga.
+  - ref: 排灣_北_女聲
+    text: izua masanmusalj a sipiliqan ta ngadan na paiwanzuku, a sangasangasan kemasi
+      tua sevalitan a ngadan,
 排灣_南:
-- ref: 排灣_南_女聲
-  text: a se paiwan a caucau tjenglai aravac a semnai,
-- ref: 排灣_南_女聲
-  text: timitja a sepaiwan, kemasi vavulung, izuanga pinenetjan a cavilj tua sipalisian,
-- ref: 排灣_南_女聲
-  text: nu izua puvaljavaljaw nu izua kinateveteveljen a na temalidu i qinaljan, semnai
-    a maqacuvucuvung a kipasemalaw tua tjenglayan tua sudjusujuan niamadju.
+  - ref: 排灣_南_女聲
+    text: a se paiwan a caucau tjenglai aravac a semnai,
+  - ref: 排灣_南_女聲
+    text: timitja a sepaiwan, kemasi vavulung, izuanga pinenetjan a cavilj tua sipalisian,
+  - ref: 排灣_南_女聲
+    text: nu izua puvaljavaljaw nu izua kinateveteveljen a na temalidu i qinaljan, semnai
+      a maqacuvucuvung a kipasemalaw tua tjenglayan tua sudjusujuan niamadju.
 卑南_建和:
-- ref: 卑南_建和_女聲
-  text: ulra a vativatiyan adiyu diya, kadu tu sinareman a keriw di dawa mapiyapiya
-    i ʼuma na ayawan kema.
-- ref: 卑南_建和_女聲
-  text: na karumaʼan kinakuwa da nu minacay ta rinumaʼenan mu, nantu awayan i kadu
-    mau tu inuramiyan da samawan kema.
-- ref: 卑南_建和_女聲
-  text: di mau na palalisiyan cempa kananta temuwamuwan na pinuyumayan.
+  - ref: 卑南_建和_女聲
+    text: ulra a vativatiyan adiyu diya, kadu tu sinareman a keriw di dawa mapiyapiya
+      i ʼuma na ayawan kema.
+  - ref: 卑南_建和_女聲
+    text: na karumaʼan kinakuwa da nu minacay ta rinumaʼenan mu, nantu awayan i kadu
+      mau tu inuramiyan da samawan kema.
+  - ref: 卑南_建和_女聲
+    text: di mau na palalisiyan cempa kananta temuwamuwan na pinuyumayan.
 卑南_南王:
-- ref: 卑南_南王_女聲
-  text: asuwa driya, tu kinapadrangalan dra mainayan i mulibelibek aw i tamalrakaw
-    i a sidrung.
-- ref: 卑南_南王_女聲
-  text: kemay kinasuwaanan palru garem na pinuyumayan i, salaw asabak dra nirangeran.
-    aw matrina tu igelayan dra trau.
-- ref: 卑南_南王_女聲
-  text: ulraya tu maidraidrangan kadri mulibelibek. i senayan tu ngalad.
+  - ref: 卑南_南王_女聲
+    text: asuwa driya, tu kinapadrangalan dra mainayan i mulibelibek aw i tamalrakaw
+      i a sidrung.
+  - ref: 卑南_南王_女聲
+    text: kemay kinasuwaanan palru garem na pinuyumayan i, salaw asabak dra nirangeran.
+      aw matrina tu igelayan dra trau.
+  - ref: 卑南_南王_女聲
+    text: ulraya tu maidraidrangan kadri mulibelibek. i senayan tu ngalad.
 卑南_西群:
-- ref: 卑南_西群_女聲
-  text: na vuʼenin pinialrak za pidawariyan, zuwa na wadiyan semasaharana, maw na
-    maʼizaʼizangan i rumaʼ na pungadan, aziyu ziyan nu pungadan mu pungadanay kana
-    tu ngadan na temuwamuwan za trungutrungulran,
-- ref: 卑南_西群_女聲
-  text: na trau i pinuyumayan iniyan za nirukezang za kemuret puwangadan, menaʼu ta
-    kemay kana maʼizangan ta trau na ʼazi muramawan za wari zi pungadan, ini na nirekudayan
-    mualring kana kazu ziya i taiwan na dipung za tu iyadikes na muasalr zuwa i taiwan.
-- ref: 卑南_西群_女聲
-  text: aramawa na tu inupanayan za ta temuwamuwan maʼizaʼizangan i savak kuwaleng
-    mutuʼaʼuvir, minatray za kuwatrengan, lriketri a tu kavaaw,
+  - ref: 卑南_西群_女聲
+    text: na vuʼenin pinialrak za pidawariyan, zuwa na wadiyan semasaharana, maw na
+      maʼizaʼizangan i rumaʼ na pungadan, aziyu ziyan nu pungadan mu pungadanay kana
+      tu ngadan na temuwamuwan za trungutrungulran,
+  - ref: 卑南_西群_女聲
+    text: na trau i pinuyumayan iniyan za nirukezang za kemuret puwangadan, menaʼu ta
+      kemay kana maʼizangan ta trau na ʼazi muramawan za wari zi pungadan, ini na nirekudayan
+      mualring kana kazu ziya i taiwan na dipung za tu iyadikes na muasalr zuwa i taiwan.
+  - ref: 卑南_西群_女聲
+    text: aramawa na tu inupanayan za ta temuwamuwan maʼizaʼizangan i savak kuwaleng
+      mutuʼaʼuvir, minatray za kuwatrengan, lriketri a tu kavaaw,
 卑南_知本:
-- ref: 卑南_知本_女聲
-  text: na vuʼenin pinialrak lra pidawariyan, zuwa na wadadiyan semasaharan, maw na
-    maʼizangan i rumaʼ na pungadan.
-- ref: 卑南_知本_女聲
-  text: maw mu nazu natu temuwamuwan nu ʼazi ʼinava tu ikavavaaw i punapunan, zi sazu
-    tu kualengan, zi minatray kana kakuatrengan,
-- ref: 卑南_知本_女聲
-  text: aziyu ziyan nu pungadan mu, pungadanay kana tu ngadan na temuwamuwan za trungutrungulran,
-    na trau i pinuyumayan iniyan za rinukezang kemuret za puwangadan.
+  - ref: 卑南_知本_女聲
+    text: na vuʼenin pinialrak lra pidawariyan, zuwa na wadadiyan semasaharan, maw na
+      maʼizangan i rumaʼ na pungadan.
+  - ref: 卑南_知本_女聲
+    text: maw mu nazu natu temuwamuwan nu ʼazi ʼinava tu ikavavaaw i punapunan, zi sazu
+      tu kualengan, zi minatray kana kakuatrengan,
+  - ref: 卑南_知本_女聲
+    text: aziyu ziyan nu pungadan mu, pungadanay kana tu ngadan na temuwamuwan za trungutrungulran,
+      na trau i pinuyumayan iniyan za rinukezang kemuret za puwangadan.
 魯凱_大武:
-- ref: 魯凱_大武_女聲
-  text: lu patupalra ku kakudha ki ngudradrekai, kai daini lu sunagana, tahatwakucingalre
-    kidradremedreme si pilri,
-- ref: 魯凱_大武_女聲
-  text: ku nadruma, ku cucungulaneta lu aga pwapalungu ku eaea ka behathe, kwani eaea
-    ka behathe lu kadunga wadulru pakabucuku ki wacekecekele.
-- ref: 魯凱_大武_女聲
-  text: kai senainai ki ngudradrekai, lu singikaimadu ku tamakaelaelaa si alra apauvagavagai
-    taitulrua,
+  - ref: 魯凱_大武_女聲
+    text: lu patupalra ku kakudha ki ngudradrekai, kai daini lu sunagana, tahatwakucingalre
+      kidradremedreme si pilri,
+  - ref: 魯凱_大武_女聲
+    text: ku nadruma, ku cucungulaneta lu aga pwapalungu ku eaea ka behathe, kwani eaea
+      ka behathe lu kadunga wadulru pakabucuku ki wacekecekele.
+  - ref: 魯凱_大武_女聲
+    text: kai senainai ki ngudradrekai, lu singikaimadu ku tamakaelaelaa si alra apauvagavagai
+      taitulrua,
 魯凱_多納:
-- ref: 魯凱_多納_男聲
-  text: thakongadavane sikibooanane ko kanekaneiname ka maicenge na becenge si pagay,
-    lakamani na boathi tay aegenge na sadokoʼo,
-- ref: 魯凱_多納_男聲
-  text: makasi tacekecekelane ko poatyalani matisoisoiʼane sife ka laʼikay pasopaa
-    boboo na saakay,
-- ref: 魯凱_多納_男聲
-  text: makasi driyane ka thakotitiʼici na tadokoʼane na taʼakamolane, koacaysyanela
-    ko sakakaini, idoo ʼangyadraw kitaleke.
+  - ref: 魯凱_多納_男聲
+    text: thakongadavane sikibooanane ko kanekaneiname ka maicenge na becenge si pagay,
+      lakamani na boathi tay aegenge na sadokoʼo,
+  - ref: 魯凱_多納_男聲
+    text: makasi tacekecekelane ko poatyalani matisoisoiʼane sife ka laʼikay pasopaa
+      boboo na saakay,
+  - ref: 魯凱_多納_男聲
+    text: makasi driyane ka thakotitiʼici na tadokoʼane na taʼakamolane, koacaysyanela
+      ko sakakaini, idoo ʼangyadraw kitaleke.
 魯凱_東:
-- ref: 魯凱_東_女聲
-  text: taka lemelemea ki taromak konai ka sotaromak, konadroma lro ikai ka wa ʼacay
-    sana kilalra, kai swa ʼalakwa amala ida tawdring,
-- ref: 魯凱_東_女聲
-  text: kadralaza ki sotaromak. kai natarwarodranga, kai dralay lro ʼasalisisi sa
-    baza sa beceng, lro ʼalraʼalrang avaevaere mararake drwaladralay,
-- ref: 魯凱_東_女聲
-  text: dwae darʼe tomaomase. konai kasotaromak, kai natarwarodranga. ki kai twa omaomas
-    si kai wa daedareʼe,
+  - ref: 魯凱_東_女聲
+    text: taka lemelemea ki taromak konai ka sotaromak, konadroma lro ikai ka wa ʼacay
+      sana kilalra, kai swa ʼalakwa amala ida tawdring,
+  - ref: 魯凱_東_女聲
+    text: kadralaza ki sotaromak. kai natarwarodranga, kai dralay lro ʼasalisisi sa
+      baza sa beceng, lro ʼalraʼalrang avaevaere mararake drwaladralay,
+  - ref: 魯凱_東_女聲
+    text: dwae darʼe tomaomase. konai kasotaromak, kai natarwarodranga. ki kai twa omaomas
+      si kai wa daedareʼe,
 魯凱_茂林:
-- ref: 魯凱_茂林_男聲
-  text: teldreka tédra na sulate ku asulatani. si iku yiene tésingirwani pelenge.
-    ku tumanedra.
-- ref: 魯凱_茂林_男聲
-  text: si sémamnadra thérobu sémamnadra pvaruene sakuratikecengé nia.
-- ref: 魯凱_茂林_男聲
-  text: sékarethedra puvaruene, ka pikédia ku spakilivudra, talalé si kakolu ka masikiulane
-    tésémamnadra, odranga na thabthabre si bobaru ka ina thɨrobu ni ka nirigukwa técavnali
-    ma na ico,
+  - ref: 魯凱_茂林_男聲
+    text: teldreka tédra na sulate ku asulatani. si iku yiene tésingirwani pelenge.
+      ku tumanedra.
+  - ref: 魯凱_茂林_男聲
+    text: si sémamnadra thérobu sémamnadra pvaruene sakuratikecengé nia.
+  - ref: 魯凱_茂林_男聲
+    text: sékarethedra puvaruene, ka pikédia ku spakilivudra, talalé si kakolu ka masikiulane
+      tésémamnadra, odranga na thabthabre si bobaru ka ina thɨrobu ni ka nirigukwa técavnali
+      ma na ico,
 魯凱_萬山:
-- ref: 魯凱_萬山_女聲
-  text: onaʼi aiki na nai kaʼoponohae dhona taikie nai dhaʼane ʼaliʼaamadhalae nga
-    dhona dhaʼane. mani paocongocongolo nga takataka lalake.
-- ref: 魯凱_萬山_女聲
-  text: dhona aidhi odhaace papicongo todhaʼane. odholro ka dha ka iki kadhaʼanae.
-- ref: 魯凱_萬山_女聲
-  text: lo paohiki ta ʼinaʼi alrace dhaʼane, lo ʼialrace dha takataka ʼaolai lapadhoma
-    mia dha, dhonaʼi aidhi ʼa omalra lacohovo mia poalrace.
+  - ref: 魯凱_萬山_女聲
+    text: onaʼi aiki na nai kaʼoponohae dhona taikie nai dhaʼane ʼaliʼaamadhalae nga
+      dhona dhaʼane. mani paocongocongolo nga takataka lalake.
+  - ref: 魯凱_萬山_女聲
+    text: dhona aidhi odhaace papicongo todhaʼane. odholro ka dha ka iki kadhaʼanae.
+  - ref: 魯凱_萬山_女聲
+    text: lo paohiki ta ʼinaʼi alrace dhaʼane, lo ʼialrace dha takataka ʼaolai lapadhoma
+      mia dha, dhonaʼi aidhi ʼa omalra lacohovo mia poalrace.
 魯凱_霧台:
-- ref: 魯凱_霧台_女聲
-  text: ikay ki ngudradrekay, tinukucingalrane turamuru kay becenge, laka saarakaykayyane
-    madu ki rarukudrane apatumatumane.
-- ref: 魯凱_霧台_女聲
-  text: yakay ku sapatuthingalane ki niake, lrekeme, laubuubulu, tacekecekelane,
-- ref: 魯凱_霧台_女聲
-  text: kay lridingi si kalathe, luka tawvaylekete kiaparaisi. kaidu kiaparairaisi
-    ka sawvalay.
+  - ref: 魯凱_霧台_女聲
+    text: ikay ki ngudradrekay, tinukucingalrane turamuru kay becenge, laka saarakaykayyane
+      madu ki rarukudrane apatumatumane.
+  - ref: 魯凱_霧台_女聲
+    text: yakay ku sapatuthingalane ki niake, lrekeme, laubuubulu, tacekecekelane,
+  - ref: 魯凱_霧台_女聲
+    text: kay lridingi si kalathe, luka tawvaylekete kiaparaisi. kaidu kiaparairaisi
+      ka sawvalay.
 拉阿魯哇:
-- ref: 拉阿魯哇_女聲
-  text: hlaʼalua kiariari macimarungahlaia, ausicucutahlana usumanʉ,
-- ref: 拉阿魯哇_女聲
-  text: angahlahlanisa hlamamaisa vahlita taruihla puaili maci masinu mualualuia arupakaricua
-    muriparanana iniciki maru amacucu ngahlamamainiisana, ruvanaisa kanaʼa macihliapausasaliria,
-- ref: 拉阿魯哇_女聲
-  text: ahlamaisakiariarin muripara nana ngahlaia, kanaʼana paruangahlaisaisana hlamamaisana.
+  - ref: 拉阿魯哇_女聲
+    text: hlaʼalua kiariari macimarungahlaia, ausicucutahlana usumanʉ,
+  - ref: 拉阿魯哇_女聲
+    text: angahlahlanisa hlamamaisa vahlita taruihla puaili maci masinu mualualuia arupakaricua
+      muriparanana iniciki maru amacucu ngahlamamainiisana, ruvanaisa kanaʼa macihliapausasaliria,
+  - ref: 拉阿魯哇_女聲
+    text: ahlamaisakiariarin muripara nana ngahlaia, kanaʼana paruangahlaisaisana hlamamaisana.
 賽夏:
-- ref: 賽夏_女聲
-  text: kinra:aman, baba:aw ka ripon ʼima miyalawaʼ ʼokaʼ ka tapa:ngasan.
-- ref: 賽夏_女聲
-  text: pinsasingozaw ra:amen ʼisa:aʼ ila hini kabohoel tinalʼoemaeh pinaskayzaeh.
-- ref: 賽夏_女聲
-  text: saySiyat kama ʼabeʼ bowaw, somapsapih ʼima ʼokik Seklaʼ ka ʼoemaeh,
+  - ref: 賽夏_女聲
+    text: kinra:aman, baba:aw ka ripon ʼima miyalawaʼ ʼokaʼ ka tapa:ngasan.
+  - ref: 賽夏_女聲
+    text: pinsasingozaw ra:amen ʼisa:aʼ ila hini kabohoel tinalʼoemaeh pinaskayzaeh.
+  - ref: 賽夏_女聲
+    text: saySiyat kama ʼabeʼ bowaw, somapsapih ʼima ʼokik Seklaʼ ka ʼoemaeh,
 撒奇萊雅:
-- ref: 撒奇萊雅_女聲
-  text: palasepaten nu kakawsan ku ngangan a mipangangan; nu uzip a ngangan,
-- ref: 撒奇萊雅_女聲
-  text: butuc nu ama a ngangan, pazik sa nu lalumaʼan a ngangan,
-- ref: 撒奇萊雅_女聲
-  text: u ngangan nu uzip yu lecuh sa henay sa u ama atu ina caay sa lalumaʼan ku
-    panganganay.
+  - ref: 撒奇萊雅_女聲
+    text: palasepaten nu kakawsan ku ngangan a mipangangan; nu uzip a ngangan,
+  - ref: 撒奇萊雅_女聲
+    text: butuc nu ama a ngangan, pazik sa nu lalumaʼan a ngangan,
+  - ref: 撒奇萊雅_女聲
+    text: u ngangan nu uzip yu lecuh sa henay sa u ama atu ina caay sa lalumaʼan ku
+      panganganay.
 賽德克_德鹿谷:
-- ref: 賽德克_德鹿谷_女聲
-  text: ida dha qtaan bi brah nganguc sapah ni slian dsejiqun alang.
-- ref: 賽德克_德鹿谷_女聲
-  text: grig seejiq ga mseupu dha ka uyas, niqan ka meuyas ni madas grig, niqan ka
-    mgrig ni madas uyas, niqan ka mlubu ni sdayaw na grig dnii, mseupu grigan.
-- ref: 賽德克_德鹿谷_女聲
-  text: rmgrig siida asi ka mseupu uyas, kingal seejiq ka madas rmgrig bukuy do hbaraw
-    bi ka mllutuc rmgrig.
+  - ref: 賽德克_德鹿谷_女聲
+    text: ida dha qtaan bi brah nganguc sapah ni slian dsejiqun alang.
+  - ref: 賽德克_德鹿谷_女聲
+    text: grig seejiq ga mseupu dha ka uyas, niqan ka meuyas ni madas grig, niqan ka
+      mgrig ni madas uyas, niqan ka mlubu ni sdayaw na grig dnii, mseupu grigan.
+  - ref: 賽德克_德鹿谷_女聲
+    text: rmgrig siida asi ka mseupu uyas, kingal seejiq ka madas rmgrig bukuy do hbaraw
+      bi ka mllutuc rmgrig.
 賽德克_都達:
-- ref: 賽德克_都達_女聲
-  text: qtan ta mkla mhulis cida ka laqi, kiya ka sbuway hangan ka hiya da, niqan
-    waya na ka muda mhangan.
-- ref: 賽德克_都達_女聲
-  text: miing mi mangan tmhangan ni u asi ka niqan bay mbiyax mi mkla maduk mi malu
-    bay ndaan na ka snaw,
-- ref: 賽德克_都達_女聲
-  text: uxay uri u mneyq siyaw qmita bubu mi ptusa tminun dadan, wada bnsyaqan mbiyax
-    sluhay daw, qulung bay pqrasan tama bubu mi dsnaw da.
+  - ref: 賽德克_都達_女聲
+    text: qtan ta mkla mhulis cida ka laqi, kiya ka sbuway hangan ka hiya da, niqan
+      waya na ka muda mhangan.
+  - ref: 賽德克_都達_女聲
+    text: miing mi mangan tmhangan ni u asi ka niqan bay mbiyax mi mkla maduk mi malu
+      bay ndaan na ka snaw,
+  - ref: 賽德克_都達_女聲
+    text: uxay uri u mneyq siyaw qmita bubu mi ptusa tminun dadan, wada bnsyaqan mbiyax
+      sluhay daw, qulung bay pqrasan tama bubu mi dsnaw da.
 賽德克_德固達雅:
-- ref: 賽德克_德固達雅_男聲
-  text: ngayan laqi nami yami seediq nii we mangal ngayan rrudan tnsapah daha nanaq,
-    ini mmhemuc tmngayan ma, ini angal ngayan rrudan tnsapah seediq duri.
-- ref: 賽德克_德固達雅_女聲
-  text: netun naq tena niqan ngayan ka laqi ttqliyun kii de, ini huwa ini pryuxi.
-- ref: 賽德克_德固達雅_男聲
-  text: pusu bale seediq ka kari uyas nii, ado ta bnsiyaq meniq lmiqu, nii ka pnyayan
-    kndkilan ta kari uyas seediq.
+  - ref: 賽德克_德固達雅_男聲
+    text: ngayan laqi nami yami seediq nii we mangal ngayan rrudan tnsapah daha nanaq,
+      ini mmhemuc tmngayan ma, ini angal ngayan rrudan tnsapah seediq duri.
+  - ref: 賽德克_德固達雅_女聲
+    text: netun naq tena niqan ngayan ka laqi ttqliyun kii de, ini huwa ini pryuxi.
+  - ref: 賽德克_德固達雅_男聲
+    text: pusu bale seediq ka kari uyas nii, ado ta bnsiyaq meniq lmiqu, nii ka pnyayan
+      kndkilan ta kari uyas seediq.
 邵:
-- ref: 邵_男聲
-  text: thau ianan pitu a antu tataal a shiduq,
-- ref: 邵_男聲
-  text: kahiwan mriqariqaz yaku izahai tanatuqash kmalawa sa taturtur.
-- ref: 邵_男聲
-  text: numawan yaku thuini mafazaq kmalawa sa taturtur.
+  - ref: 邵_男聲
+    text: thau ianan pitu a antu tataal a shiduq,
+  - ref: 邵_男聲
+    text: kahiwan mriqariqaz yaku izahai tanatuqash kmalawa sa taturtur.
+  - ref: 邵_男聲
+    text: numawan yaku thuini mafazaq kmalawa sa taturtur.
 太魯閣:
-- ref: 太魯閣_女聲
-  text: uyas smapuh tunux pusu na o tunux pais gnaliq ka spuhun, saw nii ka uda, musa
-    miing tunux pais ka dsnaw, sdgiyal dha ka pais do slapun ka tunux ni dsun sapah,
-- ref: 太魯閣_男聲1
-  text: tunux gnaliq o pqbaan haya hlama tnkanan duhung truku ka quwaq na, kika qrasun
-    balay utux rudan msa ka kari hnici rudan.
-- ref: 太魯閣_男聲2
-  text: dhuq sapah ka snaw do ngalun msapuh utux ka tunux seejiq gnaliq psaan babaw
-    daka ni spuhun.
+  - ref: 太魯閣_女聲
+    text: uyas smapuh tunux pusu na o tunux pais gnaliq ka spuhun, saw nii ka uda, musa
+      miing tunux pais ka dsnaw, sdgiyal dha ka pais do slapun ka tunux ni dsun sapah,
+  - ref: 太魯閣_男聲1
+    text: tunux gnaliq o pqbaan haya hlama tnkanan duhung truku ka quwaq na, kika qrasun
+      balay utux rudan msa ka kari hnici rudan.
+  - ref: 太魯閣_男聲2
+    text: dhuq sapah ka snaw do ngalun msapuh utux ka tunux seejiq gnaliq psaan babaw
+      daka ni spuhun.
 鄒:
-- ref: 鄒_女聲
-  text: ne noanaʼo, pano moso nanala mevcongʉ nomo tmucou ci fkoi ci mamespingi.
-- ref: 鄒_女聲
-  text: ho moso tusiʼngi no aemana no hnou, ohsinana tuʼupa homo tusiʼngi namo vhongʉ
-    ci fkoi,
-- ref: 鄒_女聲
-  text: mo amiocni ʼo akʼimu. isi nana ʼohatmala paavi ho aiti no mamespingi,
+  - ref: 鄒_女聲
+    text: ne noanaʼo, pano moso nanala mevcongʉ nomo tmucou ci fkoi ci mamespingi.
+  - ref: 鄒_女聲
+    text: ho moso tusiʼngi no aemana no hnou, ohsinana tuʼupa homo tusiʼngi namo vhongʉ
+      ci fkoi,
+  - ref: 鄒_女聲
+    text: mo amiocni ʼo akʼimu. isi nana ʼohatmala paavi ho aiti no mamespingi,
 雅美:
-- ref: 雅美_女聲
-  text: nokakoa do iyangey no tao do pongso am, ganam am vazay no mavakes, so ikabo
-    no meakey a malovot a maganam.
-- ref: 雅美_女聲
-  text: nokakoa pa am, makarilow o tao do pongso a mivevyey. no tomakatakaw am to
-    miyonong o arow a ji acimoy,
-- ref: 雅美_女聲
-  text: abo do pongso o mapivazay so nimawakwak a tao a pansahadan, so tongahapi sia
-    no asa ka vahay a mangey pivazain.
+  - ref: 雅美_女聲
+    text: nokakoa do iyangey no tao do pongso am, ganam am vazay no mavakes, so ikabo
+      no meakey a malovot a maganam.
+  - ref: 雅美_女聲
+    text: nokakoa pa am, makarilow o tao do pongso a mivevyey. no tomakatakaw am to
+      miyonong o arow a ji acimoy,
+  - ref: 雅美_女聲
+    text: abo do pongso o mapivazay so nimawakwak a tao a pansahadan, so tongahapi sia
+      no asa ka vahay a mangey pivazain.
