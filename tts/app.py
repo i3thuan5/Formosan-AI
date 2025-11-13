@@ -124,7 +124,7 @@ examples_config = OmegaConf.to_object(OmegaConf.load("configs/examples.yaml"))
 
 DEFAULT_MODEL_ID = list(models_config.keys())[0]
 
-ETHNICITIES = list([k.split("_")[0] for k in g2p_object.keys()])
+ETHNICITIES = list(set([k.split("_")[0] for k in g2p_object.keys()]))
 
 
 @gpu_decorator
