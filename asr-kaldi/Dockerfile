@@ -1,7 +1,7 @@
 FROM python:3.10-slim
 
 RUN apt-get update && \
-    apt-get install --no-install-recommends -y git git-lfs ffmpeg libsm6 libxext6 cmake rsync libgl1-mesa-glx && \
+    apt-get install --no-install-recommends -y git git-lfs ffmpeg libsm6 libxext6 cmake rsync && \
     git lfs install && \
     apt-get install --no-install-recommends -y curl && \
     curl --proto "=https" --tlsv1.2 -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
