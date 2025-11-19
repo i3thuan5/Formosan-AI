@@ -4,12 +4,13 @@ hf_xet>=1.0.0,<2.0.0
 hf-transfer>=0.1.4
 click<8.1
 pydantic
-torch
 
-gradio[oauth]==5.37.0
+gradio[oauth]==5.49.1
 uvicorn>=0.14.0
 spaces==0.36.0
 
 omegaconf
 opencc
+torch==2.7.0
+torchcodec==0.5.0
 f5-tts @ git+https://github.com/SWivid/F5-TTS.git@695c7357378c03f25d607cca45f5eb967592ce1a

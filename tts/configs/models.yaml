@@ -1,3 +1,2 @@
 ---
-all-formosan-v2-step-843031: ${load_f5tts:hf://ithuan/f5-tts-formosan-all-finetune-v2/model_843031.safetensors,hf://ithuan/f5-tts-formosan-all-finetune-v2/vocab.txt,false,false}
-# all-formosan-step-1081600: ${load_f5tts:hf://ithuan/f5-tts-formosan-all-finetune/model_1081600.safetensors,hf://ithuan/f5-tts-formosan-all-finetune/vocab.txt,false,false}
+all-formosan-v3-step-877212: ${load_f5tts:hf://ithuan/f5-tts-formosan-all-finetune-v3/model_877212.safetensors,hf://ithuan/f5-tts-formosan-all-finetune-v3/vocab.txt,false,false}

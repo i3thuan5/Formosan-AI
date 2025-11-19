@@ -55,9 +55,9 @@ def replace_to_list(text: str, g2p: dict) -> Tuple[list, set]:
 
         for key in g2p:
             # 檢查當前位置是否匹配 key
-            if i + len(key) <= len(text) and text[i:i + len(key)] == key:
+            if i + len(key) <= len(text) and text[i: i + len(key)] == key:
                 # 檢查這個範圍是否已有部分被處理過
-                if not any(marked[i:i + len(key)]):
+                if not any(marked[i: i + len(key)]):
                     found_key = key
                     found_pos = i
                     break
@@ -125,6 +125,9 @@ def text_to_ipa(
     text = lower_formosan_text(text, language)
     # text = text.replace("'", "’")
     text = re.sub(r"\s+", " ", text)  # remove extra spaces
+    text = re.sub(r"[\"\-\“\”]", "", text)  # remove punctuation
+    text = re.sub(r"[\ʼ\’\']", "ʼ", text)  # normalize ʼ
+    text = text.replace("^", "⌃")  # normalize ⌃
 
     ipa, unknown_chars = convert_to_ipa(text, g2p_object[language])
 

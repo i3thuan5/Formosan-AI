@@ -151,12 +151,12 @@ google-resumable-media==2.7.2
     # via google-cloud-storage
 googleapis-common-protos==1.70.0
     # via google-api-core
-gradio[oauth]==5.37.0
+gradio[oauth]==5.49.1
     # via
     #   -r requirements.in
     #   f5-tts
     #   spaces
-gradio-client==1.10.4
+gradio-client==1.13.3
     # via gradio
 groovy==0.1.2
     # via gradio
@@ -166,8 +166,10 @@ h11==0.16.0
     #   uvicorn
 hf-transfer==0.1.9
     # via -r requirements.in
-hf-xet==1.0.3
-    # via -r requirements.in
+hf-xet==1.2.0
+    # via
+    #   -r requirements.in
+    #   huggingface-hub
 httpcore==1.0.9
     # via httpx
 httpx==0.28.1
@@ -176,7 +178,7 @@ httpx==0.28.1
     #   gradio-client
     #   safehttpx
     #   spaces
-huggingface-hub==0.30.2
+huggingface-hub==0.36.0
     # via
     #   -r requirements.in
     #   accelerate
@@ -499,6 +501,8 @@ torchaudio==2.7.0
     #   encodec
     #   f5-tts
     #   vocos
+torchcodec==0.5
+    # via -r requirements.in
 torchdiffeq==0.2.5
     # via f5-tts
 tqdm==4.67.1
