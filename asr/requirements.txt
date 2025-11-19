@@ -31,7 +31,7 @@ async-timeout==5.0.1
     # via aiohttp
 attrs==25.3.0
     # via aiohttp
-authlib==1.6.1
+authlib==1.6.5
     # via gradio
 av==15.0.0
     # via faster-whisper
