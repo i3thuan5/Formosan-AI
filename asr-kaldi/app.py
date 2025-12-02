@@ -77,6 +77,8 @@ demo = gr.Blocks(
 )
 
 with demo:
+    gr.HTML("""<a href="https://ai-no-ilrdf.ithuankhoki.tw/">返回首頁</a> """
+        )
     with open("DEMO.md") as tong:
         gr.Markdown(tong.read())
 
