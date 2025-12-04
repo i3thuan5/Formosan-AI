@@ -75,43 +75,7 @@ demo = gr.Blocks(
             "system-ui",
             "sans-serif",
         )
-    ),
-    js="""
-    function createFooter() {
-        const parser = new DOMParser();
-        let ftstr = `
-            <div class='sa-footer'>
-                <a class='sa-link'>footer link</a>
-                <div class='sa-container'>
-                    <div class='text-center py-3 border-bottom border-1'>
-                        <span>Copyright &copy; 2025 財團法人原住民族語言研究發展基金會 版權所有</span>
-                    </div>
-                    <div class='row py-3'>
-                        <div class='col-12 col-lg-6'>
-                            <img class='img-fluid' src='./static/image/ilrdf-logo.png'
-                                alt='財團法人原住民族語言研究發展基金會logo'>
-                        </div>
-                        <div class='col-12 col-lg-3'>
-                            <p>電話：(02)2341-8508</p>
-                            <p>傳真：(02)2341-8256</p>
-                            <p>信箱：ilrdf@ilrdf.org.tw</p>
-                            <p>地址：100029台北市中正區羅斯福路一段63號</p>
-                        </div>
-                        <div class='col-12 col-lg-3'>
-                            <ul class='list-unstyled'>
-                                <li class='mb-3'><a href='#'>著作權聲明</a></li>
-                                <li class='mb-3'><a href='#'>網站使用條款</a></li>
-                                <li class='mb-3'><img src='' alt='待申請尚未通過無障礙標章AA'></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>`;
-        const doc = parser.parseFromString(ftstr, "text/html");
-        const footerNode = doc.body.firstChild;
-        document.body.appendChild(footerNode);
-    }
-    """
+    )
 )
 
 with demo:
@@ -152,13 +116,28 @@ with demo:
         outputs=[output_textbox],
     )
 
-    gr.HTML("""
-        <div class="sa-container">
-        <a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">
-            測試RWD連結
-        </a>
-        </div>
-        """)
+    with gr.Row(equal_height=True):
+        gr.Markdown("財團法人原住民族語言研究發展基金會 版權所有")
+
+    with gr.Row(equal_height=True):
+        with gr.Column(scale=1, min_width=300):
+            gr.HTML("""
+                <img class='img-fluid' src='./static/image/ilrdf-logo.png'
+                    alt='財團法人原住民族語言研究發展基金會logo'>
+                """)
+        with gr.Column(scale=1, min_width=300):
+            gr.HTML("""
+                <p>電話：(02)2341-8508</p>
+                <p>傳真：(02)2341-8256</p>
+                <p>信箱：ilrdf@ilrdf.org.tw</p>
+                <p>地址：100029台北市中正區羅斯福路一段63號</p>
+                """)
+        with gr.Column(scale=1, min_width=300):
+            gr.HTML("""
+                    <p><a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">著作權聲明</a></p>
+                    <p><a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">網站使用條款</a></p>
+                    <p><img src='./static/image/ilrdf-logo.png'  alt="待申請尚未通過無障礙標章AA"></p>
+                """)
 
 
 demo.launch()
