@@ -15,7 +15,8 @@ OmegaConf.register_new_resolver("load_vosk", load_vosk)
 
 models_config = OmegaConf.load("configs/models.yaml")
 
-DEFAULT_MODEL = OmegaConf.to_object(models_config[list(models_config.keys())[0]])
+DEFAULT_MODEL = OmegaConf.to_object(
+    models_config[list(models_config.keys())[0]])
 
 
 def automatic_speech_recognition(dialect_id: str, audio_data: str):
@@ -77,15 +78,19 @@ demo = gr.Blocks(
 )
 
 with demo:
-    gr.HTML("""<a href="https://ai-no-ilrdf.ithuankhoki.tw/">返回首頁</a> """
-        )
+    gr.HTML("""
+        <a href="https://ai-no-ilrdf.ithuankhoki.tw/" style="color: #AC370C;">
+            < 返回成果網站首頁
+        </a>
+        """)
     with open("DEMO.md") as tong:
         gr.Markdown(tong.read())
 
     with gr.Row():
         with gr.Column():
             dialect_drop_down = gr.Radio(
-                choices=[(k, v) for k, v in DEFAULT_MODEL["dialect_mapping"].items()],
+                choices=[(k, v)
+                         for k, v in DEFAULT_MODEL["dialect_mapping"].items()],
                 value=list(DEFAULT_MODEL["dialect_mapping"].values())[0],
                 label="步驟一:選擇族別",
             )
