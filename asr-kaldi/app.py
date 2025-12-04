@@ -65,7 +65,24 @@ def get_title():
 
 demo = gr.Blocks(
     title=get_title(),
-    css="@import url(https://tauhu.tw/tauhu-oo.css);",
+    css="""
+    @import url(https://tauhu.tw/tauhu-oo.css);
+    :root {
+      --sa-primary-darker: #AC370C;
+      --bs-success: #2F5ACB;
+    }
+    a.sapolita-link {
+        color: var(--sa-primary-darker);
+    }
+    a.sapolita-link:hover,
+    a.sapolita-link:active {
+        color: var(--bs-success);
+    }
+    a.sapolita-link:focus-visible {
+      outline: 3px solid var(--bs-success);
+      border-radius: 2px;
+    }
+    """,
     theme=gr.themes.Default(
         font=(
             "tauhu-oo",
@@ -79,7 +96,7 @@ demo = gr.Blocks(
 
 with demo:
     gr.HTML("""
-        <a href="https://ai-no-ilrdf.ithuankhoki.tw/" style="color: #AC370C;">
+        <a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sapolita-link">
             < 返回成果網站首頁
         </a>
         """)
