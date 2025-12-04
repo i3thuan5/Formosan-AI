@@ -1,10 +1,11 @@
 import os
 import tempfile
+from pathlib import Path
+
 import gradio as gr
 import uvicorn
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from pathlib import Path
 from whisper import load_audio, load_model
 
 SAMPLING_RATE = 16000
@@ -18,24 +19,7 @@ model = load_model(
 
 with gr.Blocks(
     title="族語語音辨識系統 - 原住民族語言研究發展基金會",
-    css="""
-    @import url(https://tauhu.tw/tauhu-oo.css);
-    :root {
-      --sa-primary-darker: #AC370C;
-      --bs-success: #2F5ACB;
-    }
-    a.sapolita-link {
-        color: var(--sa-primary-darker);
-    }
-    a.sapolita-link:hover,
-    a.sapolita-link:active {
-        color: var(--bs-success);
-    }
-    a.sapolita-link:focus-visible {
-      outline: 3px solid var(--bs-success);
-      border-radius: 2px;
-    }
-    """,
+    css_paths=[Path(__file__).parent / 'static' / 'css' / 'app.css', ],
     theme=gr.themes.Default(
         font=(
             "tauhu-oo",

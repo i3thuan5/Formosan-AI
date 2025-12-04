@@ -1,6 +1,7 @@
 import re
 import tempfile
 from importlib.resources import files
+from pathlib import Path
 
 import gradio as gr
 import soundfile as sf
@@ -189,24 +190,7 @@ def get_title():
 
 demo = gr.Blocks(
     title=get_title(),
-    css="""@import url(https://tauhu.tw/tauhu-oo.css);
-    .textonly textarea {border-width: 0px !important; }
-    :root {
-      --sa-primary-darker: #AC370C;
-      --bs-success: #2F5ACB;
-    }
-    a.sapolita-link {
-        color: var(--sa-primary-darker);
-    }
-    a.sapolita-link:hover,
-    a.sapolita-link:active {
-        color: var(--bs-success);
-    }
-    a.sapolita-link:focus-visible {
-      outline: 3px solid var(--bs-success);
-      border-radius: 2px;
-    }
-    """,
+    css_paths=[Path(__file__).parent / 'static' / 'css' / 'app.css', ],
     theme=gr.themes.Default(
         font=(
             "tauhu-oo",

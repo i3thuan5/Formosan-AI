@@ -18,6 +18,7 @@ COPY --link app.py DEMO.md /app/
 COPY --link configs/ /app/configs/
 COPY --link ipa/ /app/ipa/
 COPY --link assets/ /app/assets/
+COPY --link static/ /app/static/
 RUN addgroup --gid 1000 nonroot && \
     adduser --uid 1000 --disabled-password --ingroup nonroot --quiet nonroot
 
