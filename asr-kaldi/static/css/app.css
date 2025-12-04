@@ -3,14 +3,45 @@
   --sa-primary-darker: #AC370C;
   --bs-success: #2F5ACB;
 }
-a.sapolita-link {
+a.sa-link {
     color: var(--sa-primary-darker);
 }
-a.sapolita-link:hover,
-a.sapolita-link:active {
+a.sa-link:hover,
+a.sa-link:active {
     color: var(--bs-success);
 }
-a.sapolita-link:focus-visible {
+a.sa-link:focus-visible {
   outline: 3px solid var(--bs-success);
   border-radius: 2px;
+}
+
+.sa-footer {
+  background-color: RGBA(248,249,250);
+}
+.sa-container{
+    width: 100%;
+  padding-right: calc(1.5rem * .5);
+  padding-left: calc(1.5rem * .5);
+  margin-right: auto;
+  margin-left: auto;
+}
+@media screen and (min-width: 768px) {
+    .sa-container{
+        max-width: 720px;
+    }
+}
+@media screen and (min-width: 992px) {
+    .sa-container{
+        max-width: 960px;
+    }
+}
+@media screen and (min-width: 1200px) {
+    .sa-container{
+        max-width: 1140px;
+    }
+}
+@media screen and (min-width: 1400px) {
+    .sa-container{
+        max-width: 1320px;
+    }
 }
