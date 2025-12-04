@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 import gradio as gr
 from huggingface_hub import snapshot_download
@@ -65,24 +66,7 @@ def get_title():
 
 demo = gr.Blocks(
     title=get_title(),
-    css="""
-    @import url(https://tauhu.tw/tauhu-oo.css);
-    :root {
-      --sa-primary-darker: #AC370C;
-      --bs-success: #2F5ACB;
-    }
-    a.sapolita-link {
-        color: var(--sa-primary-darker);
-    }
-    a.sapolita-link:hover,
-    a.sapolita-link:active {
-        color: var(--bs-success);
-    }
-    a.sapolita-link:focus-visible {
-      outline: 3px solid var(--bs-success);
-      border-radius: 2px;
-    }
-    """,
+    css_paths=[Path(__file__).parent / 'static' / 'css' / 'app.css', ],
     theme=gr.themes.Default(
         font=(
             "tauhu-oo",
