@@ -87,7 +87,8 @@ def load_model(
     ).to(device)
 
     dtype = torch.float32 if mel_spec_type == "bigvgan" or not fp16 else None
-    model = load_checkpoint(model, ckpt_path, device, dtype=dtype, use_ema=use_ema)
+    model = load_checkpoint(model, ckpt_path, device,
+                            dtype=dtype, use_ema=use_ema)
 
     return model
 
@@ -169,7 +170,8 @@ def infer(
         with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as f:
             sf.write(f.name, final_wave, final_sample_rate)
             remove_silence_for_generated_wav(f.name)
-            final_wave = torchcodec.decoders.AudioDecoder(f.name).get_all_samples().data
+            final_wave = torchcodec.decoders.AudioDecoder(
+                f.name).get_all_samples().data
         final_wave = final_wave.squeeze().cpu().numpy()
 
     # Save the spectrogram
@@ -189,6 +191,21 @@ demo = gr.Blocks(
     title=get_title(),
     css="""@import url(https://tauhu.tw/tauhu-oo.css);
     .textonly textarea {border-width: 0px !important; }
+    :root {
+      --sa-primary-darker: #AC370C;
+      --bs-success: #2F5ACB;
+    }
+    a.sapolita-link {
+        color: var(--sa-primary-darker);
+    }
+    a.sapolita-link:hover,
+    a.sapolita-link:active {
+        color: var(--bs-success);
+    }
+    a.sapolita-link:focus-visible {
+      outline: 3px solid var(--bs-success);
+      border-radius: 2px;
+    }
     """,
     theme=gr.themes.Default(
         font=(
@@ -215,6 +232,12 @@ with demo:
     with open("DEMO.md") as tong:
         gr.Markdown(tong.read())
 
+    gr.HTML("""
+        <a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sapolita-link">
+            < 返回成果網站首頁
+        </a>
+        """)
+
     gr.HTML(
         "特殊符號請複製使用（滑鼠點擊即可複製）：<button>é</button> <button>ṟ</button> <button>ɨ</button> <button>ʉ</button>",
         padding=False,
@@ -235,9 +258,11 @@ with demo:
                     return [r for r in refs_config.keys() if r.startswith(prefix)]
 
                 default_speaker_refs = gr.Dropdown(
-                    choices=get_refs_by_perfix(default_speaker_ethnicity.value),
+                    choices=get_refs_by_perfix(
+                        default_speaker_ethnicity.value),
                     label="步驟二：選擇配音員",
-                    value=get_refs_by_perfix(default_speaker_ethnicity.value)[0],
+                    value=get_refs_by_perfix(
+                        default_speaker_ethnicity.value)[0],
                     filterable=False,
                 )
 
@@ -368,7 +393,8 @@ with demo:
         lambda ethnicity: gr.Dropdown(
             choices=[k for k in g2p_object.keys() if k.startswith(ethnicity)],
             value=[k for k in g2p_object.keys() if k.startswith(ethnicity)][0],
-            visible=len([k for k in g2p_object.keys() if k.startswith(ethnicity)]) > 1,
+            visible=len([k for k in g2p_object.keys()
+                         if k.startswith(ethnicity)]) > 1,
         ),
         inputs=[custom_speaker_ethnicity],
         outputs=[custom_speaker_language],

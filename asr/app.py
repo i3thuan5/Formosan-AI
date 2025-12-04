@@ -18,7 +18,39 @@ model = load_model(
 
 with gr.Blocks(
     title="族語語音辨識系統 - 原住民族語言研究發展基金會",
+    css="""
+    @import url(https://tauhu.tw/tauhu-oo.css);
+    :root {
+      --sa-primary-darker: #AC370C;
+      --bs-success: #2F5ACB;
+    }
+    a.sapolita-link {
+        color: var(--sa-primary-darker);
+    }
+    a.sapolita-link:hover,
+    a.sapolita-link:active {
+        color: var(--bs-success);
+    }
+    a.sapolita-link:focus-visible {
+      outline: 3px solid var(--bs-success);
+      border-radius: 2px;
+    }
+    """,
+    theme=gr.themes.Default(
+        font=(
+            "tauhu-oo",
+            gr.themes.GoogleFont("Source Sans Pro"),
+            "ui-sans-serif",
+            "system-ui",
+            "sans-serif",
+        )
+    ),
 ) as demo:
+    gr.HTML("""
+        <a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sapolita-link">
+            < 返回成果網站首頁
+        </a>
+        """)
     gr.Markdown(
         """
         # 原住民族語言研究發展基金會族語語音辨識系統
