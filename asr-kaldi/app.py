@@ -81,6 +81,7 @@ demo = gr.Blocks(
         const parser = new DOMParser();
         let ftstr = `
             <div class='sa-footer'>
+                <a class='sa-link'>footer link</a>
                 <div class='sa-container'>
                     <div class='text-center py-3 border-bottom border-1'>
                         <span>Copyright &copy; 2025 財團法人原住民族語言研究發展基金會 版權所有</span>
@@ -150,6 +151,14 @@ with demo:
         inputs=[dialect_drop_down, audio_source],
         outputs=[output_textbox],
     )
+
+    gr.HTML("""
+        <div class="sa-container">
+        <a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">
+            測試RWD連結
+        </a>
+        </div>
+        """)
 
 
 demo.launch()
