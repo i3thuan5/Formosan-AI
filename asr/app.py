@@ -1,10 +1,11 @@
 import os
 import tempfile
+from pathlib import Path
+
 import gradio as gr
 import uvicorn
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from pathlib import Path
 from whisper import load_audio, load_model
 
 SAMPLING_RATE = 16000
@@ -18,7 +19,22 @@ model = load_model(
 
 with gr.Blocks(
     title="族語語音辨識系統 - 原住民族語言研究發展基金會",
+    css_paths=[Path(__file__).parent / 'static' / 'css' / 'app.css', ],
+    theme=gr.themes.Default(
+        font=(
+            "tauhu-oo",
+            gr.themes.GoogleFont("Source Sans Pro"),
+            "ui-sans-serif",
+            "system-ui",
+            "sans-serif",
+        )
+    ),
 ) as demo:
+    gr.HTML("""
+        <a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sapolita-link">
+            < 返回成果網站首頁
+        </a>
+        """)
     gr.Markdown(
         """
         # 原住民族語言研究發展基金會族語語音辨識系統
