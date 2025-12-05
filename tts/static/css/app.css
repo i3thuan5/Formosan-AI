@@ -4,14 +4,20 @@
   --sa-primary-darker: #AC370C;
   --bs-success: #2F5ACB;
 }
-a.sapolita-link {
+a.sa-link {
     color: var(--sa-primary-darker);
 }
-a.sapolita-link:hover,
-a.sapolita-link:active {
+a.sa-link:hover,
+a.sa-link:active {
     color: var(--bs-success);
 }
-a.sapolita-link:focus-visible {
+a.sa-link:focus-visible {
   outline: 3px solid var(--bs-success);
   border-radius: 2px;
+}
+.text-center {
+  text-align: center !important;
+}
+.mt-3{
+  margin-top: 1rem !important;
 }

@@ -2,6 +2,7 @@ import re
 import tempfile
 from importlib.resources import files
 from pathlib import Path
+from datetime import datetime
 
 import gradio as gr
 import soundfile as sf
@@ -188,6 +189,8 @@ def get_title():
         return tong.readline().strip("# ")
 
 
+gr.set_static_paths(paths=[Path.cwd().absolute() / "static" / "image"])
+
 demo = gr.Blocks(
     title=get_title(),
     css_paths=[Path(__file__).parent / 'static' / 'css' / 'app.css', ],
@@ -217,7 +220,7 @@ with demo:
         gr.Markdown(tong.read())
 
     gr.HTML("""
-        <a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sapolita-link">
+        <a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">
             < 返回成果網站首頁
         </a>
         """)
@@ -439,4 +442,32 @@ with demo:
         outputs=[custom_speaker_audio_output],
     )
 
-demo.launch()
+    with gr.Row(equal_height=True):
+        gr.HTML(
+            "<div>"
+            "<hr>"
+            "<p class='text-center'>Copy &copy; {} "
+            "財團法人原住民族語言研究發展基金會 版權所有</p>"
+            "</div>".format(datetime.now().year))
+
+    with gr.Row(equal_height=True):
+        with gr.Column(scale=1, min_width=300):
+            gr.HTML("""
+                <img class='img-fluid' src='/gradio_api/file=static/image/ilrdf-logo.png'
+                    alt='財團法人原住民族語言研究發展基金會logo'>
+                """)
+        with gr.Column(scale=1, min_width=300):
+            gr.HTML("""
+                <p>電話：(02)2341-8508</p>
+                <p>傳真：(02)2341-8256</p>
+                <p>信箱：ilrdf@ilrdf.org.tw</p>
+                <p>地址：100029台北市中正區羅斯福路一段63號</p>
+                """)
+        with gr.Column(scale=1, min_width=300):
+            gr.HTML("""
+                    <p><a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">著作權聲明</a></p>
+                    <p><a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">網站使用條款</a></p>
+                """)
+
+
+demo.launch(allowed_paths=['ilrdf-logo.png'])
