@@ -65,6 +65,8 @@ def get_title():
         return tong.readline().strip("# ")
 
 
+gr.set_static_paths(paths=[Path.cwd().absolute() / "static" / "image"])
+
 demo = gr.Blocks(
     title=get_title(),
     css_paths=[Path(__file__).parent / 'static' / 'css' / 'app.css', ],
@@ -128,7 +130,9 @@ with demo:
     with gr.Row(equal_height=True):
         with gr.Column(scale=1, min_width=300):
             gr.HTML("""
-                <img class='img-fluid' src='./static/image/ilrdf-logo.png'
+                <img class='img-fluid' src='/gradio_api/file=favicon_arik_ver.png'
+                    alt='favicon_arik_ver'>
+                <img class='img-fluid' src='/gradio_api/file=static/image/ilrdf-logo.png'
                     alt='財團法人原住民族語言研究發展基金會logo'>
                 """)
         with gr.Column(scale=1, min_width=300):
@@ -142,8 +146,7 @@ with demo:
             gr.HTML("""
                     <p><a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">著作權聲明</a></p>
                     <p><a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">網站使用條款</a></p>
-                    <p><img src='./static/image/ilrdf-logo.png'  alt="待申請尚未通過無障礙標章AA"></p>
                 """)
 
 
-demo.launch()
+demo.launch(allowed_paths=['ilrdf-logo.png', 'favicon_arik_ver.png'])

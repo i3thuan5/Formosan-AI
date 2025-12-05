@@ -16,6 +16,7 @@ COPY --link app.py DEMO.md /app/
 COPY --link configs/ /app/configs/
 COPY --link examples/ /app/examples/
 COPY --link static/ /app/static/
+COPY --link favicon_arik_ver.png /app/
 RUN addgroup --gid 1000 nonroot && \
     adduser --uid 1000 --disabled-password --ingroup nonroot --quiet nonroot
 USER nonroot
