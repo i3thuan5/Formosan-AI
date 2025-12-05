@@ -119,8 +119,11 @@ with demo:
 
     with gr.Row(equal_height=True):
         gr.HTML(
+            "<div>"
+            "<hr>"
             "<p class='text-center'>Copy &copy; {} "
-            "財團法人原住民族語言研究發展基金會 版權所有</p>".format(datetime.now().year))
+            "財團法人原住民族語言研究發展基金會 版權所有</p>"
+            "</div>".format(datetime.now().year))
 
     with gr.Row(equal_height=True):
         with gr.Column(scale=1, min_width=300):
