@@ -35,7 +35,7 @@ with gr.Blocks(
     ),
 ) as demo:
     gr.HTML("""
-        <a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sapolita-link">
+        <a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">
             < 返回成果網站首頁
         </a>
         """)
