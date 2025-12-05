@@ -130,8 +130,6 @@ with demo:
     with gr.Row(equal_height=True):
         with gr.Column(scale=1, min_width=300):
             gr.HTML("""
-                <img class='img-fluid' src='/gradio_api/file=favicon_arik_ver.png'
-                    alt='favicon_arik_ver'>
                 <img class='img-fluid' src='/gradio_api/file=static/image/ilrdf-logo.png'
                     alt='財團法人原住民族語言研究發展基金會logo'>
                 """)
@@ -149,4 +147,4 @@ with demo:
                 """)
 
 
-demo.launch(allowed_paths=['ilrdf-logo.png', 'favicon_arik_ver.png'])
+demo.launch(allowed_paths=['ilrdf-logo.png'])
