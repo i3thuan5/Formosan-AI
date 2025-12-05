@@ -21,3 +21,6 @@ a.sa-link:focus-visible {
 .mt-3{
   margin-top: 1rem !important;
 }
+footer[class^="svelte"]{
+  display: none !important;
+}
