@@ -6,14 +6,19 @@ import gradio as gr
 
 from colors import sa_orange_color, sa_zinc_color
 
+STATIC_DIR_NAME = 'common_static'
+COMMON_STATIC_ROOT = Path(__file__).parent / STATIC_DIR_NAME
+
 
 @contextmanager
-def render_demo(title, js=None):
-    gr.set_static_paths(paths=[Path.cwd().absolute() / "static" / "image"])
+def render_demo(title, js=None, css_paths=[]):
+    gr.set_static_paths(paths=[COMMON_STATIC_ROOT / "image"])
+
+    common_css_paths = [COMMON_STATIC_ROOT / 'css' / 'app.css', ]
 
     demo = gr.Blocks(
         title=title,
-        css_paths=[Path(__file__).parent / 'static' / 'css' / 'app.css', ],
+        css_paths=(common_css_paths + css_paths),
         theme=gr.themes.Default(
             primary_hue=sa_orange_color,
             neutral_hue=sa_zinc_color,
@@ -48,9 +53,9 @@ def render_demo(title, js=None):
         with gr.Row(equal_height=True):
             with gr.Column(scale=1, min_width=300):
                 gr.HTML("""
-                    <img class='img-fluid' src='/gradio_api/file=static/image/ilrdf-logo.png'
+                    <img class='img-fluid' src='/gradio_api/file={}/image/ilrdf-logo.png'
                         alt='財團法人原住民族語言研究發展基金會logo'>
-                    """)
+                    """.format(STATIC_DIR_NAME))
             with gr.Column(scale=1, min_width=300):
                 gr.HTML("""
                     <p>電話：(02)2341-8508</p>
@@ -66,6 +71,5 @@ def render_demo(title, js=None):
 
     demo.launch(
         allowed_paths=['ilrdf-logo.png'],
-        favicon_path=Path(__file__).parent / 'static' /
-        'favicon' / 'logo.svg'
+        favicon_path=COMMON_STATIC_ROOT / 'favicon' / 'logo.svg'
     )
