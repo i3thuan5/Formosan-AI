@@ -18,8 +18,7 @@ RUN addgroup --gid 1000 nonroot && \
     adduser --uid 1000 --disabled-password --ingroup nonroot --quiet nonroot
 COPY --from=formosan-ai-common /app/utils.py /app/colors.py /app/
 COPY --from=formosan-ai-common /app/common_static/ /app/common_static/
-COPY --link app.py whisper.py /app/
-COPY --link static/ /app/static/
+COPY --link app.py whisper.py DEMO.md /app/
 
 USER nonroot
 WORKDIR /app

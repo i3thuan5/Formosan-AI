@@ -20,16 +20,15 @@ model = load_model(
 )
 
 
-title = "族語語音辨識系統 - 原住民族語言研究發展基金會"
+def get_title():
+    with open("DEMO.md") as tong:
+        return tong.readline().strip("# ")
+
 
 with render_demo(title=title) as demo:
-    gr.Markdown(
-        """
-        # 原住民族語言研究發展基金會族語語音辨識系統
-        本辨識系統在讀取檔案後，可自動判斷族語別，請將檔案拖放到下方上傳處，點擊「開始辨識」，流程請見[操作手冊](static/操作手冊｜原住民族語言研究發展基金會族語語音辨識系統.pdf)。\\
-        當上傳檔案較大時，請靜待辨識結果產生。
-        """
-    )
+
+    with open("DEMO.md") as tong:
+        gr.Markdown(tong.read())
 
     with gr.Row():
         with gr.Column():
