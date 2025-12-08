@@ -1,10 +1,11 @@
 import json
-from pathlib import Path
 
 import gradio as gr
 from huggingface_hub import snapshot_download
 from omegaconf import OmegaConf
 from vosk import KaldiRecognizer, Model
+
+from utils import render_demo
 
 
 def load_vosk(model_id: str):
@@ -64,26 +65,7 @@ def get_title():
         return tong.readline().strip("# ")
 
 
-demo = gr.Blocks(
-    title=get_title(),
-    css_paths=[Path(__file__).parent / 'static' / 'css' / 'app.css', ],
-    theme=gr.themes.Default(
-        font=(
-            "tauhu-oo",
-            gr.themes.GoogleFont("Source Sans Pro"),
-            "ui-sans-serif",
-            "system-ui",
-            "sans-serif",
-        )
-    ),
-)
-
-with demo:
-    gr.HTML("""
-        <a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sapolita-link">
-            < 返回成果網站首頁
-        </a>
-        """)
+with render_demo(title=get_title()) as demo:
     with open("DEMO.md") as tong:
         gr.Markdown(tong.read())
 
@@ -115,6 +97,3 @@ with demo:
         inputs=[dialect_drop_down, audio_source],
         outputs=[output_textbox],
     )
-
-
-demo.launch()

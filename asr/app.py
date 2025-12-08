@@ -8,6 +8,8 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from whisper import load_audio, load_model
 
+from utils import render_demo
+
 SAMPLING_RATE = 16000
 BATCH_SIZE = int(os.getenv('BATCH_SIZE', 32))
 
@@ -17,24 +19,10 @@ model = load_model(
     asr_options={"word_timestamps": True},
 )
 
-with gr.Blocks(
-    title="族語語音辨識系統 - 原住民族語言研究發展基金會",
-    css_paths=[Path(__file__).parent / 'static' / 'css' / 'app.css', ],
-    theme=gr.themes.Default(
-        font=(
-            "tauhu-oo",
-            gr.themes.GoogleFont("Source Sans Pro"),
-            "ui-sans-serif",
-            "system-ui",
-            "sans-serif",
-        )
-    ),
-) as demo:
-    gr.HTML("""
-        <a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sapolita-link">
-            < 返回成果網站首頁
-        </a>
-        """)
+
+title = "族語語音辨識系統 - 原住民族語言研究發展基金會"
+
+with render_demo(title=title) as demo:
     gr.Markdown(
         """
         # 原住民族語言研究發展基金會族語語音辨識系統

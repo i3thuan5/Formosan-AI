@@ -11,6 +11,7 @@ from cached_path import cached_path
 from omegaconf import OmegaConf
 
 from ipa.ipa import g2p_object, text_to_ipa
+from utils import render_demo
 
 try:
     import spaces
@@ -188,39 +189,23 @@ def get_title():
         return tong.readline().strip("# ")
 
 
-demo = gr.Blocks(
+with render_demo(
     title=get_title(),
-    css_paths=[Path(__file__).parent / 'static' / 'css' / 'app.css', ],
-    theme=gr.themes.Default(
-        font=(
-            "tauhu-oo",
-            gr.themes.GoogleFont("Source Sans Pro"),
-            "ui-sans-serif",
-            "system-ui",
-            "sans-serif",
-        )
-    ),
+    css_path=[Path(__file__).parent / 'static' / 'app.css', ],
     js="""
-    function addButtonsEvent() {
-        const buttons = document.querySelectorAll("#head-html-block button");
-        buttons.forEach(button => {
-            button.addEventListener("click", () => {
-                navigator.clipboard.writeText(button.innerText);
+        function addButtonsEvent() {
+            const buttons = document.querySelectorAll("#head-html-block button");
+            buttons.forEach(button => {
+                button.addEventListener("click", () => {
+                    navigator.clipboard.writeText(button.innerText);
+                });
             });
-        });
-    }
-    """,
-)
+        }
+        """,
+) as demo:
 
-with demo:
     with open("DEMO.md") as tong:
         gr.Markdown(tong.read())
-
-    gr.HTML("""
-        <a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sapolita-link">
-            < 返回成果網站首頁
-        </a>
-        """)
 
     gr.HTML(
         "特殊符號請複製使用（滑鼠點擊即可複製）：<button>é</button> <button>ṟ</button> <button>ɨ</button> <button>ʉ</button>",
@@ -438,5 +423,3 @@ with demo:
         ],
         outputs=[custom_speaker_audio_output],
     )
-
-demo.launch()
