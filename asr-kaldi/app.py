@@ -1,5 +1,4 @@
 import json
-from pathlib import Path
 
 import gradio as gr
 from huggingface_hub import snapshot_download

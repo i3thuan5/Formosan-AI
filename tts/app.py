@@ -2,7 +2,6 @@ import re
 import tempfile
 from importlib.resources import files
 from pathlib import Path
-from datetime import datetime
 
 import gradio as gr
 import soundfile as sf
@@ -194,15 +193,16 @@ with render_demo(
     title=get_title(),
     css_path=[Path(__file__).parent / 'static' / 'app.css', ],
     js="""
-    function addButtonsEvent() {
-        const buttons = document.querySelectorAll("#head-html-block button");
-        buttons.forEach(button => {
-            button.addEventListener("click", () => {
-                navigator.clipboard.writeText(button.innerText);
+        function addButtonsEvent() {
+            const buttons = document.querySelectorAll("#head-html-block button");
+            buttons.forEach(button => {
+                button.addEventListener("click", () => {
+                    navigator.clipboard.writeText(button.innerText);
+                });
             });
-        });
-    }
-    """,) as demo:
+        }
+        """,
+) as demo:
 
     with open("DEMO.md") as tong:
         gr.Markdown(tong.read())
