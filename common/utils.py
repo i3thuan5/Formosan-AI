@@ -8,7 +8,7 @@ from colors import sa_orange_color, sa_zinc_color
 
 
 @contextmanager
-def render_demo(title):
+def render_demo(title, js=None):
     gr.set_static_paths(paths=[Path.cwd().absolute() / "static" / "image"])
 
     demo = gr.Blocks(
@@ -24,7 +24,8 @@ def render_demo(title):
                 "system-ui",
                 "sans-serif",
             )
-        )
+        ),
+        js=js,
     )
 
     with demo:

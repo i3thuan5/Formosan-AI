@@ -14,6 +14,7 @@ RUN pip install --no-cache-dir pip -U
 
 RUN --mount=target=/tmp/requirements.txt,source=requirements.txt pip install --no-cache-dir -r /tmp/requirements.txt
 
+COPY --from=formosan-ai-common /app/utils.py /app/colors.py /app/
 COPY --link app.py DEMO.md /app/
 COPY --link configs/ /app/configs/
 COPY --link ipa/ /app/ipa/

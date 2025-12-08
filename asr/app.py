@@ -19,26 +19,9 @@ model = load_model(
 )
 
 
-gr.set_static_paths(paths=[Path.cwd().absolute() / "static" / "image"])
+title = "族語語音辨識系統 - 原住民族語言研究發展基金會"
 
-with gr.Blocks(
-    title="族語語音辨識系統 - 原住民族語言研究發展基金會",
-    css_paths=[Path(__file__).parent / 'static' / 'css' / 'app.css', ],
-    theme=gr.themes.Default(
-        font=(
-            "tauhu-oo",
-            gr.themes.GoogleFont("Source Sans Pro"),
-            "ui-sans-serif",
-            "system-ui",
-            "sans-serif",
-        )
-    ),
-) as demo:
-    gr.HTML("""
-        <a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">
-            < 返回成果網站首頁
-        </a>
-        """)
+with render_demo(title=title) as demo:
     gr.Markdown(
         """
         # 原住民族語言研究發展基金會族語語音辨識系統
@@ -114,36 +97,6 @@ with gr.Blocks(
         js="() => document.querySelector('#download_srt_button_hidden').click()",
     )
 
-    with gr.Row(equal_height=True):
-        gr.HTML(
-            "<div>"
-            "<hr>"
-            "<p class='text-center'>Copy &copy; {} "
-            "財團法人原住民族語言研究發展基金會 版權所有</p>"
-            "</div>".format(datetime.now().year))
-
-    with gr.Row(equal_height=True):
-        with gr.Column(scale=1, min_width=300):
-            gr.HTML("""
-                <img class='img-fluid' src='/gradio_api/file=static/image/ilrdf-logo.png'
-                    alt='財團法人原住民族語言研究發展基金會logo'>
-                """)
-        with gr.Column(scale=1, min_width=300):
-            gr.HTML("""
-                <p>電話：(02)2341-8508</p>
-                <p>傳真：(02)2341-8256</p>
-                <p>信箱：ilrdf@ilrdf.org.tw</p>
-                <p>地址：100029台北市中正區羅斯福路一段63號</p>
-                """)
-        with gr.Column(scale=1, min_width=300):
-            gr.HTML("""
-                    <p><a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">著作權聲明</a></p>
-                    <p><a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">網站使用條款</a></p>
-                """)
-
-
-demo.launch(allowed_paths=['ilrdf-logo.png'])
-
 # create a FastAPI app
 app = FastAPI()
 
@@ -154,7 +107,7 @@ static_dir = Path('./static')
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 # mount Gradio app to FastAPI app
-app = gr.mount_gradio_app(app, demo, path="", allowed_paths=['ilrdf-logo.png'])
+app = gr.mount_gradio_app(app, demo, path="")
 
 # serve the app
 if __name__ == "__main__":

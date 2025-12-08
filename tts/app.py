@@ -189,20 +189,8 @@ def get_title():
         return tong.readline().strip("# ")
 
 
-gr.set_static_paths(paths=[Path.cwd().absolute() / "static" / "image"])
-
-demo = gr.Blocks(
+with render_demo(
     title=get_title(),
-    css_paths=[Path(__file__).parent / 'static' / 'css' / 'app.css', ],
-    theme=gr.themes.Default(
-        font=(
-            "tauhu-oo",
-            gr.themes.GoogleFont("Source Sans Pro"),
-            "ui-sans-serif",
-            "system-ui",
-            "sans-serif",
-        )
-    ),
     js="""
     function addButtonsEvent() {
         const buttons = document.querySelectorAll("#head-html-block button");
@@ -212,18 +200,10 @@ demo = gr.Blocks(
             });
         });
     }
-    """,
-)
+    """,) as demo:
 
-with demo:
     with open("DEMO.md") as tong:
         gr.Markdown(tong.read())
-
-    gr.HTML("""
-        <a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">
-            < 返回成果網站首頁
-        </a>
-        """)
 
     gr.HTML(
         "特殊符號請複製使用（滑鼠點擊即可複製）：<button>é</button> <button>ṟ</button> <button>ɨ</button> <button>ʉ</button>",
@@ -441,33 +421,3 @@ with demo:
         ],
         outputs=[custom_speaker_audio_output],
     )
-
-    with gr.Row(equal_height=True):
-        gr.HTML(
-            "<div>"
-            "<hr>"
-            "<p class='text-center'>Copy &copy; {} "
-            "財團法人原住民族語言研究發展基金會 版權所有</p>"
-            "</div>".format(datetime.now().year))
-
-    with gr.Row(equal_height=True):
-        with gr.Column(scale=1, min_width=300):
-            gr.HTML("""
-                <img class='img-fluid' src='/gradio_api/file=static/image/ilrdf-logo.png'
-                    alt='財團法人原住民族語言研究發展基金會logo'>
-                """)
-        with gr.Column(scale=1, min_width=300):
-            gr.HTML("""
-                <p>電話：(02)2341-8508</p>
-                <p>傳真：(02)2341-8256</p>
-                <p>信箱：ilrdf@ilrdf.org.tw</p>
-                <p>地址：100029台北市中正區羅斯福路一段63號</p>
-                """)
-        with gr.Column(scale=1, min_width=300):
-            gr.HTML("""
-                    <p><a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">著作權聲明</a></p>
-                    <p><a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">網站使用條款</a></p>
-                """)
-
-
-demo.launch(allowed_paths=['ilrdf-logo.png'])
