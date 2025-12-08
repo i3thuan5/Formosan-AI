@@ -14,7 +14,7 @@ COMMON_STATIC_ROOT = Path(__file__).parent / STATIC_DIR_NAME
 def render_demo(title, js=None, css_paths=[]):
     gr.set_static_paths(paths=[COMMON_STATIC_ROOT / "image"])
 
-    common_css_paths = [COMMON_STATIC_ROOT / 'css' / 'app.css', ]
+    common_css_paths = [COMMON_STATIC_ROOT / 'css' / 'common.css', ]
 
     demo = gr.Blocks(
         title=title,
