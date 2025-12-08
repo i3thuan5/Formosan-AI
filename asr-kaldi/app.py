@@ -6,7 +6,7 @@ from huggingface_hub import snapshot_download
 from omegaconf import OmegaConf
 from vosk import KaldiRecognizer, Model
 
-from utils import RenderDemo
+from utils import render_demo
 
 
 def load_vosk(model_id: str):
@@ -66,7 +66,7 @@ def get_title():
         return tong.readline().strip("# ")
 
 
-with RenderDemo(title=get_title()) as demo:
+with render_demo(title=get_title()) as demo:
     with open("DEMO.md") as tong:
         gr.Markdown(tong.read())
 
