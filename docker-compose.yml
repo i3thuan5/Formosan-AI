@@ -11,6 +11,7 @@ services:
       - VIRTUAL_HOST=${ASR_VIRTUAL_HOST:-sapolita.ithuan.tw}
       - VIRTUAL_PORT=7860
       - LETSENCRYPT_HOST=${ASR_VIRTUAL_HOST:-sapolita.ithuan.tw}
+      - SAPOLITA_WEBSITE_HOST=${SAPOLITA_WEBSITE_HOST:-ai-labs.ilrdf.org.tw}
   asr-kaldi:
     build: ./asr-kaldi/
     volumes:
@@ -20,6 +21,7 @@ services:
     environment:
       - VIRTUAL_HOST=${ASR_KALDI_VIRTUAL_HOST:-sapolita-kaldi.ithuan.tw}
       - LETSENCRYPT_HOST=${ASR_KALDI_VIRTUAL_HOST:-sapolita-kaldi.ithuan.tw}
+      - SAPOLITA_WEBSITE_HOST=${SAPOLITA_WEBSITE_HOST:-ai-labs.ilrdf.org.tw}
   tts:
     build: ./tts/
     volumes:
@@ -29,6 +31,7 @@ services:
     environment:
       - VIRTUAL_HOST=${TTS_VIRTUAL_HOST:-hnang-kari-ai-asi-sluhay.ithuan.tw}
       - LETSENCRYPT_HOST=${TTS_VIRTUAL_HOST:-hnang-kari-ai-asi-sluhay.ithuan.tw}
+      - SAPOLITA_WEBSITE_HOST=${SAPOLITA_WEBSITE_HOST:-ai-labs.ilrdf.org.tw}
 
 networks:
   nginx-bridge:
