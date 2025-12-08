@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from datetime import datetime
 from contextlib import contextmanager
@@ -8,6 +9,7 @@ from colors import sa_orange_color, sa_zinc_color
 
 STATIC_DIR_NAME = 'common_static'
 COMMON_STATIC_ROOT = Path(__file__).parent / STATIC_DIR_NAME
+SAPOLITA_WEBSITE_HOST = os.environ.get('SAPOLITA_WEBSITE_HOST')
 
 
 @contextmanager
@@ -39,10 +41,10 @@ def render_demo(title, js=None, css_paths=[]):
 
     with demo:
         gr.HTML("""
-            <a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">
+            <a href="https://{site}/" class="sa-link">
                 < 返回成果網站首頁
             </a>
-            """)
+            """.format(site=SAPOLITA_WEBSITE_HOST))
 
         yield demo
 
@@ -69,9 +71,9 @@ def render_demo(title, js=None, css_paths=[]):
                     """)
             with gr.Column(scale=1, min_width=300):
                 gr.HTML("""
-                        <p><a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">著作權聲明</a></p>
-                        <p><a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">網站使用條款</a></p>
-                    """)
+                        <p><a href="https://{site}/copyright/" class="sa-link">著作權聲明</a></p>
+                        <p><a href="https://{site}/termofuse/" class="sa-link">網站使用條款</a></p>
+                    """.format(site=SAPOLITA_WEBSITE_HOST))
 
     demo.launch(
         allowed_paths=[
