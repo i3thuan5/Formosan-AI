@@ -191,7 +191,7 @@ def get_title():
 
 with render_demo(
     title=get_title(),
-    css_paths=[Path(__file__).parent / 'static' / 'app.css', ],
+    css_paths=[Path(__file__).parent / 'static' / 'css' / 'app.css', ],
     js="""
         function addButtonsEvent() {
             const buttons = document.querySelectorAll("#head-html-block button");
