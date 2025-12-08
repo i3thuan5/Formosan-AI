@@ -63,4 +63,6 @@ docker compose -f ZuGi/docker-compose.yml up -d --build nginx-proxy
 
 2. 準備環境變數檔：`cp deploy/.env.template .env`，並把要測試的服務HOST改成`localhost`。
 
-3. 編image後啟動：`docker compose up -d --build`。
+3. 手動編共用檔案的image：`docker build -t formosan-ai-common ./common` 。
+
+4. 編image後啟動：`docker compose up -d --build`。

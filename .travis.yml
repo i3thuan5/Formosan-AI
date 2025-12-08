@@ -51,6 +51,7 @@ jobs:
       before_script:
         - docker login -u "${DOCKER_USER}" -p "${DOCKER_TOKEN_PUSH}"
       script:
+        - docker build -t formosan-ai-common ./common
         - docker build -t ithuan/formosan-ai:asr ./asr
         - docker build -t ithuan/formosan-ai:asr-kaldi ./asr-kaldi
         - docker build -t ithuan/formosan-ai:tts ./tts

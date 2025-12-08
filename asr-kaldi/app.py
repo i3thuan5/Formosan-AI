@@ -1,12 +1,12 @@
 import json
 from pathlib import Path
-from datetime import datetime
 
 import gradio as gr
-from gradio.themes.utils.colors import Color
 from huggingface_hub import snapshot_download
 from omegaconf import OmegaConf
 from vosk import KaldiRecognizer, Model
+
+from utils import RenderDemo
 
 
 def load_vosk(model_id: str):
@@ -66,62 +66,7 @@ def get_title():
         return tong.readline().strip("# ")
 
 
-sa_orange_color = Color(
-    name="sa_orange",
-    c50="#F4855D",  # Lightest shade
-    c100="#F7AA8E",
-    c200="#F69D7D",
-    c300="#F5916D",
-    c400="#F4855D",
-    c500="#D04410",  # Main color
-    c600="#AC370C",
-    c700="#BB3D0E",
-    c800="#A6360D",
-    c900="#92300B",
-    c950="#7D290A"   # Darkest shade
-)
-
-
-sa_zinc_color = Color(
-    name="sa_grey",
-    c50="#EEEEEF",  # Lightest shade
-    c100="#CBCBCE",
-    c200="#BABABD",
-    c300="#97979D",
-    c400="#63636B",
-    c500="#52525B",  # Main color
-    c600="#4A4A52",
-    c700="#424249",
-    c800="#19191B",
-    c900="#101012",
-    c950="#080809"   # Darkest shade
-)
-
-
-gr.set_static_paths(paths=[Path.cwd().absolute() / "static" / "image"])
-
-demo = gr.Blocks(
-    title=get_title(),
-    css_paths=[Path(__file__).parent / 'static' / 'css' / 'app.css', ],
-    theme=gr.themes.Default(
-        primary_hue=sa_orange_color,
-        neutral_hue=sa_zinc_color,
-        font=(
-            "tauhu-oo",
-            gr.themes.GoogleFont("Source Sans Pro"),
-            "ui-sans-serif",
-            "system-ui",
-            "sans-serif",
-        )
-    )
-)
-
-with demo:
-    gr.HTML("""
-        <a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">
-            < 返回成果網站首頁
-        </a>
-        """)
+with RenderDemo(title=get_title()) as demo:
     with open("DEMO.md") as tong:
         gr.Markdown(tong.read())
 
@@ -153,36 +98,3 @@ with demo:
         inputs=[dialect_drop_down, audio_source],
         outputs=[output_textbox],
     )
-
-    with gr.Row(equal_height=True):
-        gr.HTML(
-            "<div>"
-            "<hr>"
-            "<p class='text-center'>Copy &copy; {} "
-            "財團法人原住民族語言研究發展基金會 版權所有</p>"
-            "</div>".format(datetime.now().year))
-
-    with gr.Row(equal_height=True):
-        with gr.Column(scale=1, min_width=300):
-            gr.HTML("""
-                <img class='img-fluid' src='/gradio_api/file=static/image/ilrdf-logo.png'
-                    alt='財團法人原住民族語言研究發展基金會logo'>
-                """)
-        with gr.Column(scale=1, min_width=300):
-            gr.HTML("""
-                <p>電話：(02)2341-8508</p>
-                <p>傳真：(02)2341-8256</p>
-                <p>信箱：ilrdf@ilrdf.org.tw</p>
-                <p>地址：100029台北市中正區羅斯福路一段63號</p>
-                """)
-        with gr.Column(scale=1, min_width=300):
-            gr.HTML("""
-                    <p><a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">著作權聲明</a></p>
-                    <p><a href="https://ai-no-ilrdf.ithuankhoki.tw/" class="sa-link">網站使用條款</a></p>
-                """)
-
-
-demo.launch(
-    allowed_paths=['ilrdf-logo.png'],
-    favicon_path=Path(__file__).parent / 'static' / 'favicon' / 'logo.svg'
-)
