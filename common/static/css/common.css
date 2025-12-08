@@ -3,14 +3,17 @@
   --sa-primary-darker: #AC370C;
   --bs-success: #2F5ACB;
 }
-a.sa-link {
+a.sa-link, .md a {
     color: var(--sa-primary-darker);
 }
 a.sa-link:hover,
-a.sa-link:active {
+a.sa-link:active,
+.md a:hover,
+.md a:active {
     color: var(--bs-success);
 }
-a.sa-link:focus-visible {
+a.sa-link:focus-visible,
+.md a:focus-visible {
   outline: 3px solid var(--bs-success);
   border-radius: 2px;
 }
