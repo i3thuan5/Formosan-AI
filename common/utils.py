@@ -12,7 +12,11 @@ COMMON_STATIC_ROOT = Path(__file__).parent / STATIC_DIR_NAME
 
 @contextmanager
 def render_demo(title, js=None, css_paths=[]):
-    gr.set_static_paths(paths=[COMMON_STATIC_ROOT / "image"])
+    gr.set_static_paths(
+        paths=[
+            COMMON_STATIC_ROOT / "image",
+            COMMON_STATIC_ROOT / "pdf", ]
+    )
 
     common_css_paths = [COMMON_STATIC_ROOT / 'css' / 'common.css', ]
 
@@ -70,6 +74,10 @@ def render_demo(title, js=None, css_paths=[]):
                     """)
 
     demo.launch(
-        allowed_paths=['ilrdf-logo.png'],
+        allowed_paths=[
+            'ilrdf-logo.png',
+            '族語AI翻譯計畫網站-系統操作教學手冊.pdf',
+            'SRT字幕語音辨識系統操作手冊.pdf',
+        ],
         favicon_path=COMMON_STATIC_ROOT / 'favicon' / 'favicon.svg'
     )
