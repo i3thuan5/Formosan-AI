@@ -71,5 +71,5 @@ def render_demo(title, js=None, css_paths=[]):
 
     demo.launch(
         allowed_paths=['ilrdf-logo.png'],
-        favicon_path=COMMON_STATIC_ROOT / 'favicon' / 'logo.svg'
+        favicon_path=COMMON_STATIC_ROOT / 'favicon' / 'favicon.svg'
     )
