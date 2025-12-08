@@ -9,6 +9,8 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from whisper import load_audio, load_model
 
+from utils import render_demo
+
 SAMPLING_RATE = 16000
 BATCH_SIZE = int(os.getenv('BATCH_SIZE', 32))
 

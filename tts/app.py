@@ -12,6 +12,7 @@ from cached_path import cached_path
 from omegaconf import OmegaConf
 
 from ipa.ipa import g2p_object, text_to_ipa
+from utils import render_demo
 
 try:
     import spaces
@@ -191,6 +192,7 @@ def get_title():
 
 with render_demo(
     title=get_title(),
+    css_path=[Path(__file__).parent / 'static' / 'app.css', ],
     js="""
     function addButtonsEvent() {
         const buttons = document.querySelectorAll("#head-html-block button");
