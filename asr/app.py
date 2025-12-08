@@ -25,7 +25,7 @@ def get_title():
         return tong.readline().strip("# ")
 
 
-with render_demo(title=title) as demo:
+with render_demo(title=get_title()) as demo:
 
     with open("DEMO.md") as tong:
         gr.Markdown(tong.read())
