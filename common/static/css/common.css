@@ -30,6 +30,6 @@ footer[class^="svelte"]{
   margin-top: 0.5rem;
   color: var(--block-title-text-color);
 }
-.form {
-  background-color: none !important;
+.sa-no-bg {
+  background-color: transparent;
 }

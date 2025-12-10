@@ -69,7 +69,6 @@ with render_demo(
     title=get_title(),
     js="""
         function change_fieldset_span_tag_to_legend(){
-            console.log('change_fieldset_span_tag_to_legend');
             const fieldsets = document.getElementsByTagName('fieldset');
             for(let i=0; i<fieldsets.length; i++){
                 const parentNode=fieldsets[i];
@@ -85,6 +84,9 @@ with render_demo(
                     legend.classList.add('sa-legend');
                     parentNode.insertBefore(legend, span);
                     parentNode.removeChild(span);
+                    if (parentNode.parentNode){
+                        parentNode.parentNode.classList.add('sa-no-bg');
+                    }
                 }
             }
         }
