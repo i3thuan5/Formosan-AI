@@ -65,7 +65,31 @@ def get_title():
         return tong.readline().strip("# ")
 
 
-with render_demo(title=get_title()) as demo:
+with render_demo(
+    title=get_title(),
+    js="""
+        function change_fieldset_span_tag_to_legend(){
+            console.log('change_fieldset_span_tag_to_legend');
+            const fieldsets = document.getElementsByTagName('fieldset');
+            for(let i=0; i<fieldsets.length; i++){
+                const parentNode=fieldsets[i];
+                const spans=parentNode.querySelectorAll("span[data-testid='block-info']");
+                if(spans.length){
+                    const span=spans[0];
+                    const legend=document.createElement('legend');
+                    for (let i = 0; i < span.attributes.length; i++) {
+                        const attribute = span.attributes[i];
+                        legend.setAttribute(attribute.name, attribute.value);
+                      }
+                    legend.innerHTML=span.innerHTML;
+                    legend.classList.add('sa-legend');
+                    parentNode.insertBefore(legend, span);
+                    parentNode.removeChild(span);
+                }
+            }
+        }
+        """
+) as demo:
 
     with open("DEMO.md") as tong:
         gr.Markdown(tong.read())
