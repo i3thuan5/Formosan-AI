@@ -28,7 +28,7 @@ footer[class^="svelte"]{
 }
 .sa-legend {
   margin-top: 0.5rem;
-  color: var(--block-info-text-color);
+  color: var(--block-title-text-color);
 }
 .form {
   background-color: none !important;
