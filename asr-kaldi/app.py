@@ -65,7 +65,21 @@ def get_title():
         return tong.readline().strip("# ")
 
 
-with render_demo(title=get_title()) as demo:
+with render_demo(
+    title=get_title(),
+    js='''
+        function remove_gradio5_iframe_issue61() {
+            const iframes = document.querySelectorAll('iframe');
+            iframes.forEach(iframe => {
+                const parent = iframe.parentNode;
+                if (parent) {
+                  parent.removeChild(iframe);
+                  console.log('Deleted an iframe:', iframe);
+                }
+            });
+        }
+    '''
+) as demo:
 
     with open("DEMO.md") as tong:
         gr.Markdown(tong.read())
