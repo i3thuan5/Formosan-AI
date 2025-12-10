@@ -82,7 +82,7 @@ with render_demo(
                       }
                     legend.innerHTML=span.innerHTML;
                     legend.classList.add('sa-legend');
-                    parentNode.insertBefore(legend, span);
+                    parentNode.insertBefore(legend, parentNode.firstChild);
                     parentNode.removeChild(span);
                     if (parentNode.parentNode){
                         parentNode.parentNode.classList.add('sa-no-bg');
