@@ -68,7 +68,7 @@ def get_title():
 with render_demo(
     title=get_title(),
     js='''
-        function remove_gradio5_iframe_issue61(){
+        function remove_gradio5_iframe_issue61() {
             const iframes = document.querySelectorAll('iframe');
             iframes.forEach(iframe => {
                 const parent = iframe.parentNode;
