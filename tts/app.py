@@ -201,6 +201,7 @@ with render_demo(
                         navigator.clipboard.writeText(button.innerText);
                     });
                 });
+            }
 
             function remove_gradio5_iframe_issue61() {
                 const iframes = document.querySelectorAll('iframe');
