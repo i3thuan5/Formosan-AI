@@ -1,4 +1,3 @@
-from pathlib import Path
 import gradio as gr
 import spaces
 import torch
