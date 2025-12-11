@@ -97,7 +97,6 @@ with render_demo(
                     const parent = iframe.parentNode;
                     if (parent) {
                       parent.removeChild(iframe);
-                      console.log('Deleted an iframe:', iframe);
                     }
                 });
             }
