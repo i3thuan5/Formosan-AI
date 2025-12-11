@@ -235,7 +235,11 @@ with render_demo(
         gr.Markdown(tong.read())
 
     gr.HTML(
-        "特殊符號請複製使用（滑鼠點擊即可複製）：<button>é</button> <button>ṟ</button> <button>ɨ</button> <button>ʉ</button>",
+        "特殊符號請複製使用（滑鼠點擊即可複製）："
+        "<button class='sa-btn'>é</button>"
+        "<button class='sa-btn'>ṟ</button>"
+        "<button class='sa-btn'>ɨ</button>"
+        "<button class='sa-btn'>ʉ</button>",
         padding=False,
         elem_id="head-html-block",
     )
