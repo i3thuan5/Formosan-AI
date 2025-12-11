@@ -51,7 +51,7 @@ FORMOSAN_LANGUAGES_MAP = {
     "雅美": "tao_Yami",
 }
 
-ETHNICITIES = list(set([k.split("_")[0] for k in FORMOSAN_LANGUAGES_MAP.keys()]))
+ETHNICITIES = sorted(set([k.split("_")[0] for k in FORMOSAN_LANGUAGES_MAP.keys()]))
 
 MODEL_NAME = "ithuan/nllb-600m-formosan-all-finetune-v2"
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -135,7 +135,7 @@ with render_demo(
         to_zh_ethnicity = gr.Dropdown(
             label="族別",
             choices=ETHNICITIES,
-            value=ETHNICITIES[0],
+            value="阿美",
             filterable=False,
         )
         to_zh_src_lang = gr.Dropdown(
