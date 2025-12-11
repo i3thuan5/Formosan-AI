@@ -146,7 +146,7 @@ with render_demo(
         )
         to_zh_tgt_lang = gr.Text(value="zho_Hant", visible=False, interactive=False)
         to_zh_input_text = gr.Textbox(label="原文", lines=6)
-        to_zh_btn = gr.Button("翻譯")
+        to_zh_btn = gr.Button("翻譯", variant="primary")
         to_zh_output = gr.Textbox(label="翻譯結果", lines=6)
 
         to_zh_ethnicity.change(
