@@ -67,18 +67,43 @@ def get_title():
 
 with render_demo(
     title=get_title(),
-    js='''
-        function remove_gradio5_iframe_issue61() {
-            const iframes = document.querySelectorAll('iframe');
-            iframes.forEach(iframe => {
-                const parent = iframe.parentNode;
-                if (parent) {
-                  parent.removeChild(iframe);
-                  console.log('Deleted an iframe:', iframe);
+    js="""
+        function run_asr_kaldi_block(){
+            function change_fieldset_span_tag_to_legend(){
+                const fieldsets = document.getElementsByTagName('fieldset');
+                for(let i=0; i<fieldsets.length; i++){
+                    const parentNode=fieldsets[i];
+                    const spans=parentNode.querySelectorAll("span[data-testid='block-info']");
+                    if(spans.length){
+                        const span=spans[0];
+                        const legend=document.createElement('legend');
+                        for (let i = 0; i < span.attributes.length; i++) {
+                            const attribute = span.attributes[i];
+                            legend.setAttribute(attribute.name, attribute.value);
+                          }
+                        legend.innerHTML=span.innerHTML;
+                        legend.classList.add('sa-legend');
+                        parentNode.insertBefore(legend, parentNode.firstChild);
+                        parentNode.removeChild(span);
+                        if (parentNode.parentNode){
+                            parentNode.parentNode.classList.add('sa-no-bg');
+                        }
+                    }
                 }
-            });
+            }
+            function remove_gradio5_iframe_issue61() {
+                const iframes = document.querySelectorAll('iframe');
+                iframes.forEach(iframe => {
+                    const parent = iframe.parentNode;
+                    if (parent) {
+                      parent.removeChild(iframe);
+                    }
+                });
+            }
+            change_fieldset_span_tag_to_legend();
+            remove_gradio5_iframe_issue61();
         }
-    '''
+    """
 ) as demo:
 
     with open("DEMO.md") as tong:

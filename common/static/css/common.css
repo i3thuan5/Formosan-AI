@@ -26,3 +26,10 @@ a.sa-link:focus-visible,
 footer[class^="svelte"]{
   display: none !important;
 }
+.sa-legend {
+  margin-top: 0.5rem;
+  color: var(--block-title-text-color);
+}
+.sa-no-bg {
+  background-color: transparent;
+}
