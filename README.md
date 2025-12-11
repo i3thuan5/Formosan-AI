@@ -1,5 +1,12 @@
 # formosan-asr-cd
 
+原語會「族語AI翻譯計畫」語音系統。
+
+- 族語AI成果網站網址：https://ai-labs.ilrdf.org.tw/
+- 語音辨識系統網址：https://sapolita-kaldi.ithuan.tw/
+- 合成系統網址：https://hnang-kari-ai-asi-sluhay.ithuan.tw/
+- 基礎翻譯系統網址：https://ithuan-formosan-translation.hf.space/
+
 ## local開發
 
 ### 建立 Python virtual environment
