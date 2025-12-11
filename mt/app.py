@@ -172,7 +172,7 @@ with render_demo(
         to_formosan_ethnicity = gr.Dropdown(
             label="族別",
             choices=ETHNICITIES,
-            value=ETHNICITIES[0],
+            value="阿美",
             filterable=False,
         )
         to_formosan_tgt_lang = gr.Dropdown(
