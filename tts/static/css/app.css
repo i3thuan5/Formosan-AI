@@ -1,1 +1,18 @@
 .textonly textarea {border-width: 0px !important; }
+
+.sa-btn {
+	text-align: center;
+	color: var(--primary-500);
+	border: 1px solid var(--primary-300);
+	border-radius: 0.375rem;
+	user-select: none;
+	padding: 0.375rem 0.75rem;
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	margin-right: 0.25rem;
+}
+
+.sa-btn:hover, .sa-btn:active {
+  color: #fff;
+  background-color: var(--primary-700);
+  border-color: var(--primary-700);
+}
