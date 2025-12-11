@@ -193,13 +193,15 @@ with render_demo(
     title=get_title(),
     css_paths=[Path(__file__).parent / 'static' / 'css' / 'app.css', ],
     js="""
-        function addButtonsEvent() {
-            const buttons = document.querySelectorAll("#head-html-block button");
-            buttons.forEach(button => {
-                button.addEventListener("click", () => {
-                    navigator.clipboard.writeText(button.innerText);
+        function run_tts_block(){
+            function addButtonsEvent() {
+                const buttons = document.querySelectorAll("#head-html-block button");
+                buttons.forEach(button => {
+                    button.addEventListener("click", () => {
+                        navigator.clipboard.writeText(button.innerText);
+                    });
                 });
-            });
+            }
 
             function remove_gradio5_iframe_issue61() {
                 const iframes = document.querySelectorAll('iframe');
@@ -210,7 +212,22 @@ with render_demo(
                     }
                 });
             }
+
+            function add_overflow_menu_toggler_innertext() {
+                const menus = document.querySelectorAll('.overflow-menu');
+                menus.forEach(menu => {
+                    const button = menu.querySelector('button');
+                    if (button) {
+                        const info = document.createElement('span');
+                        info.innerText = '其餘頁籤選項';
+                        info.classList.add('sa-visually-hidden');
+                        button.appendChild(info);
+                    }
+                });
+            }
+            addButtonsEvent();
             remove_gradio5_iframe_issue61();
+            add_overflow_menu_toggler_innertext();
         }
         """,
 ) as demo:
