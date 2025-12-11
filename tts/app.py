@@ -200,6 +200,17 @@ with render_demo(
                     navigator.clipboard.writeText(button.innerText);
                 });
             });
+
+            function remove_gradio5_iframe_issue61() {
+                const iframes = document.querySelectorAll('iframe');
+                iframes.forEach(iframe => {
+                    const parent = iframe.parentNode;
+                    if (parent) {
+                      parent.removeChild(iframe);
+                    }
+                });
+            }
+            remove_gradio5_iframe_issue61();
         }
         """,
 ) as demo:
