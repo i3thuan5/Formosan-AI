@@ -186,7 +186,7 @@ with render_demo(
         )
 
         to_formosan_input_text = gr.Textbox(label="原文", lines=6)
-        to_formosan_btn = gr.Button("翻譯")
+        to_formosan_btn = gr.Button("翻譯", variant="primary")
         to_formosan_output = gr.Textbox(label="翻譯結果", lines=6)
 
         to_formosan_ethnicity.change(
