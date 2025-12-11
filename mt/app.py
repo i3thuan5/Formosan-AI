@@ -1,7 +1,10 @@
+from pathlib import Path
 import gradio as gr
 import spaces
 import torch
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+from utils import render_demo
+
 
 FORMOSAN_LANGUAGES_MAP = {
     "阿美_海岸": "ami_Coas",
@@ -88,28 +91,45 @@ def translate(text: str, src_lang: str, tgt_lang: str):
     return translated
 
 
-demo = gr.Blocks(
-    title="族語基礎翻譯系統beta",
-    css="@import url(https://tauhu.tw/tauhu-oo.css);",
-    theme=gr.themes.Default(
-        font=(
-            "tauhu-oo",
-            gr.themes.GoogleFont("Source Sans Pro"),
-            "ui-sans-serif",
-            "system-ui",
-            "sans-serif",
-        )
-    ),
-)
+def get_title():
+    with open("DEMO.md", encoding="utf-8") as tong:
+        return tong.readline().strip("# ")
 
-with demo:
-    gr.Markdown(
-        """
-        # 族語基礎翻譯系統beta
 
-        這是「族語華語對譯系統」，請按照下方步驟操作，或查看操作手冊及操作影片。本系統為初步開發測試版，翻譯結果可能出現錯誤，目前仍在持續優化中。試用時請務必謹慎檢視翻譯結果，切勿直接作為正式或關鍵資訊使用，感謝您的理解與支持，並請不吝留下系統回報與建議。
-        """
-    )
+with render_demo(
+    title=get_title(),
+    js="""
+        function run_mt_block(){
+
+            function remove_gradio5_iframe_issue61() {
+                const iframes = document.querySelectorAll('iframe');
+                iframes.forEach(iframe => {
+                    const parent = iframe.parentNode;
+                    if (parent) {
+                      parent.removeChild(iframe);
+                    }
+                });
+            }
+
+            function add_overflow_menu_toggler_innertext() {
+                const menus = document.querySelectorAll('.overflow-menu');
+                menus.forEach(menu => {
+                    const button = menu.querySelector('button');
+                    if (button) {
+                        const info = document.createElement('span');
+                        info.innerText = '其餘頁籤選項';
+                        info.classList.add('sa-visually-hidden');
+                        button.appendChild(info);
+                    }
+                });
+            }
+            remove_gradio5_iframe_issue61();
+            add_overflow_menu_toggler_innertext();
+        }
+        """,
+) as demo:
+    with open("DEMO.md") as tong:
+        gr.Markdown(tong.read())
 
     with gr.Tab("族語 ⮕ 華語"):
         to_zh_ethnicity = gr.Dropdown(
@@ -184,5 +204,3 @@ with demo:
             inputs=[to_formosan_input_text, to_formosan_src_lang, to_formosan_tgt_lang],
             outputs=to_formosan_output,
         )
-
-demo.launch()

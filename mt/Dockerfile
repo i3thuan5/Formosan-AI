@@ -16,7 +16,7 @@ RUN --mount=target=/tmp/requirements.txt,source=requirements.txt pip install --n
 
 COPY --from=formosan-ai-common /app/utils.py /app/colors.py /app/
 COPY --from=formosan-ai-common /app/common_static/ /app/common_static/
-COPY --link app.py /app/
+COPY --link app.py DEMO.md /app/
 RUN addgroup --gid 1000 nonroot && \
     adduser --uid 1000 --disabled-password --ingroup nonroot --quiet nonroot
 
