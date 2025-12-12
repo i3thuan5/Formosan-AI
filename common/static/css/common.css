@@ -2,6 +2,7 @@
 :root {
   --sa-primary-darker: #AC370C;
   --bs-success: #2F5ACB;
+  --bs-suceess-lighter:#EAEFFA;
 }
 a.sa-link, .md a {
     color: var(--sa-primary-darker);
@@ -43,4 +44,19 @@ footer[class^="svelte"]{
   clip: rect(0, 0, 0, 0) !important;
   white-space: nowrap !important;
   border: 0 !important;
+}
+.sa-alert {
+  box-sizing: border-box;
+  position: relative;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  color: var(--primary-800);
+  background-color: var(--primary-200);
+  border: var(--primary-500);
+  border-radius: 0.375rem;
+}
+.sa-alert.alert-success {
+  color: var(--bs-success);
+  background-color: var(--bs-suceess-lighter);
+  border: var(--bs-success);
 }

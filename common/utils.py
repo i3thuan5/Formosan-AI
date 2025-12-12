@@ -40,6 +40,11 @@ def render_demo(title, js=None, css_paths=[]):
     )
 
     with demo:
+        gr.HTML(
+            "<noscript class='sa-alert alert-success'>"
+            "很抱歉，本站某些功能須在JavaScript啟用的狀態下才能正常操作。"
+            "</noscript>"
+        )
         gr.HTML("""
             <a href="https://{site}/" class="sa-link">
                 < 返回成果網站首頁
