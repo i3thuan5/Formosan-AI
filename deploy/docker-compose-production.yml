@@ -26,3 +26,7 @@ services:
               count: all
               capabilities: [gpu]
     restart: always
+  mt:
+    image: ithuan/formosan-ai:mt
+    build: !reset null
+    restart: always

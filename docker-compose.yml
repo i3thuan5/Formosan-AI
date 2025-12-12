@@ -32,6 +32,16 @@ services:
       - VIRTUAL_HOST=${TTS_VIRTUAL_HOST:-hnang-kari-ai-asi-sluhay.ithuan.tw}
       - LETSENCRYPT_HOST=${TTS_VIRTUAL_HOST:-hnang-kari-ai-asi-sluhay.ithuan.tw}
       - SAPOLITA_WEBSITE_HOST=${SAPOLITA_WEBSITE_HOST:-ai-labs.ilrdf.org.tw}
+  mt:
+    build: ./mt/
+    volumes:
+      - "./model_cache_mt:/home/nonroot/.cache:rw"
+    networks:
+      - nginx-bridge
+    environment:
+      - VIRTUAL_HOST=${MT_VIRTUAL_HOST:-hmjil.ithuan.tw}
+      - LETSENCRYPT_HOST=${MT_VIRTUAL_HOST:-hmjil.ithuan.tw}
+      - SAPOLITA_WEBSITE_HOST=${SAPOLITA_WEBSITE_HOST:-ai-labs.ilrdf.org.tw}
 
 networks:
   nginx-bridge:

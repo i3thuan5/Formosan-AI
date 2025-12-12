@@ -44,6 +44,7 @@ jobs:
         - docker build -t ithuan/formosan-ai:asr ./asr
         - docker build -t ithuan/formosan-ai:asr-kaldi ./asr-kaldi
         - docker build -t ithuan/formosan-ai:tts ./tts
+        - docker build -t ithuan/formosan-ai:mt ./mt
     - stage: Prepare for the Deployment
       name: Build Docker Container
       if: (type = push or type = cron) and (branch = main or branch = asr-docker-cd)
@@ -56,10 +57,12 @@ jobs:
         - docker build -t ithuan/formosan-ai:asr ./asr
         - docker build -t ithuan/formosan-ai:asr-kaldi ./asr-kaldi
         - docker build -t ithuan/formosan-ai:tts ./tts
+        - docker build -t ithuan/formosan-ai:mt ./mt
       after_success:
         - docker push ithuan/formosan-ai:asr
         - docker push ithuan/formosan-ai:asr-kaldi
         - docker push ithuan/formosan-ai:tts
+        - docker push ithuan/formosan-ai:mt
     - stage: Deploy
       name: Deploy
       if: (type = push or type = cron) and (branch = main or branch = asr-docker-cd)
@@ -86,6 +89,7 @@ jobs:
           --extra-vars "ASR_VIRTUAL_HOST=${ASR_VIRTUAL_HOST}"
           --extra-vars "ASR_KALDI_VIRTUAL_HOST=${ASR_KALDI_VIRTUAL_HOST}"
           --extra-vars "TTS_VIRTUAL_HOST=${TTS_VIRTUAL_HOST}"
+          --extra-vars "MT_VIRTUAL_HOST=${MT_VIRTUAL_HOST}"
           --extra-vars "SENTRY_DSN=${SENTRY_DSN}"
     - stage: After Deploy
       name: Online ASR Check
