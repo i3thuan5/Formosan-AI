@@ -6,43 +6,53 @@ services:
       - "./model_cache_asr:/home/nonroot/.cache:rw"
     networks:
       - nginx-bridge
+      - ai-labs-bridge
     environment:
       - BATCH_SIZE=${ASR_BATCH_SIZE:-5}
       - VIRTUAL_HOST=${ASR_VIRTUAL_HOST:-sapolita.ithuan.tw}
       - VIRTUAL_PORT=7860
       - LETSENCRYPT_HOST=${ASR_VIRTUAL_HOST:-sapolita.ithuan.tw}
       - SAPOLITA_WEBSITE_HOST=${SAPOLITA_WEBSITE_HOST:-ai-labs.ilrdf.org.tw}
+      - GRADIO_ROOT_PATH=/sapolita
   asr-kaldi:
     build: ./asr-kaldi/
     volumes:
       - "./model_cache_asr_kaldi:/home/nonroot/.cache:rw"
     networks:
       - nginx-bridge
+      - ai-labs-bridge
     environment:
       - VIRTUAL_HOST=${ASR_KALDI_VIRTUAL_HOST:-sapolita-kaldi.ithuan.tw}
       - LETSENCRYPT_HOST=${ASR_KALDI_VIRTUAL_HOST:-sapolita-kaldi.ithuan.tw}
       - SAPOLITA_WEBSITE_HOST=${SAPOLITA_WEBSITE_HOST:-ai-labs.ilrdf.org.tw}
+      - GRADIO_ROOT_PATH=/sapolita-kaldi
   tts:
     build: ./tts/
     volumes:
       - "./model_cache_tts:/home/nonroot/.cache:rw"
     networks:
       - nginx-bridge
+      - ai-labs-bridge
     environment:
       - VIRTUAL_HOST=${TTS_VIRTUAL_HOST:-hnang-kari-ai-asi-sluhay.ithuan.tw}
       - LETSENCRYPT_HOST=${TTS_VIRTUAL_HOST:-hnang-kari-ai-asi-sluhay.ithuan.tw}
       - SAPOLITA_WEBSITE_HOST=${SAPOLITA_WEBSITE_HOST:-ai-labs.ilrdf.org.tw}
+      - GRADIO_ROOT_PATH=/hnang-kari-ai-asi-sluhay
   mt:
     build: ./mt/
     volumes:
       - "./model_cache_mt:/home/nonroot/.cache:rw"
     networks:
       - nginx-bridge
+      - ai-labs-bridge
     environment:
       - VIRTUAL_HOST=${MT_VIRTUAL_HOST:-hmjil.ithuan.tw}
       - LETSENCRYPT_HOST=${MT_VIRTUAL_HOST:-hmjil.ithuan.tw}
       - SAPOLITA_WEBSITE_HOST=${SAPOLITA_WEBSITE_HOST:-ai-labs.ilrdf.org.tw}
+      - GRADIO_ROOT_PATH=/hmjil
 
 networks:
+  ai-labs-bridge:
+    name: ai-labs-bridge
   nginx-bridge:
     external: true
