@@ -52,7 +52,7 @@ def render_demo(title, js=None, css_paths=[]):
             gr.HTML(
                 "<div>"
                 "<hr>"
-                "<p class='text-center'>Copy &copy; {} "
+                "<p class='text-center'>Copyright &copy; {} "
                 "財團法人原住民族語言研究發展基金會 版權所有</p>"
                 "</div>".format(datetime.now().year))
 
