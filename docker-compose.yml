@@ -39,8 +39,8 @@ services:
     networks:
       - nginx-bridge
     environment:
-      - VIRTUAL_HOST=${MT_VIRTUAL_HOST:-sapolita-kaldi.ithuan.tw}
-      - LETSENCRYPT_HOST=${MT_VIRTUAL_HOST:-sapolita-kaldi.ithuan.tw}
+      - VIRTUAL_HOST=${MT_VIRTUAL_HOST:-hmjil.ithuan.tw}
+      - LETSENCRYPT_HOST=${MT_VIRTUAL_HOST:-hmjil.ithuan.tw}
       - SAPOLITA_WEBSITE_HOST=${SAPOLITA_WEBSITE_HOST:-ai-labs.ilrdf.org.tw}
 
 networks:
