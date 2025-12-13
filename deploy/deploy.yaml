@@ -36,6 +36,11 @@
         path: "{{ tsuanan_path }}/model_cache_tts"
         state: directory
         mode: '1777'
+    - name: 設定翻譯model_cache檔案簿仔
+      ansible.builtin.file:
+        path: "{{ tsuanan_path }}/model_cache_mt"
+        state: directory
+        mode: '1777'
     - name: Log into DockerHub
       community.docker.docker_login:
         username: "{{ DOCKER_USER }}"
