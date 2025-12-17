@@ -2,6 +2,7 @@ import os
 import tempfile
 from pathlib import Path
 
+import torch
 import gradio as gr
 import uvicorn
 from fastapi import FastAPI
@@ -13,9 +14,13 @@ from utils import render_demo
 SAMPLING_RATE = 16000
 BATCH_SIZE = int(os.getenv('BATCH_SIZE', 32))
 
+device = "cuda" if torch.cuda.is_available() else "cpu"
+compute_type = "float16" if torch.cuda.is_available() else "int8"
+
 model = load_model(
     "formospeech/whisper-large-v2-formosan-all-ct2",
-    device="cuda",
+    device=device,
+    compute_type=compute_type,
     asr_options={"word_timestamps": True},
 )
 
