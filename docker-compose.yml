@@ -46,10 +46,10 @@ services:
       - nginx-bridge
       - ai-labs-bridge
     environment:
-      - VIRTUAL_HOST=${MT_VIRTUAL_HOST:-hmjil.ithuan.tw}
-      - LETSENCRYPT_HOST=${MT_VIRTUAL_HOST:-hmjil.ithuan.tw}
+      - VIRTUAL_HOST=${MT_VIRTUAL_HOST:-kari-seejiq-tnpusu-ai-hmjil.ithuan.tw}
+      - LETSENCRYPT_HOST=${MT_VIRTUAL_HOST:-kari-seejiq-tnpusu-ai-hmjil.ithuan.tw}
       - SAPOLITA_WEBSITE_HOST=${SAPOLITA_WEBSITE_HOST:-ai-labs.ilrdf.org.tw}
-      - GRADIO_ROOT_PATH=/hmjil
+      - GRADIO_ROOT_PATH=/kari-seejiq-tnpusu-ai-hmjil
 
 networks:
   ai-labs-bridge:
