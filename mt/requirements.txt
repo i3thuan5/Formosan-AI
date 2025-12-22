@@ -269,7 +269,7 @@ typing-inspection==0.4.2
     # via pydantic
 tzdata==2025.2
     # via pandas
-urllib3==2.5.0
+urllib3==2.6.0
     # via requests
 uvicorn==0.38.0
     # via
@@ -277,3 +277,4 @@ uvicorn==0.38.0
     #   gradio
 websockets==15.0.1
     # via gradio-client
+
