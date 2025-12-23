@@ -12,6 +12,9 @@ RUN apt-get update && \
 
 RUN pip install --no-cache-dir pip -U
 
+RUN addgroup --gid 1000 nonroot && \
+    adduser --uid 1000 --disabled-password --ingroup nonroot --quiet nonroot
+
 RUN --mount=target=/tmp/requirements.txt,source=requirements.txt pip install --no-cache-dir -r /tmp/requirements.txt
 
 COPY --from=formosan-ai-common /app/utils.py /app/colors.py /app/
@@ -21,8 +24,6 @@ COPY --link configs/ /app/configs/
 COPY --link ipa/ /app/ipa/
 COPY --link assets/ /app/assets/
 COPY --link static/ /app/static/
-RUN addgroup --gid 1000 nonroot && \
-    adduser --uid 1000 --disabled-password --ingroup nonroot --quiet nonroot
 
 USER nonroot
 WORKDIR /app

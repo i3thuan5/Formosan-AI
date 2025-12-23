@@ -1,8 +1,8 @@
-FROM nvidia/cuda:12.2.2-cudnn8-runtime-ubuntu22.04
+FROM nvidia/cuda:12.2.2-runtime-ubuntu22.04
 
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
-    python3.10 python3-pip python-is-python3 \
+    python3.10 libpython3.10 python3-pip python-is-python3 \
     git git-lfs ffmpeg libsm6 libxext6 cmake rsync libgl1-mesa-glx && \
     git lfs install && \
     apt-get install --no-install-recommends -y curl && \
@@ -12,10 +12,11 @@ RUN apt-get update && \
 
 RUN pip install --no-cache-dir pip -U
 
-RUN --mount=target=/tmp/requirements.txt,source=requirements.txt pip install --no-cache-dir -r /tmp/requirements.txt
-
 RUN addgroup --gid 1000 nonroot && \
     adduser --uid 1000 --disabled-password --ingroup nonroot --quiet nonroot
+
+RUN --mount=target=/tmp/requirements.txt,source=requirements.txt pip install --no-cache-dir -r /tmp/requirements.txt
+
 COPY --from=formosan-ai-common /app/utils.py /app/colors.py /app/
 COPY --from=formosan-ai-common /app/common_static/ /app/common_static/
 COPY --link app.py whisper.py DEMO.md /app/
