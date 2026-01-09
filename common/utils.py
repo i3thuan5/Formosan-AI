@@ -45,6 +45,15 @@ def render_demo(title, js=None, css_paths=[]):
             "很抱歉，本站某些功能須在JavaScript啟用的狀態下才能正常操作。"
             "</noscript>"
         )
+        gr.HTML(
+            """
+            <nav aria-label="無障礙選單" class="visually-hidden-focusable" role="navigation">
+                <div>
+                    <a href="#main" class="sa-link p-1 m-1">跳去主內容</a>
+                    <a href="https://ai-labs.ilrdf.org.tw/sitemap/" class="sa-link p-1 m-1">網站導覽</a>
+                </div>
+            </nav>"""
+        )
         gr.HTML("""
             <a href="https://{site}/" class="sa-link">
                 < 返回成果網站首頁
