@@ -184,13 +184,8 @@ def infer(
     return (final_sample_rate, final_wave), spectrogram_path
 
 
-def get_title():
-    with open("DEMO.md", encoding="utf-8") as tong:
-        return tong.readline().strip("# ")
-
-
 with render_demo(
-    title=get_title(),
+    demo_md_filename="DEMO.md",
     css_paths=[Path(__file__).parent / 'static' / 'css' / 'app.css', ],
     js="""
         function run_tts_block(){
@@ -231,9 +226,6 @@ with render_demo(
         }
         """,
 ) as demo:
-
-    with open("DEMO.md") as tong:
-        gr.Markdown(tong.read())
 
     gr.HTML(
         "特殊符號請複製使用（滑鼠點擊即可複製）："

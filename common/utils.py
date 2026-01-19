@@ -13,7 +13,7 @@ SAPOLITA_WEBSITE_HOST = os.environ.get('SAPOLITA_WEBSITE_HOST')
 
 
 @contextmanager
-def render_demo(title, js=None, css_paths=[]):
+def render_demo(demo_md_filename="", js=None, css_paths=[]):
     gr.set_static_paths(
         paths=[
             COMMON_STATIC_ROOT / "image",
@@ -23,7 +23,7 @@ def render_demo(title, js=None, css_paths=[]):
     common_css_paths = [COMMON_STATIC_ROOT / 'css' / 'common.css', ]
 
     demo = gr.Blocks(
-        title=title,
+        title=get_title(demo_md_filename),
         css_paths=(common_css_paths + css_paths),
         theme=gr.themes.Default(
             primary_hue=sa_orange_color,
@@ -45,11 +45,24 @@ def render_demo(title, js=None, css_paths=[]):
             "很抱歉，本站某些功能須在JavaScript啟用的狀態下才能正常操作。"
             "</noscript>"
         )
+        gr.HTML(
+            """
+            <nav aria-label="無障礙選單" class="visually-hidden-focusable" role="navigation">
+                <div>
+                    <a href="#main" class="sa-link p-1 m-1">跳去主內容</a>
+                    <a href="https://ai-labs.ilrdf.org.tw/sitemap/" class="sa-link p-1 m-1">網站導覽</a>
+                </div>
+            </nav>"""
+        )
         gr.HTML("""
             <a href="https://{site}/" class="sa-link">
                 < 返回成果網站首頁
             </a>
             """.format(site=SAPOLITA_WEBSITE_HOST))
+
+        with open(demo_md_filename, 'r', encoding='utf-8') as tong:
+            gr.Markdown(tong.readline(), elem_id="main")
+            gr.Markdown(tong.read())
 
         yield demo
 
@@ -88,3 +101,8 @@ def render_demo(title, js=None, css_paths=[]):
         ],
         favicon_path=COMMON_STATIC_ROOT / 'favicon' / 'favicon.svg',
     )
+
+
+def get_title(demo_md_filename):
+    with open(demo_md_filename, 'r', encoding='utf-8') as tong:
+        return tong.readline().strip("# ")
