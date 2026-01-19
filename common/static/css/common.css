@@ -81,3 +81,8 @@ footer[class^="svelte"]{
 #main {
   scroll-margin-top: 7rem;
 }
+
+.video-container button.center.boundedheight:focus,
+.audio-container button.center.boundedheight:focus {
+  box-shadow: inset 0px 0px 0px 3px var(--bs-success);
+}
