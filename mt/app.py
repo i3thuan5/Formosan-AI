@@ -93,13 +93,8 @@ def translate(text: str, src_lang: str, tgt_lang: str):
     return translated
 
 
-def get_title():
-    with open("DEMO.md", encoding="utf-8") as tong:
-        return tong.readline().strip("# ")
-
-
 with render_demo(
-    title=get_title(),
+    demo_md_filename="DEMO.md",
     js="""
         function run_mt_block(){
 
@@ -130,9 +125,6 @@ with render_demo(
         }
         """,
 ) as demo:
-    with open("DEMO.md") as tong:
-        gr.Markdown(tong.readline(), elem_id="main")
-        gr.Markdown(tong.read())
 
     with gr.Tab("族語 ⮕ 華語"):
         to_zh_ethnicity = gr.Dropdown(

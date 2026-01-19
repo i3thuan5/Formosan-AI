@@ -13,7 +13,7 @@ SAPOLITA_WEBSITE_HOST = os.environ.get('SAPOLITA_WEBSITE_HOST')
 
 
 @contextmanager
-def render_demo(title, js=None, css_paths=[]):
+def render_demo(demo_md_filename="", js=None, css_paths=[]):
     gr.set_static_paths(
         paths=[
             COMMON_STATIC_ROOT / "image",
@@ -23,7 +23,7 @@ def render_demo(title, js=None, css_paths=[]):
     common_css_paths = [COMMON_STATIC_ROOT / 'css' / 'common.css', ]
 
     demo = gr.Blocks(
-        title=title,
+        title=get_title(demo_md_filename),
         css_paths=(common_css_paths + css_paths),
         theme=gr.themes.Default(
             primary_hue=sa_orange_color,
@@ -59,6 +59,10 @@ def render_demo(title, js=None, css_paths=[]):
                 < 返回成果網站首頁
             </a>
             """.format(site=SAPOLITA_WEBSITE_HOST))
+
+        with open(demo_md_filename, 'r', encoding='utf-8') as tong:
+            gr.Markdown(tong.readline(), elem_id="main")
+            gr.Markdown(tong.read())
 
         yield demo
 
@@ -97,3 +101,8 @@ def render_demo(title, js=None, css_paths=[]):
         ],
         favicon_path=COMMON_STATIC_ROOT / 'favicon' / 'favicon.svg',
     )
+
+
+def get_title(demo_md_filename):
+    with open(demo_md_filename, 'r', encoding='utf-8') as tong:
+        return tong.readline().strip("# ")

@@ -60,13 +60,8 @@ def automatic_speech_recognition(dialect_id: str, audio_data: str):
     return (", ".join(filtered_lines) + ".").capitalize()
 
 
-def get_title():
-    with open("DEMO.md") as tong:
-        return tong.readline().strip("# ")
-
-
 with render_demo(
-    title=get_title(),
+    demo_md_filename="DEMO.md",
     js="""
         function run_asr_kaldi_block(){
             function change_fieldset_span_tag_to_legend(){
@@ -105,10 +100,6 @@ with render_demo(
         }
     """
 ) as demo:
-
-    with open("DEMO.md") as tong:
-        gr.Markdown(tong.readline(), elem_id="main")
-        gr.Markdown(tong.read())
 
     with gr.Row():
         with gr.Column():

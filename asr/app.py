@@ -25,13 +25,8 @@ model = load_model(
 )
 
 
-def get_title():
-    with open("DEMO.md") as tong:
-        return tong.readline().strip("# ")
-
-
 with render_demo(
-    title=get_title(),
+    demo_md_filename="DEMO.md",
     js='''
         function remove_gradio5_iframe_issue61() {
             const iframes = document.querySelectorAll('iframe');
@@ -44,10 +39,6 @@ with render_demo(
         }
     '''
 ) as demo:
-
-    with open("DEMO.md") as tong:
-        gr.Markdown(tong.readline(), elem_id="main")
-        gr.Markdown(tong.read())
 
     with gr.Row():
         with gr.Column():
