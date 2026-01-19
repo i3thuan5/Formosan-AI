@@ -25,7 +25,8 @@ a.sa-link:active,
     color: var(--bs-success);
 }
 a.sa-link:focus-visible,
-.md a:focus-visible {
+.md a:focus-visible,
+.sa-btn:focus-visible {
   outline: 3px solid var(--bs-success);
   border-radius: 2px;
 }
@@ -80,4 +81,26 @@ footer[class^="svelte"]{
 
 #main {
   scroll-margin-top: 7rem;
+}
+
+button:focus, input:focus {
+  outline: 3px solid var(--bs-success);
+}
+input[type='radio']:focus {
+  border-color: transparent;
+}
+
+.video-container button.center.boundedheight:focus,
+.audio-container button.center.boundedheight:focus {
+  box-shadow: inset 0px 0px 0px 3px var(--bs-success);
+  outline: auto;
+}
+
+
+.tab-container {
+  padding: 2px;
+}
+
+.html-no-start-padding {
+  margin-left: calc(0px - var(--spacing-xl) + 2px);
 }

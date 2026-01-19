@@ -233,8 +233,8 @@ with render_demo(
         "<button class='sa-btn'>ṟ</button>"
         "<button class='sa-btn'>ɨ</button>"
         "<button class='sa-btn'>ʉ</button>",
-        padding=False,
         elem_id="head-html-block",
+        elem_classes=["html-no-start-padding"],
     )
 
     with gr.Tab("預設配音員"):
