@@ -25,7 +25,8 @@ a.sa-link:active,
     color: var(--bs-success);
 }
 a.sa-link:focus-visible,
-.md a:focus-visible {
+.md a:focus-visible,
+.sa-btn:focus-visible {
   outline: 3px solid var(--bs-success);
   border-radius: 2px;
 }
@@ -85,4 +86,12 @@ footer[class^="svelte"]{
 .video-container button.center.boundedheight:focus,
 .audio-container button.center.boundedheight:focus {
   box-shadow: inset 0px 0px 0px 3px var(--bs-success);
+}
+
+.html-container {
+  padding-top: 2px;
+}
+
+.tab-container {
+  padding: 2px;
 }
