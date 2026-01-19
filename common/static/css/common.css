@@ -77,3 +77,6 @@ footer[class^="svelte"]{
   background-color: var(--bs-suceess-lighter);
   border: var(--bs-success);
 }
+h1 {
+  scroll-margin-top: 5rem;
+}

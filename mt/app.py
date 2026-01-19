@@ -50,7 +50,8 @@ FORMOSAN_LANGUAGES_MAP = {
     "雅美": "tao_Yami",
 }
 
-ETHNICITIES = sorted(set([k.split("_")[0] for k in FORMOSAN_LANGUAGES_MAP.keys()]))
+ETHNICITIES = sorted(set([k.split("_")[0]
+                          for k in FORMOSAN_LANGUAGES_MAP.keys()]))
 
 MODEL_NAME = "ithuan/nllb-600m-formosan-all-finetune-v2"
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -73,7 +74,8 @@ def translate(text: str, src_lang: str, tgt_lang: str):
     tokenizer.tgt_lang = tgt_lang
 
     input_tokens = (
-        tokenizer(text, return_tensors="pt").input_ids[0].cpu().numpy().tolist()
+        tokenizer(
+            text, return_tensors="pt").input_ids[0].cpu().numpy().tolist()
     )
     translated = model.generate(
         input_ids=torch.tensor([input_tokens]).to(device),
@@ -81,7 +83,8 @@ def translate(text: str, src_lang: str, tgt_lang: str):
         max_length=5000,
         num_return_sequences=1,
         num_beams=5,
-        no_repeat_ngram_size=4,  # repetition blocking works better if this number is below num_beams
+        # repetition blocking works better if this number is below num_beams
+        no_repeat_ngram_size=4,
         renormalize_logits=True,  # recompute token probabilities after banning the repetitions
     )
 
@@ -90,13 +93,10 @@ def translate(text: str, src_lang: str, tgt_lang: str):
     return translated
 
 
-def get_title():
-    with open("DEMO.md", encoding="utf-8") as tong:
-        return tong.readline().strip("# ")
-
+TITLE = '族語基礎翻譯系統beta'
 
 with render_demo(
-    title=get_title(),
+    title=TITLE,
     js="""
         function run_mt_block(){
 
@@ -127,6 +127,9 @@ with render_demo(
         }
         """,
 ) as demo:
+
+    gr.HTML(value=f"<h1 id='main'>{TITLE}</h1>")
+
     with open("DEMO.md") as tong:
         gr.Markdown(tong.read())
 
@@ -142,9 +145,11 @@ with render_demo(
             choices=get_languages_by_ethnicity(to_zh_ethnicity.value),
             value=get_languages_by_ethnicity(to_zh_ethnicity.value)[0][1],
             filterable=False,
-            interactive=len(get_languages_by_ethnicity(to_zh_ethnicity.value)) > 1,
+            interactive=len(get_languages_by_ethnicity(
+                to_zh_ethnicity.value)) > 1,
         )
-        to_zh_tgt_lang = gr.Text(value="zho_Hant", visible=False, interactive=False)
+        to_zh_tgt_lang = gr.Text(
+            value="zho_Hant", visible=False, interactive=False)
         to_zh_input_text = gr.Textbox(label="原文", lines=6)
         to_zh_btn = gr.Button("翻譯", variant="primary")
         to_zh_output = gr.Textbox(label="翻譯結果", lines=6)
@@ -178,9 +183,11 @@ with render_demo(
         to_formosan_tgt_lang = gr.Dropdown(
             label="語別",
             choices=get_languages_by_ethnicity(to_formosan_ethnicity.value),
-            value=get_languages_by_ethnicity(to_formosan_ethnicity.value)[0][1],
+            value=get_languages_by_ethnicity(
+                to_formosan_ethnicity.value)[0][1],
             filterable=False,
-            interactive=len(get_languages_by_ethnicity(to_formosan_ethnicity.value))
+            interactive=len(get_languages_by_ethnicity(
+                to_formosan_ethnicity.value))
             > 1,
         )
 
@@ -200,6 +207,7 @@ with render_demo(
 
         to_formosan_btn.click(
             translate,
-            inputs=[to_formosan_input_text, to_formosan_src_lang, to_formosan_tgt_lang],
+            inputs=[to_formosan_input_text,
+                    to_formosan_src_lang, to_formosan_tgt_lang],
             outputs=to_formosan_output,
         )

@@ -1,5 +1,3 @@
-# 族語語音合成系統 - 族語AI成果網站
-
 ILRDF Formosan Text-To-Speech System
 
 \
