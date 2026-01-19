@@ -3,6 +3,13 @@
   --sa-primary-darker: #AC370C;
   --bs-success: #2F5ACB;
   --bs-suceess-lighter:#EAEFFA;
+  --text-xxs: 0.5625rem;
+  --text-xs: 0.625rem;
+  --text-sm: 0.75rem;
+  --text-md: 0.875rem;
+  --text-lg: 1rem;
+  --text-xl: 1.375rem;
+  --text-xxl: 1.625rem;
 }
 .visually-hidden, .visually-hidden-focusable:not(:focus):not(:focus-within) {
   position: absolute !important;
