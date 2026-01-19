@@ -83,14 +83,19 @@ footer[class^="svelte"]{
   scroll-margin-top: 7rem;
 }
 
+button:focus, input:focus {
+  outline: 3px solid var(--bs-success);
+}
+input[type='radio']:focus {
+  border-color: transparent;
+}
+
 .video-container button.center.boundedheight:focus,
 .audio-container button.center.boundedheight:focus {
   box-shadow: inset 0px 0px 0px 3px var(--bs-success);
+  outline: auto;
 }
 
-.html-container {
-  padding-top: 2px;
-}
 
 .tab-container {
   padding: 2px;
