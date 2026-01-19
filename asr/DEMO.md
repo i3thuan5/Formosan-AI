@@ -1,3 +1,5 @@
+# 族語逐字稿辨識系統 - 族語AI成果網站
+
 ILRDF Formosan Automatic-Speech-Recognition System
 
 \

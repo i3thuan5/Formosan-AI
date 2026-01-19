@@ -93,10 +93,13 @@ def translate(text: str, src_lang: str, tgt_lang: str):
     return translated
 
 
-TITLE = '族語基礎翻譯系統beta'
+def get_title():
+    with open("DEMO.md", encoding="utf-8") as tong:
+        return tong.readline().strip("# ")
+
 
 with render_demo(
-    title=TITLE,
+    title=get_title(),
     js="""
         function run_mt_block(){
 
@@ -127,10 +130,8 @@ with render_demo(
         }
         """,
 ) as demo:
-
-    gr.HTML(value=f"<h1 id='main'>{TITLE}</h1>")
-
     with open("DEMO.md") as tong:
+        gr.Markdown(tong.readline(), elem_id="main")
         gr.Markdown(tong.read())
 
     with gr.Tab("族語 ⮕ 華語"):

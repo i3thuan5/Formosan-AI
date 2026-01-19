@@ -184,10 +184,13 @@ def infer(
     return (final_sample_rate, final_wave), spectrogram_path
 
 
-TITLE = '族語語音合成系統 - 族語AI成果網站'
+def get_title():
+    with open("DEMO.md", encoding="utf-8") as tong:
+        return tong.readline().strip("# ")
+
 
 with render_demo(
-    title=TITLE,
+    title=get_title(),
     css_paths=[Path(__file__).parent / 'static' / 'css' / 'app.css', ],
     js="""
         function run_tts_block(){
@@ -229,9 +232,8 @@ with render_demo(
         """,
 ) as demo:
 
-    gr.HTML(value=f"<h1 id='main'>{TITLE}</h1>")
-
     with open("DEMO.md") as tong:
+        gr.Markdown(tong.readline(), elem_id="main")
         gr.Markdown(tong.read())
 
     gr.HTML(

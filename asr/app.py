@@ -25,11 +25,13 @@ model = load_model(
 )
 
 
-TITLE = "族語逐字稿辨識系統 - 族語AI成果網站"
+def get_title():
+    with open("DEMO.md") as tong:
+        return tong.readline().strip("# ")
 
 
 with render_demo(
-    title=TITLE,
+    title=get_title(),
     js='''
         function remove_gradio5_iframe_issue61() {
             const iframes = document.querySelectorAll('iframe');
@@ -43,9 +45,8 @@ with render_demo(
     '''
 ) as demo:
 
-    gr.HTML(value=f"<h1 id='main'>{TITLE}</h1>")
-
     with open("DEMO.md") as tong:
+        gr.Markdown(tong.readline(), elem_id="main")
         gr.Markdown(tong.read())
 
     with gr.Row():
