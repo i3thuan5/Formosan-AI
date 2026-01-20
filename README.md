@@ -73,3 +73,7 @@ docker compose -f ZuGi/docker-compose.yml up -d --build nginx-proxy
 3. 手動編共用檔案的image：`docker build -t formosan-ai-common ./common` 。
 
 4. 編image後啟動：`docker compose up -d --build`。
+
+## 發佈
+
+目前未設置自動發佈（CD），請人工發佈。
