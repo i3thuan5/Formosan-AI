@@ -77,7 +77,7 @@ def render_demo(demo_md_filename="", js=None, css_paths=[]):
         with gr.Row(equal_height=True):
             with gr.Column(scale=1, min_width=300):
                 gr.HTML("""
-                    <img class='img-fluid' src='/gradio_api/file={}/image/ilrdf-logo.png'
+                    <img class='img-fluid' src='gradio_api/file={}/image/ilrdf-logo.png'
                         alt='財團法人原住民族語言研究發展基金會logo'>
                     """.format(STATIC_DIR_NAME))
             with gr.Column(scale=1, min_width=300):
