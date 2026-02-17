@@ -1,3 +1,4 @@
 .env
 model_cache*
 venv/
+.claude/
