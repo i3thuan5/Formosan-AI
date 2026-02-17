@@ -1,0 +1,68 @@
+schema: spec-driven
+
+# Project context
+# This is shown to AI when creating artifacts.
+context: |
+  ## 專案概述
+  原語會「族語AI翻譯計畫」語音系統（Formosan-AI），提供台灣原住民族語的語音辨識（ASR）、
+  語音合成（TTS）、機器翻譯（MT）三項AI服務，對外網站：https://ai-labs.ilrdf.org.tw/
+
+  ## 模組架構
+  - `asr/`：基於 OpenAI Whisper 的語音辨識（FastAPI + Gradio）
+  - `asr-kaldi/`：基於 Kaldi/Vosk 的語音辨識，支援多語系設定（FastAPI + Gradio + OmegaConf）
+  - `tts/`：基於 F5-TTS 的語音合成，支援 16+ 族語方言，含 IPA 轉換（FastAPI + Gradio）
+  - `mt/`：基於 HuggingFace Transformers Seq2Seq 的機器翻譯（FastAPI + Gradio）
+  - `common/`：共用工具、靜態資源（顏色主題、Gradio 工具函式、tauhu-oo 字型）
+  - `deploy/`：Ansible 部署腳本、正式環境 docker-compose
+
+  ## 技術棧
+  - 語言：Python 3.10
+  - Web 框架：FastAPI + Gradio 5.x（含 OAuth 支援）
+  - ML 框架：PyTorch 2.7+（CUDA 12.2）、HuggingFace Transformers 4.55+
+  - 語音辨識：WhisperX、Faster-Whisper、CTranslate2、Pyannote-Audio
+  - 語音合成：F5-TTS、Encodec、Vocos、Librosa
+  - 容器化：Docker（多階段建置）、Docker Compose、NVIDIA CUDA base image
+  - CI/CD：Travis CI（Docker Hub 推送；CD 目前停用，需人工發佈）
+  - 套件管理：pip-tools（requirements.in → requirements.txt）
+
+  ## 支援族語方言（16+）
+  阿美族（海岸、恆春、馬蘭、南勢、秀姑巒）、泰雅族、布農族、卑南族、魯凱族、
+  排灣族、鄒族、賽夏族、雅美族、邵族、噶瑪蘭族、太魯閣族、撒奇萊雅族、
+  賽德克族、拉阿魯哇族、卡那卡那富族
+
+  ## 開發慣例
+  - YAML 格式：yamllint（.yamllint.yml 規則）
+  - Python 風格：flake8 + ruff
+  - Markdown：pymarkdown
+  - Bash：shellcheck
+  - 測試執行：tox（`tox -e yamllint`、`tox -e flake8` 等）
+  - 套件版本：`pip-compile asr/requirements.in` 更新 requirements.txt
+  - Docker 建置：先 `docker build -t formosan-ai-common ./common`，再 `docker compose up`
+  - 環境變數：從 `deploy/.env.template` 複製為 `.env`，調整 HOST 設定
+
+  ## Docker 架構
+  - 共用 base image：`formosan-ai-common`
+  - 服務 image：`ithuan/formosan-ai:asr`、`:asr-kaldi`、`:tts`、`:mt`
+  - 網路：`nginx-bridge`（外部 HTTPS 反向代理）、`ai-labs-bridge`（服務間通訊）
+  - 以非 root 使用者（UID 1000）執行容器
+
+  ## 部署注意事項
+  - CD 已停用（.travis.yml 中已註解），需人工執行 Ansible playbook
+  - 正式環境設定在 `deploy/docker-compose-production.yml`
+
+# Per-artifact rules
+rules:
+  proposal:
+    - 以繁體中文撰寫提案說明，技術術語可保留英文
+    - 明確說明影響哪些模組（asr/asr-kaldi/tts/mt/common/deploy）
+    - 包含「非目標」章節，避免範圍蔓延
+    - 考慮族語方言支援的向下相容性
+  tasks:
+    - 每個任務須指定負責的模組目錄
+    - 涉及 Docker 的任務須說明是否需重建 common image
+    - 涉及 requirements 的任務須包含執行 pip-compile 的步驟
+    - 涉及新族語方言的任務須包含設定檔更新
+  spec:
+    - 以繁體中文撰寫，技術內容可夾雜英文
+    - API 規格須符合 FastAPI / Pydantic 慣例
+    - 需說明 GPU/CPU fallback 行為
