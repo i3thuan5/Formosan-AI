@@ -32,24 +32,24 @@ export const options = {
   },
 };
 
-export default function () {
+export default function asrKaldiIteration() {
   const up = uploadFile(APP, MODEL, AUDIO_BIN, FILENAME, "audio/mpeg", trends);
   if (!up.path) {
     return;
   }
 
-  measure(
-    APP,
-    MODEL,
-    API_NAME,
-    [DIALECT_ID, fileData(up.path, FILENAME)],
-    trends,
-    up.ms,
-    {
+  measure({
+    app: APP,
+    model: MODEL,
+    apiName: API_NAME,
+    data: [DIALECT_ID, fileData(up.path, FILENAME)],
+    trends: trends,
+    uploadMs: up.ms,
+    checkFn: {
       "asr-kaldi 有辨識出 sasowalen": (p) =>
         Array.isArray(p) && p[0].includes("sasowalen"),
     },
-  );
+  });
 }
 
 export const handleSummary = summaryHandler(MODEL);

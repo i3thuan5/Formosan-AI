@@ -13,7 +13,7 @@ echo "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |"
 
 for model in asr asr-kaldi tts mt; do
 	f="results/${model}-summary.json"
-	[ -f "$f" ] || continue
+	[[ -f "$f" ]] || continue
 	metric="$(echo "${model}" | tr '-' '_')_infer_ms"
 	jq -r --arg model "$model" --arg metric "$metric" '
 		.metrics[$metric].values as $v

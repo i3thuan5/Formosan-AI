@@ -52,7 +52,7 @@ export function tagBreakdown(metricName, tagKey, values) {
 
 // k6 的 metric 名稱只接受字母、數字與底線，所以「asr-kaldi」要先換成「asr_kaldi」。
 export function metricPrefix(model) {
-  return model.replace(/[^A-Za-z0-9_]/g, "_");
+  return model.replace(/\W/g, "_");
 }
 
 // 各測試檔案自行宣告要用的 Trend，這裡提供產生器，確保命名一致。
@@ -75,7 +75,7 @@ export function uploadFile(app, model, fileBin, filename, mimeType, trends) {
 
   const ok = check(res, {
     [`${model} 上傳 status is 200`]: (r) => r.status === 200,
-    [`${model} 上傳有回傳路徑`]: (r) => r.body && r.body.startsWith("["),
+    [`${model} 上傳有回傳路徑`]: (r) => r.body?.startsWith("["),
   });
 
   trends.upload.add(res.timings.duration);
@@ -129,10 +129,10 @@ export function gradioCall(app, model, apiName, data) {
   const ok = check(stream, {
     [`${model} 結果 status is 200`]: (r) => r.status === 200,
     [`${model} 結果有 complete 事件`]: (r) =>
-      r.body && r.body.includes("event: complete"),
+      r.body?.includes("event: complete"),
   });
 
-  if (stream.body && stream.body.includes("event: error")) {
+  if (stream.body?.includes("event: error")) {
     console.error(`${model} 回傳 error：${stream.body.slice(0, 500)}`);
   }
 
@@ -159,20 +159,26 @@ function parseSse(body) {
 }
 
 // 一次完整的量測：呼叫模型、記錄 infer 與 total。
-// tags 會附在 metric 上（例如 mt 各句、tts 各句），方便後續分開比較。
-export function measure(
+//
+// 參數用物件傳入：
+//   app、model、apiName、data ── 見 gradioCall()
+//   trends   ── makeTrends() 產生的 Trend
+//   uploadMs ── 這次上傳所花的時間，沒有上傳就省略
+//   checkFn  ── 檢查回傳內容的 check 定義
+//   tags     ── 附在 metric 上的 tag（例如 mt 各句、tts 各句），方便後續分開比較
+export function measure({
   app,
   model,
   apiName,
   data,
   trends,
-  uploadMs,
+  uploadMs = 0,
   checkFn,
   tags,
-) {
+}) {
   const res = gradioCall(app, model, apiName, data);
   trends.infer.add(res.elapsed, tags);
-  trends.total.add(res.elapsed + (uploadMs || 0), tags);
+  trends.total.add(res.elapsed + uploadMs, tags);
 
   if (res.ok && checkFn) {
     check(res.payload, checkFn);
@@ -196,7 +202,7 @@ function renderText(model, data) {
   const prefix = `${metricPrefix(model)}_`;
   const trendNames = Object.keys(data.metrics)
     .filter((n) => n.startsWith(prefix))
-    .sort();
+    .sort((a, b) => a.localeCompare(b));
 
   const width = Math.max(...trendNames.map((n) => n.length), 16) + 1;
 

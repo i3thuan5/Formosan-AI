@@ -26,28 +26,27 @@ export const options = {
   // 100 次 ÷ 2 句 ＝ 每句 50 次
   scenarios: latencyScenario("tts"),
   summaryTrendStats: SUMMARY_TREND_STATS,
-  thresholds: Object.assign(
-    { checks: ["rate>0.99"] },
-    tagBreakdown("tts_infer_ms", "sentence", SENTENCES),
-  ),
+  thresholds: {
+    checks: ["rate>0.99"],
+    ...tagBreakdown("tts_infer_ms", "sentence", SENTENCES),
+  },
 };
 
-export default function () {
+export default function ttsIteration() {
   const genText = SENTENCES[exec.scenario.iterationInTest % SENTENCES.length];
 
-  measure(
-    APP,
-    MODEL,
-    API_NAME,
-    [REF, genText],
-    trends,
-    0,
-    {
+  measure({
+    app: APP,
+    model: MODEL,
+    apiName: API_NAME,
+    data: [REF, genText],
+    trends: trends,
+    checkFn: {
       "tts 有合成出音檔": (p) =>
-        Array.isArray(p) && p[0] && typeof p[0].path === "string",
+        Array.isArray(p) && typeof p[0]?.path === "string",
     },
-    { sentence: genText },
-  );
+    tags: { sentence: genText },
+  });
 }
 
 export const handleSummary = summaryHandler(MODEL);

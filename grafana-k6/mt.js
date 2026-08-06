@@ -33,37 +33,35 @@ export const options = {
   // 100 次 ÷ 4 句 ＝ 每句 25 次
   scenarios: latencyScenario("mt"),
   summaryTrendStats: SUMMARY_TREND_STATS,
-  thresholds: Object.assign(
-    { checks: ["rate>0.99"] },
-    tagBreakdown(
-      "mt_infer_ms",
-      "direction",
-      [`${AMI}2${ZH}`, `${ZH}2${AMI}`],
-    ),
-    tagBreakdown(
+  thresholds: {
+    checks: ["rate>0.99"],
+    ...tagBreakdown("mt_infer_ms", "direction", [
+      `${AMI}2${ZH}`,
+      `${ZH}2${AMI}`,
+    ]),
+    ...tagBreakdown(
       "mt_infer_ms",
       "sentence",
       CASES.map((c) => c.text),
     ),
-  ),
+  },
 };
 
-export default function () {
+export default function mtIteration() {
   const c = CASES[exec.scenario.iterationInTest % CASES.length];
 
-  measure(
-    APP,
-    MODEL,
-    c.api,
-    [c.text, c.src, c.tgt],
-    trends,
-    0,
-    {
+  measure({
+    app: APP,
+    model: MODEL,
+    apiName: c.api,
+    data: [c.text, c.src, c.tgt],
+    trends: trends,
+    checkFn: {
       "mt 有翻出非空字串": (p) =>
         Array.isArray(p) && typeof p[0] === "string" && p[0].trim().length > 0,
     },
-    { direction: `${c.src}2${c.tgt}`, sentence: c.text },
-  );
+    tags: { direction: `${c.src}2${c.tgt}`, sentence: c.text },
+  });
 }
 
 export const handleSummary = summaryHandler(MODEL);

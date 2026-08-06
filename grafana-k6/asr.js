@@ -30,24 +30,24 @@ export const options = {
   },
 };
 
-export default function () {
+export default function asrIteration() {
   const up = uploadFile(APP, MODEL, VIDEO_BIN, FILENAME, "video/mp4", trends);
   if (!up.path) {
     return;
   }
 
-  measure(
-    APP,
-    MODEL,
-    API_NAME,
-    [{ video: fileData(up.path, FILENAME) }],
-    trends,
-    up.ms,
-    {
+  measure({
+    app: APP,
+    model: MODEL,
+    apiName: API_NAME,
+    data: [{ video: fileData(up.path, FILENAME) }],
+    trends: trends,
+    uploadMs: up.ms,
+    checkFn: {
       "asr 有辨識出 sasowalen": (p) =>
         Array.isArray(p) && p[0].includes("sasowalen"),
     },
-  );
+  });
 }
 
 export const handleSummary = summaryHandler(MODEL);
