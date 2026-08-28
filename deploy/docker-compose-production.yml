@@ -29,4 +29,11 @@ services:
   mt:
     image: ithuan/formosan-ai:mt
     build: !reset null
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     restart: always
