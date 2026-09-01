@@ -24,6 +24,7 @@ def render_demo(demo_md_filename="", js=None, css_paths=[]):
 
     demo = gr.Blocks(
         title=get_title(demo_md_filename),
+        delete_cache=(3600, 3600),
         css_paths=(common_css_paths + css_paths),
         theme=gr.themes.Default(
             primary_hue=sa_orange_color,
@@ -94,7 +95,6 @@ def render_demo(demo_md_filename="", js=None, css_paths=[]):
                     """.format(site=SAPOLITA_WEBSITE_HOST))
 
     demo.launch(
-        delete_cache=(3600, 3600),
         allowed_paths=[
             'ilrdf-logo.png',
             '族語AI翻譯計畫網站-系統操作教學手冊.pdf',
