@@ -240,23 +240,21 @@ with render_demo(
     with gr.Tab("預設配音員"):
         with gr.Row():
             with gr.Column():
-                default_speaker_ethnicity = gr.Dropdown(
+                default_speaker_ethnicity = gr.Radio(
                     choices=ETHNICITIES,
                     label="步驟一：選擇族別",
                     value="阿美",
-                    filterable=False,
                 )
 
                 def get_refs_by_perfix(prefix: str):
                     return [r for r in refs_config.keys() if r.startswith(prefix)]
 
-                default_speaker_refs = gr.Dropdown(
+                default_speaker_refs = gr.Radio(
                     choices=get_refs_by_perfix(
                         default_speaker_ethnicity.value),
                     label="步驟二：選擇配音員",
                     value=get_refs_by_perfix(
                         default_speaker_ethnicity.value)[0],
-                    filterable=False,
                 )
 
                 default_speaker_gen_text_input = gr.Textbox(
@@ -276,14 +274,13 @@ with render_demo(
     with gr.Tab("自己當配音員"):
         with gr.Row():
             with gr.Column():
-                custom_speaker_ethnicity = gr.Dropdown(
+                custom_speaker_ethnicity = gr.Radio(
                     choices=ETHNICITIES,
                     label="步驟一：選擇族別與語別",
                     value="阿美",
-                    filterable=False,
                 )
 
-                custom_speaker_language = gr.Dropdown(
+                custom_speaker_language = gr.Radio(
                     choices=[
                         k
                         for k in g2p_object.keys()
@@ -294,7 +291,6 @@ with render_demo(
                         for k in g2p_object.keys()
                         if k.startswith(custom_speaker_ethnicity.value)
                     ][0],
-                    filterable=False,
                     show_label=False,
                 )
 
@@ -331,7 +327,7 @@ with render_demo(
                 )
 
     default_speaker_ethnicity.change(
-        lambda ethnicity: gr.Dropdown(
+        lambda ethnicity: gr.Radio(
             choices=get_refs_by_perfix(ethnicity),
             value=get_refs_by_perfix(ethnicity)[0],
         ),
@@ -383,7 +379,7 @@ with render_demo(
     )
 
     custom_speaker_ethnicity.change(
-        lambda ethnicity: gr.Dropdown(
+        lambda ethnicity: gr.Radio(
             choices=[k for k in g2p_object.keys() if k.startswith(ethnicity)],
             value=[k for k in g2p_object.keys() if k.startswith(ethnicity)][0],
             visible=len([k for k in g2p_object.keys()

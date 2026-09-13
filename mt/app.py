@@ -127,17 +127,15 @@ with render_demo(
 ) as demo:
 
     with gr.Tab("族語 ⮕ 華語"):
-        to_zh_ethnicity = gr.Dropdown(
+        to_zh_ethnicity = gr.Radio(
             label="族別",
             choices=ETHNICITIES,
             value="阿美",
-            filterable=False,
         )
-        to_zh_src_lang = gr.Dropdown(
+        to_zh_src_lang = gr.Radio(
             label="語別",
             choices=get_languages_by_ethnicity(to_zh_ethnicity.value),
             value=get_languages_by_ethnicity(to_zh_ethnicity.value)[0][1],
-            filterable=False,
             interactive=len(get_languages_by_ethnicity(
                 to_zh_ethnicity.value)) > 1,
         )
@@ -148,7 +146,7 @@ with render_demo(
         to_zh_output = gr.Textbox(label="翻譯結果", lines=6)
 
         to_zh_ethnicity.change(
-            lambda ethnicity: gr.Dropdown(
+            lambda ethnicity: gr.Radio(
                 choices=get_languages_by_ethnicity(ethnicity),
                 value=get_languages_by_ethnicity(ethnicity)[0][1],
                 interactive=len(get_languages_by_ethnicity(ethnicity)) > 1,
@@ -167,18 +165,16 @@ with render_demo(
         to_formosan_src_lang = gr.Text(
             value="zho_Hant", visible=False, interactive=False
         )
-        to_formosan_ethnicity = gr.Dropdown(
+        to_formosan_ethnicity = gr.Radio(
             label="族別",
             choices=ETHNICITIES,
             value="阿美",
-            filterable=False,
         )
-        to_formosan_tgt_lang = gr.Dropdown(
+        to_formosan_tgt_lang = gr.Radio(
             label="語別",
             choices=get_languages_by_ethnicity(to_formosan_ethnicity.value),
             value=get_languages_by_ethnicity(
                 to_formosan_ethnicity.value)[0][1],
-            filterable=False,
             interactive=len(get_languages_by_ethnicity(
                 to_formosan_ethnicity.value))
             > 1,
@@ -189,7 +185,7 @@ with render_demo(
         to_formosan_output = gr.Textbox(label="翻譯結果", lines=6)
 
         to_formosan_ethnicity.change(
-            lambda ethnicity: gr.Dropdown(
+            lambda ethnicity: gr.Radio(
                 choices=get_languages_by_ethnicity(ethnicity),
                 value=get_languages_by_ethnicity(ethnicity)[0][1],
                 interactive=len(get_languages_by_ethnicity(ethnicity)) > 1,
