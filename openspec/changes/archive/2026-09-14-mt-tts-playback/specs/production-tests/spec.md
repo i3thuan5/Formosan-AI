@@ -23,13 +23,23 @@
 - **WHEN** 受測主機的 TTS 沒有 `/synthesize`
 - **THEN** 此項檢查失敗，訊息指出缺少 `/synthesize`
 
-### Requirement: 檢查 42 個語別都能合成
+### Requirement: 檢查語別都能合成
 
-腳本 SHALL 對 `mt/formosan_languages.py` `FORMOSAN_LANGUAGES_MAP` 的每個語別直接呼叫 TTS `/synthesize`，句子取自 `tts/configs/refs.yaml` 中該語別第一位配音員的 `text`，每個語別都要回傳音檔。語別表 SHALL 獨立於 `mt/app.py`，腳本 MUST NOT import `mt/app.py`（避免載入翻譯模型）。
+腳本 SHALL 預設從 `mt/formosan_languages.py` `FORMOSAN_LANGUAGES_MAP` 隨機抽樣 5 個語別，指定 `--all-languages` 參數時改為全部語別，對每個受測語別直接呼叫 TTS `/synthesize`，句子取自 `tts/configs/refs.yaml` 中該語別第一位配音員的 `text`，每個受測語別都要回傳音檔。語別表 SHALL 獨立於 `mt/app.py`，腳本 MUST NOT import `mt/app.py`（避免載入翻譯模型）。
+
+#### Scenario: 預設隨機抽樣
+
+- **WHEN** 不帶參數執行腳本
+- **THEN** 第 2 項只合成隨機抽出的 5 個語別，並印出抽到哪些語別
+
+#### Scenario: 掃描全部語別
+
+- **WHEN** 執行腳本時加上 `--all-languages`
+- **THEN** 第 2 項合成 `FORMOSAN_LANGUAGES_MAP` 的全部語別
 
 #### Scenario: 語別表與配音員設定不一致
 
-- **WHEN** `FORMOSAN_LANGUAGES_MAP` 有某個語別在 `refs.yaml` 中找不到配音員
+- **WHEN** 加上 `--all-languages` 執行，且 `FORMOSAN_LANGUAGES_MAP` 有某個語別在 `refs.yaml` 中找不到配音員
 - **THEN** 該語別的檢查失敗，訊息列出語別名稱
 
 ### Requirement: 檢查已知 bug 回歸

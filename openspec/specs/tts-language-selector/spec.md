@@ -1,3 +1,11 @@
+# TTS 族別、配音員與語別選擇元件
+
+## Purpose
+
+TTS 語音合成系統「預設配音員」與「自己當配音員」兩個 Tab 中，族別、配音員、語別的選擇元件規格（使用 `gr.Radio`）。
+
+## Requirements
+
 ### Requirement: 族別選擇使用 Radio 元件
 
 TTS 系統的「預設配音員」與「自己當配音員」兩個 Tab 中，族別選擇 SHALL 使用 `gr.Radio` 元件呈現所有可用族別。

@@ -142,7 +142,7 @@ production_tests/
 | 檢查 | 內容 | 資料來源 |
 |---|---|---|
 | 1. API 約定 | tts `view_api` 含 `/synthesize`，參數為 language、text | — |
-| 2. 42 語別合成 | 直接呼叫 tts `/synthesize`，每個語別都要回傳音檔 | 語別：import `mt/formosan_languages.py` 的 `FORMOSAN_LANGUAGES_MAP`（語別表獨立成檔，不必 import 會載入模型的 `mt/app.py`）；句子：`tts/configs/refs.yaml` 該語別第一位配音員的 `text` |
+| 2. 語別合成 | 預設隨機抽 5 個語別，`--all-languages` 則全部 42 個；直接呼叫 tts `/synthesize`，都要回傳音檔 | 語別：import `mt/formosan_languages.py` 的 `FORMOSAN_LANGUAGES_MAP`（語別表獨立成檔，不必 import 會載入模型的 `mt/app.py`）；句子：`tts/configs/refs.yaml` 該語別第一位配音員的 `text` |
 | 3. 回歸 | 引號結尾、含「」的文字能合成成功；不支援的語別回傳錯誤 | 腳本內固定字串 |
 | 4. 端到端 | 呼叫 mt `/to_formosan_languages` 再呼叫 `/synthesize`，回傳音檔，並記錄耗時 | 5 個語別：`阿美_海岸`（預設）、`泰雅_萬大`（ṟ）、`魯凱_茂林`（ɨ、é）、`卡那卡那富`（ʉ）、`賽夏`（大寫 S、`:`） |
 
@@ -157,7 +157,7 @@ production_tests/
 - **[長文字接近 20 秒逾時]** → 299 字元約 8.7 秒，無排隊時有餘裕；尖峰時段會顯示人數眾多訊息，屬預期行為。
 - **[使用者翻譯後切換語別再按合成]** → 會用新語別的配音員與 G2P 念舊譯文，可能出現不認得的字元錯誤。目前接受，錯誤訊息會照實顯示。
 - **[檢查腳本讀的是本地 repo 的 refs.yaml 與語別表]** → 若受測主機部署的版本不同，結果可能不一致。README 註明應用與部署版本相同的 commit 執行。
-- **[檢查腳本會實際消耗受測主機的 GPU]** → 一次約 42＋5＋數句合成，約 2–3 分鐘；循序執行，不併發。
+- **[檢查腳本會實際消耗受測主機的 GPU]** → 預設約 5＋5＋數句合成，約 1 分鐘；`--all-languages` 約 42＋5＋數句，約 2–3 分鐘；循序執行，不併發。
 - **[MT 輸出本身含 G2P 不認得的字元]**（實測 210 句中 1 句）→ 顯示 tts 的錯誤訊息，使用者可以自行修改譯文後再合成。
 
 ## Migration Plan

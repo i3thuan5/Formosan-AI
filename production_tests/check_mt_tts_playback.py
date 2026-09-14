@@ -1,10 +1,13 @@
 """上線後檢查：MT「華語 ⮕ 族語」合成語音，以及 TTS `/synthesize` API。
 
     $ BASE_URL=https://ai-labs.ilrdf.org.tw python production_tests/check_mt_tts_playback.py
+    $ python production_tests/check_mt_tts_playback.py --all-languages  # 第 2 項掃全部語別
 
 全部通過 exit 0，任一項失敗 exit 1。說明見 README.md。
 """
+import argparse
 import os
+import random
 import sys
 import tempfile
 import time
@@ -25,6 +28,7 @@ TTS_URL = f"{BASE_URL}/hnang-kari-ai-asi-sluhay/"
 # 預設的阿美，加上涵蓋 ṟ、ɨ é、ʉ、大寫 S 與 : 的語別
 END_TO_END_LANGUAGES = ["阿美_海岸", "泰雅_萬大", "魯凱_茂林", "卡那卡那富", "賽夏"]
 SLOW_WARNING_SECONDS = 15
+SAMPLE_LANGUAGE_COUNT = 5
 
 REGRESSION_TEXTS = [
     ("阿美_海岸", 'Sowal sa ko singsi, "Ano dafak micodad kita."'),
@@ -113,9 +117,25 @@ def check_end_to_end(mt, refs, language, code):
     return run
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="上線後檢查 MT 合成語音與 TTS /synthesize API")
+    parser.add_argument(
+        "--all-languages",
+        action="store_true",
+        help=f"第 2 項合成全部 {len(FORMOSAN_LANGUAGES_MAP)} 個語別（預設隨機抽 {SAMPLE_LANGUAGE_COUNT} 個）",
+    )
+    return parser.parse_args()
+
+
 def main():
+    args = parse_args()
     print(f"BASE_URL = {BASE_URL}")
     refs = load_refs()
+
+    if args.all_languages:
+        languages = list(FORMOSAN_LANGUAGES_MAP)
+    else:
+        languages = random.sample(list(FORMOSAN_LANGUAGES_MAP), SAMPLE_LANGUAGE_COUNT)
 
     with tempfile.TemporaryDirectory(prefix="production-tests-") as download_dir:
         try:
@@ -129,8 +149,11 @@ def main():
             print("\n[1] TTS API 約定")
             check("/synthesize(language, text)", lambda: check_tts_api_contract(tts))
 
-            print(f"\n[2] TTS 合成 {len(FORMOSAN_LANGUAGES_MAP)} 個語別")
-            for language in FORMOSAN_LANGUAGES_MAP:
+            if args.all_languages:
+                print(f"\n[2] TTS 合成全部 {len(languages)} 個語別")
+            else:
+                print(f"\n[2] TTS 合成隨機抽樣 {len(languages)} 個語別（加 --all-languages 掃全部）")
+            for language in languages:
                 check(language, check_tts_language(tts, refs, language))
 
             print("\n[3] 已知 bug 回歸")

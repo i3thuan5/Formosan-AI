@@ -29,7 +29,7 @@
 - [x] 4.2 [production_tests/] `check_mt_tts_playback.py` 基本架構：讀 `BASE_URL`（預設 `https://ai-labs.ilrdf.org.tw`），組出 MT、TTS 網址；收集每項檢查的成功或失敗，結尾列出失敗項目並以 exit code 0/1 結束；循序執行，不併發
 - [x] 4.3 [production_tests/] `FORMOSAN_LANGUAGES_MAP` 從 `mt/app.py` 搬到 `mt/formosan_languages.py`（`mt/Dockerfile` 的 `COPY` 一併加上），腳本直接 import 它，以 PyYAML 讀 `tts/configs/refs.yaml`，取每個語別第一位配音員的 `text`；路徑以腳本所在位置為基準
 - [x] 4.4 [production_tests/] 檢查 1：TTS `view_api` 含 `/synthesize`，參數為 `language`、`text`
-- [x] 4.5 [production_tests/] 檢查 2：42 個語別直接呼叫 TTS `/synthesize`，都要回傳音檔；找不到配音員的語別列為失敗
+- [x] 4.5 [production_tests/] 檢查 2：預設隨機抽 5 個語別、`--all-languages` 則全部 42 個，直接呼叫 TTS `/synthesize`，都要回傳音檔；找不到配音員的語別列為失敗
 - [x] 4.6 [production_tests/] 檢查 3：引號結尾文字、含「」文字要合成成功；不存在的語別要回傳錯誤
 - [x] 4.7 [production_tests/] 檢查 4：`阿美_海岸`、`泰雅_萬大`、`魯凱_茂林`、`卡那卡那富`、`賽夏` 各自在同一 MT session 先呼叫 `/to_formosan_languages` 再呼叫 `/synthesize`，確認回傳音檔、印出耗時，超過 15 秒印警告
 - [x] 4.8 [production_tests/] 撰寫 `production_tests/README.md`：安裝、執行、`BASE_URL`、各項檢查內容、預估耗時與 GPU 消耗、應以與部署相同的 commit 執行、tts 先於 mt 部署
@@ -39,5 +39,5 @@
 - [x] 5.1 [tts/ mt/ production_tests/] 執行 `tox -e flake8` 通過
 - [x] 5.2 [production_tests/] `pymarkdown scan production_tests/README.md` 通過（`tox -e pymarkdown` 的 `scan .` 不會遞迴掃子目錄，要直接指定檔案）
 - [x] 5.3 [production_tests/] 對目前正式站跑檢查腳本：確認腳本本身可執行，且在 tts、mt 尚未部署新版時，檢查 1–4 正確回報失敗
-- [ ] 5.4 [deploy/] 部署 tts 新版到測試機或正式機後，跑檢查腳本，確認檢查 1–3 通過
-- [ ] 5.5 [deploy/] 部署 mt 新版後，跑完整檢查腳本，確認端到端（含 hairpin NAT）通過；在網頁上手動測試「翻譯 → 修改譯文 → 合成語音」流程
+- [x] 5.4 [deploy/] 部署 tts 新版到測試機或正式機後，跑檢查腳本，確認檢查 1–3 通過
+- [x] 5.5 [deploy/] 部署 mt 新版後，跑完整檢查腳本，確認端到端（含 hairpin NAT）通過；在網頁上手動測試「翻譯 → 修改譯文 → 合成語音」流程

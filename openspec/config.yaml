@@ -36,6 +36,8 @@ context: |
   - Markdown：pymarkdown
   - Bash：shellcheck
   - 測試執行：tox（`tox -e yamllint`、`tox -e flake8` 等）
+  - OpenSpec 格式：每次修改 proposal/design/specs/tasks、sync 主 specs 或 archive 後，
+    都要執行 `openspec validate --all --strict` 並全部通過
   - 套件版本：`pip-compile asr/requirements.in` 更新 requirements.txt
   - Docker 建置：先 `docker build -t formosan-ai-common ./common`，再 `docker compose up`
   - 環境變數：從 `deploy/.env.template` 複製為 `.env`，調整 HOST 設定
@@ -66,3 +68,4 @@ rules:
     - 以繁體中文撰寫，技術內容可夾雜英文
     - API 規格須符合 FastAPI / Pydantic 慣例
     - 需說明 GPU/CPU fallback 行為
+    - 寫完或修改 spec 後，必須執行 `openspec validate --all --strict` 並全部通過

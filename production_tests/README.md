@@ -26,6 +26,9 @@ python production_tests/check_mt_tts_playback.py
 
 # 檢查測試機
 BASE_URL=https://<測試機網域> python production_tests/check_mt_tts_playback.py
+
+# 第 2 項掃全部語別（預設隨機抽 5 個）
+python production_tests/check_mt_tts_playback.py --all-languages
 ```
 
 - 受測主機要和正式站一樣，以 `{BASE_URL}/kari-seejiq-tnpusu-ai-hmjil/`（MT）與
@@ -39,7 +42,7 @@ BASE_URL=https://<測試機網域> python production_tests/check_mt_tts_playback
 | 項目 | 內容 |
 | --- | --- |
 | 1. TTS API 約定 | TTS 有 `/synthesize`，參數為 `language`、`text` |
-| 2. TTS 合成 42 個語別 | `mt/formosan_languages.py` 的每個語別直接呼叫 TTS `/synthesize`，句子用 `refs.yaml` 該語別第一位配音員的 `text`，都要回傳音檔 |
+| 2. TTS 合成語別 | 預設從 `mt/formosan_languages.py` 隨機抽 5 個語別，加 `--all-languages` 則全部 42 個；直接呼叫 TTS `/synthesize`，句子用 `refs.yaml` 該語別第一位配音員的 `text`，都要回傳音檔 |
 | 3. 已知 bug 回歸 | 以引號結尾、含「」的文字要能合成；不存在的語別要回傳錯誤 |
 | 4. mt → tts 端到端 | `阿美_海岸`、`泰雅_萬大`、`魯凱_茂林`、`卡那卡那富`、`賽夏` 各自先呼叫 MT `/to_formosan_languages` 切換族別，再呼叫 MT `/synthesize`，要回傳音檔；超過 15 秒會印出警告（MT 的逾時是 20 秒） |
 
@@ -48,6 +51,7 @@ BASE_URL=https://<測試機網域> python production_tests/check_mt_tts_playback
 
 ## 四、注意事項
 
-- **會實際使用受測主機的 GPU**：約 50 次合成，循序執行，正式站無人排隊時約 2–3 分鐘。
+- **會實際使用受測主機的 GPU**：預設約 12 次合成，循序執行，無人排隊時約 1 分鐘；
+  加 `--all-languages` 約 50 次、2–3 分鐘。
   請避開尖峰時段。
 - **部署順序**：tts 要先部署新版，mt 再部署。只部署 tts 時，第 1–3 項應該通過、第 4 項失敗。
