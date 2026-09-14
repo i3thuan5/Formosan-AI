@@ -227,6 +227,140 @@ class FasterWhisperPipeline(BasePipeline):
             self.tokenizer, self.options = tokenizer, options
             self.last_speech_timestamp = 0.0
 
+    @staticmethod
+    def _validate_transcription_options(chunk_size, batch_size):
+        if not 0 < chunk_size <= 30:
+            raise ValueError("chunk_size must be greater than 0 and at most 30 seconds")
+        if batch_size is not None and batch_size < 1:
+            raise ValueError("batch_size must be positive")
+
+    def _audio_chunks(self, audio, segments):
+        for segment in segments:
+            start = int(segment["start"] * SAMPLE_RATE)
+            end = int(segment["end"] * SAMPLE_RATE)
+            yield {
+                "inputs": audio[start:end],
+                "start": segment["start"],
+                "end": segment["end"],
+                "segment_size": int(
+                    round(
+                        (end - start) / SAMPLE_RATE * self.model.frames_per_second
+                    )
+                ),
+            }
+
+    def _prepare_vad_segments(self, audio, chunk_size):
+        if isinstance(self.vad_model, Vad):
+            waveform = self.vad_model.preprocess_audio(audio)
+            merge_chunks = self.vad_model.merge_chunks
+        else:
+            waveform = Pyannote.preprocess_audio(audio)
+            merge_chunks = Pyannote.merge_chunks
+
+        raw_segments = self.vad_model(
+            {"waveform": waveform, "sample_rate": SAMPLE_RATE}
+        )
+        merged_segments = merge_chunks(
+            raw_segments,
+            chunk_size,
+            onset=self._vad_params["vad_onset"],
+            offset=self._vad_params["vad_offset"],
+        )
+        return raw_segments, merged_segments
+
+    def _configure_tokenizer(self, audio, language, task):
+        if self.tokenizer is None:
+            language = language or self.detect_language(audio)
+            task = task or "transcribe"
+        else:
+            language = language or self.tokenizer.language_code
+            current_task = (
+                self.tokenizer.task
+                if isinstance(self.tokenizer.task, str)
+                else self.tokenizer.tokenizer.id_to_token(self.tokenizer.task)[2:-2]
+            )
+            task = task or current_task
+            if task == current_task and language == self.tokenizer.language_code:
+                return language
+
+        self.tokenizer = FormosanTokenizer(
+            self.model.hf_tokenizer,
+            self.model.model.is_multilingual,
+            task=task,
+            language=language,
+        )
+        return language
+
+    def _suppress_numeral_tokens(self):
+        if not self.suppress_numerals:
+            return
+        print("Suppressing numeral and symbol tokens")
+        suppressed_tokens = find_numeral_symbol_tokens(self.tokenizer)
+        suppressed_tokens += self.options.suppress_tokens
+        self.options = replace(
+            self.options, suppress_tokens=list(set(suppressed_tokens))
+        )
+
+    def _subtitle_segments(self, raw_vad_segments, chunk_size):
+        binarize = Binarize(
+            max_duration=chunk_size,
+            onset=self._vad_params["vad_onset"],
+            offset=self._vad_params["vad_offset"],
+        )
+        timeline = (
+            raw_vad_segments
+            if isinstance(self.vad_model, Silero)
+            else binarize(raw_vad_segments).get_timeline()
+        )
+        return [
+            {"start": segment.start, "end": segment.end, "text": ""}
+            for segment in timeline
+        ]
+
+    @staticmethod
+    def _report_progress(
+        index, total, print_progress, combined_progress, progress_callback
+    ):
+        progress = 100 * (index + 1) / total
+        if print_progress:
+            displayed_progress = progress / 2 if combined_progress else progress
+            print(f"Progress: {displayed_progress:.2f}%...")
+        if progress_callback is not None:
+            progress_callback(progress)
+
+    @staticmethod
+    def _overlap_duration(segment, word):
+        return min(segment["end"], word["end"]) - max(
+            segment["start"], word["start"]
+        )
+
+    def _append_words_to_segments(self, segments, words):
+        first_possible_segment = 0
+        for word in words:
+            candidates = []
+            next_possible_segment = first_possible_segment
+            for index, segment in enumerate(segments[first_possible_segment:]):
+                segment_index = first_possible_segment + index
+                if segment["end"] < word["start"]:
+                    next_possible_segment = segment_index + 1
+                if self._overlap_duration(segment, word) >= 0:
+                    candidates.append(segment_index)
+            first_possible_segment = next_possible_segment
+
+            if not candidates:
+                print(
+                    f"Warning: Word '{word['word']}' at "
+                    f"[{round(word['start'], 3)} --> {round(word['end'], 3)}] "
+                    "is not in any segment."
+                )
+                continue
+
+            best_segment = max(
+                candidates,
+                key=lambda index: self._overlap_duration(segments[index], word),
+            )
+            segments[best_segment]["text"] += word["word"]
+
     def _transcribe(
         self,
         audio: Union[str, np.ndarray],
@@ -240,46 +374,14 @@ class FasterWhisperPipeline(BasePipeline):
         verbose=False,
         progress_callback: ProgressCallback = None,
     ) -> TranscriptionResult:
-        if not 0 < chunk_size <= 30:
-            raise ValueError("chunk_size must be greater than 0 and at most 30 seconds")
-        if batch_size is not None and batch_size < 1:
-            raise ValueError("batch_size must be positive")
+        self._validate_transcription_options(chunk_size, batch_size)
         self.last_speech_timestamp = 0.0
         if isinstance(audio, str):
             audio = load_audio(audio)
 
-        def data(audio, segments):
-            for seg in segments:
-                f1 = int(seg["start"] * SAMPLE_RATE)
-                f2 = int(seg["end"] * SAMPLE_RATE)
-
-                yield {
-                    "inputs": audio[f1:f2],
-                    "start": seg["start"],
-                    "end": seg["end"],
-                    "segment_size": int(
-                        round((f2 - f1) / SAMPLE_RATE * self.model.frames_per_second)
-                    ),
-                }
-
         # Pre-process audio and merge chunks as defined by the respective VAD child class
         # In case vad_model is manually assigned (see 'load_model') follow the functionality of pyannote toolkit
-        if isinstance(self.vad_model, Vad):
-            waveform = self.vad_model.preprocess_audio(audio)
-            merge_chunks = self.vad_model.merge_chunks
-        else:
-            waveform = Pyannote.preprocess_audio(audio)
-            merge_chunks = Pyannote.merge_chunks
-
-        pre_merge_vad_segments = self.vad_model(
-            {"waveform": waveform, "sample_rate": SAMPLE_RATE}
-        )
-        vad_segments = merge_chunks(
-            pre_merge_vad_segments,
-            chunk_size,
-            onset=self._vad_params["vad_onset"],
-            offset=self._vad_params["vad_offset"],
-        )
+        raw_vad_segments, vad_segments = self._prepare_vad_segments(audio, chunk_size)
         if not vad_segments:
             if progress_callback is not None:
                 progress_callback(100.0)
@@ -287,108 +389,30 @@ class FasterWhisperPipeline(BasePipeline):
                 "segments": [],
                 "language": language or self.preset_language or "unknown",
             }
-        if self.tokenizer is None:
-            language = language or self.detect_language(audio)
-            task = task or "transcribe"
-            self.tokenizer = FormosanTokenizer(
-                self.model.hf_tokenizer,
-                self.model.model.is_multilingual,
-                task=task,
-                language=language,
-            )
-        else:
-            language = language or self.tokenizer.language_code
-            current_task = (
-                self.tokenizer.task
-                if isinstance(self.tokenizer.task, str)
-                else self.tokenizer.tokenizer.id_to_token(self.tokenizer.task)[2:-2]
-            )
-            task = task or current_task
-            if task != current_task or language != self.tokenizer.language_code:
-                self.tokenizer = FormosanTokenizer(
-                    self.model.hf_tokenizer,
-                    self.model.model.is_multilingual,
-                    task=task,
-                    language=language,
-                )
-
-        if self.suppress_numerals:
-            numeral_symbol_tokens = find_numeral_symbol_tokens(self.tokenizer)
-            print("Suppressing numeral and symbol tokens")
-            new_suppressed_tokens = numeral_symbol_tokens + self.options.suppress_tokens
-            new_suppressed_tokens = list(set(new_suppressed_tokens))
-            self.options = replace(self.options, suppress_tokens=new_suppressed_tokens)
-
-        binarize = Binarize(
-            max_duration=chunk_size,
-            onset=self._vad_params["vad_onset"],
-            offset=self._vad_params["vad_offset"],
+        language = self._configure_tokenizer(audio, language, task)
+        self._suppress_numeral_tokens()
+        segments: List[SingleSegment] = self._subtitle_segments(
+            raw_vad_segments, chunk_size
         )
-        segments = (
-            pre_merge_vad_segments
-            if isinstance(self.vad_model, Silero)
-            else binarize(pre_merge_vad_segments).get_timeline()
-        )
-        segments: List[SingleSegment] = [
-            {
-                "start": seg.start,
-                "end": seg.end,
-                "text": "",
-            }
-            for seg in segments
-        ]
 
         batch_size = batch_size or self._batch_size or 1
         total_segments = len(vad_segments)
         for idx, out in enumerate(
             self.__call__(
-                data(audio, vad_segments),
+                self._audio_chunks(audio, vad_segments),
                 batch_size=batch_size,
                 num_workers=num_workers,
             )
         ):
-            if print_progress:
-                base_progress = ((idx + 1) / total_segments) * 100
-                percent_complete = (
-                    base_progress / 2 if combined_progress else base_progress
-                )
-                print(f"Progress: {percent_complete:.2f}%...")
-
-            if progress_callback is not None:
-                progress_callback(100 * (idx + 1) / total_segments)
+            self._report_progress(
+                idx,
+                total_segments,
+                print_progress,
+                combined_progress,
+                progress_callback,
+            )
             words = out["words"] if batch_size > 1 else out["words"][0]
-            last_speech_timestamp_index = 0
-            next_last_speech_timestamp_index = 0
-            for word in words:
-                candidate_indices = []
-
-                for i, segment in enumerate(segments[last_speech_timestamp_index:]):
-                    if segment["end"] < word["start"]:
-                        next_last_speech_timestamp_index = (
-                            last_speech_timestamp_index + i + 1
-                        )
-                    overlap_start = max(segment["start"], word["start"])
-                    overlap_end = min(segment["end"], word["end"])
-                    if overlap_start <= overlap_end:
-                        candidate_indices.append(last_speech_timestamp_index + i)
-                last_speech_timestamp_index = next_last_speech_timestamp_index
-
-                if not candidate_indices:
-                    print(
-                        f"Warning: Word '{word['word']}' at [{round(word['start'], 3)} --> {round(word['end'], 3)}] is not in any segment."
-                    )
-                else:
-                    largest_overlap = -1
-                    best_segment_index = None
-                    for i in candidate_indices:
-                        segment = segments[i]
-                        overlap_start = max(segment["start"], word["start"])
-                        overlap_end = min(segment["end"], word["end"])
-                        overlap_duration = overlap_end - overlap_start
-                        if overlap_duration > largest_overlap:
-                            largest_overlap = overlap_duration
-                            best_segment_index = i
-                    segments[best_segment_index]["text"] += word["word"]
+            self._append_words_to_segments(segments, words)
         return {
             "segments": [s for s in segments if s["text"].strip()],
             "language": language,
