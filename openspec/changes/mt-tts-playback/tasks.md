@@ -25,9 +25,9 @@
 
 ## 4. 上線後檢查腳本（production_tests/）
 
-- [x] 4.1 [production_tests/] 建立 `production_tests/requirements.txt`（`gradio_client==1.13.3`、`PyYAML`）
+- [x] 4.1 [production_tests/] 建立 `production_tests/requirements.in`（`gradio_client==1.13.3`、`PyYAML`），執行 `pip-compile production_tests/requirements.in` 產生 `requirements.txt`
 - [x] 4.2 [production_tests/] `check_mt_tts_playback.py` 基本架構：讀 `BASE_URL`（預設 `https://ai-labs.ilrdf.org.tw`），組出 MT、TTS 網址；收集每項檢查的成功或失敗，結尾列出失敗項目並以 exit code 0/1 結束；循序執行，不併發
-- [x] 4.3 [production_tests/] 以 `ast` 靜態解析 `mt/app.py` 的 `FORMOSAN_LANGUAGES_MAP`（不 import），以 PyYAML 讀 `tts/configs/refs.yaml`，取每個語別第一位配音員的 `text`；路徑以腳本所在位置為基準
+- [x] 4.3 [production_tests/] `FORMOSAN_LANGUAGES_MAP` 從 `mt/app.py` 搬到 `mt/formosan_languages.py`（`mt/Dockerfile` 的 `COPY` 一併加上），腳本直接 import 它，以 PyYAML 讀 `tts/configs/refs.yaml`，取每個語別第一位配音員的 `text`；路徑以腳本所在位置為基準
 - [x] 4.4 [production_tests/] 檢查 1：TTS `view_api` 含 `/synthesize`，參數為 `language`、`text`
 - [x] 4.5 [production_tests/] 檢查 2：42 個語別直接呼叫 TTS `/synthesize`，都要回傳音檔；找不到配音員的語別列為失敗
 - [x] 4.6 [production_tests/] 檢查 3：引號結尾文字、含「」文字要合成成功；不存在的語別要回傳錯誤
@@ -37,7 +37,7 @@
 ## 5. 驗證
 
 - [x] 5.1 [tts/ mt/ production_tests/] 執行 `tox -e flake8` 通過
-- [x] 5.2 [production_tests/] 執行 `tox -e pymarkdown` 通過（README.md）
+- [x] 5.2 [production_tests/] `pymarkdown scan production_tests/README.md` 通過（`tox -e pymarkdown` 的 `scan .` 不會遞迴掃子目錄，要直接指定檔案）
 - [x] 5.3 [production_tests/] 對目前正式站跑檢查腳本：確認腳本本身可執行，且在 tts、mt 尚未部署新版時，檢查 1–4 正確回報失敗
 - [ ] 5.4 [deploy/] 部署 tts 新版到測試機或正式機後，跑檢查腳本，確認檢查 1–3 通過
 - [ ] 5.5 [deploy/] 部署 mt 新版後，跑完整檢查腳本，確認端到端（含 hairpin NAT）通過；在網頁上手動測試「翻譯 → 修改譯文 → 合成語音」流程

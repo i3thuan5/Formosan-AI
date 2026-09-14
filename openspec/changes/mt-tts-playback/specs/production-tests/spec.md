@@ -25,7 +25,7 @@
 
 ### Requirement: 檢查 42 個語別都能合成
 
-腳本 SHALL 對 `mt/app.py` `FORMOSAN_LANGUAGES_MAP` 的每個語別直接呼叫 TTS `/synthesize`，句子取自 `tts/configs/refs.yaml` 中該語別第一位配音員的 `text`，每個語別都要回傳音檔。腳本 MUST 以靜態解析讀取 `mt/app.py`，MUST NOT import 它（避免載入翻譯模型）。
+腳本 SHALL 對 `mt/formosan_languages.py` `FORMOSAN_LANGUAGES_MAP` 的每個語別直接呼叫 TTS `/synthesize`，句子取自 `tts/configs/refs.yaml` 中該語別第一位配音員的 `text`，每個語別都要回傳音檔。語別表 SHALL 獨立於 `mt/app.py`，腳本 MUST NOT import `mt/app.py`（避免載入翻譯模型）。
 
 #### Scenario: 語別表與配音員設定不一致
 

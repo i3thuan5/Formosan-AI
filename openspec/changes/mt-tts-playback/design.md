@@ -92,7 +92,7 @@ GPU/CPU 行為與既有的 `default_speaker_tts` 相同：沿用 `gpu_decorator`
 
 ### 5. mt 的 `Client` 延遲建立、全程共用，失敗時重建
 
-模組層級保存一個 `Client`，第一次按合成時才建立，避免 mt 啟動時因 tts 還沒上線而失敗。`/synthesize` 沒有 session 依賴，多位使用者可以共用同一個 client 同時送出 job。呼叫過程發生連線類錯誤時丟棄 client，下次重建，以應付 tts 重啟後 config 過期的情況。
+`mt/tts_client.py` 的 `TtsClient` 保存一個 `Client`（mt/app.py 建立單一 instance），第一次按合成時才建立，避免 mt 啟動時因 tts 還沒上線而失敗。`/synthesize` 沒有 session 依賴，多位使用者可以共用同一個 client 同時送出 job。呼叫過程發生連線類錯誤時丟棄 client，下次重建，以應付 tts 重啟後 config 過期的情況。
 
 ### 6. 逾時與錯誤訊息
 
@@ -132,7 +132,8 @@ mt 的 `tgt_lang` 是 `gr.Radio`（commit 5228d4a 由 Dropdown 改來），有�
 ```
 production_tests/
 ├── README.md               怎麼跑、檢查了什麼
-├── requirements.txt        gradio_client、PyYAML
+├── requirements.in         gradio_client、PyYAML（pip-compile 產生 requirements.txt）
+├── requirements.txt
 └── check_mt_tts_playback.py
 ```
 
@@ -141,7 +142,7 @@ production_tests/
 | 檢查 | 內容 | 資料來源 |
 |---|---|---|
 | 1. API 約定 | tts `view_api` 含 `/synthesize`，參數為 language、text | — |
-| 2. 42 語別合成 | 直接呼叫 tts `/synthesize`，每個語別都要回傳音檔 | 語別：以 `ast` 解析 `mt/app.py` 的 `FORMOSAN_LANGUAGES_MAP`（不 import，避免載入模型）；句子：`tts/configs/refs.yaml` 該語別第一位配音員的 `text` |
+| 2. 42 語別合成 | 直接呼叫 tts `/synthesize`，每個語別都要回傳音檔 | 語別：import `mt/formosan_languages.py` 的 `FORMOSAN_LANGUAGES_MAP`（語別表獨立成檔，不必 import 會載入模型的 `mt/app.py`）；句子：`tts/configs/refs.yaml` 該語別第一位配音員的 `text` |
 | 3. 回歸 | 引號結尾、含「」的文字能合成成功；不支援的語別回傳錯誤 | 腳本內固定字串 |
 | 4. 端到端 | 呼叫 mt `/to_formosan_languages` 再呼叫 `/synthesize`，回傳音檔，並記錄耗時 | 5 個語別：`阿美_海岸`（預設）、`泰雅_萬大`（ṟ）、`魯凱_茂林`（ɨ、é）、`卡那卡那富`（ʉ）、`賽夏`（大寫 S、`:`） |
 

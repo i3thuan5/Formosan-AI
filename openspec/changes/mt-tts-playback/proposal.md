@@ -41,7 +41,7 @@
 ## Impact
 
 - **影響模組**：`tts/`、`mt/`；新增 `production_tests/`。不影響 `asr/`、`asr-kaldi/`、`common/`、`deploy/`。
-- **影響檔案**：`tts/app.py`、`mt/app.py`、`mt/requirements.in`、`mt/requirements.txt`，以及新增的 `production_tests/`。
+- **影響檔案**：`tts/app.py`、`mt/app.py`、`mt/Dockerfile`、`mt/requirements.in`、`mt/requirements.txt`，以及新增的 `mt/tts_client.py`、`mt/formosan_languages.py`、`production_tests/`。
 - **API**：
   - tts 新增 `/synthesize`，既有 API 不變。
   - mt 新增合成語音 endpoint，並為族別切換事件設定固定 `api_name`。原本自動產生的 `/lambda`、`/lambda_1` 名稱會改變，但這兩個是 UI 內部事件，沒有已知的外部使用者。
