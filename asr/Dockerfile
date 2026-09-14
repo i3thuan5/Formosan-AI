@@ -1,21 +1,20 @@
-FROM nvidia/cuda:12.8.1-cudnn-runtime-ubuntu24.04
+FROM nvidia/cuda:12.2.2-cudnn8-runtime-ubuntu22.04
 
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
-    python3.12 libpython3.12 python3-pip python-is-python3 \
-    git git-lfs ffmpeg libsm6 libxext6 cmake rsync libgl1 && \
+    python3.10 libpython3.10 python3-pip python-is-python3 \
+    git git-lfs ffmpeg libsm6 libxext6 cmake rsync libgl1-mesa-glx && \
     git lfs install && \
     apt-get install --no-install-recommends -y curl && \
     curl --proto "=https" --tlsv1.2 -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install --no-install-recommends -y nodejs && \
     rm -rf /var/lib/apt/lists/* && apt-get clean
 
-RUN groupmod --new-name nonroot ubuntu && \
-    usermod --login nonroot --home /home/nonroot --move-home ubuntu
+RUN addgroup --gid 1000 nonroot && \
+    adduser --uid 1000 --disabled-password --ingroup nonroot --quiet nonroot
 
 RUN --mount=target=/tmp/requirements.txt,source=requirements.txt \
     pip install \
-    --break-system-packages \
     --require-hashes \
     --only-binary=:all: \
     --no-binary=antlr4-python3-runtime,julius \
