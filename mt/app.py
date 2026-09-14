@@ -1,7 +1,12 @@
+import concurrent.futures
+from pathlib import Path
+
 import gradio as gr
 import spaces
 import torch
+from gradio_client.exceptions import AppError
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+from tts_client import TTS_TIMEOUT_SECONDS, TtsClient
 from utils import render_demo
 
 
@@ -53,6 +58,8 @@ FORMOSAN_LANGUAGES_MAP = {
 ETHNICITIES = sorted(set([k.split("_")[0]
                           for k in FORMOSAN_LANGUAGES_MAP.keys()]))
 
+CODE_TO_LANGUAGE = {v: k for k, v in FORMOSAN_LANGUAGES_MAP.items()}
+
 MODEL_NAME = "ithuan/nllb-600m-formosan-all-finetune-v2"
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -91,6 +98,44 @@ def translate(text: str, src_lang: str, tgt_lang: str):
     translated = tokenizer.decode(translated[0], skip_special_tokens=True)
 
     return translated
+
+
+tts_client = TtsClient()
+
+
+def synthesize(text: str, tgt_lang: str):
+    text = text.strip()
+    if len(text) == 0:
+        raise gr.Error("請先翻譯或輸入族語文字。")
+
+    job = None
+    try:
+        job = tts_client.get().submit(
+            CODE_TO_LANGUAGE[tgt_lang],
+            text,
+            api_name="/synthesize",
+        )
+        audio_path = Path(job.result(timeout=TTS_TIMEOUT_SECONDS))
+        audio = audio_path.read_bytes()
+    except concurrent.futures.TimeoutError:
+        if job is not None:
+            job.cancel()
+        raise gr.Error("現在使用人數眾多，請稍候再試")
+    except AppError as e:
+        raise gr.Error(e.message)
+    except Exception:
+        tts_client.reset()
+        raise gr.Error("語音合成服務暫時無法使用，請稍候再試")
+
+    # 回傳 bytes，讓 gr.Audio 存進 Gradio 快取（delete_cache 會清）；
+    # gradio_client 下載的原檔不在快取追蹤範圍內，要自己刪掉
+    audio_path.unlink(missing_ok=True)
+    try:
+        audio_path.parent.rmdir()
+    except OSError:
+        pass
+
+    return audio
 
 
 with render_demo(
@@ -183,6 +228,10 @@ with render_demo(
         to_formosan_input_text = gr.Textbox(label="原文", lines=6)
         to_formosan_btn = gr.Button("翻譯", variant="primary")
         to_formosan_output = gr.Textbox(label="翻譯結果", lines=6)
+        to_formosan_tts_btn = gr.Button("合成語音")
+        to_formosan_audio = gr.Audio(
+            label="合成結果", show_share_button=False, show_download_button=True
+        )
 
         to_formosan_ethnicity.change(
             lambda ethnicity: gr.Radio(
@@ -192,11 +241,25 @@ with render_demo(
             ),
             inputs=to_formosan_ethnicity,
             outputs=to_formosan_tgt_lang,
+            api_name="to_formosan_languages",
         )
 
+        # 按翻譯時先清掉舊的合成音檔，避免和新譯文對不上
+        to_formosan_btn.click(
+            lambda: None,
+            outputs=to_formosan_audio,
+            api_name=False,
+        )
         to_formosan_btn.click(
             translate,
             inputs=[to_formosan_input_text,
                     to_formosan_src_lang, to_formosan_tgt_lang],
             outputs=to_formosan_output,
+        )
+
+        to_formosan_tts_btn.click(
+            synthesize,
+            inputs=[to_formosan_output, to_formosan_tgt_lang],
+            outputs=to_formosan_audio,
+            api_name="synthesize",
         )

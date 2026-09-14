@@ -62,7 +62,7 @@ rules:
     - 涉及 Docker 的任務須說明是否需重建 common image
     - 涉及 requirements 的任務須包含執行 pip-compile 的步驟
     - 涉及新族語方言的任務須包含設定檔更新
-  spec:
+  specs:
     - 以繁體中文撰寫，技術內容可夾雜英文
     - API 規格須符合 FastAPI / Pydantic 慣例
     - 需說明 GPU/CPU fallback 行為

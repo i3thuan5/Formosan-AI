@@ -58,7 +58,9 @@ gradio[oauth]==5.49.1
     #   -r requirements.in
     #   spaces
 gradio-client==1.13.3
-    # via gradio
+    # via
+    #   -r requirements.in
+    #   gradio
 groovy==0.1.2
     # via gradio
 h11==0.16.0
