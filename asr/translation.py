@@ -47,7 +47,7 @@ class Translator:
         tokenizer.tgt_lang = TRANSLATION_TARGET_LANGUAGE
         translated_texts = []
         for start in range(0, len(texts), self.batch_size):
-            text_batch = texts[start : start + self.batch_size]
+            text_batch = texts[start:start + self.batch_size]
             inputs = tokenizer(
                 text_batch,
                 return_tensors="pt",
