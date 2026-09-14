@@ -357,7 +357,9 @@ class FasterWhisperPipeline(BasePipeline):
 
             best_segment = max(
                 candidates,
-                key=lambda index: self._overlap_duration(segments[index], word),
+                key=lambda index, current_word=word: self._overlap_duration(
+                    segments[index], current_word
+                ),
             )
             segments[best_segment]["text"] += word["word"]
 
