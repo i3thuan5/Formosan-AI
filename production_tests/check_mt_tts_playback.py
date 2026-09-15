@@ -35,8 +35,7 @@ REGRESSION_TEXTS = [
     ("卑南_知本", 'marengay na sinsi, " temakesi ta nu ʼemanan.」'),
 ]
 UNSUPPORTED_LANGUAGE = "不存在的語別"
-
-failures = []
+SYNTHESIZE_API_NAME = "/synthesize"
 
 
 def load_refs():
@@ -58,7 +57,7 @@ def assert_audio(result):
     path.unlink()
 
 
-def check(name, fn):
+def check(name, fn, failures):
     start = time.time()
     try:
         note = fn()
@@ -75,9 +74,9 @@ def connect(url, download_dir):
 
 def check_tts_api_contract(tts):
     endpoints = tts.view_api(print_info=False, return_format="dict")["named_endpoints"]
-    if "/synthesize" not in endpoints:
-        raise AssertionError("TTS 缺少 /synthesize")
-    params = [p["parameter_name"] for p in endpoints["/synthesize"]["parameters"]]
+    if SYNTHESIZE_API_NAME not in endpoints:
+        raise AssertionError(f"TTS 缺少 {SYNTHESIZE_API_NAME}")
+    params = [p["parameter_name"] for p in endpoints[SYNTHESIZE_API_NAME]["parameters"]]
     if params != ["language", "text"]:
         raise AssertionError(f"/synthesize 參數應為 ['language', 'text']，實際為 {params}")
 
@@ -85,20 +84,20 @@ def check_tts_api_contract(tts):
 def check_tts_language(tts, refs, language):
     def run():
         text = sample_text(refs, language)
-        assert_audio(tts.predict(language, text, api_name="/synthesize"))
+        assert_audio(tts.predict(language, text, api_name=SYNTHESIZE_API_NAME))
         return text
     return run
 
 
 def check_tts_text(tts, language, text):
     def run():
-        assert_audio(tts.predict(language, text, api_name="/synthesize"))
+        assert_audio(tts.predict(language, text, api_name=SYNTHESIZE_API_NAME))
     return run
 
 
 def check_tts_unsupported_language(tts):
     try:
-        result = tts.predict(UNSUPPORTED_LANGUAGE, "abc", api_name="/synthesize")
+        result = tts.predict(UNSUPPORTED_LANGUAGE, "abc", api_name=SYNTHESIZE_API_NAME)
     except AppError as e:
         return f"回傳錯誤：{e}"
     raise AssertionError(f"不支援的語別應回傳錯誤，卻回傳了 {result!r}")
@@ -110,7 +109,7 @@ def check_end_to_end(mt, refs, language, code):
         # mt 的語別是 Radio，要先在同一個 session 切換族別，choices 才會包含該語別
         mt.predict(language.split("_")[0], api_name="/to_formosan_languages")
         start = time.time()
-        assert_audio(mt.predict(text, code, api_name="/synthesize"))
+        assert_audio(mt.predict(text, code, api_name=SYNTHESIZE_API_NAME))
         elapsed = time.time() - start
         if elapsed > SLOW_WARNING_SECONDS:
             return f"⚠ 合成花了 {elapsed:.1f}s，接近 mt 的 20 秒逾時"
@@ -131,11 +130,12 @@ def main():
     args = parse_args()
     print(f"BASE_URL = {BASE_URL}")
     refs = load_refs()
+    failures = []
 
     if args.all_languages:
         languages = list(FORMOSAN_LANGUAGES_MAP)
     else:
-        languages = random.sample(list(FORMOSAN_LANGUAGES_MAP), SAMPLE_LANGUAGE_COUNT)
+        languages = random.SystemRandom().sample(list(FORMOSAN_LANGUAGES_MAP), SAMPLE_LANGUAGE_COUNT)
 
     with tempfile.TemporaryDirectory(prefix="production-tests-") as download_dir:
         try:
@@ -143,35 +143,44 @@ def main():
         except Exception as e:
             failures.append(("連線 TTS", f"{type(e).__name__}: {e}"))
             print(f"✗ 連不上 TTS：{TTS_URL}（{e}）")
-            tts = None
+        else:
+            run_tts_checks(tts, refs, languages, args.all_languages, failures)
 
-        if tts is not None:
-            print("\n[1] TTS API 約定")
-            check("/synthesize(language, text)", lambda: check_tts_api_contract(tts))
-
-            if args.all_languages:
-                print(f"\n[2] TTS 合成全部 {len(languages)} 個語別")
-            else:
-                print(f"\n[2] TTS 合成隨機抽樣 {len(languages)} 個語別（加 --all-languages 掃全部）")
-            for language in languages:
-                check(language, check_tts_language(tts, refs, language))
-
-            print("\n[3] 已知 bug 回歸")
-            for language, text in REGRESSION_TEXTS:
-                check(f"{language}：{text}", check_tts_text(tts, language, text))
-            check(f"不支援的語別「{UNSUPPORTED_LANGUAGE}」", lambda: check_tts_unsupported_language(tts))
-
-        print("\n[4] mt → tts 端到端")
         try:
             mt = connect(MT_URL, download_dir)
         except Exception as e:
             failures.append(("連線 MT", f"{type(e).__name__}: {e}"))
             print(f"✗ 連不上 MT：{MT_URL}（{e}）")
-            mt = None
-        if mt is not None:
-            for language in END_TO_END_LANGUAGES:
-                check(language, check_end_to_end(mt, refs, language, FORMOSAN_LANGUAGES_MAP[language]))
+        else:
+            run_end_to_end_checks(mt, refs, failures)
 
+    return report_result(failures)
+
+
+def run_tts_checks(tts, refs, languages, all_languages, failures):
+    print("\n[1] TTS API 約定")
+    check(f"{SYNTHESIZE_API_NAME}(language, text)", lambda: check_tts_api_contract(tts), failures)
+
+    if all_languages:
+        print(f"\n[2] TTS 合成全部 {len(languages)} 個語別")
+    else:
+        print(f"\n[2] TTS 合成隨機抽樣 {len(languages)} 個語別（加 --all-languages 掃全部）")
+    for language in languages:
+        check(language, check_tts_language(tts, refs, language), failures)
+
+    print("\n[3] 已知 bug 回歸")
+    for language, text in REGRESSION_TEXTS:
+        check(f"{language}：{text}", check_tts_text(tts, language, text), failures)
+    check(f"不支援的語別「{UNSUPPORTED_LANGUAGE}」", lambda: check_tts_unsupported_language(tts), failures)
+
+
+def run_end_to_end_checks(mt, refs, failures):
+    print("\n[4] mt → tts 端到端")
+    for language in END_TO_END_LANGUAGES:
+        check(language, check_end_to_end(mt, refs, language, FORMOSAN_LANGUAGES_MAP[language]), failures)
+
+
+def report_result(failures):
     if failures:
         print(f"\n失敗 {len(failures)} 項：")
         for name, message in failures:
