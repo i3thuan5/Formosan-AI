@@ -184,6 +184,18 @@ def infer(
     return (final_sample_rate, final_wave), spectrogram_path
 
 
+def normalize_gen_text(gen_text_input: str) -> str:
+    # 先移除引號再判斷句尾，避免 `kita."` 補成 `kita.".`，移除引號後變成 `kita..`
+    gen_text_input = re.sub(r"[\"“”「」]", "", gen_text_input).strip()
+    if len(gen_text_input) == 0:
+        raise gr.Error("請勿輸入空字串。")
+
+    if gen_text_input[-1] not in [".", "?", "!", ",", ";", ":"]:
+        gen_text_input += "."
+
+    return gen_text_input
+
+
 with render_demo(
     demo_md_filename="DEMO.md",
     css_paths=[Path(__file__).parent / 'static' / 'css' / 'app.css', ],
@@ -344,12 +356,7 @@ with render_demo(
         ref_text_input = refs_config[ref]["text"]
         ref_audio_input = refs_config[ref]["wav"]
 
-        gen_text_input = gen_text_input.strip()
-        if len(gen_text_input) == 0:
-            raise gr.Error("請勿輸入空字串。")
-
-        if gen_text_input[-1] not in [".", "?", "!", ",", ";", ":"]:
-            gen_text_input += "."
+        gen_text_input = normalize_gen_text(gen_text_input)
 
         ignore_punctuation = False
         ipa_with_ng = False
@@ -376,6 +383,31 @@ with render_demo(
             default_speaker_gen_text_input,
         ],
         outputs=[default_speaker_audio_output],
+    )
+
+    def synthesize_by_language(
+        language: str,
+        text: str,
+    ):
+        # 給其他服務（如 mt）呼叫，用該語別第一位配音員合成。
+        # 用 Textbox 當輸入，才不會受 Radio choices 限制。
+        refs = get_refs_by_perfix(language + "_")
+        if len(refs) == 0:
+            raise gr.Error(f"不支援的語別：{language}")
+        return default_speaker_tts(refs[0], text)
+
+    synthesize_language_input = gr.Textbox(visible=False)
+    synthesize_text_input = gr.Textbox(visible=False)
+    synthesize_audio_output = gr.Audio(visible=False)
+    synthesize_btn = gr.Button(visible=False)
+    synthesize_btn.click(
+        synthesize_by_language,
+        inputs=[
+            synthesize_language_input,
+            synthesize_text_input,
+        ],
+        outputs=[synthesize_audio_output],
+        api_name="synthesize",
     )
 
     custom_speaker_ethnicity.change(
@@ -408,15 +440,10 @@ with render_demo(
         if len(ref_text_input) == 0:
             raise gr.Error("請勿輸入空字串。")
 
-        gen_text_input = gen_text_input.strip()
-        if len(gen_text_input) == 0:
-            raise gr.Error("請勿輸入空字串。")
+        gen_text_input = normalize_gen_text(gen_text_input)
 
         ignore_punctuation = False
         ipa_with_ng = False
-
-        if gen_text_input[-1] not in [".", "?", "!", ",", ";", ":"]:
-            gen_text_input += "."
 
         ref_text_input = text_to_ipa(
             ref_text_input, language, ignore_punctuation, ipa_with_ng

@@ -1,57 +1,20 @@
+import concurrent.futures
+from pathlib import Path
+
 import gradio as gr
 import spaces
 import torch
+from gradio_client.exceptions import AppError
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+from formosan_languages import FORMOSAN_LANGUAGES_MAP
+from tts_client import TTS_TIMEOUT_SECONDS, TtsClient
 from utils import render_demo
 
 
-FORMOSAN_LANGUAGES_MAP = {
-    "阿美_海岸": "ami_Coas",
-    "阿美_恆春": "ami_Heng",
-    "阿美_馬蘭": "ami_Mala",
-    "阿美_南勢": "ami_Sout",
-    "阿美_秀姑巒": "ami_Xiug",
-    "泰雅_四季": "tay_Four",
-    "泰雅_賽考利克": "tay_Seko",
-    "泰雅_萬大": "tay_Wand",
-    "泰雅_汶水": "tay_Wens",
-    "泰雅_宜蘭澤敖利": "tay_Yzea",
-    "泰雅_澤敖利": "tay_Zeao",
-    "布農_郡群": "bnn_Junq",
-    "布農_卡群": "bnn_Kaqu",
-    "布農_巒群": "bnn_Luan",
-    "布農_丹群": "bnn_Tanq",
-    "布農_卓群": "bnn_Zhuo",
-    "卡那卡那富": "xnb_Kana",
-    "噶瑪蘭": "ckv_Kava",
-    "排灣_中": "pwn_Cent",
-    "排灣_東": "pwn_East",
-    "排灣_北": "pwn_Nrth",
-    "排灣_南": "pwn_Sout",
-    "卑南_建和": "pyu_Jian",
-    "卑南_南王": "pyu_Nanw",
-    "卑南_西群": "pyu_Xiqu",
-    "卑南_知本": "pyu_Zhib",
-    "魯凱_大武": "dru_Dawu",
-    "魯凱_多納": "dru_Dona",
-    "魯凱_東": "dru_East",
-    "魯凱_茂林": "dru_Maol",
-    "魯凱_萬山": "dru_Wans",
-    "魯凱_霧台": "dru_Wuta",
-    "拉阿魯哇": "sxr_Saar",
-    "賽夏": "xsy_Sais",
-    "撒奇萊雅": "szy_Saki",
-    "賽德克_德鹿谷": "trv_Delu",
-    "賽德克_都達": "trv_Duda",
-    "賽德克_德固達雅": "trv_Tegu",
-    "邵": "ssf_Thao",
-    "太魯閣": "trv_Truk",
-    "鄒": "tsu_Tsou",
-    "雅美": "tao_Yami",
-}
-
 ETHNICITIES = sorted(set([k.split("_")[0]
                           for k in FORMOSAN_LANGUAGES_MAP.keys()]))
+
+CODE_TO_LANGUAGE = {v: k for k, v in FORMOSAN_LANGUAGES_MAP.items()}
 
 MODEL_NAME = "ithuan/nllb-600m-formosan-all-finetune-v2"
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -91,6 +54,44 @@ def translate(text: str, src_lang: str, tgt_lang: str):
     translated = tokenizer.decode(translated[0], skip_special_tokens=True)
 
     return translated
+
+
+tts_client = TtsClient()
+
+
+def synthesize(text: str, tgt_lang: str):
+    text = text.strip()
+    if len(text) == 0:
+        raise gr.Error("請先翻譯或輸入族語文字。")
+
+    job = None
+    try:
+        job = tts_client.get().submit(
+            CODE_TO_LANGUAGE[tgt_lang],
+            text,
+            api_name="/synthesize",
+        )
+        audio_path = Path(job.result(timeout=TTS_TIMEOUT_SECONDS))
+        audio = audio_path.read_bytes()
+    except concurrent.futures.TimeoutError:
+        if job is not None:
+            job.cancel()
+        raise gr.Error("現在使用人數眾多，請稍候再試")
+    except AppError as e:
+        raise gr.Error(e.message)
+    except Exception:
+        tts_client.reset()
+        raise gr.Error("語音合成服務暫時無法使用，請稍候再試")
+
+    # 回傳 bytes，讓 gr.Audio 存進 Gradio 快取（delete_cache 會清）；
+    # gradio_client 下載的原檔不在快取追蹤範圍內，要自己刪掉
+    audio_path.unlink(missing_ok=True)
+    try:
+        audio_path.parent.rmdir()
+    except OSError:
+        pass
+
+    return audio
 
 
 with render_demo(
@@ -183,6 +184,10 @@ with render_demo(
         to_formosan_input_text = gr.Textbox(label="原文", lines=6)
         to_formosan_btn = gr.Button("翻譯", variant="primary")
         to_formosan_output = gr.Textbox(label="翻譯結果", lines=6)
+        to_formosan_tts_btn = gr.Button("合成語音")
+        to_formosan_audio = gr.Audio(
+            label="合成結果", show_share_button=False, show_download_button=True
+        )
 
         to_formosan_ethnicity.change(
             lambda ethnicity: gr.Radio(
@@ -192,11 +197,25 @@ with render_demo(
             ),
             inputs=to_formosan_ethnicity,
             outputs=to_formosan_tgt_lang,
+            api_name="to_formosan_languages",
         )
 
+        # 按翻譯時先清掉舊的合成音檔，避免和新譯文對不上
+        to_formosan_btn.click(
+            lambda: None,
+            outputs=to_formosan_audio,
+            api_name=False,
+        )
         to_formosan_btn.click(
             translate,
             inputs=[to_formosan_input_text,
                     to_formosan_src_lang, to_formosan_tgt_lang],
             outputs=to_formosan_output,
+        )
+
+        to_formosan_tts_btn.click(
+            synthesize,
+            inputs=[to_formosan_output, to_formosan_tgt_lang],
+            outputs=to_formosan_audio,
+            api_name="synthesize",
         )

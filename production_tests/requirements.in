@@ -1,0 +1,3 @@
+# 和 mt 的 gradio==5.49.1 用同一版 client，測到的呼叫方式才一致
+gradio_client==1.13.3
+PyYAML
