@@ -1,18 +1,14 @@
-FROM nvidia/cuda:12.2.2-cudnn8-runtime-ubuntu22.04
+FROM formosan-ai-gpu
 
-RUN apt-get update && \
-    apt-get install --no-install-recommends -y \
-    python3.10 libpython3.10 python3-pip python-is-python3 \
-    git git-lfs ffmpeg libsm6 libxext6 cmake rsync libgl1-mesa-glx && \
-    git lfs install && \
-    apt-get install --no-install-recommends -y curl && \
-    curl --proto "=https" --tlsv1.2 -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-    apt-get install --no-install-recommends -y nodejs && \
-    rm -rf /var/lib/apt/lists/* && apt-get clean
+# 確認這份 lock 檔的 torch 與 nvidia-* 和共用層一致，不一致就不要 build 出
+# 多帶一份 torch 的 image。CI 的 tox -e lockcheck 做同樣的事（tests/check_lock_consistency.py）。
+RUN --mount=target=/tmp/requirements.txt,source=requirements.txt \
+    python /opt/formosan-ai/check_lock_consistency.py \
+    --constraints /opt/formosan-ai/gpu-constraints.txt \
+    /tmp/requirements.txt
 
-RUN addgroup --gid 1000 nonroot && \
-    adduser --uid 1000 --disabled-password --ingroup nonroot --quiet nonroot
-
+# requirements.txt 由 uv 完整鎖版並附 hash。WhisperX 會遞移依賴只有 sdist 的
+# antlr4-python3-runtime 與 julius，所以 --only-binary=:all: 要開這兩個例外。
 RUN --mount=target=/tmp/requirements.txt,source=requirements.txt \
     pip install \
     --require-hashes \

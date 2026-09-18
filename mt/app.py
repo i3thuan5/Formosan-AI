@@ -2,7 +2,6 @@ import concurrent.futures
 from pathlib import Path
 
 import gradio as gr
-import spaces
 import torch
 from gradio_client.exceptions import AppError
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
@@ -31,7 +30,6 @@ def get_languages_by_ethnicity(ethnicity: str):
     ]
 
 
-@spaces.GPU
 def translate(text: str, src_lang: str, tgt_lang: str):
     tokenizer.src_lang = src_lang
     tokenizer.tgt_lang = tgt_lang
@@ -154,6 +152,7 @@ with render_demo(
             ),
             inputs=to_zh_ethnicity,
             outputs=to_zh_src_lang,
+            api_name="to_zh_languages",
         )
 
         to_zh_btn.click(
