@@ -130,6 +130,11 @@ DEFAULT_MODEL_ID = list(models_config.keys())[0]
 ETHNICITIES = sorted(set([k.split("_")[0] for k in g2p_object.keys()]))
 
 
+def silent_info(*args, **kwargs):
+    # F5-TTS 內部會用 show_info 跳英文提示，但太干擾故不顯示
+    pass
+
+
 @gpu_decorator
 def infer(
     ref_audio_orig,
@@ -140,14 +145,14 @@ def infer(
     cross_fade_duration=0.15,
     nfe_step=32,
     speed=1,
-    show_info=gr.Info,
+    show_info=silent_info,
 ):
     if not ref_audio_orig:
-        gr.Warning("Please provide reference audio.")
+        gr.Warning("請提供參考音檔。")
         return gr.update(), gr.update(), ref_text
 
     if not gen_text.strip():
-        gr.Warning("Please enter text to generate.")
+        gr.Warning("請輸入要合成語音的文字。")
         return gr.update(), gr.update(), ref_text
 
     ref_audio, ref_text = preprocess_ref_audio_text(
