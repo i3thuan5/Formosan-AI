@@ -7,8 +7,12 @@ RUN --mount=target=/tmp/requirements.txt,source=requirements.txt \
     --constraints /opt/formosan-ai/gpu-constraints.txt \
     /tmp/requirements.txt
 
+# 只裝 wheel，不在 build 時執行套件的 setup 腳本。mt 的套件全部都有 wheel，不需要例外。
 RUN --mount=target=/tmp/requirements.txt,source=requirements.txt \
-    pip install --no-cache-dir -r /tmp/requirements.txt
+    pip install \
+    --only-binary=:all: \
+    --no-cache-dir \
+    -r /tmp/requirements.txt
 
 COPY --from=formosan-ai-common /app/utils.py /app/colors.py /app/
 COPY --from=formosan-ai-common /app/common_static/ /app/common_static/

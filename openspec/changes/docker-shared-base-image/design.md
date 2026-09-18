@@ -148,6 +148,22 @@ strace -f -e trace=execve,openat -o /tmp/trace python app.py
 
 smoke 必須涵蓋：上傳非 wav 音檔、麥克風錄音、一次辨識或合成、冷啟動模型下載。這四個動作分別走 pydub、gradio、whisperx 與 torchcodec、huggingface-hub。
 
+### 6.1 tts 在 build 時需要 git（實際 build 後發現）
+
+決策 6 的判斷只看了執行時：repo 程式碼沒有 shell out 到 git，模型也走 huggingface-hub 的 HTTP。但 tts 的 `f5-tts @ git+https://github.com/SWivid/F5-TTS.git@695c735...` 是 git URL 依賴，pip 安裝時要 git 才能 clone，第一次 build 就失敗：
+
+```
+ERROR: Cannot find command 'git' - do you have 'git' installed and in your PATH?
+```
+
+做法是只在 tts 的 Dockerfile，於同一個 `RUN` 內安裝 git、`pip install`、移除 git，git 不進任何 image 的最終內容，也不影響共用的 base 與 gpu 層。
+
+**替代方案：**
+
+- git 放進 base：最簡單，但四個 image 都多一份只有 tts build 時用得到的東西，而且改 base 會讓 gpu 那 3.7 GiB 重建。
+- 改用 GitHub 壓縮檔 URL（`.../archive/<commit>.zip`），完全不需要 git：這個 commit 的 `build-system` 需要 `setuptools-scm`，而且有 `src/third_party/BigVGAN` submodule，壓縮檔沒有 git metadata 也不含 submodule，打包出來的內容可能不完整。
+- 改用 PyPI 的 `f5-tts==1.1.4`：PyPI 的 1.1.4 發佈於 2025-05-04，這個 commit 是 2025-05-16，內容不同。等升 Python 3.12 時可一併評估換成 PyPI 的新版，就能拿掉這段。
+
 ### 7. Travis 用 buildx registry cache，保留兩個 build stage
 
 ```

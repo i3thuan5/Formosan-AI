@@ -32,6 +32,12 @@
 - [ ] 3.14 ⏸ 需要已部署的測試機｜[deploy/] 部署到測試機前後各跑一次 `tox -e production_tests --report`（檔名含 `-before-`、`-after-`）與 k6 各 10 次，比對無新失敗、耗時無數倍劣化
 - [x] 3.15 [deploy/][common/] 更新 `README.md`：build 步驟改為 `--target base`、`--target gpu`、`--target files` 三個指令加 `docker compose up -d --build`；「更新套件版本」改為 uv 指令、GPU 服務加 `-c common/requirements.txt`、升 torch 先改 `common/requirements.in`；更新 `openspec/config.yaml` 的技術棧（torch 2.8、無 CUDA base image）、套件管理（uv）與 Docker 架構（三個共用 image）
 
+- [x] 3.16 [tts/] 實際 build 發現 f5-tts 的 git URL 依賴需要 git：tts Dockerfile 在同一個 `RUN` 內安裝 git、`pip install`、移除 git（見 design 6.1）。Docker：只需重建 `ithuan/formosan-ai:tts`，不需重建共用 image
+- [ ] 3.17 ⏸ 需要 docker｜[tts/] 重新 build tts，確認 f5-tts 安裝成功，且 `docker run --rm ithuan/formosan-ai:tts which git` 找不到 git
+
+- [x] 3.18 [mt/][asr-kaldi/][tts/] 回應 SonarQube docker:S8541：mt 加 `--only-binary=:all:`（88 個套件都有 wheel）；asr-kaldi 加 `--only-binary=:all:` 與 `--no-binary=antlr4-python3-runtime,srt`；tts 不加，Dockerfile 註明原因，並在 SonarQube 標記為已審查、可接受。Docker：只需重建 mt、asr-kaldi、tts，不需重建共用 image
+- [ ] 3.19 ⏸ 需要 docker｜[mt/][asr-kaldi/] 重新 build mt 與 asr-kaldi，確認只裝 wheel 仍能成功
+
 ## 4. PR 3：Travis buildx registry cache（deploy/）
 
 - [x] 4.1 [deploy/] `.travis.yml` 兩個 build job 以 `docker buildx create --use` 建 `docker-container` builder（registry cache 需要）

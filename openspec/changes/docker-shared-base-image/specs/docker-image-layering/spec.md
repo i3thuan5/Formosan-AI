@@ -16,7 +16,7 @@
 
 ### Requirement: 服務 image 以共用 image 為 FROM，且不自行安裝 apt 套件或 torch
 
-asr、mt、tts 的 Dockerfile SHALL `FROM formosan-ai-gpu`；asr-kaldi 的 Dockerfile SHALL `FROM formosan-ai-base`。服務 Dockerfile MUST NOT 執行 `apt-get install`，MUST NOT 在自己的 `pip install` 步驟重新安裝或變更 torch 系列、`nvidia-*-cu12`、triton 的版本。
+asr、mt、tts 的 Dockerfile SHALL `FROM formosan-ai-gpu`；asr-kaldi 的 Dockerfile SHALL `FROM formosan-ai-base`。服務 Dockerfile MUST NOT 執行 `apt-get install`，唯一例外是 tts：f5-tts 以 git URL 安裝，build 時需要 git，MUST 在同一個 `RUN` 內安裝 git、執行 `pip install`、再移除 git，不留在 image 裡。服務 DockerfileMUST NOT 在自己的 `pip install` 步驟重新安裝或變更 torch 系列、`nvidia-*-cu12`、triton 的版本。
 
 #### Scenario: 三個 GPU 服務共用 torch layer
 
@@ -83,3 +83,17 @@ asr、mt、tts 的 Dockerfile SHALL `FROM formosan-ai-gpu`；asr-kaldi 的 Docke
 
 - **WHEN** Docker 官方重建 `python:3.10-slim`
 - **THEN** Dependabot 提出更新 digest 的 PR，CI 的 build 與 lockcheck 通過後即可合併，不需改動 requirements
+
+### Requirement: pip 只安裝 wheel，例外須明列
+
+服務 Dockerfile 的 `pip install` SHALL 使用 `--only-binary=:all:`，只在 PyPI 沒有 wheel 的套件以 `--no-binary` 明列例外，避免 build 時執行未預期的 setup 腳本（SonarQube docker:S8541）。目前的例外為：asr `antlr4-python3-runtime`、`julius`；asr-kaldi `antlr4-python3-runtime`、`srt`；mt 無。tts 因 f5-tts 以 git URL 安裝必須 build，另有 4 個套件只有原始碼包，SHALL 不加 `--only-binary`，並在 Dockerfile 註明此為已審查、可接受的例外。
+
+#### Scenario: 新增的依賴沒有 wheel
+
+- **WHEN** mt 的 requirements 新增一個只有原始碼包的套件後 build
+- **THEN** `pip install` 失敗並指出該套件，必須明確加入 `--no-binary` 例外才能通過
+
+#### Scenario: tts 的例外有紀錄
+
+- **WHEN** 檢視 `tts/Dockerfile`
+- **THEN** pip install 那一段有註解說明為何不加 `--only-binary`，並列出需要從原始碼 build 的套件
