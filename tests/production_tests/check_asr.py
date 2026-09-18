@@ -27,13 +27,18 @@ TIMESTAMP = re.compile(r"^\d{2}:\d{2}:\d{2},\d{3} --> \d{2}:\d{2}:\d{2},\d{3}$")
 
 
 def all_languages():
-    return [code for languages in LANGUAGE_GROUPS.values() for _, code in languages]
+    codes = []
+    for languages in LANGUAGE_GROUPS.values():
+        for _, code in languages:
+            codes.append(code)
+    return codes
 
 
 def group_of(code):
     for group, languages in LANGUAGE_GROUPS.items():
-        if any(c == code for _, c in languages):
-            return group
+        for _, candidate in languages:
+            if candidate == code:
+                return group
     raise AssertionError(f"asr/languages.py 沒有語別代碼 {code}")
 
 
@@ -43,7 +48,9 @@ def parse_srt(srt):
         raise AssertionError(f"回傳的不是字串，而是 {type(srt).__name__}")
 
     formosan_lines = []
-    for block in [b for b in srt.strip().split("\n\n") if b.strip()]:
+    for block in srt.strip().split("\n\n"):
+        if not block.strip():
+            continue
         lines = block.split("\n")
         if len(lines) != 4:
             raise AssertionError(f"cue 應有 4 行（序號、時間、族語、華語），實際 {len(lines)} 行：{block!r}")

@@ -24,7 +24,11 @@ PINNED = re.compile(r"^([A-Za-z0-9._-]+)==([^\s\\]+)", re.MULTILINE)
 
 def read_pins(path):
     with open(path, encoding="utf-8") as f:
-        return {name.lower(): version for name, version in PINNED.findall(f.read())}
+        content = f.read()
+    pins = {}
+    for name, version in PINNED.findall(content):
+        pins[name.lower()] = version
+    return pins
 
 
 def main():
@@ -45,11 +49,10 @@ def main():
     failed = False
     for path in args.locks:
         service = read_pins(path)
-        mismatched = {
-            name: (version, service[name])
-            for name, version in expected.items()
-            if name in service and service[name] != version
-        }
+        mismatched = {}
+        for name, version in expected.items():
+            if name in service and service[name] != version:
+                mismatched[name] = (version, service[name])
         if mismatched:
             failed = True
             print(f"✗ {path} 有 {len(mismatched)} 個套件和共用層不同：")

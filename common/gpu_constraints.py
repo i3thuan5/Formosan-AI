@@ -31,7 +31,9 @@ def render():
     versions = dict(GPU_PACKAGES.findall(LOCK.read_text(encoding="utf-8")))
     if not versions:
         raise SystemExit(f"✗ {LOCK} 找不到任何 GPU 套件")
-    lines = HEADER + [f"{name}=={version}" for name, version in sorted(versions.items())]
+    lines = list(HEADER)
+    for name, version in sorted(versions.items()):
+        lines.append(f"{name}=={version}")
     return "\n".join(lines) + "\n", len(versions)
 
 

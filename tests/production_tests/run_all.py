@@ -38,7 +38,10 @@ def sample_languages(all_items, required, all_languages):
     """固定含素材語別，再隨機抽幾個；--all-languages 時回傳全部。"""
     if all_languages:
         return list(all_items)
-    others = [item for item in all_items if item != required]
+    others = []
+    for item in all_items:
+        if item != required:
+            others.append(item)
     count = min(SAMPLE_COUNT, len(others))
     return [required] + random.SystemRandom().sample(others, count)
 
@@ -104,8 +107,15 @@ def parse_args():
     parser.add_argument("--report", help="把結果寫成 JSON 到這個路徑")
     args = parser.parse_args()
 
-    services = [s.strip() for s in args.services.split(",") if s.strip()]
-    unknown = [s for s in services if s not in ALL_SERVICES]
+    services = []
+    unknown = []
+    for service in args.services.split(","):
+        service = service.strip()
+        if not service:
+            continue
+        services.append(service)
+        if service not in ALL_SERVICES:
+            unknown.append(service)
     if unknown:
         parser.error(f"不認識的服務：{'、'.join(unknown)}。可選：{'、'.join(ALL_SERVICES)}")
     args.services = services

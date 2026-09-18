@@ -46,7 +46,10 @@ def load_refs():
 
 
 def sample_text(refs, language):
-    speakers = [k for k in refs if k.startswith(language + "_")]
+    speakers = []
+    for speaker in refs:
+        if speaker.startswith(language + "_"):
+            speakers.append(speaker)
     if len(speakers) == 0:
         raise AssertionError(f"tts/configs/refs.yaml 沒有「{language}」的配音員")
     return refs[speakers[0]]["text"]
@@ -63,7 +66,9 @@ def check_tts_api_contract(tts):
     endpoints = tts.view_api(print_info=False, return_format="dict")["named_endpoints"]
     if SYNTHESIZE_API_NAME not in endpoints:
         raise AssertionError(f"TTS 缺少 {SYNTHESIZE_API_NAME}")
-    params = [p["parameter_name"] for p in endpoints[SYNTHESIZE_API_NAME]["parameters"]]
+    params = []
+    for parameter in endpoints[SYNTHESIZE_API_NAME]["parameters"]:
+        params.append(parameter["parameter_name"])
     if params != ["language", "text"]:
         raise AssertionError(f"/synthesize 參數應為 ['language', 'text']，實際為 {params}")
 

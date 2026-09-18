@@ -37,7 +37,10 @@ def rms_ratio(path):
     if not samples:
         raise AssertionError("音檔沒有任何取樣點")
 
-    rms = math.sqrt(sum(float(s) * s for s in samples) / len(samples))
+    square_sum = 0.0
+    for sample in samples:
+        square_sum += float(sample) * sample
+    rms = math.sqrt(square_sum / len(samples))
     return rms / float(2 ** (8 * width - 1)), frames / rate, rate
 
 
