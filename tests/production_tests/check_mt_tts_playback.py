@@ -1,7 +1,7 @@
 """上線後檢查：MT「華語 ⮕ 族語」合成語音，以及 TTS `/synthesize` API。
 
-    $ BASE_URL=https://ai-labs.ilrdf.org.tw python production_tests/check_mt_tts_playback.py
-    $ python production_tests/check_mt_tts_playback.py --all-languages  # 第 2 項掃全部語別
+    $ BASE_URL=https://ai-labs.ilrdf.org.tw python tests/production_tests/check_mt_tts_playback.py
+    $ python tests/production_tests/check_mt_tts_playback.py --all-languages  # 第 2 項掃全部語別
 
 全部通過 exit 0，任一項失敗 exit 1。說明見 README.md。
 """
@@ -14,10 +14,12 @@ import time
 from pathlib import Path
 
 import yaml
-from gradio_client import Client
 from gradio_client.exceptions import AppError
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
+from reporting import check, connect, report_result
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(REPO_ROOT / "mt"))
 from formosan_languages import FORMOSAN_LANGUAGES_MAP  # noqa: E402
 
@@ -44,7 +46,10 @@ def load_refs():
 
 
 def sample_text(refs, language):
-    speakers = [k for k in refs if k.startswith(language + "_")]
+    speakers = []
+    for speaker in refs:
+        if speaker.startswith(language + "_"):
+            speakers.append(speaker)
     if len(speakers) == 0:
         raise AssertionError(f"tts/configs/refs.yaml 沒有「{language}」的配音員")
     return refs[speakers[0]]["text"]
@@ -57,26 +62,13 @@ def assert_audio(result):
     path.unlink()
 
 
-def check(name, fn, failures):
-    start = time.time()
-    try:
-        note = fn()
-    except Exception as e:
-        failures.append((name, f"{type(e).__name__}: {e}"))
-        print(f"  ✗ {name}（{time.time() - start:.1f}s）{type(e).__name__}: {e}", flush=True)
-        return
-    print(f"  ✓ {name}（{time.time() - start:.1f}s）{note or ''}", flush=True)
-
-
-def connect(url, download_dir):
-    return Client(url, verbose=False, analytics_enabled=False, download_files=download_dir)
-
-
 def check_tts_api_contract(tts):
     endpoints = tts.view_api(print_info=False, return_format="dict")["named_endpoints"]
     if SYNTHESIZE_API_NAME not in endpoints:
         raise AssertionError(f"TTS 缺少 {SYNTHESIZE_API_NAME}")
-    params = [p["parameter_name"] for p in endpoints[SYNTHESIZE_API_NAME]["parameters"]]
+    params = []
+    for parameter in endpoints[SYNTHESIZE_API_NAME]["parameters"]:
+        params.append(parameter["parameter_name"])
     if params != ["language", "text"]:
         raise AssertionError(f"/synthesize 參數應為 ['language', 'text']，實際為 {params}")
 
@@ -159,36 +151,27 @@ def main():
 
 def run_tts_checks(tts, refs, languages, all_languages, failures):
     print("\n[1] TTS API 約定")
-    check(f"{SYNTHESIZE_API_NAME}(language, text)", lambda: check_tts_api_contract(tts), failures)
+    check(f"{SYNTHESIZE_API_NAME}(language, text)", lambda: check_tts_api_contract(tts), failures, service="tts")
 
     if all_languages:
         print(f"\n[2] TTS 合成全部 {len(languages)} 個語別")
     else:
         print(f"\n[2] TTS 合成隨機抽樣 {len(languages)} 個語別（加 --all-languages 掃全部）")
     for language in languages:
-        check(language, check_tts_language(tts, refs, language), failures)
+        check(language, check_tts_language(tts, refs, language), failures, service="tts")
 
     print("\n[3] 已知 bug 回歸")
     for language, text in REGRESSION_TEXTS:
-        check(f"{language}：{text}", check_tts_text(tts, language, text), failures)
-    check(f"不支援的語別「{UNSUPPORTED_LANGUAGE}」", lambda: check_tts_unsupported_language(tts), failures)
+        check(f"{language}：{text}", check_tts_text(tts, language, text), failures, service="tts")
+    check(f"不支援的語別「{UNSUPPORTED_LANGUAGE}」", lambda: check_tts_unsupported_language(tts), failures,
+          service="tts")
 
 
 def run_end_to_end_checks(mt, refs, failures):
     print("\n[4] mt → tts 端到端")
     for language in END_TO_END_LANGUAGES:
-        check(language, check_end_to_end(mt, refs, language, FORMOSAN_LANGUAGES_MAP[language]), failures)
-
-
-def report_result(failures):
-    if failures:
-        print(f"\n失敗 {len(failures)} 項：")
-        for name, message in failures:
-            print(f"  - {name}：{message}")
-        return 1
-
-    print("\n全部通過")
-    return 0
+        check(f"mt → tts {language}", check_end_to_end(mt, refs, language, FORMOSAN_LANGUAGES_MAP[language]),
+              failures, service="mt")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,12 @@
+# GPU 服務共用的大型套件，由 common/Dockerfile 的 gpu stage 安裝一次，
+# asr、mt、tts 三個服務共用同一層，正式機也只需要 pull 一次。
+#
+# 版本由「最嚴格的消費者」決定：目前是 asr 的 whisperx，它硬 pin torch~=2.8.0。
+# 要升版時先改這裡、重編 common/requirements.txt，再重編三個服務的 requirements.txt。
+# cu12 的 wheel 需要主機 NVIDIA 驅動 525.60 以上，升到 cu13 前先在正式機確認 nvidia-smi。
+torch==2.8.0
+torchaudio==2.8.0
+torchvision==0.23.0
+# torchcodec 的編譯擴充與 libtorch 版本綁定，但 PyPI metadata 沒宣告 torch 依賴，
+# pip 抓不到不相容。0.7 配 torch 2.8（whisperx 也要求 torchcodec>=0.6,<0.8）。
+torchcodec==0.7.0

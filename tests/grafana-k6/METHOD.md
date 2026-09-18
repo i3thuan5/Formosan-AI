@@ -16,31 +16,13 @@
 
 ## 二、測試資料
 
-全部放在 `testing_data/`。
+全部放在 [tests/data/](../data/)，和 [tests/production_tests/](../production_tests/) 共用。
+檔案規格與 mp3 的轉檔指令見 [tests/data/README.md](../data/README.md)。
 
 ### 2-1 語音辨識（asr、asr-kaldi）
 
-原始檔 `海岸阿美語-曾玉蘭-個人生命史-短.mp4`：
-
-| 項目 | 值 |
-| --- | --- |
-| 長度 | 10.18 秒 |
-| 大小 | 1,459,372 bytes |
-| 影像 | H.264、1280×720 |
-| 聲音 | AAC、48kHz、2 聲道 |
-
 - **asr**（Whisper）吃的是 `gr.Video`，所以**直接用原始 mp4**。
-- **asr-kaldi** 吃的是 `gr.Audio`，所以先用 ffmpeg 轉成 mp3（16kHz 單聲道，10.12 秒、81,364 bytes）：
-
-  ```bash
-  $ cd testing_data/
-  $ ffmpeg -i 海岸阿美語-曾玉蘭-個人生命史-短.mp4 \
-      -vn -ac 1 -ar 16000 -c:a libmp3lame -b:a 64k \
-      海岸阿美語-曾玉蘭-個人生命史-短.mp3
-  ```
-
-  （16kHz 是 `asr-kaldi/app.py` 的 `gr.WaveformOptions(sample_rate=16000)` 所設定，
-  Vosk 模型也是吃 16kHz，所以轉成 16kHz 單聲道。）
+- **asr-kaldi** 吃的是 `gr.Audio`，所以用轉好的 mp3（16kHz 單聲道）。
 
 族別都選**阿美語**（`formosan_ami`）。
 

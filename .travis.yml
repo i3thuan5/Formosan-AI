@@ -34,17 +34,22 @@ jobs:
         - pip install tox
       script:
         - tox -e shellcheck
+    - name: Check dependency lock consistency
+      install:
+        - pip install tox
+      script:
+        - tox -e lockcheck
     - name: Docker Build
       service:
         - docker
       before_script:
         - docker login -u "${DOCKER_USER}" -p "${DOCKER_TOKEN_PULL}"
+        - docker buildx create --use --name formosan-ai
+      # PR 的 token 沒有 push 權限，只讀 cache。
+      # 不加 --load：這裡只驗證 build 會過，不需要把 image 載入 Docker。
+      # 載入時每個 GPU image 都會各自解開一份 4 GB 的 torch 層，Travis 的磁碟會不夠。
       script:
-        - docker build -t formosan-ai-common ./common
-        - docker build -t ithuan/formosan-ai:asr ./asr
-        - docker build -t ithuan/formosan-ai:asr-kaldi ./asr-kaldi
-        - docker build -t ithuan/formosan-ai:tts ./tts
-        - docker build -t ithuan/formosan-ai:mt ./mt
+        - CACHE=read docker buildx bake -f docker-bake.hcl
     - stage: Prepare for the Deployment
       name: Build Docker Container
       if: (type = push or type = cron) and (branch = main or branch = asr-docker-cd)
@@ -52,17 +57,13 @@ jobs:
         - docker
       before_script:
         - docker login -u "${DOCKER_USER}" -p "${DOCKER_TOKEN_PUSH}"
+        - docker buildx create --use --name formosan-ai
       script:
-        - docker build -t formosan-ai-common ./common
-        - docker build -t ithuan/formosan-ai:asr ./asr
-        - docker build -t ithuan/formosan-ai:asr-kaldi ./asr-kaldi
-        - docker build -t ithuan/formosan-ai:tts ./tts
-        - docker build -t ithuan/formosan-ai:mt ./mt
-      after_success:
-        - docker push ithuan/formosan-ai:asr
-        - docker push ithuan/formosan-ai:asr-kaldi
-        - docker push ithuan/formosan-ai:tts
-        - docker push ithuan/formosan-ai:mt
+        # 寫 cache，下次 requirements 沒變就不用再從 PyPI 抓 torch。
+        # 直接從 buildx 推到 Docker Hub，不經過 --load 與 docker push：
+        # 共用的 torch 層在 registry 只上傳一次，也不會佔用 Travis 的磁碟。
+        # 只列四個服務，共用的 base、gpu、files 只留在 cache，不會被推送。
+        - CACHE=readwrite docker buildx bake -f docker-bake.hcl --push asr asr-kaldi tts mt
     # - stage: Deploy
     #   name: Deploy
     #   if: (type = push or type = cron) and (branch = main or branch = asr-docker-cd)

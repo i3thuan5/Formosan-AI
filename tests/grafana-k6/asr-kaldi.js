@@ -2,7 +2,7 @@
 
 // asr-kaldi／族語語音辨識系統（Kaldi／Vosk）延遲測試
 // 線上 API：https://ai-labs.ilrdf.org.tw/sapolita-kaldi/?view=api
-// 測試資料：testing_data/海岸阿美語-曾玉蘭-個人生命史-短.mp3
+// 測試資料：../data/海岸阿美語-曾玉蘭-個人生命史-短.mp3
 //   （由同名 mp4 用 ffmpeg 轉成 16kHz 單聲道 mp3，10.12 秒；此 API 的輸入是音檔，不吃影片）
 
 import {
@@ -22,7 +22,7 @@ const FILENAME = "海岸阿美語-曾玉蘭-個人生命史-短.mp3";
 const DIALECT_ID = "formosan_ami"; // 阿美語
 
 const trends = makeTrends(MODEL);
-const AUDIO_BIN = open(`./testing_data/${FILENAME}`, "b");
+const AUDIO_BIN = open(`../data/${FILENAME}`, "b");
 
 export const options = {
   scenarios: latencyScenario("asr_kaldi"),
@@ -45,9 +45,10 @@ export default function asrKaldiIteration() {
     data: [DIALECT_ID, fileData(up.path, FILENAME)],
     trends: trends,
     uploadMs: up.ms,
+    // 只驗有辨識出文字，不比對內容：模型換版後辨識結果會變
     checkFn: {
-      "asr-kaldi 有辨識出 sasowalen": (p) =>
-        Array.isArray(p) && p[0].includes("sasowalen"),
+      "asr-kaldi 有辨識出非空字串": (p) =>
+        Array.isArray(p) && typeof p[0] === "string" && p[0].trim().length > 0,
     },
   });
 }

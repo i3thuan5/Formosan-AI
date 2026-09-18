@@ -7,6 +7,6 @@ pydantic
 gradio[oauth]==5.49.1
 gradio_client
 uvicorn>=0.14.0
-spaces==0.36.0
 
+# torch 系列的版本由 common/requirements.txt 決定
 transformers[torch]
