@@ -2,6 +2,8 @@ FROM formosan-ai-base
 
 # 只裝 wheel，不在 build 時執行套件的 setup 腳本。
 # antlr4-python3-runtime（omegaconf 的依賴）與 srt（vosk 的依賴）在 PyPI 上只有原始碼包，列為例外。
+# 刻意不加 --require-hashes（SonarQube docker:S8544 已審查、可接受）：hash 先在 asr 與
+# 共用 gpu 層試用，團隊之後再決定要不要全面導入。
 RUN --mount=target=/tmp/requirements.txt,source=requirements.txt \
     pip install \
     --only-binary=:all: \

@@ -63,7 +63,7 @@ asr、mt、tts 的 Dockerfile SHALL `FROM formosan-ai-gpu`；asr-kaldi 的 Docke
 
 ### Requirement: CI 依序 build 並使用 registry cache
 
-建置 SHALL 由 repo 根目錄的 `docker-bake.hcl` 定義 `base`、`gpu`、`files`、`asr`、`asr-kaldi`、`tts`、`mt` 七個 target。服務 target MUST 以 `contexts` 把 `formosan-ai-gpu`、`formosan-ai-base`、`formosan-ai-common` 對應到 `target:gpu`、`target:base`、`target:files`，MUST NOT 依賴本機 image store（registry cache 需要的 `docker-container` driver 看不到本機 image）。變數 `CACHE` 為 `read` 時每個 target MUST 使用 `cache-from type=registry,ref=ithuan/formosan-ai:cache-<name>`；為 `readwrite` 時 MUST 另加 `cache-to type=registry,mode=max,ref=ithuan/formosan-ai:cache-<name>`；為空字串時不用 cache。`.travis.yml` 的兩個 build job SHALL 執行 `docker buildx bake -f docker-bake.hcl --load`，PR 的 job 設 `CACHE=read`，main 的 job 設 `CACHE=readwrite`。
+建置 SHALL 由 repo 根目錄的 `docker-bake.hcl` 定義 `base`、`gpu`、`files`、`asr`、`asr-kaldi`、`tts`、`mt` 七個 target。服務 target MUST 以 `contexts` 把 `formosan-ai-gpu`、`formosan-ai-base`、`formosan-ai-common` 對應到 `target:gpu`、`target:base`、`target:files`，MUST NOT 依賴本機 image store（registry cache 需要的 `docker-container` driver 看不到本機 image）。變數 `CACHE` 為 `read` 時每個 target MUST 使用 `cache-from type=registry,ref=ithuan/formosan-ai:cache-<name>`；為 `readwrite` 時 MUST 另加 `cache-to type=registry,mode=max,ref=ithuan/formosan-ai:cache-<name>`；為空字串時不用 cache。`.travis.yml` 的 PR job SHALL 執行 `CACHE=read docker buildx bake -f docker-bake.hcl`，MUST NOT 加 `--load`（只驗證能 build，載入 Docker 會讓每個 GPU image 各解開一份 torch 層而耗盡磁碟）。main 的 job SHALL 執行 `CACHE=readwrite docker buildx bake -f docker-bake.hcl --push asr asr-kaldi tts mt`，直接推送四個服務，共用的 base、gpu、files 只留在 cache。
 
 #### Scenario: requirements 未變時不重新下載 torch
 

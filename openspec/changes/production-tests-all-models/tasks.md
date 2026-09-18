@@ -32,7 +32,7 @@
 
 - [x] 5.1 [mt/] `to_zh_ethnicity.change` 加 `api_name="to_zh_languages"`；`tests/production_tests/check_mt.py` 改呼叫 `/to_zh_languages`
 - [x] 5.2 [mt/] 移除 `import spaces` 與 `translate` 上的 `@spaces.GPU`；`mt/requirements.in` 移除 `spaces==0.36.0`，以 `uv pip compile mt/requirements.in --python-version 3.10 --python-platform linux --no-strip-extras -o mt/requirements.txt` 重編，確認只少了 spaces 一個套件。Docker：只需重建 `ithuan/formosan-ai:mt`，不需重建共用 image
-- [ ] 5.3 [mt/] 部署 mt 到測試機後跑 `tox -e production_tests -- --services mt`，確認 `/to_zh_languages` 可用；部署前對舊版執行會因為找不到 `/to_zh_languages` 而失敗
+- [x] 5.3 [mt/] 部署 mt 到測試機後跑 `tox -e production_tests -- --services mt`，確認 `/to_zh_languages` 可用；部署前對舊版執行會因為找不到 `/to_zh_languages` 而失敗（2026-09-18 部署後驗證通過，報告 `2026-09-18-after-440d095.json`）
 
 ## 6. 對測試機驗證（tests/production_tests/）
 

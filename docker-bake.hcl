@@ -1,9 +1,12 @@
 # 建三個共用 image 與四個服務 image。
 #
-#   docker buildx bake --load                   # 本機，不用 cache
-#   CACHE=read docker buildx bake --load        # PR：只讀 cache（token 沒有 push 權限）
-#   CACHE=readwrite docker buildx bake --load   # main：讀也寫 cache
-#   docker buildx bake --load base gpu files    # 只建共用 image（本機 docker compose 開發用）
+#   docker buildx bake -f docker-bake.hcl --load                  # 本機，建好載入 Docker，不用 cache
+#   docker buildx bake -f docker-bake.hcl --load base gpu files   # 只建共用 image（本機 docker compose 開發用）
+#   CACHE=read docker buildx bake -f docker-bake.hcl              # CI 的 PR：只驗證能 build，只讀 cache
+#   CACHE=readwrite docker buildx bake -f docker-bake.hcl --push asr asr-kaldi tts mt
+#                                                                 # CI 的 main：推送四個服務，讀也寫 cache
+#
+# 一定要加 -f docker-bake.hcl，否則 bake 會把 docker-compose.yml 也讀進來合併。
 #
 # 為什麼用 bake 而不是依序 docker buildx build：
 # registry cache 需要 docker-container driver，而這個 driver 的 BuildKit 看不到本機

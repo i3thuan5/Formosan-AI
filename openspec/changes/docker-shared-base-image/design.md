@@ -124,6 +124,8 @@ tts       18 個：torch 2.7.0→2.8.0、torchcodec 0.5→0.7.0，加全部 nvid
 
 pip 的 `--require-hashes` 對已安裝的套件不再驗證，所以 asr 對 torch 的 hash 保證實際上由 gpu stage 提供；gpu stage 不帶 hash 的話，最大最值得驗的 3.7 GiB 反而沒驗。`common/requirements.in` 只有三行，帶 hash 的維護成本接近零，也是團隊體驗 hash 更新流程最輕鬆的地方。tts 的 `f5-tts @ git+…` 在 hash 模式下無法安裝，是 tts 暫不導入的另一個原因。
 
+**SonarQube docker:S8544（2026-09-18）**：mt 與 asr-kaldi 的 `pip install` 沒有 `--require-hashes` 被標為資安熱點。實測兩者都能產生完整 hash 且版本不變，但維持原決定，在 SonarQube 接受該 issue，並在兩個 Dockerfile 註明；tts 因 f5-tts 是 git URL 依賴，技術上無法使用 hash 模式。
+
 ### 5. 一致性檢查做在兩層
 
 - **產生與檢查分開**：`common/gpu_constraints.py` 產生 `common/gpu-constraints.txt`，是「哪些套件算 GPU 套件」的唯一定義；`--check` 模式確認它沒有過期。`tests/check_lock_consistency.py` 不需要知道這個定義，直接拿 constraints 檔當標準比對。
@@ -179,7 +181,9 @@ main 分支    --cache-to   type=registry,ref=<cache ref>,mode=max
 - 但 `docker-container` driver 的 BuildKit 看不到本機 image store，`FROM formosan-ai-gpu` 會跑去 Docker Hub 拉而失敗（[docker/buildx#1453](https://github.com/docker/buildx/issues/1453)、[docker/build-push-action#1176](https://github.com/docker/build-push-action/issues/1176)）。原本 `COPY --from=formosan-ai-common` 也有同樣的問題。
 - bake 的 `contexts = { formosan-ai-gpu = "target:gpu" }`（[Using a Bake target as build context](https://docs.docker.com/build/bake/contexts/)）讓同一次 build 內的 target 直接當別人的 base，順序由 bake 解。
 
-`CACHE` 變數：空字串不用 cache（本機），`read` 只讀（PR，token 沒有 push 權限），`readwrite` 讀也寫（main）。一定要 `-f docker-bake.hcl`，否則 bake 會把 `docker-compose.yml` 一起讀進來合併。以 buildx v0.37.1 的 `bake --print` 確認三種模式都解析正確，但尚未實際 build。
+`CACHE` 變數：空字串不用 cache（本機），`read` 只讀（PR，token 沒有 push 權限），`readwrite` 讀也寫（main）。
+
+**第一次 Travis build 在 `--load` 時磁碟用盡**（2026-09-18）：`docker-container` driver 的 `--load` 會把每個 target 匯出成 tarball 再匯入 Docker，gpu、asr、mt、tts 四個 image 各自帶著同一個 4 GB 的 torch 層平行匯入，加上 builder 自己的 cache，出現 `no space left on device`。改為 PR 不輸出（只驗證能 build），main 用 `--push` 直接推到 Docker Hub：registry 端相同的層只存一份，也不經過 Travis 的 Docker。以 `bake --print --push asr asr-kaldi tts mt` 確認只有四個服務會推送，base、gpu、files 為 `cacheonly`。同一次 log 裡的 `cache-*: not found` 是預期的：main 還沒寫過 cache。一定要 `-f docker-bake.hcl`，否則 bake 會把 `docker-compose.yml` 一起讀進來合併。以 buildx v0.37.1 的 `bake --print` 確認三種模式都解析正確，但尚未實際 build。
 
 requirements 未變時 gpu 與服務的 pip 層直接命中，buildx 不需下載已存在於 registry 的 blob。PR build 只有 pull token，只做 `--cache-from`。目前的兩個 build stage 維持不動，第二次 build 因全部命中而變得很便宜；合併 stage 的改動留到 cache 穩定後。
 
@@ -195,7 +199,7 @@ requirements 未變時 gpu 與服務的 pip 層直接命中，buildx 不需下�
 - [tts 在 torch 2.8.0 上合成結果或效能改變] → 實作前先 spike：以 2.8.0 編出 lock 檔，本機實跑數個語別的合成並比對音檔長度與可聽性；有問題則 tts 暫留 2.7.0 並回到「兩個 gpu image」方案重新評估。
 - [Travis 的 docker 沒有 buildx 或版本過舊] → spike 先在 Travis 跑 `docker buildx version`；沒有就在 `before_install` 安裝 buildx plugin binary。
 - [移除 git、git-lfs 後某條路徑仍需 git] → strace smoke 的 execve 清單是驗收條件；漏掉會在容器啟動或第一次操作時以明確錯誤出現，回滾只是加回一個 apt 套件。
-- [python:slim 是 Debian bookworm，非 Ubuntu 22.04] → manylinux wheel 不受影響；ffmpeg 版本從 4.4 變 5.1，torchcodec 0.7 支援 4 到 7；strace 與 ldd 會確認。
+- [python:slim 是 Debian，非 Ubuntu 22.04] → manylinux wheel 不受影響。2026-09-18 的 Travis log 顯示 pin 的 digest 是 Debian 13 trixie，ffmpeg 從 Ubuntu 的 4.4 變成 trixie 的版本，torchcodec 0.7 支援 FFmpeg 4 到 7；測試機上線後檢查全部通過。
 - [三個 image 共用一層意味 torch 升版必須三個服務一起] → 這正是設計目標；代價是升版由最嚴格的消費者決定，目前是 whisperx。
 - [`--cache-to mode=max` 把中間層也推上 Docker Hub，占用倉庫空間] → cache tag 是獨立的 tag，可定期清理；`mode=min` 是退路。
 - [服務 lock 檔與 common 一致，但 uv 與 pip 對同一個 lock 的安裝結果應相同] → lock 檔格式是 pip 的 requirements 格式，安裝端仍用 pip，不變。
