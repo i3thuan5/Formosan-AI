@@ -19,11 +19,11 @@ FROM python:3.10-slim@sha256:8c97ebedc32fd60935cdf5992e935753e2a0f98231830028050
 
 # ffmpeg 有三個使用者：whisperx 的 load_audio 會 shell out、gradio 收到非 wav 時
 # 透過 pydub 轉檔、torchcodec 匯入時 dlopen libav*。其餘 apt 套件都沒有使用者。
+# 接著建立 uid/gid 1000 的 nonroot 使用者，四個服務都以它執行。
 RUN apt-get update && \
     apt-get install --no-install-recommends -y ffmpeg && \
-    rm -rf /var/lib/apt/lists/* && apt-get clean
-
-RUN addgroup --gid 1000 nonroot && \
+    rm -rf /var/lib/apt/lists/* && apt-get clean && \
+    addgroup --gid 1000 nonroot && \
     adduser --uid 1000 --disabled-password --ingroup nonroot --quiet nonroot
 
 # nvidia-container-toolkit 用這兩個變數決定要注入哪些驅動函式庫，

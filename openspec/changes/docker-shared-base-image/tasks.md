@@ -38,6 +38,8 @@
 - [x] 3.18 [mt/][asr-kaldi/][tts/] 回應 SonarQube docker:S8541：mt 加 `--only-binary=:all:`（88 個套件都有 wheel）；asr-kaldi 加 `--only-binary=:all:` 與 `--no-binary=antlr4-python3-runtime,srt`；tts 不加，Dockerfile 註明原因，並在 SonarQube 標記為已審查、可接受。Docker：只需重建 mt、asr-kaldi、tts，不需重建共用 image
 - [ ] 3.19 ⏸ 需要 docker｜[mt/][asr-kaldi/] 重新 build mt 與 asr-kaldi，確認只裝 wheel 仍能成功
 
+- [x] 3.20 [asr/][mt/][tts/][common/] 回應 SonarQube docker:S7031：三個 GPU 服務把版本一致性檢查併進 `pip install` 的同一個 `RUN`（兩者掛載同一份 requirements.txt，本來就一起失效，合併不影響快取）；`common/Dockerfile` base stage 的 apt 與建立 nonroot 使用者合併為一個 `RUN`。Docker：base 改變，`formosan-ai-base`、`formosan-ai-gpu` 與四個服務都要重建
+
 ## 4. PR 3：Travis buildx registry cache（deploy/）
 
 - [x] 4.1 [deploy/] `.travis.yml` 兩個 build job 以 `docker buildx create --use` 建 `docker-container` builder（registry cache 需要）
