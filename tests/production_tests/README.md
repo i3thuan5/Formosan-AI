@@ -111,8 +111,8 @@ asr、asr-kaldi、mt 三個服務**固定包含素材的阿美語別**，再隨�
 
 ### 改前改後比對
 
-1. 部署前跑一次，加 `--report tests/production_tests/results/<日期>-<commit>.json`。
-2. 部署後用同樣參數再跑一次，存成另一個檔名。
+1. 部署前跑一次，加 `--report tests/production_tests/results/<日期>-部署前.json`。
+2. 部署後用同樣參數再跑一次，存成另一個檔名（例如 `<日期>-部署後.json`）。
 3. 比對兩份 JSON：`checks` 的名稱集合應相同，`ok` 不該從 `true` 變 `false`，
    `seconds` 不該有數倍的劣化。
 
@@ -128,9 +128,9 @@ asr、asr-kaldi、mt 三個服務**固定包含素材的阿美語別**，再隨�
   | `--all-languages` | 214 | 約 8 分鐘 |
 
   請避開尖峰時段。檢查循序執行，不併發。
-- **請用和受測主機部署版本相同的 commit 執行**：語別表讀自本地的
+- **語別表和測試句讀自本地檔案**：語別表讀自本地的
   `asr/languages.py`、`asr-kaldi/configs/models.yaml`、`mt/formosan_languages.py`，
-  測試句讀自本地的 `tts/configs/refs.yaml`，版本不同時結果可能對不上。
+  測試句讀自本地的 `tts/configs/refs.yaml`，本地版本和受測主機部署的版本不同時，結果可能對不上。
 - 腳本**不可** import 各服務的 `app.py`，那會在本機載入模型。
 - **部署順序**：tts 要先部署新版，mt 再部署。只部署 tts 時，tts 的檢查應該通過、
   mt → tts 端到端失敗。

@@ -13,7 +13,6 @@ import datetime
 import json
 import os
 import random
-import subprocess
 import sys
 import tempfile
 from pathlib import Path
@@ -65,21 +64,9 @@ def with_client(service, app_path, download_dir, body, failures):
     body(client)
 
 
-def git_commit():
-    try:
-        return subprocess.run(
-            ["git", "rev-parse", "HEAD"],
-            capture_output=True, text=True, check=True,
-            cwd=Path(__file__).resolve().parents[2],
-        ).stdout.strip()
-    except Exception:
-        return None
-
-
 def write_report(path, warnings, failures):
     report = {
         "base_url": BASE_URL,
-        "commit": git_commit(),
         "started_at": datetime.datetime.now().astimezone().isoformat(timespec="seconds"),
         "checks": reporting.RESULTS,
         "warnings": list(warnings),
