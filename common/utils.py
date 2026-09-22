@@ -84,32 +84,33 @@ def render_demo(demo_md_filename="", js=None, css_paths=[]):
 
         yield demo
 
-        with gr.Row(equal_height=True):
-            gr.HTML(
-                "<div>"
-                "<hr>"
-                "<p class='text-center'>Copyright &copy; {} "
-                "財團法人原住民族語言研究發展基金會 版權所有</p>"
-                "</div>".format(datetime.now().year))
+        with gr.Column(elem_classes="sa-footer"):
+            with gr.Row(equal_height=True):
+                gr.HTML(
+                    "<div>"
+                    "<hr>"
+                    "<p class='text-center'>Copyright &copy; {} "
+                    "財團法人原住民族語言研究發展基金會 版權所有</p>"
+                    "</div>".format(datetime.now().year))
 
-        with gr.Row(equal_height=True):
-            with gr.Column(scale=1, min_width=300):
-                gr.HTML("""
-                    <img class='img-fluid' src='gradio_api/file={}/image/ilrdf-logo.png'
-                        alt='財團法人原住民族語言研究發展基金會logo'>
-                    """.format(STATIC_DIR_NAME))
-            with gr.Column(scale=1, min_width=300):
-                gr.HTML("""
-                    <p>電話：(02)2341-8508</p>
-                    <p>傳真：(02)2341-8256</p>
-                    <p>信箱：ilrdf@ilrdf.org.tw</p>
-                    <p>地址：100029台北市中正區羅斯福路一段63號</p>
-                    """)
-            with gr.Column(scale=1, min_width=300):
-                gr.HTML("""
-                        <p><a href="https://{site}/copyright/" class="sa-link">著作權聲明</a></p>
-                        <p><a href="https://{site}/termofuse/" class="sa-link">網站使用條款</a></p>
-                    """.format(site=SAPOLITA_WEBSITE_HOST))
+            with gr.Row(equal_height=True):
+                with gr.Column(scale=1, min_width=300):
+                    gr.HTML("""
+                        <img class='img-fluid' src='gradio_api/file={}/image/ilrdf-logo.png'
+                            alt='財團法人原住民族語言研究發展基金會logo'>
+                        """.format(STATIC_DIR_NAME))
+                with gr.Column(scale=1, min_width=300):
+                    gr.HTML("""
+                        <p>電話：(02)2341-8508</p>
+                        <p>傳真：(02)2341-8256</p>
+                        <p>信箱：ilrdf@ilrdf.org.tw</p>
+                        <p>地址：100029台北市中正區羅斯福路一段63號</p>
+                        """)
+                with gr.Column(scale=1, min_width=300):
+                    gr.HTML("""
+                            <p><a href="https://{site}/copyright/" class="sa-link">著作權聲明</a></p>
+                            <p><a href="https://{site}/termofuse/" class="sa-link">網站使用條款</a></p>
+                        """.format(site=SAPOLITA_WEBSITE_HOST))
 
     demo.launch(
         allowed_paths=[
