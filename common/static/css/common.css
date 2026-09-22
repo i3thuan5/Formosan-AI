@@ -111,3 +111,11 @@ input[type='radio']:focus {
 .html-no-start-padding {
   margin-left: calc(0px - var(--spacing-xl) + 2px);
 }
+
+
+/* 全頁文字統一為標題大小
+   footer（.sa-footer）與通知（.toast-wrap）維持原本字級 */
+.gradio-container,
+.gradio-container *:not(.sa-footer, .sa-footer *, .toast-wrap, .toast-wrap *) {
+  font-size: var(--text-xxl) !important;
+}
