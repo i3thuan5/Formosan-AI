@@ -149,11 +149,11 @@ def infer(
 ):
     if not ref_audio_orig:
         gr.Warning("請提供參考音檔。")
-        return gr.update(), gr.update(), ref_text
+        return gr.update(), gr.update()
 
     if not gen_text.strip():
         gr.Warning("請輸入要合成語音的文字。")
-        return gr.update(), gr.update(), ref_text
+        return gr.update(), gr.update()
 
     ref_audio, ref_text = preprocess_ref_audio_text(
         ref_audio_orig, ref_text, show_info=show_info
