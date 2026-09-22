@@ -10,16 +10,20 @@ RUN apt-get update && \
     apt-get install --no-install-recommends -y nodejs && \
     rm -rf /var/lib/apt/lists/* && apt-get clean
 
-RUN pip install --no-cache-dir pip -U
-
 RUN addgroup --gid 1000 nonroot && \
     adduser --uid 1000 --disabled-password --ingroup nonroot --quiet nonroot
 
-RUN --mount=target=/tmp/requirements.txt,source=requirements.txt pip install --no-cache-dir -r /tmp/requirements.txt
+RUN --mount=target=/tmp/requirements.txt,source=requirements.txt \
+    pip install \
+    --require-hashes \
+    --only-binary=:all: \
+    --no-binary=antlr4-python3-runtime,julius \
+    --no-cache-dir \
+    -r /tmp/requirements.txt
 
 COPY --from=formosan-ai-common /app/utils.py /app/colors.py /app/
 COPY --from=formosan-ai-common /app/common_static/ /app/common_static/
-COPY --link app.py whisper.py DEMO.md /app/
+COPY --link app.py whisper.py subtitles.py languages.py translation.py DEMO.md /app/
 
 USER nonroot
 WORKDIR /app
