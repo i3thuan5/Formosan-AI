@@ -119,3 +119,12 @@ input[type='radio']:focus {
 .gradio-container *:not(.sa-footer, .sa-footer *, .toast-wrap, .toast-wrap *) {
   font-size: var(--text-xxl) !important;
 }
+
+/* 音訊播放速度按鈕：高度跟著放大後的字級 */
+.gradio-container button.playback {
+  width: auto !important;
+  min-width: 2.4em !important;
+  padding: 0 0.3em !important;
+  height: 1.8em !important;
+  line-height: 1 !important;
+}
