@@ -117,14 +117,10 @@ input[type='radio']:focus {
    footer（.sa-footer）、通知（.toast-wrap）維持原本字級 */
 .gradio-container,
 .gradio-container *:not(.sa-footer, .sa-footer *, .toast-wrap, .toast-wrap *) {
-  font-size: var(--text-xxl) !important;
+  font-size: var(--text-xl) !important;
 }
 
 /* 音訊播放速度按鈕：高度跟著放大後的字級 */
 .gradio-container button.playback {
-  width: auto !important;
-  min-width: 2.4em !important;
-  padding: 0 0.3em !important;
-  height: 1.8em !important;
-  line-height: 1 !important;
+  height: var(--text-xxxl) !important;
 }
