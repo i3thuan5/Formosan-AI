@@ -113,10 +113,10 @@ input[type='radio']:focus {
 }
 
 
-/* 全頁文字統一為標題大小
-   footer（.sa-footer）、通知（.toast-wrap）維持原本字級 */
+/* 全部文字統一為 xl
+   標題(h1)、footer（.sa-footer）、通知（.toast-wrap）維持原本字級 */
 .gradio-container,
-.gradio-container *:not(.sa-footer, .sa-footer *, .toast-wrap, .toast-wrap *) {
+.gradio-container *:not(h1, .sa-footer, .sa-footer *, .toast-wrap, .toast-wrap *) {
   font-size: var(--text-xl) !important;
 }
 
