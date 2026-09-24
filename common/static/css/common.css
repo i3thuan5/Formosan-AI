@@ -122,5 +122,5 @@ input[type='radio']:focus {
 
 /* 音訊播放速度按鈕：高度跟著放大後的字級 */
 .gradio-container button.playback {
-  height: var(--text-xxxl) !important;
+  height: 100% !important;
 }
