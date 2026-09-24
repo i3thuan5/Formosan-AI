@@ -114,8 +114,8 @@ input[type='radio']:focus {
 
 
 /* 全頁文字統一為標題大小
-/  footer（.sa-footer）、通知（.toast-wrap）、播放速度按鈕（.playback）維持原本字級 */
+   footer（.sa-footer）、通知（.toast-wrap）維持原本字級 */
 .gradio-container,
-.gradio-container *:not(.sa-footer, .sa-footer *, .toast-wrap, .toast-wrap *, .playback, .playback *) {
+.gradio-container *:not(.sa-footer, .sa-footer *, .toast-wrap, .toast-wrap *) {
   font-size: var(--text-xxl) !important;
 }
