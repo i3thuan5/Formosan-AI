@@ -113,3 +113,9 @@ input[type='radio']:focus {
 .html-no-start-padding {
   margin-left: calc(0px - var(--spacing-xl) + 2px);
 }
+
+/* 音檔／影片元件的「上傳」「錄音」來源切換圖示 */
+[data-testid="source-select"] button.icon {
+  width: var(--text-xl);
+  height: var(--text-xl);
+}
