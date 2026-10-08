@@ -11,6 +11,5 @@ spaces==0.36.0
 
 omegaconf
 opencc
-torch==2.7.0
-torchcodec==0.5.0
+torchcodec
 f5-tts @ git+https://github.com/SWivid/F5-TTS.git@695c7357378c03f25d607cca45f5eb967592ce1a

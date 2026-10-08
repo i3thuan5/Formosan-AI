@@ -12,18 +12,22 @@ context: |
   - `asr-kaldi/`：基於 Kaldi/Vosk 的語音辨識，支援多語系設定（FastAPI + Gradio + OmegaConf）
   - `tts/`：基於 F5-TTS 的語音合成，支援 16+ 族語方言，含 IPA 轉換（FastAPI + Gradio）
   - `mt/`：基於 HuggingFace Transformers Seq2Seq 的機器翻譯（FastAPI + Gradio）
-  - `common/`：共用工具、靜態資源（顏色主題、Gradio 工具函式、tauhu-oo 字型）
+  - `common/`：共用工具、靜態資源（顏色主題、Gradio 工具函式、tauhu-oo 字型），
+    以及三個共用 image 的 Dockerfile 與 torch 系列的 requirements
+  - `tests/`：`production_tests/`（上線後功能檢查）、`grafana-k6/`（延遲測試）、
+    `data/`（兩者共用的測試素材）、`check_lock_consistency.py`（GPU 套件版本一致性）
   - `deploy/`：Ansible 部署腳本、正式環境 docker-compose
 
   ## 技術棧
   - 語言：Python 3.10
   - Web 框架：FastAPI + Gradio 5.x（含 OAuth 支援）
-  - ML 框架：PyTorch 2.7+（CUDA 12.2）、HuggingFace Transformers 4.55+
+  - ML 框架：PyTorch 2.8.0（pip 的 nvidia-*-cu12 提供 CUDA 12.8 / cuDNN 9）、HuggingFace Transformers
   - 語音辨識：WhisperX、Faster-Whisper、CTranslate2、Pyannote-Audio
   - 語音合成：F5-TTS、Encodec、Vocos、Librosa
-  - 容器化：Docker（多階段建置）、Docker Compose、NVIDIA CUDA base image
+  - 容器化：Docker（多階段建置）、Docker Compose、python:3.10-slim base image（不用 nvidia/cuda）
   - CI/CD：Travis CI（Docker Hub 推送；CD 目前停用，需人工發佈）
-  - 套件管理：pip-tools（requirements.in → requirements.txt）
+  - 套件管理：uv pip compile（requirements.in → requirements.txt），
+    torch 系列由 common/requirements.in 統一，服務以 -c common/gpu-constraints.txt 編譯
 
   ## 支援族語方言（16+）
   阿美族（海岸、恆春、馬蘭、南勢、秀姑巒）、泰雅族、布農族、卑南族、魯凱族、
@@ -38,12 +42,14 @@ context: |
   - 測試執行：tox（`tox -e yamllint`、`tox -e flake8` 等）
   - OpenSpec 格式：每次修改 proposal/design/specs/tasks、sync 主 specs 或 archive 後，
     都要執行 `openspec validate --all --strict` 並全部通過
-  - 套件版本：`pip-compile asr/requirements.in` 更新 requirements.txt
-  - Docker 建置：先 `docker build -t formosan-ai-common ./common`，再 `docker compose up`
+  - 套件版本：`uv pip compile asr/requirements.in ... -c common/gpu-constraints.txt` 更新 requirements.txt，
+    改完跑 `tox -e lockcheck`
+  - Docker 建置：先 `docker buildx bake -f docker-bake.hcl --load base gpu files` 建三個共用 image，再 `docker compose up`
   - 環境變數：從 `deploy/.env.template` 複製為 `.env`，調整 HOST 設定
 
   ## Docker 架構
-  - 共用 base image：`formosan-ai-common`
+  - 共用 image：`formosan-ai-base`（apt + nonroot）、`formosan-ai-gpu`（torch，asr/mt/tts 共用）、
+    `formosan-ai-common`（共用檔案，FROM scratch）
   - 服務 image：`ithuan/formosan-ai:asr`、`:asr-kaldi`、`:tts`、`:mt`
   - 網路：`nginx-bridge`（外部 HTTPS 反向代理）、`ai-labs-bridge`（服務間通訊）
   - 以非 root 使用者（UID 1000）執行容器
@@ -51,18 +57,20 @@ context: |
   ## 部署注意事項
   - CD 已停用（.travis.yml 中已註解），需人工執行 Ansible playbook
   - 正式環境設定在 `deploy/docker-compose-production.yml`
+  - 測試機：https://tshi5v100.ithuankhoki.tw/
+  - 部署前後跑 `BASE_URL=... tox -e production_tests -- --report <檔名>` 比對
 
 # Per-artifact rules
 rules:
   proposal:
     - 以繁體中文撰寫提案說明，技術術語可保留英文
-    - 明確說明影響哪些模組（asr/asr-kaldi/tts/mt/common/deploy）
+    - 明確說明影響哪些模組（asr/asr-kaldi/tts/mt/common/deploy/tests）
     - 包含「非目標」章節，避免範圍蔓延
     - 考慮族語方言支援的向下相容性
   tasks:
     - 每個任務須指定負責的模組目錄
-    - 涉及 Docker 的任務須說明是否需重建 common image
-    - 涉及 requirements 的任務須包含執行 pip-compile 的步驟
+    - 涉及 Docker 的任務須說明是否需重建 common、base、gpu 哪幾個共用 image
+    - 涉及 requirements 的任務須包含執行 uv pip compile 與 `tox -e lockcheck` 的步驟
     - 涉及新族語方言的任務須包含設定檔更新
   specs:
     - 以繁體中文撰寫，技術內容可夾雜英文

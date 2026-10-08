@@ -1,0 +1,40 @@
+---
+version: 2
+updates:
+  # base image 的 digest。Debian 或 Python 有 patch 時 Docker 官方會重建
+  # python:3.10-slim，Dependabot 就會提 PR 更新 common/Dockerfile 的 sha256。
+  # OS 的安全修補從此和 torch 升版脫鉤，各走各的。
+  - package-ecosystem: docker
+    directory: /common
+    schedule:
+      interval: weekly
+    labels:
+      - dependencies
+      - docker
+
+  # Python 套件。common 是 torch 系列的版本來源，改了它要重編三個 GPU 服務，
+  # 所以 common 自己一組，服務共用一組，PR 不會混在一起。
+  - package-ecosystem: pip
+    directory: /common
+    schedule:
+      interval: weekly
+    labels:
+      - dependencies
+      - python
+
+  - package-ecosystem: pip
+    directories:
+      - /asr
+      - /asr-kaldi
+      - /tts
+      - /mt
+      - /tests/production_tests
+    schedule:
+      interval: weekly
+    groups:
+      pip:
+        patterns:
+          - "*"
+    labels:
+      - dependencies
+      - python

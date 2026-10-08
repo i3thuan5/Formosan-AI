@@ -1,10 +1,4 @@
-# 上線後檢查
-
-## Purpose
-
-針對已部署主機（正式機或測試機）的上線後檢查腳本，確認 asr、asr-kaldi、mt、tts 四個模型與共用靜態檔都正常。只驗「服務活著、格式對、有內容」，不比對辨識或翻譯的文字，也不比對音檔內容：模型會換版，比對內容會讓每次模型升級都要改測試。
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: 可指定受測主機的上線後檢查腳本
 
@@ -30,32 +24,16 @@
 - **WHEN** 其中一個服務的 `/config` 無法連線
 - **THEN** 該服務的所有檢查記為失敗並附錯誤訊息，其餘服務照常檢查
 
-### Requirement: tox 入口
+### Requirement: 檢查腳本說明文件
 
-`tox.ini` SHALL 提供 `production_tests` env，安裝 `tests/production_tests/requirements.txt`，以 `passenv` 傳入 `BASE_URL`，並把 `{posargs}` 傳給 `run_all.py`。
+`tests/production_tests/README.md` SHALL 說明安裝方式、`tox -e production_tests -- <參數>` 與直接執行兩種方式、`BASE_URL` 用法、`--services`、`--all-languages`、`--report` 的用法、每個服務的檢查內容與判準、語別抽樣規則、暖機與耗時門檻只警告不失敗、預估耗時與會消耗受測主機 GPU、改前改後以 `--report` 比對的流程，並註明應以與受測主機部署版本相同的 commit 執行、不可 import 各服務的 `app.py`，以及 tts 須先於 mt 部署。
 
-#### Scenario: 以 tox 執行並傳參數
+#### Scenario: 新成員第一次執行
 
-- **WHEN** 執行 `BASE_URL=https://<測試機> tox -e production_tests -- --all-languages --report out.json`
-- **THEN** `run_all.py` 收到 `--all-languages --report out.json`，且對測試機執行
+- **WHEN** 開發者只照 README 操作
+- **THEN** 能在 devcontainer 中以 tox 對指定主機完成一次檢查，並知道警告與失敗的差別
 
-### Requirement: Claude Code skill
-
-`.claude/skills/production-tests/SKILL.md` SHALL 存在，frontmatter 含 `name: production-tests` 與 `description`，內容說明何時執行、指令、參數、預估耗時與 GPU 消耗、警告與失敗的解讀、改前改後以 `--report` 比對的步驟。skill MUST NOT 內含檢查程式碼。
-
-#### Scenario: AI 助理被要求驗證部署
-
-- **WHEN** 使用者要求對某主機執行上線後檢查
-- **THEN** 助理依 skill 以 tox 執行並回報失敗與警告
-
-### Requirement: 檢查頁面與共用靜態檔
-
-腳本 SHALL 對四個服務的 `/` 與 `/config` 發出 GET，MUST 回 200 且 `/config` 為 JSON；並對每個服務的 `common_static` 下 favicon 與 `common.css` 發出 GET，MUST 回 200。
-
-#### Scenario: image 少複製共用檔案
-
-- **WHEN** 某個服務的 `common_static` favicon 回 404
-- **THEN** 該項檢查失敗並列出服務與 URL
+## ADDED Requirements
 
 ### Requirement: 檢查 asr 辨識輸出格式
 
@@ -99,48 +77,6 @@
 - **WHEN** 以隨機抽到的其他語別呼叫兩個方向
 - **THEN** 呼叫成功且回傳字串，空字串印警告
 
-### Requirement: 檢查 TTS API 約定
-
-腳本 SHALL 確認 TTS 的 API 資訊中含有 `/synthesize`，且參數為 `language` 與 `text`。
-
-#### Scenario: tts 尚未部署新版
-
-- **WHEN** 受測主機的 TTS 沒有 `/synthesize`
-- **THEN** 此項檢查失敗，訊息指出缺少 `/synthesize`
-
-### Requirement: 檢查語別都能合成
-
-腳本 SHALL 預設從 `mt/formosan_languages.py` `FORMOSAN_LANGUAGES_MAP` 隨機抽樣 5 個語別，指定 `--all-languages` 參數時改為全部語別，對每個受測語別直接呼叫 TTS `/synthesize`，句子取自 `tts/configs/refs.yaml` 中該語別第一位配音員的 `text`，每個受測語別都要回傳音檔。語別表 SHALL 獨立於 `mt/app.py`，腳本 MUST NOT import `mt/app.py`（避免載入翻譯模型）。
-
-#### Scenario: 預設隨機抽樣
-
-- **WHEN** 不帶參數執行腳本
-- **THEN** 第 2 項只合成隨機抽出的 5 個語別，並印出抽到哪些語別
-
-#### Scenario: 掃描全部語別
-
-- **WHEN** 執行腳本時加上 `--all-languages`
-- **THEN** 第 2 項合成 `FORMOSAN_LANGUAGES_MAP` 的全部語別
-
-#### Scenario: 語別表與配音員設定不一致
-
-- **WHEN** 加上 `--all-languages` 執行，且 `FORMOSAN_LANGUAGES_MAP` 有某個語別在 `refs.yaml` 中找不到配音員
-- **THEN** 該語別的檢查失敗，訊息列出語別名稱
-
-### Requirement: 檢查已知 bug 回歸
-
-腳本 SHALL 透過 TTS `/synthesize` 確認：以引號結尾的文字與含「」的文字能合成成功，以及不支援的語別會回傳錯誤。
-
-#### Scenario: 引號 bug 回歸
-
-- **WHEN** 以 `阿美_海岸` 合成 `Sowal sa ko singsi, "Ano dafak micodad kita."`
-- **THEN** 回傳音檔；若出現 `Unknown characters` 則此項檢查失敗
-
-#### Scenario: 不支援的語別
-
-- **WHEN** 以不存在的語別呼叫 `/synthesize`
-- **THEN** TTS 回傳錯誤時檢查通過；若回傳音檔則檢查失敗
-
 ### Requirement: 檢查 tts 音檔格式與非靜音
 
 腳本 SHALL 以 `阿美_海岸` 與素材句子呼叫 tts `/synthesize`。回傳檔案 MUST 能以 `wave` 開啟、取樣率為 24000、長度大於 0.5 秒、RMS 高於設定門檻。腳本 MUST NOT 比對音檔位元內容。
@@ -155,19 +91,14 @@
 - **WHEN** 回傳的 wav 長度合格但 RMS 低於門檻
 - **THEN** 該項檢查失敗，訊息含實際 RMS 與門檻
 
-### Requirement: 檢查 mt → tts 端到端
+### Requirement: 檢查頁面與共用靜態檔
 
-腳本 SHALL 對 `阿美_海岸`、`泰雅_萬大`、`魯凱_茂林`、`卡那卡那富`、`賽夏` 共 5 個語別，在同一個 MT session 先呼叫 `/to_formosan_languages` 切換族別，再呼叫 MT `/synthesize`，確認回傳音檔並印出每次耗時。耗時超過 15 秒時 SHALL 印出警告，但不算失敗。
+腳本 SHALL 對四個服務的 `/` 與 `/config` 發出 GET，MUST 回 200 且 `/config` 為 JSON；並對每個服務的 `common_static` 下 favicon 與 `common.css` 發出 GET，MUST 回 200。
 
-#### Scenario: mt 容器連不到 tts
+#### Scenario: image 少複製共用檔案
 
-- **WHEN** MT 回傳「語音合成服務暫時無法使用」等錯誤
-- **THEN** 該語別的端到端檢查失敗，並印出 MT 回傳的錯誤訊息
-
-#### Scenario: 接近逾時
-
-- **WHEN** 端到端合成成功，但耗時 16 秒
-- **THEN** 檢查通過，並印出接近 20 秒逾時的警告
+- **WHEN** 某個服務的 `common_static` favicon 回 404
+- **THEN** 該項檢查失敗並列出服務與 URL
 
 ### Requirement: 語別抽樣
 
@@ -206,6 +137,24 @@
 - **WHEN** 部署前後各以 `--report tests/production_tests/results/<日期>-<commit>.json` 執行
 - **THEN** 兩份 JSON 的檢查名稱集合相同，可逐項比對通過狀態與耗時
 
+### Requirement: tox 入口
+
+`tox.ini` SHALL 提供 `production_tests` env，安裝 `tests/production_tests/requirements.txt`，以 `passenv` 傳入 `BASE_URL`，並把 `{posargs}` 傳給 `run_all.py`。
+
+#### Scenario: 以 tox 執行並傳參數
+
+- **WHEN** 執行 `BASE_URL=https://<測試機> tox -e production_tests -- --all-languages --report out.json`
+- **THEN** `run_all.py` 收到 `--all-languages --report out.json`，且對測試機執行
+
+### Requirement: Claude Code skill
+
+`.claude/skills/production-tests/SKILL.md` SHALL 存在，frontmatter 含 `name: production-tests` 與 `description`，內容說明何時執行、指令、參數、預估耗時與 GPU 消耗、警告與失敗的解讀、改前改後以 `--report` 比對的步驟。skill MUST NOT 內含檢查程式碼。
+
+#### Scenario: AI 助理被要求驗證部署
+
+- **WHEN** 使用者要求對某主機執行上線後檢查
+- **THEN** 助理依 skill 以 tox 執行並回報失敗與警告
+
 ### Requirement: 測試素材位置
 
 `tests/data/` SHALL 含 `海岸阿美語-曾玉蘭-個人生命史-短.mp4` 與由它轉出的 16 kHz 單聲道 `.mp3` 各一份，並有 README 記載轉檔指令。`tests/production_tests/` 與 `tests/grafana-k6/` MUST 都使用此目錄，repo 內 MUST NOT 有第二份副本。
@@ -214,12 +163,3 @@
 
 - **WHEN** 在 `tests/grafana-k6/` 執行 `k6 run asr.js`
 - **THEN** `open("../data/...")` 成功讀取 mp4
-
-### Requirement: 檢查腳本說明文件
-
-`tests/production_tests/README.md` SHALL 說明安裝方式、`tox -e production_tests -- <參數>` 與直接執行兩種方式、`BASE_URL` 用法、`--services`、`--all-languages`、`--report` 的用法、每個服務的檢查內容與判準、語別抽樣規則、暖機與耗時門檻只警告不失敗、預估耗時與會消耗受測主機 GPU、改前改後以 `--report` 比對的流程，並註明應以與受測主機部署版本相同的 commit 執行、不可 import 各服務的 `app.py`，以及 tts 須先於 mt 部署。
-
-#### Scenario: 新成員第一次執行
-
-- **WHEN** 開發者只照 README 操作
-- **THEN** 能在 devcontainer 中以 tox 對指定主機完成一次檢查，並知道警告與失敗的差別

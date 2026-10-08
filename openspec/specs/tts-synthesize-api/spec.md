@@ -73,5 +73,5 @@ TTS 既有的 `/default_speaker_tts`、`/custom_speaker_tts` 等 API 的名稱�
 
 #### Scenario: 延遲測試仍可呼叫舊 API
 
-- **WHEN** `grafana-k6/tts.js` 以 `ref="阿美_秀姑巒_女聲1"` 呼叫 `/default_speaker_tts`
+- **WHEN** `tests/grafana-k6/tts.js` 以 `ref="阿美_秀姑巒_女聲1"` 呼叫 `/default_speaker_tts`
 - **THEN** 回傳音檔

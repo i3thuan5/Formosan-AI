@@ -13,7 +13,7 @@
 
 ### 1-1 安裝需要的工具
 
-本測試在 devcontainer 裡跑，這些工具**不在** [.devcontainer/](../.devcontainer/) 的設定裡，
+本測試在 devcontainer 裡跑，這些工具**不在** [.devcontainer/](../../.devcontainer/) 的設定裡，
 **容器重建後需要重裝**：
 
 ```bash
@@ -96,5 +96,6 @@ $ docker run --rm \
 | `mt.js` | mt（NLLB）測試 |
 | `run-latency.sh` | 四個模型依序執行 |
 | `results-table.sh` | 把 summary JSON 整理成比較表格 |
-| `testing_data/` | 測試資料 |
 | `results/` | 測試結果 |
+
+測試素材放在 [tests/data/](../data/)，和 [tests/production_tests/](../production_tests/) 共用。
