@@ -204,6 +204,8 @@ with render_demo(
             lambda: None,
             outputs=to_formosan_audio,
             api_name=False,
+            queue=False,
+            show_api=False,
         )
         to_formosan_btn.click(
             translate,
