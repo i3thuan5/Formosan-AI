@@ -1,7 +1,7 @@
 # 由 common/gpu_constraints.py 從 common/requirements.txt 產生，不要手改。
 # 各服務以 uv pip compile -c common/gpu-constraints.txt 編譯，
 # 讓 torch 與 nvidia-* 的版本和 formosan-ai-gpu layer 完全一致。
-nvidia-cublas-cu12==12.8.4.1
+nvidia-cublas-cu12==12.9.2.10
 nvidia-cuda-cupti-cu12==12.8.90
 nvidia-cuda-nvrtc-cu12==12.8.93
 nvidia-cuda-runtime-cu12==12.8.90
