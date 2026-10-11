@@ -220,3 +220,30 @@ with render_demo(
             outputs=to_formosan_audio,
             api_name="synthesize",
         )
+
+
+    with gr.Accordion("API 變更說明", open=False):
+        gr.Markdown(
+            """
+202609: 下列 endpoint 有變更。
+
+| 功能 | 原本 | 現在 |
+| --- | --- | --- |
+| 「族語 ⮕ 華語」切換族別 | `/lambda` | `/to_zh_languages` |
+| 「華語 ⮕ 族語」切換族別 | `/lambda_1` | `/to_formosan_languages` |
+| 「華語 ⮕ 族語」合成語音 | 未提供 | `/synthesize` |
+
+`/translate`（族語 ⮕ 華語）與 `/translate_1`（華語 ⮕ 族語）沒有變更。
+
+語別選項會隨族別改變，要翻譯或合成阿美以外的語別時，請在同一個 session 先呼叫切換族別的 endpoint，例如：
+
+```python
+from gradio_client import Client
+
+client = Client("https://ai-labs.ilrdf.org.tw/kari-seejiq-tnpusu-ai-hmjil/")
+client.predict("泰雅", api_name="/to_formosan_languages")
+text = client.predict("我們以前的生活", "zho_Hant", "tay_Wand", api_name="/translate_1")
+audio = client.predict(text, "tay_Wand", api_name="/synthesize")
+```
+"""
+        )
