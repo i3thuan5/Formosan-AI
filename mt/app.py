@@ -221,7 +221,6 @@ with render_demo(
             api_name="synthesize",
         )
 
-
     with gr.Accordion("API 變更說明", open=False):
         gr.Markdown(
             """
