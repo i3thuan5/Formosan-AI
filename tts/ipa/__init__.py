@@ -1,6 +1,6 @@
 import csv
 
-import requests
+from cached_path import cached_path
 from omegaconf import OmegaConf
 
 EXTRA_FORMOSAN_G2P = {
@@ -23,18 +23,9 @@ EXTRA_FORMOSAN_G2P = {
 }
 
 
-def gh_download(repo, path):
-    headers = {
-        "Accept": "application/vnd.github.raw+json",
-    }
-
-    url = f"https://api.github.com/repos/{repo}/contents/{path}"
-    response = requests.get(url, headers=headers)
-    if response.status_code != 200:
-        raise Exception(f"Failed to download {path} from {repo}, response: {response}")
-    response.encoding = "utf-8-sig"
-
-    return response.text
+def hf_download(path):
+    with open(cached_path(path), encoding="utf-8-sig") as f:
+        return f.read()
 
 
 def load_g2p(g2p_string):
@@ -74,5 +65,5 @@ def load_g2p(g2p_string):
     return g2p
 
 
-OmegaConf.register_new_resolver("gh_download", gh_download)
+OmegaConf.register_new_resolver("hf_download", hf_download)
 OmegaConf.register_new_resolver("load_g2p", load_g2p)
