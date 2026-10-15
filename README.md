@@ -142,3 +142,12 @@ BASE_URL=https://<受測主機> tox -e production_tests
 ## 發佈
 
 目前未設置自動發佈（CD），請人工發佈。
+
+## 測試機編譯 docker 指令
+
+```bash
+docker buildx bake -f docker-bake.hcl --load base gpu files
+docker compose -f docker-compose.yml -f docker-compose-tshi-gpu.yml up -d --build
+```
+
+跑起來後可以執行 `nvidia-smi` 指令確認。
