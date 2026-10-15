@@ -93,12 +93,20 @@
   text: médavlinga ipcacnglata, tilorosu.
   wav: ./assets/ref_wav/con_practice-0000450@0000000-0004944.wav
 魯凱_萬山_女聲:
-  text: sahivoengaʼo?
-  wav: ./assets/ref_wav/con_practice-0000666@0000000-0002034.wav
+  text: mahikocolrao dholrokali ka maavaʼi.
+  wav: ./assets/ref_wav/klokah-con_practice-32c8s2.wav
+  source:
+    來源: 族語E樂園 生活會話篇（萬山魯凱語）
+    頁面: https://web.klokah.tw/extension/con_practice/index.php?d=32&l=8&view=dialogue
+    課: 8
+    句: 2
+    對話角色: saidhai
+    中文: 我（很）忙我不能來。
+    音檔: https://klokah.tw/extension/con_data/sound/32/sentence/32c8s2.mp3
 魯凱_霧台_女聲:
   text: mawlayngata kai madradredrele.
   wav: ./assets/ref_wav/con_practice-0000243@0000000-0003474.wav
-拉阿魯哇_女聲:
+拉阿魯哇_男聲:
   text: tam mutuvavʉrʉnga iniu ahlukakua?
   wav: ./assets/ref_wav/con_practice-0000803@0000000-0005154.wav
 賽夏_女聲:
@@ -135,5 +143,13 @@
   text: micu noanaʼo ho mito oʼte yupteʉlʉ.
   wav: ./assets/ref_wav/con_practice-0000798@0000000-0005214.wav
 雅美_女聲:
-  text: kavakes kong, ka mangey jino simarow?
-  wav: ./assets/ref_wav/con_practice-0011470@0000000-0003864.wav
+  text: ori do siri no rarahan o pangonongan mo.
+  wav: ./assets/ref_wav/ilrdf-dictionary-A5413384-1419-F011-BD69-00155DB40116.wav
+  source:
+    來源: 族語辭典 20260702_16族前台上線單字_09雅美語8259筆(fin)(哈瑪星).xlsx
+    詞條: pangonongan
+    詞條ID: CD6553F1-DF09-F011-BD64-00155DB40116
+    例句ID: DEC932FA-E40A-F011-BD65-00155DB40116
+    例句音檔ID: A5413384-1419-F011-BD69-00155DB40116
+    中文: 你就從路邊那裡走。
+    音檔: https://sys-dictionary.ilrdf.org.tw/Data/api/Storage/8272647A-9025-4EA7-ABCC-2ABE61B65C34/download
