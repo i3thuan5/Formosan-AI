@@ -49,13 +49,41 @@
     result: 通過
     note: 正式機 10 句，自動判斷全部通過
 泰雅_賽考利克_男聲:
-  text: mziboq su! musa su inu?
-  wav: ./assets/ref_wav/con_practice-0000028@0000000-0003204.wav
-  gender_unstable:
+  text: iyat psbswak gi piraʼ balay knanan qani la.
+  wav: ./assets/ref_wav/ilrdf-dictionary-7AB0E3F0-BE16-F011-BD67-00155DB40116.wav
+  source:
+    來源: 族語辭典 20260702_16族前台上線單字_02泰雅語7227筆(fin)(哈瑪星).xlsx
+    語別: 賽考利克泰雅語
+    詞條: psbswak
+    詞條ID: F141A89F-6709-F011-BD64-00155DB40116
+    釋義: 將噎到
+    例句ID: BD2D67B5-B80A-F011-BD65-00155DB40116
+    例句音檔ID: 7AB0E3F0-BE16-F011-BD67-00155DB40116
+    例句音檔檔名: psbswak_{1}_@_1.2
+    中文: 不會噎到的啦，這才幾口而已。
+    音檔: https://sys-dictionary.ilrdf.org.tw/Data/api/Storage/9B9D7E7A-D9CC-4F9E-B674-2DED666546B2/download
+  gender_checked:
     date: 2026-10-15
-    note: 正式機 10 句人工試聽，有 1 句變成女聲，要換參考音檔
-    heard_as_female:
-      - aring sa iniʼ uwah naʼ qu gipun hga.
+    result: 通過
+    note: 本機 8 句短句（tests/tts_speakers/sentences.yaml），人工試聽都正常
+泰雅_賽考利克_女聲:
+  text: mniru kinhmgan qani ga, mrhuw na qalang.
+  wav: ./assets/ref_wav/ilrdf-dictionary-0A7C9E81-9205-5F90-F38E-3A1C7C86B7BD.wav
+  source:
+    來源: 族語辭典 20260702_16族前台上線單字_02泰雅語7227筆(fin)(哈瑪星).xlsx
+    語別: 賽考利克泰雅語
+    詞條: mniru
+    詞條ID: A28C3E1B-D26B-7E86-5C37-3A19B0E12F7E
+    釋義: 寫作者
+    例句ID: A74D0155-8A2C-FCA6-0F02-3A1BF4ED1306
+    例句音檔ID: 0A7C9E81-9205-5F90-F38E-3A1C7C86B7BD
+    例句音檔檔名: recording
+    中文: 這故事的作者是部落的耆老。
+    音檔: https://sys-dictionary.ilrdf.org.tw/Data/api/Storage/B90393AE-00E0-4D2D-B607-99A82D1D55C0/download
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 本機 8 句短句（tests/tts_speakers/sentences.yaml），人工試聽都正常
 泰雅_萬大_女聲:
   text: maṟbunaʼ suʼ ong!
   wav: ./assets/ref_wav/con_practice-0000048@0000000-0001944.wav
@@ -75,13 +103,20 @@
     result: 通過
     note: 正式機 10 句，自動判斷有疑慮的句子人工抽聽都正常
 泰雅_宜蘭澤敖利_女聲:
-  text: mgebu su, mosa su inu?
-  wav: ./assets/ref_wav/con_practice-0000111@0000000-0004004.wav
-  gender_unstable:
+  text: ungat nahuy mu knerin micu.
+  wav: ./assets/ref_wav/klokah-con_practice-11c27s7.wav
+  source:
+    來源: 族語E樂園 生活會話篇（宜蘭澤敖利泰雅語）
+    頁面: https://web.klokah.tw/extension/con_practice/index.php?d=11&l=27&view=dialogue
+    課: 27
+    句: 7
+    對話角色: Syat
+    中文: 我現在沒有女朋友。
+    音檔: https://klokah.tw/extension/con_data/sound/11/sentence/11c27s7.mp3
+  gender_checked:
     date: 2026-10-15
-    note: 正式機 10 句人工試聽，有 1 句變成男聲，要換參考音檔
-    heard_as_male:
-      - knle naha ruma kwara.
+    result: 通過
+    note: 本機 8 句短句（tests/tts_speakers/sentences.yaml），人工試聽都正常
 泰雅_澤敖利_男聲:
   text: lawkah su, musa su inu?
   wav: ./assets/ref_wav/con_practice-0000108@0000000-0003474.wav
@@ -90,14 +125,41 @@
     result: 通過
     note: 正式機 10 句，自動判斷有疑慮的句子人工抽聽都正常
 布農_郡群_男聲:
-  text: ali, mihumisang, nakuisa kasu?
-  wav: ./assets/ref_wav/con_practice-0000442@0000000-0005624.wav
-  gender_unstable:
+  text: Masnava saikin laupakadau malasBunun.
+  wav: ./assets/ref_wav/ilrdf-dictionary-BCC42BCF-D818-F011-BD68-00155DB40116.wav
+  source:
+    來源: 族語辭典 20260702_16族前台上線單字_04布農語8961筆(fin)(哈瑪星).xlsx
+    語別: 郡群布農語
+    詞條: malkamaaz
+    詞條ID: BB68C094-6B09-F011-BD64-00155DB40116
+    釋義: 做什麼
+    例句ID: BFC31A99-C70A-F011-BD65-00155DB40116
+    例句音檔ID: BCC42BCF-D818-F011-BD68-00155DB40116
+    例句音檔檔名: malkamaaz_{1}_@_1.2
+    中文: 我現在在教布農語。
+    音檔: https://sys-dictionary.ilrdf.org.tw/Data/api/Storage/00913A7B-2FF1-4689-9393-8458AF3DF53E/download
+  gender_checked:
     date: 2026-10-15
-    note: 正式機 10 句人工試聽，有 2 句變成女聲，要換參考音檔
-    heard_as_female:
-      - tastu taiuan tu incumin siduh.
-      - adasun mas tamacina kusia ulumahun.
+    result: 通過
+    note: 本機 8 句短句（tests/tts_speakers/sentences.yaml），自動判斷全部通過
+布農_郡群_女聲:
+  text: Indanumavang a maihanvang tu takingadaha.
+  wav: ./assets/ref_wav/ilrdf-dictionary-44BAEE6C-BE16-F011-BD67-00155DB40116.wav
+  source:
+    來源: 族語辭典 20260702_16族前台上線單字_04布農語8961筆(fin)(哈瑪星).xlsx
+    語別: 郡群布農語
+    詞條: indanum
+    詞條ID: 9089A1AC-6B09-F011-BD64-00155DB40116
+    釋義: 煮（湯）
+    例句ID: A5510BA5-C70A-F011-BD65-00155DB40116
+    例句音檔ID: 44BAEE6C-BE16-F011-BD67-00155DB40116
+    例句音檔檔名: indanum_{1}_@_1.2
+    中文: ' 請煮那道牛雜湯。'
+    音檔: https://sys-dictionary.ilrdf.org.tw/Data/api/Storage/289C4FA6-A1AF-4D26-9641-F3B47ACA8310/download
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 本機 8 句短句（tests/tts_speakers/sentences.yaml），自動判斷全部通過
 布農_卡群_男聲:
   text: miqumicang, mun icaq asu?
   wav: ./assets/ref_wav/con_practice-0000170@0000000-0004604.wav
@@ -120,14 +182,20 @@
     result: 通過
     note: 正式機 10 句，自動判斷全部通過
 布農_卓群_女聲:
-  text: miqumicang munica asu?
-  wav: ./assets/ref_wav/con_practice-0000162@0000000-0003054.wav
-  gender_unstable:
+  text: Macʼan qan dusa buan mapusan qan hima ca diqanin haip.
+  wav: ./assets/ref_wav/klokah-con_practice-18c5s2.wav
+  source:
+    來源: 族語E樂園 生活會話篇（卓群布農語）
+    頁面: https://web.klokah.tw/extension/con_practice/index.php?d=18&l=5&view=dialogue
+    課: 5
+    句: 2
+    對話角色: Puni
+    中文: 今天是12月25日。
+    音檔: https://klokah.tw/extension/con_data/sound/18/sentence/18c5s2.mp3
+  gender_checked:
     date: 2026-10-15
-    note: 正式機 10 句人工試聽，有 2 句變成男聲，要換參考音檔
-    heard_as_male:
-      - maca matinus huluc a.
-      - nanu tu iciat binanau az tu kukuzaun.
+    result: 通過
+    note: 本機 8 句短句（tests/tts_speakers/sentences.yaml），人工試聽都正常
 卡那卡那富_男聲:
   text: paʼʉ, musuʼʉvʉ tasiarʉ, miaranau cu kita koo ʼarupacʉʼʉra.
   wav: ./assets/ref_wav/con_practice-0000806@0000000-0008454.wav
@@ -182,13 +250,23 @@
     result: 通過
     note: 正式機 10 句，自動判斷全部通過
 卑南_南王_女聲:
-  text: semabalran! auka yu isuwa?
-  wav: ./assets/ref_wav/con_practice-0011320@0000000-0004794.wav
-  gender_unstable:
+  text: amelri nu selralrekangan dra ngai idru na trau.
+  wav: ./assets/ref_wav/ilrdf-dictionary-65188276-EA18-F011-BD68-00155DB40116.wav
+  source:
+    來源: 族語辭典 20260702_16族前台上線單字_05卑南語9138筆(fin)(哈瑪星).xlsx
+    語別: 南王卑南語
+    詞條: selralrekangan
+    詞條ID: 945C4E9E-6D09-F011-BD64-00155DB40116
+    釋義: 要刺激
+    例句ID: 3E475E3D-D00A-F011-BD65-00155DB40116
+    例句音檔ID: 65188276-EA18-F011-BD68-00155DB40116
+    例句音檔檔名: selralrekangan_{1}_@_1.1
+    中文: 那個人不能隨便用話刺激的。
+    音檔: https://sys-dictionary.ilrdf.org.tw/Data/api/Storage/365EE962-629B-44F3-B570-1C43884E49B3/download
+  gender_checked:
     date: 2026-10-15
-    note: 正式機 10 句人工試聽，有 1 句變成男聲，要換參考音檔
-    heard_as_male:
-      - salaw asabak dra nirangeran.
+    result: 通過
+    note: 本機 8 句短句（tests/tts_speakers/sentences.yaml），人工試聽都正常
 卑南_西群_女聲:
   text: semavalran, auwa u i iyan?
   wav: ./assets/ref_wav/con_practice-0011362@0000000-0004584.wav
