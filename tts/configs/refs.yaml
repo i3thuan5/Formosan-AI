@@ -2,96 +2,317 @@
 阿美_海岸_男聲:
   text: talacowa kiso?
   wav: ./assets/ref_wav/con_practice-0000029@0000000-0001434.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷有疑慮的句子人工抽聽都正常
 阿美_恆春_女聲:
   text: pacelem kiso kaday tatalacowa?
   wav: ./assets/ref_wav/con_practice-0000106@0000000-0003294.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 阿美_馬蘭_女聲:
   text: ngaʼayay sa mira haw?
   wav: ./assets/ref_wav/con_practice-0000041@0000000-0001704.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷有疑慮的句子人工抽聽都正常
 阿美_南勢_女聲:
   text: vaw! u ratar a talacuwa kisu?
   wav: ./assets/ref_wav/con_practice-0000001@0000000-0003324.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷有疑慮的句子人工抽聽都正常
 阿美_秀姑巒_女聲1:
   text: o pakafanaʼ ni akong to pinangan no romiʼad.
   wav: ./assets/ref_wav/E-PV001-0001.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 阿美_秀姑巒_女聲2:
   text: o pakafanaʼ ni akong to pinangan no romiʼad.
   wav: ./assets/ref_wav/E-PV002-0001.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷有疑慮的句子人工試聽正常
 泰雅_四季_女聲:
   text: mhyubuq su, musa su inu?
   wav: ./assets/ref_wav/con_practice-0000109@0000000-0003504.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 泰雅_賽考利克_男聲:
-  text: mziboq su! musa su inu?
-  wav: ./assets/ref_wav/con_practice-0000028@0000000-0003204.wav
+  text: iyat psbswak gi piraʼ balay knanan qani la.
+  wav: ./assets/ref_wav/ilrdf-dictionary-7AB0E3F0-BE16-F011-BD67-00155DB40116.wav
+  source:
+    來源: 族語辭典 20260702_16族前台上線單字_02泰雅語7227筆(fin)(哈瑪星).xlsx
+    語別: 賽考利克泰雅語
+    詞條: psbswak
+    詞條ID: F141A89F-6709-F011-BD64-00155DB40116
+    釋義: 將噎到
+    例句ID: BD2D67B5-B80A-F011-BD65-00155DB40116
+    例句音檔ID: 7AB0E3F0-BE16-F011-BD67-00155DB40116
+    例句音檔檔名: psbswak_{1}_@_1.2
+    中文: 不會噎到的啦，這才幾口而已。
+    音檔: https://sys-dictionary.ilrdf.org.tw/Data/api/Storage/9B9D7E7A-D9CC-4F9E-B674-2DED666546B2/download
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 本機 8 句短句（tests/tts_speakers/sentences.yaml），人工試聽都正常
+泰雅_賽考利克_女聲:
+  text: mniru kinhmgan qani ga, mrhuw na qalang.
+  wav: ./assets/ref_wav/ilrdf-dictionary-0A7C9E81-9205-5F90-F38E-3A1C7C86B7BD.wav
+  source:
+    來源: 族語辭典 20260702_16族前台上線單字_02泰雅語7227筆(fin)(哈瑪星).xlsx
+    語別: 賽考利克泰雅語
+    詞條: mniru
+    詞條ID: A28C3E1B-D26B-7E86-5C37-3A19B0E12F7E
+    釋義: 寫作者
+    例句ID: A74D0155-8A2C-FCA6-0F02-3A1BF4ED1306
+    例句音檔ID: 0A7C9E81-9205-5F90-F38E-3A1C7C86B7BD
+    例句音檔檔名: recording
+    中文: 這故事的作者是部落的耆老。
+    音檔: https://sys-dictionary.ilrdf.org.tw/Data/api/Storage/B90393AE-00E0-4D2D-B607-99A82D1D55C0/download
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 本機 8 句短句（tests/tts_speakers/sentences.yaml），人工試聽都正常
 泰雅_萬大_女聲:
   text: maṟbunaʼ suʼ ong!
   wav: ./assets/ref_wav/con_practice-0000048@0000000-0001944.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷有疑慮的句子人工抽聽都正常
 泰雅_汶水_男聲:
   text: babah suʼ ka magabuq cuqang, mausaʼ siʼ inuʼ?
   wav: ./assets/ref_wav/con_practice-0000055@0000000-0006714.wav
+  gender_confirmed:
+    gender: 男
+    date: 2026-10-15
+    note: 參考音檔 F0 約 226 Hz，音調偏高，試聽確認是男聲
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷有疑慮的句子人工抽聽都正常
 泰雅_宜蘭澤敖利_女聲:
-  text: mgebu su, mosa su inu?
-  wav: ./assets/ref_wav/con_practice-0000111@0000000-0004004.wav
+  text: ungat nahuy mu knerin micu.
+  wav: ./assets/ref_wav/klokah-con_practice-11c27s7.wav
+  source:
+    來源: 族語E樂園 生活會話篇（宜蘭澤敖利泰雅語）
+    頁面: https://web.klokah.tw/extension/con_practice/index.php?d=11&l=27&view=dialogue
+    課: 27
+    句: 7
+    對話角色: Syat
+    中文: 我現在沒有女朋友。
+    音檔: https://klokah.tw/extension/con_data/sound/11/sentence/11c27s7.mp3
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 本機 8 句短句（tests/tts_speakers/sentences.yaml），人工試聽都正常
 泰雅_澤敖利_男聲:
   text: lawkah su, musa su inu?
   wav: ./assets/ref_wav/con_practice-0000108@0000000-0003474.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷有疑慮的句子人工抽聽都正常
 布農_郡群_男聲:
-  text: ali, mihumisang, nakuisa kasu?
-  wav: ./assets/ref_wav/con_practice-0000442@0000000-0005624.wav
+  text: Masnava saikin laupakadau malasBunun.
+  wav: ./assets/ref_wav/ilrdf-dictionary-BCC42BCF-D818-F011-BD68-00155DB40116.wav
+  source:
+    來源: 族語辭典 20260702_16族前台上線單字_04布農語8961筆(fin)(哈瑪星).xlsx
+    語別: 郡群布農語
+    詞條: malkamaaz
+    詞條ID: BB68C094-6B09-F011-BD64-00155DB40116
+    釋義: 做什麼
+    例句ID: BFC31A99-C70A-F011-BD65-00155DB40116
+    例句音檔ID: BCC42BCF-D818-F011-BD68-00155DB40116
+    例句音檔檔名: malkamaaz_{1}_@_1.2
+    中文: 我現在在教布農語。
+    音檔: https://sys-dictionary.ilrdf.org.tw/Data/api/Storage/00913A7B-2FF1-4689-9393-8458AF3DF53E/download
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 本機 8 句短句（tests/tts_speakers/sentences.yaml），自動判斷全部通過
+布農_郡群_女聲:
+  text: Indanumavang a maihanvang tu takingadaha.
+  wav: ./assets/ref_wav/ilrdf-dictionary-44BAEE6C-BE16-F011-BD67-00155DB40116.wav
+  source:
+    來源: 族語辭典 20260702_16族前台上線單字_04布農語8961筆(fin)(哈瑪星).xlsx
+    語別: 郡群布農語
+    詞條: indanum
+    詞條ID: 9089A1AC-6B09-F011-BD64-00155DB40116
+    釋義: 煮（湯）
+    例句ID: A5510BA5-C70A-F011-BD65-00155DB40116
+    例句音檔ID: 44BAEE6C-BE16-F011-BD67-00155DB40116
+    例句音檔檔名: indanum_{1}_@_1.2
+    中文: ' 請煮那道牛雜湯。'
+    音檔: https://sys-dictionary.ilrdf.org.tw/Data/api/Storage/289C4FA6-A1AF-4D26-9641-F3B47ACA8310/download
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 本機 8 句短句（tests/tts_speakers/sentences.yaml），自動判斷全部通過
 布農_卡群_男聲:
   text: miqumicang, mun icaq asu?
   wav: ./assets/ref_wav/con_practice-0000170@0000000-0004604.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 布農_巒群_男聲:
   text: mun isaq asu?
   wav: ./assets/ref_wav/con_practice-0000167@0000000-0001464.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 布農_丹群_男聲:
   text: miqumisang. mun isaq aas?
   wav: ./assets/ref_wav/con_practice-0000171@0000000-0004044.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 布農_卓群_女聲:
-  text: miqumicang munica asu?
-  wav: ./assets/ref_wav/con_practice-0000162@0000000-0003054.wav
+  text: Macʼan qan dusa buan mapusan qan hima ca diqanin haip.
+  wav: ./assets/ref_wav/klokah-con_practice-18c5s2.wav
+  source:
+    來源: 族語E樂園 生活會話篇（卓群布農語）
+    頁面: https://web.klokah.tw/extension/con_practice/index.php?d=18&l=5&view=dialogue
+    課: 5
+    句: 2
+    對話角色: Puni
+    中文: 今天是12月25日。
+    音檔: https://klokah.tw/extension/con_data/sound/18/sentence/18c5s2.mp3
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 本機 8 句短句（tests/tts_speakers/sentences.yaml），人工試聽都正常
 卡那卡那富_男聲:
   text: paʼʉ, musuʼʉvʉ tasiarʉ, miaranau cu kita koo ʼarupacʉʼʉra.
   wav: ./assets/ref_wav/con_practice-0000806@0000000-0008454.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷有疑慮的句子人工抽聽都正常
 噶瑪蘭_女聲:
   text: semuRap, qatiw pa isu seni?
   wav: ./assets/ref_wav/con_practice-0000796@0000000-0002664.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 排灣_中_男聲:
   text: aiyanga sun!
   wav: ./assets/ref_wav/con_practice-0000436@0000000-0001314.wav
+  gender_confirmed:
+    gender: 男
+    date: 2026-10-15
+    note: 參考音檔 F0 約 177 Hz，試聽確認是男聲
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷有疑慮的句子人工抽聽都正常
 排灣_東_男聲:
   text: cuayanga tja sinicevunga.
   wav: ./assets/ref_wav/con_practice-0000337@0000000-0003084.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 排灣_北_女聲:
   text: aiyanga sun! cuacuaianga ika tjen a marepacucun ri.
   wav: ./assets/ref_wav/con_practice-0000439@0000000-0005634.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 排灣_南_女聲:
   text: cuacuay ini tje ucevucevung.
   wav: ./assets/ref_wav/con_practice-0000554@0000000-0004284.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 卑南_建和_女聲:
   text: semavalran. yawa u i iyan?
   wav: ./assets/ref_wav/con_practice-0011323@0000000-0004014.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 卑南_南王_女聲:
-  text: semabalran! auka yu isuwa?
-  wav: ./assets/ref_wav/con_practice-0011320@0000000-0004794.wav
+  text: amelri nu selralrekangan dra ngai idru na trau.
+  wav: ./assets/ref_wav/ilrdf-dictionary-65188276-EA18-F011-BD68-00155DB40116.wav
+  source:
+    來源: 族語辭典 20260702_16族前台上線單字_05卑南語9138筆(fin)(哈瑪星).xlsx
+    語別: 南王卑南語
+    詞條: selralrekangan
+    詞條ID: 945C4E9E-6D09-F011-BD64-00155DB40116
+    釋義: 要刺激
+    例句ID: 3E475E3D-D00A-F011-BD65-00155DB40116
+    例句音檔ID: 65188276-EA18-F011-BD68-00155DB40116
+    例句音檔檔名: selralrekangan_{1}_@_1.1
+    中文: 那個人不能隨便用話刺激的。
+    音檔: https://sys-dictionary.ilrdf.org.tw/Data/api/Storage/365EE962-629B-44F3-B570-1C43884E49B3/download
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 本機 8 句短句（tests/tts_speakers/sentences.yaml），人工試聽都正常
 卑南_西群_女聲:
   text: semavalran, auwa u i iyan?
   wav: ./assets/ref_wav/con_practice-0011362@0000000-0004584.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 卑南_知本_女聲:
   text: semavalran! awa u i iyan?
   wav: ./assets/ref_wav/con_practice-0011359@0000000-0003894.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷有疑慮的句子人工抽聽都正常
 魯凱_大武_女聲:
   text: maulaingata kai macacele.
   wav: ./assets/ref_wav/con_practice-0000239@0000000-0003084.wav
+  gender_confirmed:
+    gender: 女
+    date: 2026-10-15
+    note: 參考音檔 F0 約 150 Hz，音調偏低，試聽確認是女聲
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷有疑慮的句子人工抽聽都正常
 魯凱_多納_男聲:
   text: ʼiyakikaynga nitipacengecengelanga.
   wav: ./assets/ref_wav/con_practice-0000345@0000000-0002934.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 魯凱_東_女聲:
   text: mawlrainga kata ma cecelre.
   wav: ./assets/ref_wav/con_practice-0000440@0000000-0003384.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 魯凱_茂林_男聲:
   text: médavlinga ipcacnglata, tilorosu.
   wav: ./assets/ref_wav/con_practice-0000450@0000000-0004944.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 魯凱_萬山_女聲:
   text: mahikocolrao dholrokali ka maavaʼi.
   wav: ./assets/ref_wav/klokah-con_practice-32c8s2.wav
@@ -103,45 +324,105 @@
     對話角色: saidhai
     中文: 我（很）忙我不能來。
     音檔: https://klokah.tw/extension/con_data/sound/32/sentence/32c8s2.mp3
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 本機 10 句、兩組試聽句都自動判斷通過，人工抽聽正常
 魯凱_霧台_女聲:
   text: mawlayngata kai madradredrele.
   wav: ./assets/ref_wav/con_practice-0000243@0000000-0003474.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 拉阿魯哇_男聲:
   text: tam mutuvavʉrʉnga iniu ahlukakua?
   wav: ./assets/ref_wav/con_practice-0000803@0000000-0005154.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 賽夏_女聲:
   text: mayaʼ Soʼo ʼam rimaʼ raynoʼ?
   wav: ./assets/ref_wav/con_practice-0000107@0000000-0004334.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 撒奇萊雅_女聲:
   text: malanam tu. a tacuwa kisu?
   wav: ./assets/ref_wav/con_practice-0011340@0000000-0003534.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 賽德克_德鹿谷_女聲:
   text: krbuan! mowsa su inu?
   wav: ./assets/ref_wav/con_practice-0000166@0000000-0003954.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 賽德克_都達_女聲:
   text: knrbuwan! musa su inu?
   wav: ./assets/ref_wav/con_practice-0000160@0000000-0002244.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 賽德克_德固達雅_男聲:
   text: kari pnheyu ngayan seediq.
   wav: ./assets/ref_wav/E-SV001-0001.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷有疑慮的句子人工抽聽都正常
 賽德克_德固達雅_女聲:
   text: kari pnheyu ngayan seediq.
   wav: ./assets/ref_wav/E-SV002-3607.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 邵_男聲:
   text: ihu matinhumhum! amuntua ihu qa?
   wav: ./assets/ref_wav/con_practice-0000113@0000000-0004094.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 太魯閣_女聲:
   text: psbrinah lmnglung narux brah uhan.
   wav: ./assets/ref_wav/E-TV001-0001.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 太魯閣_男聲1:
   text: niqan kingal hngkawas smiyan taywang.
   wav: ./assets/ref_wav/E-TV002-0002.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷有疑慮的句子人工抽聽都正常
 太魯閣_男聲2:
   text: niqan kingal hngkawas smiyan taywang.
   wav: ./assets/ref_wav/E-TV003-0002.wav
+  gender_confirmed:
+    gender: 男
+    date: 2026-10-15
+    note: 參考音檔 F0 約 181 Hz，試聽確認是男聲
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷有疑慮的句子人工抽聽都正常
 鄒_女聲:
   text: micu noanaʼo ho mito oʼte yupteʉlʉ.
   wav: ./assets/ref_wav/con_practice-0000798@0000000-0005214.wav
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 正式機 10 句，自動判斷全部通過
 雅美_女聲:
   text: ori do siri no rarahan o pangonongan mo.
   wav: ./assets/ref_wav/ilrdf-dictionary-A5413384-1419-F011-BD69-00155DB40116.wav
@@ -153,3 +434,7 @@
     例句音檔ID: A5413384-1419-F011-BD69-00155DB40116
     中文: 你就從路邊那裡走。
     音檔: https://sys-dictionary.ilrdf.org.tw/Data/api/Storage/8272647A-9025-4EA7-ABCC-2ABE61B65C34/download
+  gender_checked:
+    date: 2026-10-15
+    result: 通過
+    note: 本機 10 句、兩組試聽句都自動判斷通過，人工抽聽正常
