@@ -63,7 +63,9 @@ jobs:
         # 直接從 buildx 推到 Docker Hub，不經過 --load 與 docker push：
         # 共用的 torch 層在 registry 只上傳一次，也不會佔用 Travis 的磁碟。
         # 只列四個服務，共用的 base、gpu、files 只留在 cache，不會被推送。
-        - CACHE=readwrite docker buildx bake -f docker-bake.hcl --push asr asr-kaldi tts mt
+        - >
+          GIT_SHA="${TRAVIS_COMMIT:0:7}" CACHE=readwrite
+          docker buildx bake -f docker-bake.hcl --push asr asr-kaldi tts mt
     # - stage: Deploy
     #   name: Deploy
     #   if: (type = push or type = cron) and (branch = main or branch = asr-docker-cd)
