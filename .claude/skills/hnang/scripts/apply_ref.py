@@ -11,7 +11,7 @@ from pathlib import Path
 
 import yaml
 
-from common import REF_WAV_DIR, REFS_PATH, load_json
+from common import REF_WAV_DIR, REFS_PATH, language_of, load_json
 
 SOURCE_KEYS_ORDER = ["來源", "頁面", "語別", "課", "句", "對話角色", "詞條", "詞條ID", "釋義", "例句ID", "例句音檔ID",
                      "例句音檔檔名", "中文", "音檔"]
@@ -30,12 +30,24 @@ def speaker_block(speaker, text, wav_rel, source):
     return "\n".join(lines) + "\n"
 
 
+def block_pattern(speaker):
+    return re.compile(rf"^{re.escape(speaker)}:\n(?:[ \t].*\n|\n)*", re.MULTILINE)
+
+
 def replace_block(content, speaker, block):
-    """換掉從「speaker:」到下一個頂層 key 之前的所有行。"""
-    pattern = re.compile(rf"^{re.escape(speaker)}:\n(?:[ \t].*\n|\n)*", re.MULTILINE)
-    if not pattern.search(content):
-        raise SystemExit(f"refs.yaml 找不到「{speaker}:」")
-    return pattern.sub(lambda _m: block, content, count=1)
+    """換掉從「speaker:」到下一個頂層 key 之前的所有行；沒有這位配音員時，插在同一語別最後一位後面。"""
+    pattern = block_pattern(speaker)
+    if pattern.search(content):
+        return pattern.sub(lambda _m: block, content, count=1)
+    last = None
+    for name in yaml.safe_load(content):
+        if language_of(name) == language_of(speaker):
+            last = name
+    if last is None:
+        raise SystemExit(f"refs.yaml 沒有「{speaker}」，也沒有同語別的配音員可以接在後面")
+    end = block_pattern(last).search(content).end()
+    print(f"新增配音員 {speaker}，接在 {last} 後面")
+    return content[:end] + block + content[end:]
 
 
 def main():
