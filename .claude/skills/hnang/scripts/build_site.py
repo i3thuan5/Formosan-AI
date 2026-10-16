@@ -84,7 +84,7 @@ def build_replace(work, site):
                 item["ratio"] = round(item["f0"] / ref["f0"], 2)
                 item["status"] = ratio_status(item["ratio"])
             items.append(item)
-        label = "目前預設配音員" if job["kind"] == "current" else slug
+        label = "目前預設配音員" if job["kind"] == "current" else job.get("label", slug)
         groups.append({
             "id": slug,
             "kind": job["kind"],
