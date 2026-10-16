@@ -63,7 +63,7 @@ asr、mt、tts 的 Dockerfile SHALL `FROM formosan-ai-gpu`；asr-kaldi 的 Docke
 
 ### Requirement: CI 依序 build 並使用 registry cache
 
-建置 SHALL 由 repo 根目錄的 `docker-bake.hcl` 定義 `base`、`gpu`、`files`、`asr`、`asr-kaldi`、`tts`、`mt` 七個 target。服務 target MUST 以 `contexts` 把 `formosan-ai-gpu`、`formosan-ai-base`、`formosan-ai-common` 對應到 `target:gpu`、`target:base`、`target:files`，MUST NOT 依賴本機 image store（registry cache 需要的 `docker-container` driver 看不到本機 image）。變數 `CACHE` 為 `read` 時每個 target MUST 使用 `cache-from type=registry,ref=ithuan/formosan-ai:cache-<name>`；為 `readwrite` 時 MUST 另加 `cache-to type=registry,mode=max,ref=ithuan/formosan-ai:cache-<name>`；為空字串時不用 cache。`.travis.yml` 的 PR job SHALL 執行 `CACHE=read docker buildx bake -f docker-bake.hcl`，MUST NOT 加 `--load`（只驗證能 build，載入 Docker 會讓每個 GPU image 各解開一份 torch 層而耗盡磁碟）。main 的 job SHALL 執行 `CACHE=readwrite docker buildx bake -f docker-bake.hcl --push asr asr-kaldi tts mt`，直接推送四個服務，共用的 base、gpu、files 只留在 cache。
+建置 SHALL 由 repo 根目錄的 `docker-bake.hcl` 定義 `base`、`gpu`、`files`、`asr`、`asr-kaldi`、`tts`、`mt` 七個 target。服務 target MUST 以 `contexts` 把 `formosan-ai-gpu`、`formosan-ai-base`、`formosan-ai-common` 對應到 `target:gpu`、`target:base`、`target:files`，MUST NOT 依賴本機 image store（registry cache 需要的 `docker-container` driver 看不到本機 image）。變數 `CACHE` 為 `read` 時每個 target MUST 使用 `cache-from type=registry,ref=ithuan/formosan-ai:cache-<name>`；為 `readwrite` 時 MUST 另加 `cache-to type=registry,mode=max,ref=ithuan/formosan-ai:cache-<name>`；為空字串時不用 cache。`.travis.yml` 的 PR job SHALL 執行 `CACHE=read docker buildx bake -f docker-bake.hcl`，MUST NOT 加 `--load`（只驗證能 build，載入 Docker 會讓每個 GPU image 各解開一份 torch 層而耗盡磁碟）。main 的 job SHALL 執行 `GIT_SHA="${TRAVIS_COMMIT:0:7}" CACHE=readwrite docker buildx bake -f docker-bake.hcl --push asr asr-kaldi tts mt`，直接推送四個服務，共用的 base、gpu、files 只留在 cache，推送到 Docker Hub 後產生 tag: `<服務>-<commit>`。
 
 #### Scenario: requirements 未變時不重新下載 torch
 
@@ -74,6 +74,16 @@ asr、mt、tts 的 Dockerfile SHALL `FROM formosan-ai-gpu`；asr-kaldi 的 Docke
 
 - **WHEN** 來自 pull request 的 build 以 `CACHE=read` 執行
 - **THEN** build 使用 `--cache-from` 讀取 cache，不執行 `--cache-to`，且不需要 push token
+
+#### Scenario: main 推送附帶 commit tag
+
+- **WHEN** commit `d27473f` push 到 main，Travis 執行推送 job
+- **THEN** Docker Hub 上 `asr`、`asr-kaldi`、`tts`、`mt` 各多一個 `<服務>-d27473f` tag，與同名的浮動 tag 指向同一個 digest，且 image 的 `org.opencontainers.image.revision` label 為 `d27473f`
+
+#### Scenario: PR 與本機 build 不產生 commit tag
+
+- **WHEN** 未設定 `GIT_SHA`，執行 `docker buildx bake -f docker-bake.hcl --print asr asr-kaldi tts mt`
+- **THEN** 每個服務的 `tags` 只有 `ithuan/formosan-ai:<服務>` 一個，沒有空字串或 `<服務>-` 結尾的 tag
 
 ### Requirement: base image 以 digest 固定並由 Dependabot 更新
 
