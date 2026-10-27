@@ -19,13 +19,13 @@ anyio==4.9.0
     #   mcp
     #   sse-starlette
     #   starlette
-async-timeout==5.0.1
-    # via aiohttp
 attrs==25.3.0
     # via
     #   aiohttp
     #   jsonschema
     #   referencing
+audioop-lts==0.2.2
+    # via gradio
 authlib==1.6.5
     # via gradio
 brotli==1.2.0
@@ -35,7 +35,7 @@ certifi==2025.4.26
     #   httpcore
     #   httpx
     #   requests
-cffi==1.17.1
+cffi==2.1.1
     # via
     #   cryptography
     #   vosk
@@ -43,19 +43,17 @@ charset-normalizer==3.4.2
     # via requests
 click==8.0.4
     # via
-    #   -r asr-kaldi/requirements.in
+    #   -r requirements.in
     #   typer
     #   uvicorn
-cryptography==45.0.2
+cryptography==50.0.0
     # via authlib
 datasets==3.6.0
-    # via -r asr-kaldi/requirements.in
+    # via -r requirements.in
 dill==0.3.8
     # via
     #   datasets
     #   multiprocess
-exceptiongroup==1.3.0
-    # via anyio
 fastapi==0.115.12
     # via gradio
 ffmpy==0.5.0
@@ -73,9 +71,9 @@ fsspec[http]==2025.3.0
     #   datasets
     #   gradio-client
     #   huggingface-hub
-gradio[mcp, oauth]==5.49.1
+gradio[mcp,oauth]==5.49.1
     # via
-    #   -r asr-kaldi/requirements.in
+    #   -r requirements.in
     #   spaces
 gradio-client==1.13.3
     # via gradio
@@ -86,10 +84,10 @@ h11==0.16.0
     #   httpcore
     #   uvicorn
 hf-transfer==0.1.9
-    # via -r asr-kaldi/requirements.in
+    # via -r requirements.in
 hf-xet==1.1.2
     # via
-    #   -r asr-kaldi/requirements.in
+    #   -r requirements.in
     #   huggingface-hub
 httpcore==1.0.9
     # via httpx
@@ -104,7 +102,7 @@ httpx-sse==0.4.0
     # via mcp
 huggingface-hub==0.33.5
     # via
-    #   -r asr-kaldi/requirements.in
+    #   -r requirements.in
     #   datasets
     #   gradio
     #   gradio-client
@@ -130,7 +128,7 @@ markupsafe==3.0.2
     #   jinja2
 mcp==1.10.1
     # via
-    #   -r asr-kaldi/requirements.in
+    #   -r requirements.in
     #   gradio
 mdurl==0.1.2
     # via markdown-it-py
@@ -146,7 +144,7 @@ numpy==2.2.6
     #   gradio
     #   pandas
 omegaconf==2.3.0
-    # via -r asr-kaldi/requirements.in
+    # via -r requirements.in
 orjson==3.10.18
     # via gradio
 packaging==25.0
@@ -174,7 +172,7 @@ pycparser==2.22
     # via cffi
 pydantic==2.11.4
     # via
-    #   -r asr-kaldi/requirements.in
+    #   -r requirements.in
     #   fastapi
     #   gradio
     #   mcp
@@ -233,7 +231,7 @@ six==1.17.0
 sniffio==1.3.1
     # via anyio
 spaces==0.36.0
-    # via -r asr-kaldi/requirements.in
+    # via -r requirements.in
 srt==3.5.3
     # via vosk
 sse-starlette==2.3.5
@@ -255,22 +253,15 @@ typer==0.15.4
     # via gradio
 typing-extensions==4.13.2
     # via
-    #   aiosignal
-    #   anyio
-    #   exceptiongroup
     #   fastapi
     #   gradio
     #   gradio-client
     #   huggingface-hub
-    #   multidict
     #   pydantic
     #   pydantic-core
-    #   referencing
-    #   rich
     #   spaces
     #   typer
     #   typing-inspection
-    #   uvicorn
 typing-inspection==0.4.1
     # via
     #   pydantic
@@ -281,11 +272,11 @@ urllib3==2.6.0
     # via requests
 uvicorn==0.34.2
     # via
-    #   -r asr-kaldi/requirements.in
+    #   -r requirements.in
     #   gradio
     #   mcp
 vosk==0.3.45
-    # via -r asr-kaldi/requirements.in
+    # via -r requirements.in
 websockets==15.0.1
     # via
     #   gradio-client
