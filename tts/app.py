@@ -159,18 +159,24 @@ def infer(
         ref_audio_orig, ref_text, show_info=show_info
     )
 
-    final_wave, final_sample_rate, combined_spectrogram = infer_process(
-        ref_audio,
-        ref_text,
-        gen_text,
-        model,
-        vocoder,
-        cross_fade_duration=cross_fade_duration,
-        nfe_step=nfe_step,
-        speed=speed,
-        show_info=show_info,
-        progress=gr.Progress(),
-    )
+    try:
+        final_wave, final_sample_rate, combined_spectrogram = infer_process(
+            ref_audio,
+            ref_text,
+            gen_text,
+            model,
+            vocoder,
+            cross_fade_duration=cross_fade_duration,
+            nfe_step=nfe_step,
+            speed=speed,
+            show_info=show_info,
+            progress=gr.Progress(),
+        )
+    finally:
+        # F5-TTS 的 DiT 會把 text embedding 快取在 model 上，正常跑完才清。
+        # 合成中途出錯時快取會留著，之後每個長度不同的 request 都會出現
+        # "Sizes of tensors must match"，直到重啟，故出錯也要清。
+        model.transformer.clear_cache()
 
     # Remove silence
     if remove_silence:
