@@ -1,0 +1,1053 @@
+# 給 tests/tts_speakers/check_tts_speakers.py 用的短句，每個語別不重複。
+# 由 build_sentences.py 從 kithann/E樂園 產生，要改請改腳本後重新產生。
+---
+阿美_海岸:
+  - text: Mamaan aca, kiso hani?
+    zh: 我很好，你呢？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 9900 B）
+  - text: Cima kora tamdaw?
+    zh: 那個人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9895 A）
+  - text: Papina ko tamdaw no lomaʼ namo?
+    zh: 你們家有幾個人？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9891 A）
+  - text: Cecay aca ko waco nira.
+    zh: 他有一隻狗。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9888 B）
+  - text: Moetep ko toki mafotiʼ kako to dadaya.
+    zh: 我晚上十點鐘睡覺。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9884 B）
+  - text: Ira ini ko impic no miso?
+    zh: 你的筆在這裡。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9880 B）
+  - text: Na i lomaay tayni kako anini romiʼad.
+    zh: 我今天從家裡來的。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9876 B）
+  - text: O wawa nira koni.
+    zh: 這是她的小孩。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9872 B）
+阿美_恆春:
+  - text: Ngaʼay ho kiso?
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 10056 A）
+  - text: Ci Ofad Kacaw ko ngangan no wama ako.
+    zh: 我爸爸叫Ofad Kacaw。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10052 B）
+  - text: O kaka ako cingra.
+    zh: 她是我的姊姊。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10048 B）
+  - text: Pinaay ko tilid iso?
+    zh: 你有幾本書？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10043 A）
+  - text: O maan konian?
+    zh: 那是什麼？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10039 A）
+  - text: Icowaay ko wama no miso?
+    zh: 你爸爸在哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10035 A）
+  - text: Tatalacuwa kiso ano hatini?
+    zh: 你現在要去哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10031 A）
+  - text: O nima koraan a siri?
+    zh: 這是誰的羊？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10027 A）
+阿美_馬蘭:
+  - text: Ngaʼayho ko miso?
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 9978 A）
+  - text: Cima kora tamdaw?
+    zh: 那個人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9973 A）
+  - text: Papinaay ko paro no lomaʼ namo?
+    zh: 你們家有幾個人？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9969 A）
+  - text: Cecayay ko waco nira.
+    zh: 他有一隻狗。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9966 B）
+  - text: Mo^tep ko toki a mafotiʼ to dadaya kako.
+    zh: 我晚上十點鐘睡覺。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9962 B）
+  - text: Ini ko impic no miso.
+    zh: 你的筆在這裡。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9958 B）
+  - text: Nanilomaʼay kako anini.
+    zh: 我今天從家裡來的。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9954 B）
+  - text: O no mira a wawa konini.
+    zh: 這是她的小孩。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9950 B）
+阿美_南勢:
+  - text: Kapah haw kisu?
+    zh: 你好嗎?
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 9744 A）
+  - text: Ci Ciyaw ku ngangan nu maku.
+    zh: 我叫Ciyaw。(我的名字叫Ciyaw。)
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9741 B）
+  - text: U pasevanaay nu maku cira.
+    zh: 他是我的老師。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9737 B）
+  - text: Pina ku wacu nina wawa?
+    zh: 這個小孩有幾隻狗？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9732 A）
+  - text: U rarapa kiniyan.
+    zh: 這是牛。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9727 B）
+  - text: Itini i cacudadan ku ama nu maku.
+    zh: 我爸爸在學校裡。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9723 B）
+  - text: U talalumaay kaku anini.
+    zh: 我正要回家。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9719 B）
+  - text: U nira a siri kiniyan.
+    zh: 這是他的羊。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9715 B）
+阿美_秀姑巒:
+  - text: Mamaan aca, kiso i?
+    zh: 我很好，你呢？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 9822 B）
+  - text: Ci Panay Kiko ciira.
+    zh: 她是Pnay Kiko。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9817 B）
+  - text: Lalima ko paro no lomaʼ niyam.
+    zh: 我們家有五個人。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9813 B）
+  - text: Tosa ko codad no mako.
+    zh: 我有二本書。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9809 B）
+  - text: O kolong kinian.
+    zh: 這是牛。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9805 B）
+  - text: I picodadan ci mama no mako.
+    zh: 我爸爸在學校裡。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9801 B）
+  - text: O maminokay kako i matini.
+    zh: 我正要回家。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9797 B）
+  - text: O siri niira kinian.
+    zh: 這是他的羊。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 9793 B）
+泰雅_四季:
+  - text: blaq su ga?
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 10446 A）
+  - text: sgagay ta la!
+    zh: 再見了！
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 10444 A）
+  - text: ima lalu na mlikuy qaca?
+    zh: 那個男人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10440 A）
+  - text: pisa qabax rawil su?
+    zh: 你有幾個兄弟姊妹？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10416 A）
+  - text: saying bbiru mu.
+    zh: 我有二本書。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10433 B）
+  - text: qaca ga qhoniq.
+    zh: 那是樹。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10428 B）
+  - text: knahul su inu mwah?
+    zh: 你從哪裡來的？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10423 A）
+  - text: musa su inu cugan?
+    zh: 你明天要去哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10419 A）
+泰雅_賽考利克:
+  - text: lokah suʼ ga?
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 10134 A）
+  - text: sgaya taʼ la!
+    zh: 再見了！
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 10132 A）
+  - text: hiyaʼ ga, Rimuy.
+    zh: 她是Rimuy。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10129 B）
+  - text: zmagal hiʼ myan kwaraʼ.
+    zh: 我們家有五個人。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10125 B）
+  - text: qutux huzil nyaʼ.
+    zh: 他有一隻狗。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10122 B）
+  - text: mopuw tmucing mʼabiʼ sakuʼ mhngan.
+    zh: 我晚上十點鐘睡覺。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10118 B）
+  - text: cyux makiʼ inuʼ yabaʼ suʼ?
+    zh: 你爸爸在哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10113 A）
+  - text: musaʼ suʼ inuʼ?
+    zh: 你現在要去哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10109 A）
+泰雅_萬大:
+  - text: ramas cu, isuʼ ga?
+    zh: 我很好，你呢？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 10368 B）
+  - text: imaʼ raluʼ suʼ?
+    zh: 你叫什麼名字？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10365 A）
+  - text: imaʼ ka malikuṟ haca?
+    zh: 那個男人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10361 A）
+  - text: malapṟow ṟamagal ingkaṟalan mu.
+    zh: 我十五歲。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10358 B）
+  - text: paṟat wagiʼ micuw.
+    zh: 現在是四點鐘。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10354 B）
+  - text: cel inuʼ ka yabaʼ suʼ?
+    zh: 你爸爸在哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10347 A）
+  - text: mahaʼ suʼ inuʼ micuw?
+    zh: 你現在要去哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10343 A）
+  - text: mit ni imaʼ kani?
+    zh: 這是誰的羊？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10339 A）
+泰雅_汶水:
+  - text: lawkah suʼ quw?
+    zh: 你好嗎?
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 10290 A）
+  - text: masugagayay taʼ la.
+    zh: 再見了！
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 10288 B）
+  - text: Yumin na Punaʼ.
+    zh: 他是Yumin(全名)。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10284 B）
+  - text: piyaʼ kaal suʼ la?
+    zh: 你幾歲？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10280 A）
+  - text: piyaʼ pincapngan la?
+    zh: 現在是幾點鐘？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10276 A）
+  - text: nanuwan ku haca?
+    zh: 那是什麼？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10272 A）
+  - text: kiya inuʼ ku imuwag mamuw?
+    zh: 你們家在哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10268 A）
+  - text: minusaʼ cimuw inuʼ cu hisaʼ?
+    zh: 你們昨天去哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10264 A）
+泰雅_宜蘭澤敖利:
+  - text: lokah su ga?
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 10524 A）
+  - text: sgagay ta la!
+    zh: 再見了！
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 10522 B）
+  - text: heya ga Semu Yukan.
+    zh: 他是Semu Yukan (全名)。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10518 B）
+  - text: pisa kawas su la?
+    zh: 你幾歲？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10514 A）
+  - text: pisa tmuting micu la?
+    zh: 現在是幾點鐘？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10510 A）
+  - text: kwaca ga hongu lutux.
+    zh: 那是彩虹。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10505 B）
+  - text: kahun cu alang na Pyahaw.
+    zh: 我從Pyahaw來的。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10501 B）
+  - text: musa cu rgyax cuxan.
+    zh: 我明天要去山上。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10497 B）
+泰雅_澤敖利:
+  - text: lawkah su ga?
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 10212 A）
+  - text: sgagay ta la!
+    zh: 再見了！
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 10210 B）
+  - text: hiya ga Watan Ciwas.
+    zh: 他是Watan Ciwas (全名)。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10206 B）
+  - text: pisa kayan su la?
+    zh: 你幾歲？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10202 A）
+  - text: pisa spngan misuw la?
+    zh: 現在是幾點鐘？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10198 A）
+  - text: hasa ga Hawngu Lyutux.
+    zh: 那是彩虹。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10193 B）
+  - text: kahun kuzing Nguhuw Ruma.
+    zh: 我從Nguhuw Ruma來的。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10189 B）
+  - text: musa kuzing rgyax sasan.
+    zh: 我明天要去山上。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10185 B）
+布農_郡群:
+  - text: Adu masial kasu?
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 11382 A）
+  - text: Saikin hai Vilian.
+    zh: 我叫飛力安。(我的名字是Vilian。)
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11379 B）
+  - text: Papia kamu tastu-lumah?
+    zh: 你們家有幾個人？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11373 A）
+  - text: Pia itu uvaztan asu?
+    zh: 這個小孩有幾隻狗？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11370 A）
+  - text: Sanavan tu cinmas-an saikin masabah.
+    zh: 我晚上十點鐘睡覺。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11366 B）
+  - text: Maisna isa kasu minsuma?
+    zh: 你從哪裡來的？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11359 A）
+  - text: Saisia ludun kaimin takna.
+    zh: 我們昨天去山上。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11356 B）
+  - text: Adu utan sa-ia?
+    zh: 那是地瓜嗎？
+    source: 族語E樂園 句型篇國中 生活百句「是非問句」（autoId 11315 A）
+布農_卡群:
+  - text: Macial amin, miqumicang.
+    zh: 我也很好，謝謝你。
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 11148 C）
+  - text: Tupaun tu Tiang.
+    zh: 我爸爸叫Tiang。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11144 B）
+  - text: Inak tu masnanava.
+    zh: 他是我的老師。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11141 B）
+  - text: Mac-an qan hima.
+    zh: 我十五歲。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11138 B）
+  - text: Pin laupaku tiktik?
+    zh: 現在是幾點鐘？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11134 A）
+  - text: Dikat ispapatac su.
+    zh: 你的筆在這裡。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11128 B）
+  - text: Maina can tibaun.
+    zh: 我從tibaun來的。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11125 B）
+  - text: Mun icaq asu laqbing?
+    zh: 你明天要去哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11121 A）
+布農_巒群:
+  - text: Masvala saak, masvala asu amin?
+    zh: 我很好，你呢？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 11304 B）
+  - text: Tupa-un inaak ngaan tu Lian.
+    zh: 我叫Lian。(我的名字是Lian。)
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11301 B）
+  - text: Simaq a binanau-az a?
+    zh: 那個女人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11296 A）
+  - text: Mas-an qan hima-in saak.
+    zh: 我十五歲。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11294 B）
+  - text: Tinpiaq asu tingmut minanuqu?
+    zh: 你早上幾點鐘起床？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11289 A）
+  - text: Ihaan inaak tama pasnanava-an.
+    zh: 我爸爸在學校裡。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11283 B）
+  - text: Si-isaq amu takna?
+    zh: 你們昨天去哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11278 A）
+  - text: Uu! Isnanava-an saak.
+    zh: 是/對，我是學生。
+    source: 族語E樂園 句型篇國中 生活百句「是非問句」（autoId 11239 B）
+布農_丹群:
+  - text: Uninang, maquaqin aas?
+    zh: 我很好，你呢？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 11226 B）
+  - text: Pisaz, mangququ naak a tama.
+    zh: 我爸爸叫Pisaz 。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11222 B）
+  - text: Papiaq muu tastulumaq bunun?
+    zh: 你們家有幾個人？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11217 A）
+  - text: Nummin sia masinauba naakta a qamisan.
+    zh: 我妹妹六歲。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11215 B）
+  - text: Piaq tukii aas tingmut minuqu?
+    zh: 你早上幾點鐘起床？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11211 A）
+  - text: Ihaan naak tama kakuta.
+    zh: 我爸爸在學校裡。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11205 B）
+  - text: Namulumaq aak laupaku.
+    zh: 我正要回家。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11201 B）
+  - text: Isimaq a sidi-un?
+    zh: 這是誰的羊？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11197 A）
+布農_卓群:
+  - text: Macial amin. Miqumicang.
+    zh: 我也很好，謝謝你。
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 11070 C）
+  - text: Cima ca binanau-az aiza?
+    zh: 那個女人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11062 A）
+  - text: Piin qamisan ca naubanau-az suu?
+    zh: 你妹妹幾歲？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11059 A）
+  - text: Paatin tatnulan haip.
+    zh: 現在是四點鐘。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11056 B）
+  - text: Lukic ca aiza.
+    zh: 那是樹。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11052 B）
+  - text: Han ica ca lumaq suu?
+    zh: 你們家在哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11048 A）
+  - text: Namulumaq azak haip.
+    zh: 我正要回家。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11045 B）
+  - text: Icima ca sidi dii?
+    zh: 這是誰的羊？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11041 A）
+卡那卡那富:
+  - text: mamanʉng kara kasu?
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 12474 A）
+  - text: neen nganai musu?
+    zh: 你叫什麼名字？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12471 A）
+  - text: neen sua cau saronai isa?
+    zh: 那個男人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12467 A）
+  - text: maan urima cenana maku.
+    zh: 我十五歲。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12464 B）
+  - text: masiin ia, usʉʉpatʉ takananga.
+    zh: 現在是四點鐘。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12460 B）
+  - text: sua isa ia, karu.
+    zh: 那是樹。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12456 B）
+  - text: niaranai kasu nan ioovutu?
+    zh: 你從哪裡來的？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12451 A）
+  - text: te kasu mokasa nan nura?
+    zh: 你明天要去哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12447 A）
+噶瑪蘭:
+  - text: nengi isu ni?
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 12318 A）
+  - text: ti buya batu nangan na tama ku.
+    zh: 我爸爸叫福亞.巴杜(全名)。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12314 B）
+  - text: qaqa ku aizipna.
+    zh: 她是我的姊姊。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12310 B）
+  - text: unem ti tasaw na suani ku.
+    zh: 我妹妹六歲。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12307 B）
+  - text: unem duki masuwat iku taRbabi.
+    zh: 我早上六點鐘起床。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12303 B）
+  - text: ta naungan leppaw niaq.
+    zh: 我們家在山上。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12296 B）
+  - text: matiw imi sa naung siRab.
+    zh: 我們昨天去山上。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12292 B）
+  - text: en. qawpiR ʼnay.
+    zh: 是/對，那是地瓜。
+    source: 族語E樂園 句型篇國中 生活百句「是非問句」（autoId 12251 B）
+排灣_中:
+  - text: navenala aken, sa tisun?
+    zh: 我很好，你呢？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 11616 B）
+  - text: a ku ngadan ti buka.
+    zh: 我叫buka。(我的名字是buka。)
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11613 B）
+  - text: ku sinsi timadju.
+    zh: 他是我的老師。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11609 B）
+  - text: unem anga cavilj nua ku kaka.
+    zh: 我妹妹六歲。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11605 B）
+  - text: ita makudakuda su sigacaljan nu kadjamadjaman?
+    zh: 你早上幾點鐘起床？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11601 A）
+  - text: i gak-ku ti kama.
+    zh: 我爸爸在學校裡。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11595 B）
+  - text: na kasi gadu a men tatiau
+    zh: 我們昨天去山上。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11590 B）
+  - text: ui, vurati azua.
+    zh: 是/對，那是地瓜。
+    source: 族語E樂園 句型篇國中 生活百句「是非問句」（autoId 11549 B）
+排灣_東:
+  - text: na tarivak sun?
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 11460 A）
+  - text: tima su ngadan?
+    zh: 你叫什麼名字？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11457 A）
+  - text: tima zua a uqaljay?
+    zh: 那個男人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11453 A）
+  - text: pida anga su cavilj?
+    zh: 你幾歲？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11450 A）
+  - text: pida milingan tucu?
+    zh: 現在是幾點鐘？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11446 A）
+  - text: aicu a su inpic.
+    zh: 你的筆在這裡。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11440 B）
+  - text: na kemasi tjumaq a ken.
+    zh: 我今天從家裡來的。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11436 B）
+  - text: nima cu a aljak?
+    zh: 這是誰的小孩？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11432 A）
+排灣_北:
+  - text: ui nasuljivat aken, ʼau namakuda sun?
+    zh: 我很好，你呢？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 11538 B）
+  - text: ti kui a karangiyan ti kama.
+    zh: 我爸爸叫kui a karangiyan (全名)。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11534 B）
+  - text: ti kaka azua.
+    zh: 她是我的姊姊。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11530 B）
+  - text: pidanga a cavilj na su kaka?
+    zh: 你妹妹幾歲？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11527 A）
+  - text: i tua sepatjanga a tuki tucu.
+    zh: 現在是四點鐘。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11524 B）
+  - text: i zainu ti tjama?
+    zh: 你爸爸在哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11517 A）
+  - text: uri matjumaʼ aken tucu.
+    zh: 我正要回家。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11513 B）
+  - text: ʼiyu nimadju aicu
+    zh: 這是他的羊。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11509 B）
+排灣_南:
+  - text: ui, nanguanguaq a en, a tisun?
+    zh: 我很好，你呢？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 11694 B）
+  - text: ti kuliw a paqevad ti kama.
+    zh: 我爸爸叫kuliw a paqevad。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11690 B）
+  - text: u kaka tjavulung a vavayan.
+    zh: 她是我的姊姊。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11686 B）
+  - text: pida vatu naicu a kakedriyan?
+    zh: 這個小孩有幾隻狗？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11682 A）
+  - text: pida milingan a su sitaqedan nu qezmezmetj?
+    zh: 你晚上幾點鐘睡覺？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11678 A）
+  - text: inuan a nu tapaw?
+    zh: 你們家在哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11672 A）
+  - text: kasinu mun tatiyaw?
+    zh: 你們昨天去哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11668 A）
+  - text: nimadju cu a sizi.
+    zh: 這是他的羊。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11665 B）
+卑南_建和:
+  - text: ʼinava u diya?
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 12864 A）
+  - text: marcevunga ta diya!
+    zh: 再見了！
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 12862 B）
+  - text: mau i Haku dumaladas.
+    zh: 他是haku dumaladas(全名)。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12858 B）
+  - text: pidaya nu ʼami?
+    zh: 你幾歲？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12854 A）
+  - text: pidaya tuki harem?
+    zh: 現在是幾點鐘？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12850 A）
+  - text: a eman idu?
+    zh: 那是什麼？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12846 A）
+  - text: ulra i iyan?
+    zh: 你們家在哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12842 A）
+  - text: mukuwa mu i iyan a adaman?
+    zh: 你們昨天去哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12838 A）
+卑南_南王:
+  - text: inaba yu driya?
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 12630 A）
+  - text: i manay tu ngalad kan temama?
+    zh: 你爸爸叫什麼名字？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12626 A）
+  - text: i baelri taytaw.
+    zh: 她是我的姊姊。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12622 B）
+  - text: ulraya samaya tu suwan kandri na walrak?
+    zh: 這個小孩有幾隻狗？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12618 A）
+  - text: alrupe yu dra munuma tuki an karaub?
+    zh: 你晚上幾點鐘睡覺？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12614 A）
+  - text: ulraya i takesian i namalri.
+    zh: 我爸爸在學校裡。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12609 B）
+  - text: uwaruma ku garem.
+    zh: 我正要回家。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12605 B）
+  - text: idri i, nantu siri.
+    zh: 這是他的羊。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12601 B）
+卑南_西群:
+  - text: ʼinava u ziya?
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 12786 A）
+  - text: i eman tu ngadan ni temama?
+    zh: 你爸爸叫什麼名字？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12782 A）
+  - text: i eman iziyu na vavayan?
+    zh: 那個女人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12778 A）
+  - text: i wadilri na vavayan mu, nanema tu ʼami.
+    zh: 我妹妹六歲。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12775 B）
+  - text: marahan ku nu nanema tuki nu ʼemanamanan.
+    zh: 我早上六點鐘起床。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12771 B）
+  - text: iziyu mu, a ʼaliwanes.
+    zh: 那是彩虹。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12767 B）
+  - text: zuwa ku kemay i Valangaw.
+    zh: 我從Valangaw來的。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12763 B）
+  - text: ni eman alrak i ini?
+    zh: 這是誰的小孩？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12758 A）
+卑南_知本:
+  - text: ʼinava u ziya?
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 12708 A）
+  - text: marepanaʼuwa ta ziyan!
+    zh: 再見了！
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 12706 B）
+  - text: i eman iziyu na maʼinay?
+    zh: 那個男人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12702 A）
+  - text: papida mu maruwadiyadi?
+    zh: 你有幾個兄弟姊妹？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12678 A）
+  - text: ulra pida ʼetiv nu valray?
+    zh: 你有幾本書？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12695 A）
+  - text: a eman i ini?
+    zh: 這是什麼？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12691 A）
+  - text: ulra i iyan i temama?
+    zh: 你爸爸在哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12687 A）
+  - text: awa u i iyan harem?
+    zh: 你現在要去哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12683 A）
+魯凱_大武:
+  - text: eene, mwadringadringadhaku, kusu?
+    zh: 我很好，你呢？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 11928 B）
+  - text: syaanea ku nagane ki tamasu?
+    zh: 你爸爸叫什麼名字？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11924 A）
+  - text: anea kwani ababai?
+    zh: 那個女人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11920 A）
+  - text: tahamangealenga si lrima kai cailili.
+    zh: 我十五歲。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11918 B）
+  - text: drusa ku hunguli.
+    zh: 我有二本書。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11915 B）
+  - text: waapecaku lu amangeale ki tuki ki maungu.
+    zh: 我晚上十點鐘睡覺。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11912 B）
+  - text: yakai inu ku daanenumi?
+    zh: 你們家在哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11906 A）
+  - text: mwalregelregenai ku dhaa.
+    zh: 我們昨天去山上。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11902 B）
+魯凱_多納:
+  - text: ipoyingaw kake, si koso ka?
+    zh: 我很好，你呢？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 12006 B）
+  - text: acini ka Tangoco Mathede.
+    zh: 我爸爸叫Tangoco Mathede。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12002 B）
+  - text: daʼanimo ka taʼapiyani na coaw?
+    zh: 你們家有幾個人？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11997 A）
+  - text: kikay valavalake ka piyani na athoini?
+    zh: 這個小孩有幾隻狗？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11994 A）
+  - text: nomaʼawbo ka pyani na koliʼi no syaekiso?
+    zh: 你晚上幾點鐘睡覺？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11990 A）
+  - text: syalikay kake kongadavane awkay.
+    zh: 我從kongadavane來的。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11983 B）
+  - text: nanini pisawʼiyoane nakay?
+    zh: 這是誰的羊？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11977 A）
+  - text: ʼayini, koisang kini.
+    zh: 不，他是醫生。
+    source: 族語E樂園 句型篇國中 生活百句「是非問句」（autoId 11942 B）
+魯凱_東:
+  - text: miyako, mwadringadringai, maelranenga.
+    zh: 我也很好，謝謝你。
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 11772 C）
+  - text: anea kwani omase?
+    zh: 那個人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11767 A）
+  - text: ta ʼiya nomi ka cekecekelre?
+    zh: 你們家有幾個人？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11763 A）
+  - text: yakai ka drosa ka tawʼong ini.
+    zh: 他有兩隻狗。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11760 B）
+  - text: lro amaong ʼiya ka toki lro aʼece so?
+    zh: 你晚上幾點鐘睡覺？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11756 A）
+  - text: ya kai legelege ka daane nai.
+    zh: 我們家在山上。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11750 B）
+  - text: amwa nomi no koza?
+    zh: 你們昨天去哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11746 A）
+  - text: kaivai ka yainiya ka boʼaʼe
+    zh: 這是他的羊。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11743 B）
+魯凱_茂林:
+  - text: margi kɨkɨ, tumanesuni?
+    zh: 我很好，你呢？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 12084 B）
+  - text: aci kdroo abéya?
+    zh: 那個女人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12076 A）
+  - text: pidra cvélédra glimwa abéya?
+    zh: 你妹妹幾歲？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12073 A）
+  - text: pidra na toké kné?
+    zh: 現在是幾點鐘？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12070 A）
+  - text: ikadra ku ingpiculi?
+    zh: 我的筆在哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12065 A）
+  - text: saleké kɨkɨ rɨgerɨge mukuné.
+    zh: 我從rɨgerɨge來的。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12061 B）
+  - text: amwa kɨname rɨgerɨge ku kusya.
+    zh: 我們昨天去山上。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12058 B）
+  - text: iyo, burathi kdroo.
+    zh: 是/對，那是地瓜。
+    source: 族語E樂園 句型篇國中 生活百句「是非問句」（autoId 12017 B）
+魯凱_萬山:
+  - text: aikaʼo ka polringaao?
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 12162 A）
+  - text: aangai ana ocao?
+    zh: 那個人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12157 A）
+  - text: takali ana ʼavai.
+    zh: 她是我的姊姊。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12154 B）
+  - text: otahapingai caili ʼadhiʼo ʼavai?
+    zh: 你妹妹幾歲？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12151 A）
+  - text: omikinga ʼakaʼepate toki.
+    zh: 現在是四點鐘。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12148 B）
+  - text: omiki ʼina ʼasolasolateʼo.
+    zh: 你的筆在這裡。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12142 B）
+  - text: ʼalikilrao dhaʼane maavaʼi.
+    zh: 我今天從家裡來的。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12138 B）
+  - text: iaʼe, maihange ana.
+    zh: 是/對，那是地瓜。
+    source: 族語E樂園 句型篇國中 生活百句「是非問句」（autoId 12095 B）
+魯凱_霧台:
+  - text: maialria ku, maelanenga!
+    zh: 我也很好，謝謝你。
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 11850 C）
+  - text: aneane kavay umaumase?
+    zh: 那個人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11845 A）
+  - text: kavay alisu kaka.
+    zh: 她是我的姊姊。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11842 B）
+  - text: tarapianga ku cayli ki agi ka ababay?
+    zh: 你妹妹幾歲？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11839 A）
+  - text: supatenga ki tuki.
+    zh: 現在是四點鐘。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11836 B）
+  - text: yakay inu ku tama su?
+    zh: 你爸爸在哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11829 A）
+  - text: twaladha ku tavananae kaykameane.
+    zh: 我今天從家裡來的。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11826 B）
+  - text: kikay lalake ki alisu.
+    zh: 這是她的小孩。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 11822 B）
+拉阿魯哇:
+  - text: tam mavacangʉa ku, auninu i?
+    zh: 我很好，你呢？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 12552 B）
+  - text: cucuʼu misaini ia kanaʼana?
+    zh: 那個人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12547 A）
+  - text: maru upiaini cucusalia mu?
+    zh: 你們家有幾個人？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12543 A）
+  - text: papiainia tasau isa mamainia kaniʼina?
+    zh: 這個小孩有幾隻狗？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12540 A）
+  - text: upiaini pakiaturua macu malusapʉ ruvana?
+    zh: 你晚上幾點鐘睡覺？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12536 A）
+  - text: ma ninaua salia mu?
+    zh: 你們家在哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12530 A）
+  - text: muasalamu matata vuvulunga.
+    zh: 我們昨天去山上。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12526 B）
+  - text: aaʼʉ, kanaʼana ia mairangʉ.
+    zh: 是/對，那是地瓜。
+    source: 族語E樂園 句型篇國中 生活百句「是非問句」（autoId 12485 B）
+賽夏:
+  - text: Soʼo kayzaeh ay?
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 10680 A）
+  - text: yako Sin ʼaeʼaewen.
+    zh: 我叫'ae'aew。(我的名字是'ae'aew。)
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10677 B）
+  - text: hiza minkoringan hiyaʼ?
+    zh: 那個女人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10672 A）
+  - text: 'maʼan minaytiʼ minkoringan SayboSi: tinalʼoemaeh.'
+    zh: 我妹妹六歲。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10669 B）
+  - text: 'yako ririmʼanan hinSayboSi: minʼitol.'
+    zh: 我早上六點鐘起床。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10665 B）
+  - text: nimon taewʼan haynoʼ?
+    zh: 你們家在哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10658 A）
+  - text: moyo kahiyaʼ ʼilaʼinoʼ?
+    zh: 你們昨天去哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10654 A）
+  - text: hiza ʼaewpir ay?
+    zh: 那是地瓜嗎？
+    source: 族語E樂園 句型篇國中 生活百句「是非問句」（autoId 10613 A）
+撒奇萊雅:
+  - text: amahica isu i?
+    zh: 我很好，你呢？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 13020 B）
+  - text: cima kiza tademaw saw?
+    zh: 那個人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 13015 A）
+  - text: papina ku tademaw nu lumaʼ namu saw?
+    zh: 你們家有幾個人？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 13011 A）
+  - text: pina ku wacu nina wawa saw?
+    zh: 這個小孩有幾隻狗？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 13008 A）
+  - text: pinaay ku tuki isu mabiʼ tu labi saw?
+    zh: 你晚上幾點鐘睡覺？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 13004 A）
+  - text: iniw ku sapisulit isu.
+    zh: 你的筆在這裡。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 13000 B）
+  - text: namayza kaku i lumaʼ taini ayza ademiad.
+    zh: 我今天從家裡來的。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12996 B）
+  - text: u wawa niza kuyni.
+    zh: 這是她的小孩。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12992 B）
+賽德克_德鹿谷:
+  - text: Embiyax su hug?
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 10992 A）
+  - text: Ima ka hangan su?
+    zh: 你叫什麼名字？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10989 A）
+  - text: Emptgsa mu ka hiya.
+    zh: 他是我的老師。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10985 B）
+  - text: Piya ka hngkawas su hug?
+    zh: 你幾歲？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10982 A）
+  - text: Manu ka gaga?
+    zh: 那是什麼？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10973 A）
+  - text: Pnaah su inu?
+    zh: 你從哪裡來的？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10969 A）
+  - text: Musa namu inu ka kusun
+    zh: 你明天要去哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10965 A）
+  - text: Blbul ka gaga hug?
+    zh: 那是香蕉嗎？
+    source: 族語E樂園 句型篇國中 生活百句「是非問句」（autoId 10926 A）
+賽德克_都達:
+  - text: Malu su hu?
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 10836 A）
+  - text: Swayay ta da.
+    zh: 再見了！
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 10834 B）
+  - text: Ima ka snaw way?
+    zh: 那個男人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10829 A）
+  - text: Piya knkawas su?
+    zh: 你幾歲？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10826 A）
+  - text: Spac tuki da.
+    zh: 現在是四點鐘。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10822 B）
+  - text: Wa inu ka ingpic mu da hu?
+    zh: 我的筆在哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10816 A）
+  - text: Pneyyah su inu ka saya?
+    zh: 你今天從哪裡來的？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10812 A）
+  - text: Laqi niya ni.
+    zh: 這是她的小孩。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10808 B）
+賽德克_德固達雅:
+  - text: Sndamac su bale!
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 10914 A）
+  - text: Swae ta da!
+    zh: 再見了！
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 10912 B）
+  - text: Tado Mona ka heya.
+    zh: 他是Tado Mona (全名)。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10908 B）
+  - text: Piya ka knkawas su isu?
+    zh: 你幾歲？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10904 A）
+  - text: Nanji ka saya?
+    zh: 現在是幾點鐘？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10900 A）
+  - text: Maanu ka gaga?
+    zh: 那是什麼？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10896 A）
+  - text: Waga inu ka sapah namu yamu?
+    zh: 你們家在哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10892 A）
+  - text: Mnusa namu inu ka ciga?
+    zh: 你們昨天去哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10888 A）
+邵:
+  - text: maqitan yaku. miakuza ihu?
+    zh: 我很好，你呢？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 10758 B）
+  - text: zain naak a ama wa lhanaz Taniwu Lhkatafatu.
+    zh: 我爸爸叫Taniwu Lhkatafatu (全名)。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10754 B）
+  - text: yamin tata wa taun larima wa thau.
+    zh: 我們家有五個人。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10749 B）
+  - text: lapiza mihu a patashan?
+    zh: 你有幾本書？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10745 A）
+  - text: yaku ya mahumhum makthin a wali ya malhus.
+    zh: 我晚上十點鐘睡覺。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10742 B）
+  - text: naak a ama isa lhupilhupishan a taun.
+    zh: 我爸爸在學校裡。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10737 B）
+  - text: amutaun yaku thuini.
+    zh: 我正要回家。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10733 B）
+  - text: haya thithu a sisi.
+    zh: 這是他的羊。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 10729 B）
+太魯閣:
+  - text: Embiyax su hug?
+    zh: 你好嗎？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 12240 A）
+  - text: Swayay ta han!
+    zh: 再見了！
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 12238 B）
+  - text: Hiya o Lowking Harung.
+    zh: 他是Lowking Harung (全名)。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12234 B）
+  - text: Piya hngkwasan su ka isu?
+    zh: 你幾歲？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12230 A）
+  - text: Piya tuki ka sayang?
+    zh: 現在是幾點鐘？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12226 A）
+  - text: Manu ka gaga?
+    zh: 那是什麼？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12222 A）
+  - text: Gaga inu ka sapah namu?
+    zh: 你們家在哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12218 A）
+  - text: Mnsa namu inu ka shiga?
+    zh: 你們昨天去哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12214 A）
+鄒:
+  - text: ʼa leaʼu ʉmʼʉmnʉ, leako mainenu?
+    zh: 我很好，你呢？
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 12396 B）
+  - text: miko cu topzoha?
+    zh: 你幾歲？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12386 A）
+  - text: ʼa mo yuso ʼo tposʉʼu.
+    zh: 我有二本書。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12383 B）
+  - text: mo yonenu ʼo ʼoyomza tmopsʉʼu?
+    zh: 我的筆在哪裡？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12376 A）
+  - text: ʼa miʼo iʼmi ne ʼalisan
+    zh: 我從阿里山來的。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12373 B）
+  - text: taʼu uhne fuengu ho hucma.
+    zh: 我明天要去山上。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12369 B）
+  - text: zou cnʉmʉ tonoi?
+    zh: 那是香蕉嗎？
+    source: 族語E樂園 句型篇國中 生活百句「是非問句」（autoId 12330 A）
+  - text: lea naʼno tvaezoya icʼo?
+    zh: 那個人很勤勞嗎？
+    source: 族語E樂園 句型篇國中 生活百句「是非問句」（autoId 12344 A）
+雅美:
+  - text: ya meyngen o mata ko.
+    zh: 我的眼睛痛。
+    source: 族語E樂園 句型篇國中 生活百句「問候道別謝謝」（autoId 12943 B）
+  - text: sino o ito?
+    zh: 那個人是誰？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12937 A）
+  - text: kamo papira do vahay nio?
+    zh: 你們家有幾個人？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12933 A）
+  - text: ya na ikapira a vatvatek rana ya?
+    zh: 現在是幾點鐘？
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12928 A）
+  - text: o ri am, rangirang.
+    zh: 那是彩虹。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12923 B）
+  - text: ko nimapo do Jivalino.
+    zh: 我從野銀村來的。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12919 B）
+  - text: ko mangay do takey simaraw.
+    zh: 我明天要去山上。
+    source: 族語E樂園 句型篇國中 生活百句「訊息問句」（autoId 12915 B）
+  - text: beken, o ri am, tomozokosi.
+    zh: 不，那是玉米。
+    source: 族語E樂園 句型篇國中 生活百句「是非問句」（autoId 12876 B）
