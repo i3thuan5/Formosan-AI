@@ -122,6 +122,19 @@ docker compose -f ZuGi/docker-compose.yml up -d --build nginx-proxy
 
 4. 編image後啟動：`docker compose up -d --build`。
 
+## 更新選單佮 footer
+
+四個服務頂懸ê選單佮下跤ê footer 是對成果網站（ai-labs）掠來ê，存佇 `common/static/khing/`。
+成果網站ê選單抑是 footer 有改，佇本機執行：
+
+```bash
+python3 common/liah_khing.py
+git diff common/static/khing/
+```
+
+檢查 diff 無問題就 commit，閣重編 image。只用 Python 標準函式庫，免裝套件。
+欲對本機ê ai-labs 掠，加 `--url http://localhost:8000/comming_soon/`。
+
 ## Docker image 架構
 
 ```text
