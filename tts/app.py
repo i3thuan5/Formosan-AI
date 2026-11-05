@@ -1,5 +1,6 @@
 import re
 import tempfile
+import threading
 from importlib.resources import files
 from pathlib import Path
 
@@ -48,6 +49,12 @@ def gpu_decorator(func):
 
 
 vocoder = load_vocoder()
+
+# F5-TTS 的 DiT 會把 text embedding 快取在 model 上，同時兩個合成會互相用到
+# 對方的快取，出現 "Sizes of tensors must match"。Gradio 的 concurrency_limit
+# 是每個 event listener 各自算，網頁、自己當配音員、mt 呼叫的 synthesize
+# 三個端點會同時執行，所以用全域鎖讓所有合成排同一個隊。
+F5TTS_LOCK = threading.Lock()
 
 
 def load_model(
@@ -159,18 +166,19 @@ def infer(
         ref_audio_orig, ref_text, show_info=show_info
     )
 
-    final_wave, final_sample_rate, combined_spectrogram = infer_process(
-        ref_audio,
-        ref_text,
-        gen_text,
-        model,
-        vocoder,
-        cross_fade_duration=cross_fade_duration,
-        nfe_step=nfe_step,
-        speed=speed,
-        show_info=show_info,
-        progress=gr.Progress(),
-    )
+    with F5TTS_LOCK:
+        final_wave, final_sample_rate, combined_spectrogram = infer_process(
+            ref_audio,
+            ref_text,
+            gen_text,
+            model,
+            vocoder,
+            cross_fade_duration=cross_fade_duration,
+            nfe_step=nfe_step,
+            speed=speed,
+            show_info=show_info,
+            progress=gr.Progress(),
+        )
 
     # Remove silence
     if remove_silence:

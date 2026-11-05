@@ -2,7 +2,10 @@
     "name": "Claude Code Sandbox",
     "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
     "features": {
-        "ghcr.io/devcontainers/features/node:1": {}
+        "ghcr.io/devcontainers/features/node:1": {},
+        "ghcr.io/devcontainers/features/python:1": {
+            "version": "3.12"
+        }
     },
     // 【關鍵：掛載Linux主機ê .claude 登入資訊到容器內】
     "mounts": [
@@ -21,6 +24,6 @@
             ]
         }
     },
-    "postCreateCommand": "npm install -g @fission-ai/openspec@latest",
+    "postCreateCommand": "npm install -g @fission-ai/openspec@latest && pip install tox",
     "remoteUser": "vscode"
 }

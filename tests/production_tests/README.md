@@ -10,6 +10,7 @@
 | --- | --- |
 | `run_all.py` | 單一入口，四個模型加頁面 |
 | `check_mt_tts_playback.py` | MT「華語 ⮕ 族語」合成語音與 TTS `/synthesize` API，也可獨立執行 |
+| `check_tts_concurrency.py` | TTS 兩個端點同時合成時有沒有保護好，`run_all.py` 的 `tts` 會跑，也可獨立執行 |
 
 ## 一、安裝
 
@@ -61,6 +62,7 @@ BASE_URL=... python tests/production_tests/run_all.py --services asr
 | `--services` | 逗號分隔，可選 `pages`、`asr`、`asr-kaldi`、`mt`、`tts`，預設全部 |
 | `--all-languages` | 每個服務掃全部語別，預設是素材語別加隨機 3 個 |
 | `--report <path>` | 把每項結果與耗時寫成 JSON，未指定就不寫檔 |
+| `--allow-production` | 正式站也跑 tts 同時合成保護檢查，預設對正式站略過（見下方注意事項） |
 
 受測主機要和正式站一樣，以下面的路徑提供服務：
 
@@ -82,6 +84,7 @@ BASE_URL=... python tests/production_tests/run_all.py --services asr
 | `asr-kaldi` | 送 mp3 到 `/automatic_speech_recognition`。回傳要是字串；阿美族別要非空 |
 | `mt` | `/translate`（族語 ⮕ 華語）與 `/translate_1`（華語 ⮕ 族語）。阿美_海岸兩個方向都要非空且不等於原文 |
 | `tts` | `/synthesize` 的音檔要是 24 kHz wav、長於 0.5 秒、RMS 高於門檻（非靜音）；另含既有的 API 約定、語別合成與已知 bug 回歸 |
+| `tts` 同時合成 | `/synthesize` 與 `/default_speaker_tts` 先分別打、再同時打 5 輪、再分別打。出現 tts 端例外（`AppError`）就是失敗：沒保護時 F5-TTS 的快取會錯亂，甚至卡住到重啟。只有逾時沒有例外時印警告 |
 | `mt` → `tts` | 端到端：先切族別再呼叫 MT `/synthesize`，要回傳音檔。這條路才會經過「mt 容器 → 公開網域 → tts」，可以抓到 hairpin NAT 不通、`SAPOLITA_WEBSITE_HOST` 設錯、tts 還沒部署新版 |
 
 ### 語別抽樣
@@ -127,7 +130,10 @@ asr、asr-kaldi、mt 三個服務**固定包含素材的阿美語別**，再隨�
   | 預設抽樣 | 50 | 約 2 分鐘 |
   | `--all-languages` | 214 | 約 8 分鐘 |
 
-  請避開尖峰時段。檢查循序執行，不併發。
+  請避開尖峰時段。檢查循序執行，不併發，只有 tts 同時合成那項會同時送 2 個 request。
+- **tts 同時合成檢查在沒保護的版本會讓 tts 卡住，要重啟 tts 容器才會恢復。**
+  所以排在 tts 檢查的最後，而且 `BASE_URL` 是正式站時預設略過、印警告；
+  確定正式站已部署有保護的版本，才加 `--allow-production`。
 - **語別表和測試句讀自本地檔案**：語別表讀自本地的
   `asr/languages.py`、`asr-kaldi/configs/models.yaml`、`mt/formosan_languages.py`，
   測試句讀自本地的 `tts/configs/refs.yaml`，本地版本和受測主機部署的版本不同時，結果可能對不上。

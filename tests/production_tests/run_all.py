@@ -25,6 +25,7 @@ import check_mt  # noqa: E402
 import check_mt_tts_playback as playback  # noqa: E402
 import check_pages  # noqa: E402
 import check_tts  # noqa: E402
+import check_tts_concurrency  # noqa: E402
 import reporting  # noqa: E402
 from reporting import connect, report_result  # noqa: E402
 
@@ -92,6 +93,11 @@ def parse_args():
         help=f"每個服務掃全部語別（預設是素材語別加隨機 {SAMPLE_COUNT} 個）",
     )
     parser.add_argument("--report", help="把結果寫成 JSON 到這個路徑")
+    parser.add_argument(
+        "--allow-production",
+        action="store_true",
+        help="正式站也跑 tts 同時合成保護檢查。沒保護的版本會讓 tts 卡住到重啟，請確定已部署新版",
+    )
     args = parser.parse_args()
 
     services = []
@@ -150,7 +156,8 @@ def main():
                 check_mt.all_languages(), check_mt.AMIS_LANGUAGE, args.all_languages)
             with_client(
                 "tts", check_tts.APP_PATH, download_dir,
-                lambda client: run_tts(client, tts_languages, args.all_languages, failures, warnings),
+                lambda client: run_tts(
+                    client, tts_languages, args.all_languages, args.allow_production, failures, warnings),
                 failures)
 
     exit_code = report_result(failures, warnings)
@@ -165,10 +172,12 @@ def run_mt(client, languages, failures, warnings):
     playback.run_end_to_end_checks(client, playback.load_refs(), failures)
 
 
-def run_tts(client, languages, all_languages, failures, warnings):
+def run_tts(client, languages, all_languages, allow_production, failures, warnings):
     check_tts.run(client, failures, warnings)
     # 既有的 TTS API 約定、語別合成與已知 bug 回歸
     playback.run_tts_checks(client, playback.load_refs(), languages, all_languages, failures)
+    # 放最後：沒保護的版本會讓 tts 卡住，其他 tts 檢查要先跑完
+    check_tts_concurrency.run(client, BASE_URL, failures, warnings, allow_production=allow_production)
 
 
 if __name__ == "__main__":
