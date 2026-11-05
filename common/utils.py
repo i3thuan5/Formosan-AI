@@ -79,6 +79,49 @@ def tsha_ga_pv():
     return int(pv)
 
 
+# 複製按鈕：瀏覽器內底直接複製，袂經過 server
+KOPI_JS = """
+(text) => {
+    const button = document.getElementById(%(elem_id)s);
+    const label = %(label)s;
+    const tshut = (bun) => {
+        button.textContent = bun;
+        setTimeout(() => { button.textContent = label; }, 1500);
+    };
+    const kopi = navigator.clipboard
+        ? navigator.clipboard.writeText(text || '')
+        : Promise.reject();
+    return kopi.then(
+        () => tshut('已複製'),
+        () => tshut('複製失敗'),
+    );
+}
+"""
+
+
+def tsoo_kopi_button(textbox, label, elem_id):
+    # 放佇 gr.Column(elem_classes=["sa-copy-wrap"]) 內底、textbox 後壁，
+    # CSS 會共按鈕囥佇 textbox 標題ê正手爿
+    button = gr.Button(
+        label,
+        size="sm",
+        elem_id=elem_id,
+        elem_classes=["sa-copy-btn"],
+    )
+    button.click(
+        None,
+        inputs=textbox,
+        js=KOPI_JS % {
+            'elem_id': json.dumps(elem_id),
+            'label': json.dumps(label, ensure_ascii=False),
+        },
+        api_name=False,
+        show_api=False,
+        queue=False,
+    )
+    return button
+
+
 @contextmanager
 def render_demo(demo_md_filename="", js=None, css_paths=[]):
     gr.set_static_paths(
