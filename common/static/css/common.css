@@ -55,8 +55,13 @@ footer[class^="svelte"]{
   display: none !important;
 }
 .sa-legend {
-  margin-top: 0.5rem;
+  float: left;
+  width: 100%;
+  margin-bottom: var(--spacing-lg);
   color: var(--block-title-text-color);
+}
+.sa-legend ~ * {
+  clear: left;
 }
 .sa-no-bg {
   background-color: transparent;
@@ -118,4 +123,20 @@ input[type='radio']:focus {
 [data-testid="source-select"] button.icon {
   width: var(--text-xl);
   height: var(--text-xl);
+}
+
+/* 族別等選項：每個選項一樣闊 */
+.gradio-container .sa-radio-equal .wrap:has(> label) {
+  --sa-radio-min-width: calc(
+    6em
+    + 2 * var(--spacing-md)
+    + 2 * var(--checkbox-label-border-width)
+  );
+  display: grid;
+  font-size: var(--checkbox-label-text-size);
+  grid-template-columns: repeat(auto-fill, minmax(var(--sa-radio-min-width), 1fr));
+}
+.gradio-container .sa-radio-equal .wrap > label[data-testid] {
+  padding-inline: var(--spacing-md);
+  white-space: nowrap;
 }

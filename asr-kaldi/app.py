@@ -108,6 +108,7 @@ with render_demo(
                          for k, v in DEFAULT_MODEL["dialect_mapping"].items()],
                 value=list(DEFAULT_MODEL["dialect_mapping"].values())[0],
                 label="步驟一:選擇族別",
+                elem_classes=["sa-radio-equal"],
             )
 
             audio_source = gr.Audio(

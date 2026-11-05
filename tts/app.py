@@ -261,6 +261,7 @@ with render_demo(
                     choices=ETHNICITIES,
                     label="步驟一：選擇族別",
                     value="阿美",
+                    elem_classes=["sa-radio-equal"],
                 )
 
                 def get_refs_by_perfix(prefix: str):
@@ -295,6 +296,7 @@ with render_demo(
                     choices=ETHNICITIES,
                     label="步驟一：選擇族別與語別",
                     value="阿美",
+                    elem_classes=["sa-radio-equal"],
                 )
 
                 custom_speaker_language = gr.Radio(

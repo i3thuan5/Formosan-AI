@@ -130,6 +130,7 @@ with render_demo(
             label="族別",
             choices=ETHNICITIES,
             value="阿美",
+            elem_classes=["sa-radio-equal"],
         )
         to_zh_src_lang = gr.Radio(
             label="語別",
@@ -169,6 +170,7 @@ with render_demo(
             label="族別",
             choices=ETHNICITIES,
             value="阿美",
+            elem_classes=["sa-radio-equal"],
         )
         to_formosan_tgt_lang = gr.Radio(
             label="語別",
