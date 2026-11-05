@@ -119,10 +119,41 @@ input[type='radio']:focus {
   margin-left: calc(0px - var(--spacing-xl) + 2px);
 }
 
-/* 音檔／影片元件的「上傳」「錄音」來源切換圖示 */
-[data-testid="source-select"] button.icon {
-  width: var(--text-xl);
-  height: var(--text-xl);
+/* 音檔元件的「上傳音檔」「開始錄音」來源切換：改做圖示＋文字的按鈕 */
+.audio-container [data-testid="source-select"] {
+  height: auto;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) 0;
+}
+.audio-container [data-testid="source-select"] button.icon {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: 1px solid var(--border-color-primary);
+  border-radius: var(--radius-md);
+  color: var(--body-text-color);
+  font-size: var(--text-md);
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.audio-container [data-testid="source-select"] button.icon svg {
+  flex: none;
+  width: 1.1em;
+  height: 1.1em;
+}
+.audio-container [data-testid="source-select"] button.icon:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.audio-container [data-testid="source-select"] button[aria-label="Upload file"]::after {
+  content: "上傳音檔";
+}
+.audio-container [data-testid="source-select"] button[aria-label="Record audio"]::after {
+  content: "開始錄音";
 }
 
 /* 族別等選項：每個選項一樣闊 */
