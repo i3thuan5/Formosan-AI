@@ -171,3 +171,13 @@ input[type='radio']:focus {
   padding-inline: var(--spacing-md);
   white-space: nowrap;
 }
+
+/* Gradio 元件角落ê圖示大細是寫死ê，綴咧放大 */
+.gradio-container label[data-testid="block-label"] > span {
+  width: var(--text-lg);
+  height: var(--text-lg);
+}
+.gradio-container .icon-button-wrapper .icon-button > div {
+  width: var(--text-lg);
+  height: var(--text-lg);
+}
