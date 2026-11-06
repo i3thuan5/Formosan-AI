@@ -21,6 +21,7 @@ import argparse
 import re
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from html.parser import HTMLParser
 from pathlib import Path
@@ -84,6 +85,8 @@ class KhingParser(HTMLParser):
 
 
 def theh_bang_iah(url):
+    if urllib.parse.urlsplit(url).scheme not in ('http', 'https'):
+        raise ValueError(f'干焦接受 http/https 網址：{url}')
     request = urllib.request.Request(
         url, headers={'User-Agent': 'formosan-ai-liah-khing'})
     with urllib.request.urlopen(request, timeout=TIMEOUT_SECONDS) as response:
@@ -115,7 +118,7 @@ def main():
 
     try:
         source = theh_bang_iah(args.url)
-    except (urllib.error.URLError, TimeoutError) as e:
+    except (ValueError, urllib.error.URLError, TimeoutError) as e:
         sys.exit(f'掠 {args.url} 失敗：{e}')
     khing = KhingParser(source)
     khing.feed(khing.source)
