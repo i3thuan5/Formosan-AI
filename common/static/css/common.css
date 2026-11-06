@@ -55,8 +55,13 @@ footer[class^="svelte"]{
   display: none !important;
 }
 .sa-legend {
-  margin-top: 0.5rem;
+  float: left;
+  width: 100%;
+  margin-bottom: var(--spacing-lg);
   color: var(--block-title-text-color);
+}
+.sa-legend ~ * {
+  clear: left;
 }
 .sa-no-bg {
   background-color: transparent;
@@ -114,8 +119,78 @@ input[type='radio']:focus {
   margin-left: calc(0px - var(--spacing-xl) + 2px);
 }
 
-/* 音檔／影片元件的「上傳」「錄音」來源切換圖示 */
-[data-testid="source-select"] button.icon {
-  width: var(--text-xl);
-  height: var(--text-xl);
+/* 音檔元件的「上傳音檔」「開始錄音」來源切換：改做圖示＋文字的按鈕 */
+.audio-container [data-testid="source-select"] {
+  height: auto;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) 0;
+}
+.audio-container [data-testid="source-select"] button.icon {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: 1px solid var(--border-color-primary);
+  border-radius: var(--radius-md);
+  color: var(--body-text-color);
+  font-size: var(--text-md);
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.audio-container [data-testid="source-select"] button.icon svg {
+  flex: none;
+  width: 1.1em;
+  height: 1.1em;
+}
+.audio-container [data-testid="source-select"] button.icon:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.audio-container [data-testid="source-select"] button[aria-label="Upload file"]::after {
+  content: "上傳音檔";
+}
+.audio-container [data-testid="source-select"] button[aria-label="Record audio"]::after {
+  content: "開始錄音";
+}
+
+/* 族別等選項：每個選項一樣闊 */
+.gradio-container .sa-radio-equal .wrap:has(> label) {
+  --sa-radio-min-width: calc(
+    6em
+    + 2 * var(--spacing-md)
+    + 2 * var(--checkbox-label-border-width)
+  );
+  display: grid;
+  font-size: var(--checkbox-label-text-size);
+  grid-template-columns: repeat(auto-fill, minmax(var(--sa-radio-min-width), 1fr));
+}
+.gradio-container .sa-radio-equal .wrap > label[data-testid] {
+  padding-inline: var(--spacing-md);
+  white-space: nowrap;
+}
+
+/* Gradio 元件角落ê圖示大細是寫死ê，綴咧放大 */
+.gradio-container label[data-testid="block-label"] > span {
+  width: var(--text-lg);
+  height: var(--text-lg);
+}
+.gradio-container .icon-button-wrapper .icon-button > div {
+  width: var(--text-lg);
+  height: var(--text-lg);
+}
+
+/* 複製按鈕：囥佇文字框標題ê正手爿 */
+.gradio-container .sa-copy-wrap {
+  position: relative;
+}
+.gradio-container .sa-copy-wrap > .sa-copy-btn {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-xl);
+  z-index: var(--layer-2);
+  width: auto;
+  min-width: 0;
 }
