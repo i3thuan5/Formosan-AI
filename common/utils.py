@@ -180,6 +180,7 @@ def render_demo(demo_md_filename="", js=None, css_paths=[]):
         allowed_paths=[
             'ilrdf-logo.png',
             '族語AI翻譯計畫網站-系統操作教學手冊.pdf',
+            '族語AI網站-系統操作教學手冊-20261106.pdf',
             'SRT字幕語音辨識系統操作手冊.pdf',
         ],
         favicon_path=COMMON_STATIC_ROOT / 'favicon' / 'favicon.svg',
