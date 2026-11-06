@@ -34,7 +34,7 @@ def tsoo_ga_head(ga_id):
     ).format(gid=ga_id)
 
 
-def tok_khing(filename):
+def thak_khin(filename):
     # 「/」開頭ê網址改做連去成果網站
     html = (KHING_DIR / filename).read_text(encoding='utf-8')
     if SAPOLITA_WEBSITE_HOST:
@@ -131,8 +131,8 @@ def render_demo(demo_md_filename="", js=None, css_paths=[]):
     )
 
     common_css_paths = [COMMON_STATIC_ROOT / 'css' / 'common.css', ]
-    footer = tok_khing('footer.html')
-    head = tsoo_khing_head(tok_khing('header.html'), footer)
+    footer = thak_khin('footer.html')
+    head = tsoo_khing_head(thak_khin('header.html'), footer)
     if GA_MEASUREMENT_ID:
         head = tsoo_ga_head(GA_MEASUREMENT_ID) + head
 
