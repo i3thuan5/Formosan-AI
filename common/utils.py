@@ -99,7 +99,7 @@ KOPI_JS = """
 """
 
 
-def tsoo_kopi_button(textbox, label, elem_id):
+def tsoo_khokpih_button(textbox, label, elem_id):
     # 放佇 gr.Column(elem_classes=["sa-copy-wrap"]) 內底、textbox 後壁，
     # CSS 會共按鈕囥佇 textbox 標題ê正手爿
     button = gr.Button(

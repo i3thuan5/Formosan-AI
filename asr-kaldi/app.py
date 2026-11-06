@@ -5,7 +5,7 @@ from huggingface_hub import snapshot_download
 from omegaconf import OmegaConf
 from vosk import KaldiRecognizer, Model
 
-from utils import render_demo, tsoo_kopi_button
+from utils import render_demo, tsoo_khokpih_button
 
 
 def load_vosk(model_id: str):
@@ -124,7 +124,7 @@ with render_demo(
 
         with gr.Column(elem_classes=["sa-copy-wrap"]):
             output_textbox = gr.TextArea(interactive=True, label="辨識結果")
-            tsoo_kopi_button(output_textbox, "複製族語", "output-kopi")
+            tsoo_khokpih_button(output_textbox, "複製族語", "output-kopi")
 
     submit_button.click(
         automatic_speech_recognition,

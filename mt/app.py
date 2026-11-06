@@ -7,7 +7,7 @@ from gradio_client.exceptions import AppError
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 from formosan_languages import FORMOSAN_LANGUAGES_MAP
 from tts_client import TTS_TIMEOUT_SECONDS, TtsClient
-from utils import render_demo, tsoo_kopi_button
+from utils import render_demo, tsoo_khokpih_button
 
 
 ETHNICITIES = sorted(set([k.split("_")[0]
@@ -145,7 +145,7 @@ with render_demo(
         to_zh_btn = gr.Button("翻譯", variant="primary")
         with gr.Column(elem_classes=["sa-copy-wrap"]):
             to_zh_output = gr.Textbox(label="翻譯結果", lines=6)
-            tsoo_kopi_button(to_zh_output, "複製譯文", "to-zh-output-kopi")
+            tsoo_khokpih_button(to_zh_output, "複製譯文", "to-zh-output-kopi")
 
         to_zh_ethnicity.change(
             lambda ethnicity: gr.Radio(
@@ -188,7 +188,7 @@ with render_demo(
         to_formosan_btn = gr.Button("翻譯", variant="primary")
         with gr.Column(elem_classes=["sa-copy-wrap"]):
             to_formosan_output = gr.Textbox(label="翻譯結果", lines=6)
-            tsoo_kopi_button(
+            tsoo_khokpih_button(
                 to_formosan_output, "複製譯文", "to-formosan-output-kopi")
         to_formosan_tts_btn = gr.Button("合成語音")
         to_formosan_audio = gr.Audio(
