@@ -8,7 +8,7 @@ from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 from formosan_languages import FORMOSAN_LANGUAGES_MAP, LANGUAGE_CODES
 from orthography import normalize
 from tts_client import TTS_TIMEOUT_SECONDS, TtsClient
-from utils import render_demo
+from utils import render_demo, tsoo_khokpih_button
 
 
 ETHNICITIES = sorted(set([k.split("_")[0]
@@ -132,6 +132,7 @@ with render_demo(
             label="族別",
             choices=ETHNICITIES,
             value="阿美",
+            elem_classes=["sa-radio-equal"],
         )
         to_zh_src_lang = gr.Radio(
             label="語別",
@@ -144,7 +145,9 @@ with render_demo(
             value="zho_Hant", visible=False, interactive=False)
         to_zh_input_text = gr.Textbox(label="原文", lines=6)
         to_zh_btn = gr.Button("翻譯", variant="primary")
-        to_zh_output = gr.Textbox(label="翻譯結果", lines=6)
+        with gr.Column(elem_classes=["sa-copy-wrap"]):
+            to_zh_output = gr.Textbox(label="翻譯結果", lines=6)
+            tsoo_khokpih_button(to_zh_output, "複製譯文", "to-zh-output-kopi")
 
         to_zh_ethnicity.change(
             lambda ethnicity: gr.Radio(
@@ -171,6 +174,7 @@ with render_demo(
             label="族別",
             choices=ETHNICITIES,
             value="阿美",
+            elem_classes=["sa-radio-equal"],
         )
         to_formosan_tgt_lang = gr.Radio(
             label="語別",
@@ -184,7 +188,10 @@ with render_demo(
 
         to_formosan_input_text = gr.Textbox(label="原文", lines=6)
         to_formosan_btn = gr.Button("翻譯", variant="primary")
-        to_formosan_output = gr.Textbox(label="翻譯結果", lines=6)
+        with gr.Column(elem_classes=["sa-copy-wrap"]):
+            to_formosan_output = gr.Textbox(label="翻譯結果", lines=6)
+            tsoo_khokpih_button(
+                to_formosan_output, "複製譯文", "to-formosan-output-kopi")
         to_formosan_tts_btn = gr.Button("合成語音")
         to_formosan_audio = gr.Audio(
             label="合成結果", show_share_button=False, show_download_button=True
