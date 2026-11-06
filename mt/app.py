@@ -5,7 +5,8 @@ import gradio as gr
 import torch
 from gradio_client.exceptions import AppError
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-from formosan_languages import FORMOSAN_LANGUAGES_MAP
+from formosan_languages import FORMOSAN_LANGUAGES_MAP, LANGUAGE_CODES
+from orthography import normalize
 from tts_client import TTS_TIMEOUT_SECONDS, TtsClient
 from utils import render_demo
 
@@ -31,6 +32,7 @@ def get_languages_by_ethnicity(ethnicity: str):
 
 
 def translate(text: str, src_lang: str, tgt_lang: str):
+    text = normalize(text, LANGUAGE_CODES.get(src_lang))
     tokenizer.src_lang = src_lang
     tokenizer.tgt_lang = tgt_lang
 
@@ -51,7 +53,7 @@ def translate(text: str, src_lang: str, tgt_lang: str):
 
     translated = tokenizer.decode(translated[0], skip_special_tokens=True)
 
-    return translated
+    return normalize(translated, LANGUAGE_CODES.get(tgt_lang))
 
 
 tts_client = TtsClient()

@@ -7,6 +7,7 @@
 | --- | --- |
 | `海岸阿美語-曾玉蘭-個人生命史-短.mp4` | asr（`gr.Video`，吃影片） |
 | `海岸阿美語-曾玉蘭-個人生命史-短.mp3` | asr-kaldi（`gr.Audio`，吃音檔） |
+| `klokah_orthography.csv` | `tests/unit/` 的書寫符號正規化不動點測試 |
 
 ## 原始檔規格
 
@@ -33,3 +34,23 @@ $ ffmpeg -i 海岸阿美語-曾玉蘭-個人生命史-短.mp4 \
 
 16kHz 是 `asr-kaldi/app.py` 的 `gr.WaveformOptions(sample_rate=16000)` 所設定，
 Vosk 模型也是吃 16kHz。
+
+## klokah_orthography.csv 怎麼來的
+
+來源是族語 E 樂園文化篇的句子（`kithann/E樂園/6.文化篇/klokah_cuture_sentence.csv` 的 `sentenceAb` 欄）。
+`kithann/` 被 `.gitignore` 忽略、進不了 repo，所以節錄一份放在這裡，單元測試和 CI 才讀得到。
+
+每個語別各取 20 句，共 120 句，欄位是 `language`（語言別代碼）和 `sentence`（族語句子）。
+節錄方式：從該 dialectId 的句子中，排除長度不在 15 到 120 字元的句子，再排除含有會被正規化改寫的字母的句子（見下表），剩下的依原本順序等距取 20 句。
+
+| dialectId | 語言別代碼 | 語別 | 排除含有的字母 |
+| --- | --- | --- | --- |
+| 1 | `ami-x-iams` | 南勢阿美語 | o、f、b |
+| 2 | `ami-x-skl` | 秀姑巒阿美語 | u、v、b |
+| 3 | `ami-x-pswl` | 海岸阿美語 | u、v、b |
+| 4 | `ami-x-frng` | 馬蘭阿美語 | u、v、b |
+| 5 | `ami-x-pld` | 恆春阿美語 | u、v、b |
+| 43 | `szy` | 撒奇萊雅語 | o、v |
+
+klokah 本身就符合目標拼法，所以這些句子是正規化的不動點：把句子裡的 `’`、`'` 換成 `ʼ`（U+02BC）當作預期結果，
+正規化後必須和預期結果完全相同。撒奇萊雅原本有 3 句含 `o`，已經被上面的排除條件剔除。

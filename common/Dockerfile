@@ -56,5 +56,5 @@ WORKDIR /app
 
 USER nonroot
 
-COPY colors.py utils.py /app/
+COPY colors.py utils.py orthography.py /app/
 COPY static/ /app/common_static/
