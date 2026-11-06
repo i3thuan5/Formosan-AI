@@ -218,7 +218,7 @@
 .sa-khing .dropdown-item:hover,
 .sa-khing .dropdown-item:focus {
   color: #AC370C;
-  background-color: rgba(208, 68, 16, 0.1);
+  background-color: #FAECE7;
 }
 
 @media (min-width: 992px) {
