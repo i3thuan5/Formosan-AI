@@ -132,7 +132,7 @@ def render_demo(demo_md_filename="", js=None, css_paths=[]):
 
     common_css_paths = [COMMON_STATIC_ROOT / 'css' / 'common.css', ]
     footer = thak_khin('footer.html')
-    head = tsoo_khing_head(thak_khin('header.html'), footer)
+    head = tsoo_khing_head('header.html', 'footer.html')
     if GA_MEASUREMENT_ID:
         head = tsoo_ga_head(GA_MEASUREMENT_ID) + head
 
