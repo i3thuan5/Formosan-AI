@@ -19,8 +19,8 @@
 ## 3. 驗證
 
 - [x] 3.1 [tests/] `tox -e test`、`tox -e flake8` 全部通過
-- [ ] 3.2 [mt/] 測試機（`https://tshi5v100.ithuankhoki.tw`）mt 選 `噶瑪蘭`，「華語 ⮕ 族語」翻譯「你好」「蛋」「水果」。驗證：輸出不含不在 u 後面的 o、小寫 r、R 以外的大寫字母，撇號是 U+02BC
-- [ ] 3.3 [asr/] 同一台測試機 asr 選 `噶瑪蘭語`，辨識 `tests/data` 的影片。驗證：SRT 的族語行同樣不含不在 u 後面的 o、小寫 r、R 以外的大寫字母，華語行有翻譯
+- [x] 3.2 [mt/] 測試機（`https://tshi5v100.ithuankhoki.tw`）mt 選 `噶瑪蘭`，「華語 ⮕ 族語」翻譯「你好」「蛋」「水果」。驗證：輸出不含不在 u 後面的 o、小寫 r、R 以外的大寫字母，撇號是 U+02BC
+- [x] 3.3 [asr/] 同一台測試機 asr 選 `噶瑪蘭語`，辨識 `tests/data` 的影片。驗證：SRT 的族語行同樣不含不在 u 後面的 o、小寫 r、R 以外的大寫字母，華語行有翻譯
 - [x] 3.4 [openspec/] `openspec validate --all --strict` 通過
 
 ## Workflow follow-up
