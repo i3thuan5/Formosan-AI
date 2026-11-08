@@ -12,6 +12,7 @@ from cached_path import cached_path
 from omegaconf import OmegaConf
 
 from ipa.ipa import g2p_object, text_to_ipa
+from languages import ETHNICITIES
 from utils import render_demo
 
 try:
@@ -133,8 +134,6 @@ examples_config = OmegaConf.to_object(OmegaConf.load("configs/examples.yaml"))
 
 
 DEFAULT_MODEL_ID = list(models_config.keys())[0]
-
-ETHNICITIES = sorted(set([k.split("_")[0] for k in g2p_object.keys()]))
 
 
 def silent_info(*args, **kwargs):

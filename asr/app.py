@@ -8,6 +8,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from languages import DEFAULT_GROUP, LANGUAGE_GROUPS
+from orthography import normalize
 from subtitles import render_srt
 from translation import Translator
 from utils import render_demo
@@ -114,6 +115,8 @@ with render_demo(
             for segment in output["segments"]
             if segment["text"].strip() and segment["end"] > segment["start"]
         ]
+        for segment in segments:
+            segment["text"] = normalize(segment["text"], language)
         translations = translator.translate_segments(segments, language)
         return render_srt(segments, translations)
 
