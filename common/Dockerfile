@@ -15,7 +15,7 @@
 # 不用 nvidia/cuda 當 base：PyPI 的 torch wheel 自帶 nvidia-*-cu12，執行時只會載入
 # 那一份，base image 裡的 CUDA 從來沒被用到（還比 pip 那份舊，cuDNN 8 vs 9）。
 # GPU 存取靠 nvidia-container-toolkit 在 docker run 時注入驅動，和 image 無關。
-FROM python:3.10-slim@sha256:8c97ebedc32fd60935cdf5992e935753e2a0f98231830028050e1e04bd3c13c2 AS base
+FROM python:3.10-slim@sha256:6ff506466f8b1e981719b468cc0023b8ef000b983cdec0eafe119d01f379e31d AS base
 
 # ffmpeg 有三個使用者：whisperx 的 load_audio 會 shell out、gradio 收到非 wav 時
 # 透過 pydub 轉檔、torchcodec 匯入時 dlopen libav*。其餘 apt 套件都沒有使用者。
