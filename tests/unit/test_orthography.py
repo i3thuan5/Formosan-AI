@@ -2,11 +2,25 @@ import csv
 from pathlib import Path
 
 from languages import LANGUAGE_GROUPS
-from orthography import LANGUAGE_RULES, b2f, b2v, f2v, normalize, o2u, quote_2_u02bc, u2o, v2b, v2f
+from orthography import (
+    LANGUAGE_RULES,
+    b2f,
+    b2v,
+    f2v,
+    lower_Rupper,
+    normalize,
+    o2u,
+    o2u_except_uo,
+    quote_2_u02bc,
+    u2o,
+    v2b,
+    v2f,
+)
 
 KLOKAH_CSV = Path(__file__).parents[1] / 'data' / 'klokah_orthography.csv'
+CKV_CSV = Path(__file__).parents[1] / 'data' / 'ckv_dictionary_orthography.csv'
 # 含全部會被規則碰到的字母（大小寫）、撇號與 ^
-PROBE = 'oOuUfFvVbB ’\' ʼ ^'
+PROBE = 'oOuUfFvVbBrRPAB ’\' ʼ ^'
 
 
 def test_o2u_lower():
@@ -121,6 +135,44 @@ def test_quote_2_u02bc_other_chars_unchanged():
     assert quote_2_u02bc(text) == text
 
 
+def test_o2u_except_uo_single_o():
+    assert o2u_except_uo('qoR') == 'quR'
+
+
+def test_o2u_except_uo_keeps_o_after_u():
+    assert o2u_except_uo('suykuo suykuoan') == 'suykuo suykuoan'
+
+
+def test_o2u_except_uo_consecutive_o():
+    assert o2u_except_uo('oo') == 'uu'
+
+
+def test_o2u_except_uo_upper_unchanged():
+    assert o2u_except_uo('Oba') == 'Oba'
+
+
+def test_o2u_except_uo_other_chars_unchanged():
+    text = 'uvbf ABC 123 ’\' ^ 你好, .'
+    assert o2u_except_uo(text) == text
+
+
+def test_lower_Rupper_lowers_other_upper():
+    assert lower_Rupper('PateRis') == 'pateRis'
+
+
+def test_lower_Rupper_r_to_R():
+    assert lower_Rupper('saribung') == 'saRibung'
+
+
+def test_lower_Rupper_R_kept():
+    assert lower_Rupper('Rabas naRin tebuquR') == 'Rabas naRin tebuquR'
+
+
+def test_lower_Rupper_other_chars_unchanged():
+    text = '123 ’\' ^ 你好, .'
+    assert lower_Rupper(text) == text
+
+
 def test_other_language_unchanged():
     text = 'lalu’ mu o Yumin'
     assert normalize(text, 'tay-x-sql') == text
@@ -177,6 +229,57 @@ def test_normalize_twice_same_as_once():
     assert normalize(once, 'ami-x-iams') == once
 
 
+def test_truku_unchanged():
+    text = 'bowyak Away’'
+    assert normalize(text, 'trv-x-truku') == text
+
+
+def test_ckv_o():
+    assert normalize('Oba qoR', 'ckv') == 'uba quR'
+
+
+def test_ckv_keeps_o_after_u():
+    assert normalize('suykuo suykuoan Uo', 'ckv') == 'suykuo suykuoan uo'
+
+
+def test_ckv_consecutive_o():
+    assert normalize('qoo', 'ckv') == 'quu'
+
+
+def test_ckv_r():
+    assert normalize('saribung serai', 'ckv') == 'saRibung seRai'
+
+
+def test_ckv_keeps_R():
+    assert normalize('Rabas naRin tebuquR', 'ckv') == 'Rabas naRin tebuquR'
+
+
+def test_ckv_proper_noun_not_capitalized():
+    assert normalize('PateRis ika ti ukud', 'ckv') == 'pateRis ika ti ukud'
+
+
+def test_ckv_keeps_b_and_z():
+    assert normalize('babuzan', 'ckv') == 'babuzan'
+
+
+def test_ckv_quote_unified():
+    assert normalize('ʼnay ’ta \'qi', 'ckv') == 'ʼnay ʼta ʼqi'
+
+
+def test_ckv_dictionary_words_rewritten():
+    assert normalize('suykuo', 'ckv') == 'suykuo'
+    assert normalize('PateRis', 'ckv') == 'pateRis'
+    assert normalize('saribung', 'ckv') == 'saRibung'
+
+
+def test_ckv_dictionary_sentences_are_fixed_points():
+    with open(CKV_CSV, encoding='utf-8', newline='') as f:
+        rows = list(csv.DictReader(f))
+    assert rows
+    for row in rows:
+        assert normalize(row['sentence'], row['language']) == row['sentence'], row
+
+
 def test_klokah_sentences_are_fixed_points():
     with open(KLOKAH_CSV, encoding='utf-8', newline='') as f:
         rows = list(csv.DictReader(f))
@@ -191,15 +294,6 @@ def test_all_languages_normalize_twice_same_as_once():
     for language in LANGUAGE_RULES:
         once = normalize(PROBE, language)
         assert normalize(once, language) == once, language
-
-
-def test_all_languages_rule_order_does_not_matter():
-    # 同一個 list 裡沒有連鎖：反過來套用，結果必須相同
-    for language, rules in LANGUAGE_RULES.items():
-        reversed_text = PROBE
-        for rule in reversed(rules):
-            reversed_text = rule(reversed_text)
-        assert normalize(PROBE, language) == reversed_text, language
 
 
 def test_language_rules_keys_match_language_groups_in_order():

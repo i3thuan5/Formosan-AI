@@ -1,4 +1,5 @@
 """族語書寫符號正規化：每個規則是一個小函式，每個語別設定要套用哪幾個。"""
+import re
 
 
 def _letter_table(pairs):
@@ -66,6 +67,15 @@ def quote_2_u02bc(text):
     return text.translate(_QUOTE_2_U02BC)
 
 
+def lower_Rupper(text):
+    return text.lower().replace('r', 'R')
+
+
+def o2u_except_uo(text):
+    # uo 念 [uo]，是兩個元音連續，不是 u 的同位音 [o]。排在 lower_Rupper 之後，所以只處理小寫。
+    return re.sub(r'(?<!u)o', 'u', text)
+
+
 # key 的順序照「族語及語言別名稱 - 語言別名稱.csv」的顯示排序先後，沒有規則的語別 list 留空。
 LANGUAGE_RULES = {
     'ami-x-iams': [o2u, f2v, b2v, quote_2_u02bc],
@@ -102,7 +112,7 @@ LANGUAGE_RULES = {
     'xsy': [],
     'tao': [],
     'ssf': [],
-    'ckv': [],
+    'ckv': [lower_Rupper, quote_2_u02bc, o2u_except_uo],
     'trv-x-truku': [],
     'szy': [o2u, v2b, quote_2_u02bc],
     'trv-x-td': [],
