@@ -19,9 +19,9 @@
 
 - [x] 3.1 [tests/] `tox -e test`、`tox -e flake8`、`tox -e pymarkdown` 全部通過
 - [x] 3.2 [openspec/] `openspec validate --all --strict` 通過
-- [ ] 3.3 [deploy/] 部署到測試機（`https://tshi5v100.ithuankhoki.tw`）。`common/orthography.py` 有改，要重建 `formosan-ai-common` 共用 image 與 asr、mt 的服務 image；`formosan-ai-base`、`formosan-ai-gpu` 不用重建。驗證：asr、mt 服務正常啟動
-- [ ] 3.4 [mt/] 測試機 mt 選 `太魯閣`，「華語 ⮕ 族語」翻譯幾句。驗證：輸出的 o 只出現在虛詞清單的詞與 `ow`
-- [ ] 3.5 [asr/] 同一台測試機 asr 選 `太魯閣語`，辨識 `tests/data` 的影片。驗證：SRT 的族語行同樣符合 3.4 的條件，華語行有翻譯
+- [x] 3.3 [deploy/] 部署到測試機（`https://tshi5v100.ithuankhoki.tw`）。`common/orthography.py` 有改，要重建 `formosan-ai-common` 共用 image 與 asr、mt 的服務 image；`formosan-ai-base`、`formosan-ai-gpu` 不用重建。驗證：asr、mt 服務正常啟動
+- [x] 3.4 [mt/] 測試機 mt 選 `太魯閣`，「華語 ⮕ 族語」翻譯幾句。驗證：輸出的 o 只出現在虛詞清單的詞與 `ow`
+- [x] 3.5 [asr/] 同一台測試機 asr 選 `太魯閣語`，辨識 `tests/data` 的影片。驗證：SRT 的族語行同樣符合 3.4 的條件，華語行有翻譯。結果：族語行全部符合；5 段有 4 段有華語翻譯，第 1 段族語只有單獨的 `o`，華語是空的。直接問 mt，`o` 也翻成空字串，是模型對單獨 `o` 的行為，這個 change 不會改動 `o`，接受
 
 ## Workflow follow-up
 
