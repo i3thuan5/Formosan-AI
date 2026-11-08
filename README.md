@@ -114,13 +114,13 @@ docker compose -f ZuGi/docker-compose.yml up -d --build nginx-proxy
 
 2. 準備環境變數檔：`cp deploy/.env.template .env`，並把要測試的服務HOST改成`localhost`。
 
-3. 手動編三個共用image：
+3. 手動編image：
 
-   ```bash
-   docker buildx bake -f docker-bake.hcl --load base gpu files
-   ```
+    ```bash
+    docker buildx bake -f docker-bake.hcl --load base gpu files asr asr-kaldi tts mt
+    ```
 
-4. 編image後啟動：`docker compose up -d --build`。
+4. 啟動：`docker compose up -d`。
 
 ## 更新選單佮 footer
 
@@ -160,9 +160,7 @@ BASE_URL=https://<受測主機> tox -e production_tests
 
 ```bash
 docker buildx bake -f docker-bake.hcl --load base gpu files asr asr-kaldi tts mt
-docker compose -f docker-compose.yml -f deploy/docker-compose-production.yml up -d --pull never
+docker compose -f docker-compose.yml -f deploy/docker-compose-production.yml up -d
 ```
 
 跑起來後可以執行 `nvidia-smi` 指令確認。
-
-另外，注意不要在測試機執行 `docker compose pull`，會讓 Docker Hub 上 main 的版本蓋掉本機 bake 編好的 image。
