@@ -120,7 +120,7 @@ docker compose -f ZuGi/docker-compose.yml up -d --build nginx-proxy
     docker buildx bake -f docker-bake.hcl --load base gpu files asr asr-kaldi tts mt
     ```
 
-4. 啟動：`docker compose up -d`。
+4. 啟動：`docker compose up -d --pull never`。
 
 ## 更新選單佮 footer
 
@@ -160,7 +160,7 @@ BASE_URL=https://<受測主機> tox -e production_tests
 
 ```bash
 docker buildx bake -f docker-bake.hcl --load base gpu files asr asr-kaldi tts mt
-docker compose -f docker-compose.yml -f deploy/docker-compose-production.yml up -d
+docker compose -f docker-compose.yml -f deploy/docker-compose-production.yml up -d --pull never
 ```
 
 跑起來後可以執行 `nvidia-smi` 指令確認。
