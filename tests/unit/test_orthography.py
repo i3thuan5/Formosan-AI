@@ -10,6 +10,7 @@ from orthography import (
     lower_Rupper,
     normalize,
     o2u,
+    o2u_except_ow_particles,
     o2u_except_uo,
     quote_2_u02bc,
     u2o,
@@ -19,6 +20,7 @@ from orthography import (
 
 KLOKAH_CSV = Path(__file__).parents[1] / 'data' / 'klokah_orthography.csv'
 CKV_CSV = Path(__file__).parents[1] / 'data' / 'ckv_dictionary_orthography.csv'
+TRUKU_CSV = Path(__file__).parents[1] / 'data' / 'truku_dictionary_orthography.csv'
 # 含全部會被規則碰到的字母（大小寫）、撇號與 ^
 PROBE = 'oOuUfFvVbBrRPAB ’\' ʼ ^'
 
@@ -156,6 +158,67 @@ def test_o2u_except_uo_other_chars_unchanged():
     assert o2u_except_uo(text) == text
 
 
+def test_o2u_except_ow_particles_keeps_each_particle():
+    for particle in ('o', 'do', 'hido', 'kido', 'empeehido'):
+        assert o2u_except_ow_particles(particle) == particle
+
+
+def test_o2u_except_ow_particles_keeps_capitalized_particle():
+    for particle in ('O', 'Do', 'Hido', 'Kido', 'Empeehido'):
+        assert o2u_except_ow_particles(particle) == particle
+
+
+def test_o2u_except_ow_particles_keeps_all_caps_particle():
+    for particle in ('DO', 'HIDO', 'KIDO', 'EMPEEHIDO'):
+        assert o2u_except_ow_particles(particle) == particle
+
+
+def test_o2u_except_ow_particles_keeps_ow():
+    assert o2u_except_ow_particles('bowyak mowsa gow') == 'bowyak mowsa gow'
+
+
+def test_o2u_except_ow_particles_keeps_upper_ow():
+    assert o2u_except_ow_particles('OW Ow oW BOWYAK boWyak') == 'OW Ow oW BOWYAK boWyak'
+
+
+def test_o2u_except_ow_particles_lower():
+    assert o2u_except_ow_particles('toda sapoh') == 'tuda sapuh'
+
+
+def test_o2u_except_ow_particles_upper():
+    assert o2u_except_ow_particles('Toda TODA') == 'Tuda TUDA'
+
+
+def test_o2u_except_ow_particles_next_to_q():
+    assert o2u_except_ow_particles('qoli biyoq') == 'quli biyuq'
+
+
+def test_o2u_except_ow_particles_next_to_h():
+    assert o2u_except_ow_particles('holing sapoh') == 'huling sapuh'
+
+
+def test_o2u_except_ow_particles_consecutive_o():
+    assert o2u_except_ow_particles('oo') == 'uu'
+
+
+def test_o2u_except_ow_particles_second_o_of_oow_kept():
+    assert o2u_except_ow_particles('toow') == 'tuow'
+
+
+def test_o2u_except_ow_particles_particle_inside_word_converted():
+    assert o2u_except_ow_particles('dodo nhapuydo') == 'dudu nhapuydu'
+
+
+def test_o2u_except_ow_particles_word_boundary_not_letters():
+    for text in ('do’', '‘do’', 'doʼ', 'do你好', '你好do', 'o-do', 'do1', 'do.', '(o)'):
+        assert o2u_except_ow_particles(text) == text
+
+
+def test_o2u_except_ow_particles_other_chars_unchanged():
+    text = 'uvbf ABC 123 ’\' ^ 你好, .'
+    assert o2u_except_ow_particles(text) == text
+
+
 def test_lower_Rupper_lowers_other_upper():
     assert lower_Rupper('PateRis') == 'pateRis'
 
@@ -229,9 +292,71 @@ def test_normalize_twice_same_as_once():
     assert normalize(once, 'ami-x-iams') == once
 
 
-def test_truku_unchanged():
+def test_truku_o():
+    assert normalize('holing sapoh biyoq', 'trv-x-truku') == 'huling sapuh biyuq'
+
+
+def test_truku_upper_o():
+    assert normalize('Holing TODA', 'trv-x-truku') == 'Huling TUDA'
+
+
+def test_truku_keeps_particles():
+    text = 'o do hido kido empeehido'
+    assert normalize(text, 'trv-x-truku') == text
+
+
+def test_truku_keeps_capitalized_particles():
+    text = 'Kido, mhuya da? DO O Empeehido'
+    assert normalize(text, 'trv-x-truku') == text
+
+
+def test_truku_particles_match_whole_word():
+    assert normalize('Toda nhapuydo', 'trv-x-truku') == 'Tuda nhapuydu'
+
+
+def test_truku_word_boundary_only_letters():
+    text = '‘do’ doʼ do你好 o-do'
+    assert normalize(text, 'trv-x-truku') == text
+
+
+def test_truku_keeps_ow_and_quote():
     text = 'bowyak Away’'
     assert normalize(text, 'trv-x-truku') == text
+
+
+def test_truku_keeps_upper_ow():
+    text = 'Mowsa OW Ow'
+    assert normalize(text, 'trv-x-truku') == text
+
+
+def test_truku_no_reverse_conversion():
+    text = 'buwyak u du'
+    assert normalize(text, 'trv-x-truku') == text
+
+
+def test_truku_normalize_twice_same_as_once():
+    once = normalize('Toda bowyak do Holing', 'trv-x-truku')
+    assert once == 'Tuda bowyak do Huling'
+    assert normalize(once, 'trv-x-truku') == once
+
+
+def test_seediq_unchanged():
+    text = 'holing Toda'
+    assert normalize(text, 'trv-x-trk') == text
+
+
+def test_truku_dictionary_accepted_exceptions():
+    assert normalize('Toda', 'trv-x-truku') == 'Tuda'
+    assert normalize('Nomaw', 'trv-x-truku') == 'Numaw'
+    assert normalize('nhapuydo', 'trv-x-truku') == 'nhapuydu'
+
+
+def test_truku_dictionary_sentences_are_fixed_points():
+    with open(TRUKU_CSV, encoding='utf-8', newline='') as f:
+        rows = list(csv.DictReader(f))
+    assert rows
+    for row in rows:
+        assert normalize(row['sentence'], row['language']) == row['sentence'], row
 
 
 def test_ckv_o():

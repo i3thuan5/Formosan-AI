@@ -76,6 +76,21 @@ def o2u_except_uo(text):
     return re.sub(r'(?<!u)o', 'u', text)
 
 
+# 詞界只看英文字母，因為 \b 會把 ʼ 和漢字當成詞內字元。虛詞比對到時整個詞跳過，裡面的 o 就不會被第二個分支處理。
+_TRUKU_O = re.compile(r'(?P<keep>(?<![a-z])(?:o|do|hido|kido|empeehido)(?![a-z]))|o(?!w)', re.IGNORECASE)
+
+
+def _keep_particle_or_o2u(match):
+    if match.group('keep'):
+        return match.group(0)
+    return o2u(match.group(0))
+
+
+def o2u_except_ow_particles(text):
+    # 太魯閣語的虛詞固定寫 o，ow 是 /aw/ 的同位音，都不是 u 的另一種寫法。
+    return _TRUKU_O.sub(_keep_particle_or_o2u, text)
+
+
 # key 的順序照「族語及語言別名稱 - 語言別名稱.csv」的顯示排序先後，沒有規則的語別 list 留空。
 LANGUAGE_RULES = {
     'ami-x-iams': [o2u, f2v, b2v, quote_2_u02bc],
@@ -113,7 +128,7 @@ LANGUAGE_RULES = {
     'tao': [],
     'ssf': [],
     'ckv': [lower_Rupper, quote_2_u02bc, o2u_except_uo],
-    'trv-x-truku': [],
+    'trv-x-truku': [o2u_except_ow_particles],
     'szy': [o2u, v2b, quote_2_u02bc],
     'trv-x-td': [],
     'trv-x-tgdy': [],

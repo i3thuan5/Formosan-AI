@@ -10,6 +10,7 @@
 | `kako.wav` | production_tests 的 asr 書寫符號檢查（一個詞 kako） |
 | `klokah_orthography.csv` | `tests/unit/` 的書寫符號正規化不動點測試 |
 | `ckv_dictionary_orthography.csv` | `tests/unit/` 的噶瑪蘭語書寫符號正規化不動點測試 |
+| `truku_dictionary_orthography.csv` | `tests/unit/` 的太魯閣語書寫符號正規化不動點測試 |
 
 ## 原始檔規格
 
@@ -70,3 +71,17 @@ klokah 本身就符合目標拼法，所以這些句子是正規化的不動點�
 4. 剩下的句子中，不含 `suykuo` 的依原本順序等距取 19 句，再加上第一句含 `suykuo` 的句子。
 
 辭典例句符合噶瑪蘭語的書寫規範，所以這些句子是正規化的不動點：正規化後必須和原句完全相同。
+
+## truku_dictionary_orthography.csv 怎麼來的
+
+來源是族語辭典的太魯閣語例句（`kithann/規範/族語辭典_單詞與例句/20260702_16族前台上線單字_12太魯閣語33402筆(fin)(哈瑪星).xlsx` 的「例句原文」欄）。
+`kithann/` 被 `.gitignore` 忽略、進不了 repo，所以節錄一份放在這裡，單元測試和 CI 才讀得到。
+
+共 20 句，欄位是 `language`（固定為 `trv-x-truku`）和 `sentence`（族語句子）。節錄方式：
+
+1. 去掉重複句，排除長度不在 15 到 120 字元的句子。
+2. 排除會被正規化改寫的句子：含 `Toda` 或 `nhapuydo`。
+3. 排除含 tab、換行、連續空白、全形空白或漢字等雜訊的句子。
+4. 剩下的句子中，先各取第一句含虛詞 `o`、`do`、`hido`、`kido`、`empeehido` 與含 `ow` 的句子（共 6 句），其餘依原本順序等距取 14 句。
+
+除了第 2 點排除的詞，辭典例句的 o 只出現在虛詞與 `ow`，所以這些句子是正規化的不動點：正規化後必須和原句完全相同。
