@@ -9,8 +9,8 @@ from reporting import check
 from timing import check_threshold, warm_up
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT / "mt"))
-from formosan_languages import FORMOSAN_LANGUAGES_MAP  # noqa: E402
+sys.path.insert(0, str(REPO_ROOT / "common"))
+from languages import FORMOSAN_LANGUAGES_MAP  # noqa: E402
 
 SERVICE = "mt"
 APP_PATH = "kari-seejiq-tnpusu-ai-hmjil"

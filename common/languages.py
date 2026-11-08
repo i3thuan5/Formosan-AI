@@ -1,4 +1,4 @@
-"""Formosan UI labels and Whisper-to-NLLB language codes."""
+"""Formosan UI labels, language codes and Whisper-to-NLLB language codes."""
 
 LANGUAGE_GROUPS = {
     "阿美語": [
@@ -109,3 +109,63 @@ TRANSLATION_LANGUAGE_CODES = {
     "sxr": "sxr_Saar",
     "xnb": "xnb_Kana",
 }
+
+
+# mt 與 tts 的語別顯示名稱（「族別_語別」）→ 翻譯模型的語言代碼。
+# 名稱要和 tts 的 g2p 語別名稱一致（mt 呼叫 tts 時直接傳這個名稱），順序是 mt 介面的顯示順序。
+FORMOSAN_LANGUAGES_MAP = {
+    "阿美_海岸": "ami_Coas",
+    "阿美_恆春": "ami_Heng",
+    "阿美_馬蘭": "ami_Mala",
+    "阿美_南勢": "ami_Sout",
+    "阿美_秀姑巒": "ami_Xiug",
+    "泰雅_四季": "tay_Four",
+    "泰雅_賽考利克": "tay_Seko",
+    "泰雅_萬大": "tay_Wand",
+    "泰雅_汶水": "tay_Wens",
+    "泰雅_宜蘭澤敖利": "tay_Yzea",
+    "泰雅_澤敖利": "tay_Zeao",
+    "布農_郡群": "bnn_Junq",
+    "布農_卡群": "bnn_Kaqu",
+    "布農_巒群": "bnn_Luan",
+    "布農_丹群": "bnn_Tanq",
+    "布農_卓群": "bnn_Zhuo",
+    "卡那卡那富": "xnb_Kana",
+    "噶瑪蘭": "ckv_Kava",
+    "排灣_中": "pwn_Cent",
+    "排灣_東": "pwn_East",
+    "排灣_北": "pwn_Nrth",
+    "排灣_南": "pwn_Sout",
+    "卑南_建和": "pyu_Jian",
+    "卑南_南王": "pyu_Nanw",
+    "卑南_西群": "pyu_Xiqu",
+    "卑南_知本": "pyu_Zhib",
+    "魯凱_大武": "dru_Dawu",
+    "魯凱_多納": "dru_Dona",
+    "魯凱_東": "dru_East",
+    "魯凱_茂林": "dru_Maol",
+    "魯凱_萬山": "dru_Wans",
+    "魯凱_霧台": "dru_Wuta",
+    "拉阿魯哇": "sxr_Saar",
+    "賽夏": "xsy_Sais",
+    "撒奇萊雅": "szy_Saki",
+    "賽德克_德鹿谷": "trv_Delu",
+    "賽德克_都達": "trv_Duda",
+    "賽德克_德固達雅": "trv_Tegu",
+    "邵": "ssf_Thao",
+    "太魯閣": "trv_Truk",
+    "鄒": "tsu_Tsou",
+    "雅美": "tao_Yami",
+}
+
+
+# 翻譯模型的語言代碼 → 語言別代碼（「族語及語言別名稱 - 語言別名稱.csv」）。
+LANGUAGE_CODES = {}
+for _language_code, _nllb_code in TRANSLATION_LANGUAGE_CODES.items():
+    LANGUAGE_CODES[_nllb_code] = _language_code
+
+
+# 族別名稱：LANGUAGE_GROUPS 的組名去掉「語」，和 FORMOSAN_LANGUAGES_MAP 名稱的前綴相同。
+ETHNICITIES = []
+for _group in LANGUAGE_GROUPS:
+    ETHNICITIES.append(_group.removesuffix("語"))

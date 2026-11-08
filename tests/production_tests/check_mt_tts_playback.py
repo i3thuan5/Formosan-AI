@@ -20,8 +20,8 @@ from reporting import check, connect, report_result
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-sys.path.insert(0, str(REPO_ROOT / "mt"))
-from formosan_languages import FORMOSAN_LANGUAGES_MAP  # noqa: E402
+sys.path.insert(0, str(REPO_ROOT / "common"))
+from languages import FORMOSAN_LANGUAGES_MAP  # noqa: E402
 
 BASE_URL = os.environ.get("BASE_URL", "https://ai-labs.ilrdf.org.tw").rstrip("/")
 MT_URL = f"{BASE_URL}/kari-seejiq-tnpusu-ai-hmjil/"

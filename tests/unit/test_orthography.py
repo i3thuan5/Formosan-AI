@@ -202,7 +202,7 @@ def test_all_languages_rule_order_does_not_matter():
         assert normalize(PROBE, language) == reversed_text, language
 
 
-def test_language_rules_keys_match_asr_language_codes_in_order():
+def test_language_rules_keys_match_language_groups_in_order():
     codes = []
     for group in LANGUAGE_GROUPS.values():
         for _label, code in group:

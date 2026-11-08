@@ -5,14 +5,11 @@ import gradio as gr
 import torch
 from gradio_client.exceptions import AppError
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-from formosan_languages import FORMOSAN_LANGUAGES_MAP, LANGUAGE_CODES
+from languages import ETHNICITIES, FORMOSAN_LANGUAGES_MAP, LANGUAGE_CODES
 from orthography import normalize
 from tts_client import TTS_TIMEOUT_SECONDS, TtsClient
 from utils import render_demo, tsoo_khokpih_button
 
-
-ETHNICITIES = sorted(set([k.split("_")[0]
-                          for k in FORMOSAN_LANGUAGES_MAP.keys()]))
 
 CODE_TO_LANGUAGE = {v: k for k, v in FORMOSAN_LANGUAGES_MAP.items()}
 

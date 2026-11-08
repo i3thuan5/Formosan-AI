@@ -12,7 +12,7 @@ from reporting import check
 from timing import check_threshold, warm_up
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT / "asr"))
+sys.path.insert(0, str(REPO_ROOT / "common"))
 from languages import LANGUAGE_GROUPS  # noqa: E402
 
 SERVICE = "asr"
@@ -39,7 +39,7 @@ def group_of(code):
         for _, candidate in languages:
             if candidate == code:
                 return group
-    raise AssertionError(f"asr/languages.py 沒有語別代碼 {code}")
+    raise AssertionError(f"common/languages.py 沒有語別代碼 {code}")
 
 
 def parse_srt(srt):

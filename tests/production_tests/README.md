@@ -135,7 +135,7 @@ asr、asr-kaldi、mt 三個服務**固定包含素材的阿美語別**，再隨�
   所以排在 tts 檢查的最後，而且 `BASE_URL` 是正式站時預設略過、印警告；
   確定正式站已部署有保護的版本，才加 `--allow-production`。
 - **語別表和測試句讀自本地檔案**：語別表讀自本地的
-  `asr/languages.py`、`asr-kaldi/configs/models.yaml`、`mt/formosan_languages.py`，
+  `common/languages.py`、`asr-kaldi/configs/models.yaml`，
   測試句讀自本地的 `tts/configs/refs.yaml`，本地版本和受測主機部署的版本不同時，結果可能對不上。
 - 腳本**不可** import 各服務的 `app.py`，那會在本機載入模型。
 - **部署順序**：tts 要先部署新版，mt 再部署。只部署 tts 時，tts 的檢查應該通過、

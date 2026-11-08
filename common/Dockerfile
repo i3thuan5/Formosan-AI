@@ -6,7 +6,7 @@
 #
 # base  → asr-kaldi 的 FROM
 # gpu   → asr、mt、tts 的 FROM，torch 與 nvidia-* 只裝這一次，三個 image 共用同一層
-# files → 共用的 utils.py、colors.py 與靜態檔，四個服務都用 COPY --from 取用
+# files → 共用的 utils.py、colors.py、languages.py、orthography.py 與靜態檔，四個服務都用 COPY --from 取用
 #
 # gpu 需要具名 build context tests=./tests（bake 會帶），一致性檢查腳本在 tests/。
 
@@ -56,5 +56,5 @@ WORKDIR /app
 
 USER nonroot
 
-COPY colors.py utils.py orthography.py /app/
+COPY colors.py languages.py orthography.py utils.py /app/
 COPY static/ /app/common_static/
