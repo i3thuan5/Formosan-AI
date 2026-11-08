@@ -164,3 +164,5 @@ docker compose -f docker-compose.yml -f deploy/docker-compose-production.yml up 
 ```
 
 跑起來後可以執行 `nvidia-smi` 指令確認。
+
+另外，注意不要在測試機執行 `docker compose pull`，會讓 Docker Hub 上 main 的版本蓋掉本機 bake 編好的 image。
