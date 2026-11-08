@@ -1,6 +1,7 @@
 """檢查 asr（WhisperX）的辨識輸出格式。
 
 只驗格式與有沒有內容，不比對辨識出來的文字：模型會換版，比對內容會讓每次升級都要改測試。
+唯一的例外是 kako.wav 的書寫符號檢查：它驗正規化後的 o/u 拼法，不驗模型聽得準不準。
 """
 import re
 import sys
@@ -23,6 +24,17 @@ GROUP_API_NAME = "/update_languages"
 VIDEO = REPO_ROOT / "tests" / "data" / "海岸阿美語-曾玉蘭-個人生命史-短.mp4"
 # 素材本身的語別，一定要測，而且要求有辨識結果
 AMIS_LANGUAGE = "ami-x-pswl"
+# kako.wav 只有一個詞 kako。Whisper 對它的輸出是 kaku，要靠書寫符號正規化才會依語別變成
+# kako（通用阿美）或 kaku（南勢、撒奇萊雅）。
+KAKO_VIDEO = REPO_ROOT / "tests" / "data" / "kako.wav"
+KAKO_EXPECTED = {
+    "ami-x-iams": "kaku",
+    "ami-x-skl": "kako",
+    "ami-x-pswl": "kako",
+    "ami-x-frng": "kako",
+    "ami-x-pld": "kako",
+    "szy": "kaku",
+}
 TIMESTAMP = re.compile(r"^\d{2}:\d{2}:\d{2},\d{3} --> \d{2}:\d{2}:\d{2},\d{3}$")
 
 
@@ -94,6 +106,24 @@ def check_language(client, language, warnings):
     return run
 
 
+def check_kako(client, language, expected):
+    def run():
+        client.predict(group_of(language), api_name=GROUP_API_NAME)
+        srt = client.predict({"video": handle_file(str(KAKO_VIDEO))}, language, api_name=API_NAME)
+        cues = parse_srt(srt)
+        text = " ".join(cues).strip().lower()
+        if text != expected:
+            raise AssertionError(f"kako.wav 應辨識成 {expected}，實際為 {text!r}")
+        return text
+    return run
+
+
+def run_kako(client, failures):
+    print("\n[asr] kako.wav 書寫符號：南勢、撒奇萊雅是 kaku，其他阿美是 kako")
+    for language, expected in KAKO_EXPECTED.items():
+        check(f"kako.wav {language} → {expected}", check_kako(client, language, expected), failures, service=SERVICE)
+
+
 def run(client, languages, failures, warnings):
     print(f"\n[asr] 辨識 {len(languages)} 個語別：{'、'.join(languages)}")
     warm_up(SERVICE, lambda: transcribe(client, AMIS_LANGUAGE), warnings)
@@ -102,3 +132,5 @@ def run(client, languages, failures, warnings):
         seconds = check(f"{language}", check_language(client, language, warnings), failures, service=SERVICE)
         if seconds is not None and language == AMIS_LANGUAGE:
             check_threshold(SERVICE, seconds, warnings)
+
+    run_kako(client, failures)

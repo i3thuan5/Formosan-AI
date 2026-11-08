@@ -7,6 +7,7 @@
 | --- | --- |
 | `海岸阿美語-曾玉蘭-個人生命史-短.mp4` | asr（`gr.Video`，吃影片） |
 | `海岸阿美語-曾玉蘭-個人生命史-短.mp3` | asr-kaldi（`gr.Audio`，吃音檔） |
+| `kako.wav` | production_tests 的 asr 書寫符號檢查（一個詞 kako） |
 | `klokah_orthography.csv` | `tests/unit/` 的書寫符號正規化不動點測試 |
 
 ## 原始檔規格

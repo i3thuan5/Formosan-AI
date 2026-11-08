@@ -38,3 +38,24 @@
 
 - **WHEN** 加上 `--all-languages` 執行，且 `FORMOSAN_LANGUAGES_MAP` 有某個語別在 `refs.yaml` 中找不到配音員
 - **THEN** 該語別的檢查失敗，訊息列出語別名稱
+
+## ADDED Requirements
+
+### Requirement: 檢查 asr 的書寫符號正規化
+
+腳本 SHALL 以 `tests/data/kako.wav` 分別對六個語別呼叫 asr `/generate_srt`，並比對辨識出的族語文字：南勢阿美（`ami-x-iams`）與撒奇萊雅（`szy`）MUST 是 `kaku`，秀姑巒、海岸、馬蘭、恆春阿美（`ami-x-skl`、`ami-x-pswl`、`ami-x-frng`、`ami-x-pld`）MUST 是 `kako`。這六個語別每次都測，不隨機抽樣。這是「不比對辨識文字」原則的唯一例外：它驗的是書寫符號正規化，不是模型聽得準不準。
+
+#### Scenario: 南勢與撒奇萊雅
+
+- **WHEN** 以 `ami-x-iams` 或 `szy` 辨識 `kako.wav`
+- **THEN** 族語文字為 `kaku`
+
+#### Scenario: 通用阿美
+
+- **WHEN** 以 `ami-x-skl`、`ami-x-pswl`、`ami-x-frng` 或 `ami-x-pld` 辨識 `kako.wav`
+- **THEN** 族語文字為 `kako`
+
+#### Scenario: 尚未部署正規化的舊版
+
+- **WHEN** 受測主機的 asr 沒有書寫符號正規化，模型對 `kako.wav` 的原始輸出是 `kaku`
+- **THEN** 四個通用阿美語別的檢查失敗，訊息列出期望值與實際值

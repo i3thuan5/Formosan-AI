@@ -183,3 +183,4 @@ kithann/
 
 # 上線後檢查的報告，要留存就手動 commit
 tests/production_tests/results/
+.DS_Store
