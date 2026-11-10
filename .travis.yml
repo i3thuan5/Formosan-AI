@@ -39,6 +39,11 @@ jobs:
         - pip install tox
       script:
         - tox -e lockcheck
+    - name: Unit tests
+      install:
+        - pip install tox
+      script:
+        - tox -e test
     - name: Docker Build
       service:
         - docker
