@@ -15,9 +15,9 @@ RUN --mount=target=/tmp/requirements.txt,source=requirements.txt \
     --no-cache-dir \
     -r /tmp/requirements.txt
 
-COPY --from=formosan-ai-common /app/utils.py /app/colors.py /app/
+COPY --from=formosan-ai-common /app/utils.py /app/colors.py /app/languages.py /app/orthography.py /app/
 COPY --from=formosan-ai-common /app/common_static/ /app/common_static/
-COPY --link app.py whisper.py subtitles.py languages.py translation.py DEMO.md /app/
+COPY --link app.py whisper.py subtitles.py translation.py DEMO.md /app/
 
 USER nonroot
 WORKDIR /app

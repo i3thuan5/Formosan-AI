@@ -1,0 +1,301 @@
+/*
+ * 成果網站ê選單佮 footer（common/static/khing/*.html）。
+ * 外觀照 ai-labs ê Bootstrap 5.2 + sapolita.css，干焦寫 HTML 有用著ê class。
+ */
+
+/* ---- 版面：選單囥佇 <gradio-app> 頭前，footer 囥後壁 ---- */
+.sa-sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+}
+
+@media (max-width: 576px) {
+  .sa-sticky-top {
+    position: static;
+  }
+}
+
+/* ---- 共用 ---- */
+.sa-khing {
+  font-family: tauhu-oo, sans-serif;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: #212529;
+}
+
+.sa-khing *,
+.sa-khing *::before,
+.sa-khing *::after {
+  box-sizing: border-box;
+}
+
+.sa-khing ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sa-khing li {
+  margin: 0;
+}
+
+.sa-khing p {
+  margin: 0 0 1rem;
+  line-height: 2rem;
+}
+
+.sa-khing a {
+  color: #AC370C;
+  text-decoration: underline;
+}
+
+.sa-khing a:hover,
+.sa-khing a:focus {
+  color: #2F5ACB;
+}
+
+.sa-khing a:focus-visible,
+.sa-khing .dropdown-toggle:focus-visible {
+  outline: 3px solid #2F5ACB;
+  border-radius: 2px;
+}
+
+.sa-khing img {
+  max-width: 100%;
+  height: auto;
+}
+
+.sa-khing .container,
+.sa-khing .container-fluid {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 0.75rem;
+}
+
+.sa-khing .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.sa-khing .py-3 { padding-top: 1rem; padding-bottom: 1rem; }
+.sa-khing .mb-3 { margin-bottom: 1rem; }
+.sa-khing .d-inline-flex { display: inline-flex; }
+.sa-khing .p-2 { padding: 0.5rem; }
+
+/* ---- 主選單 ---- */
+.sa-khing .navbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0.5rem 0;
+  background-color: #D04410;
+  color: #FFFFFF;
+}
+
+.sa-khing .navbar > .container-fluid {
+  display: flex;
+  flex-wrap: inherit;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sa-khing .navbar-brand {
+  padding: 0.3125rem 0;
+  margin-right: 1rem;
+  font-size: 1.25rem;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.sa-khing .navbar-toggler {
+  padding: 0.25rem 0.75rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  background-color: transparent;
+  border: 1px solid #FFFFFF;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease-in-out;
+}
+
+.sa-khing .navbar-toggler:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.sa-khing .navbar-toggler-icon {
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: middle;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='%23ffffff' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") center / 100% no-repeat;
+}
+
+.sa-khing .navbar-collapse {
+  flex-basis: 100%;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.sa-khing .collapse:not(.show) {
+  display: none;
+}
+
+.sa-khing .navbar-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.sa-khing .nav-item {
+  margin-bottom: 0.25rem;
+}
+
+.sa-khing .nav-link {
+  display: block;
+  padding: 0.5rem;
+  border: 0;
+  border-radius: 0.375rem;
+  background-color: #D04410;
+  color: #FFFFFF;
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.sa-khing .navbar-brand:hover,
+.sa-khing .nav-link:focus {
+  color: #FFFFFF;
+}
+
+.sa-khing .nav-link:hover,
+.sa-khing .nav-link.show {
+  background-color: #FFFFFF;
+  color: #D04410;
+}
+
+/* common.css 有 button:focus 外框，滑鼠點ê時照 ai-labs 毋顯示 */
+.sa-khing .dropdown-toggle:focus:not(:focus-visible) {
+  outline: 0;
+}
+
+.sa-khing .dropdown {
+  position: relative;
+}
+
+.sa-khing .dropdown-toggle::after {
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0;
+  border-left: 0.3em solid transparent;
+}
+
+.sa-khing .dropdown-menu {
+  display: none;
+  z-index: 1000;
+  min-width: max-content;
+  padding: 0.5rem 0;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.175);
+  border-radius: 0.375rem;
+  text-align: left;
+}
+
+.sa-khing .dropdown-menu.show {
+  display: block;
+}
+
+.sa-khing .dropdown-item {
+  display: block;
+  padding: 0.25rem 1rem;
+  color: #D04410;
+  text-decoration: none;
+}
+
+.sa-khing .dropdown-item:hover,
+.sa-khing .dropdown-item:focus {
+  color: #AC370C;
+  background-color: #FAECE7;
+}
+
+@media (min-width: 992px) {
+  .sa-khing .navbar {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
+
+  .sa-khing .navbar-toggler {
+    display: none;
+  }
+
+  .sa-khing .navbar-collapse.collapse {
+    display: flex;
+    flex-basis: auto;
+  }
+
+  .sa-khing .navbar-nav {
+    flex-direction: row;
+  }
+
+  .sa-khing .nav-item {
+    margin: 0 0 0 0.25rem;
+  }
+
+  .sa-khing .nav-item:first-child {
+    margin-left: 3rem;
+  }
+
+  .sa-khing .dropdown-menu {
+    position: absolute;
+  }
+}
+
+/* ---- footer ---- */
+.sa-khing footer {
+  background-color: #F8F9FA;
+  margin-top: 40px;
+}
+
+.sa-khing .text-center {
+  text-align: center;
+}
+
+.sa-khing .border-bottom {
+  border-bottom: 1px solid #DEE2E6;
+}
+
+.sa-khing .row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -0.75rem;
+}
+
+.sa-khing .row > * {
+  width: 100%;
+  padding: 0 0.75rem;
+}
+
+@media (min-width: 576px) {
+  .sa-khing .container { max-width: 540px; }
+}
+
+@media (min-width: 768px) {
+  .sa-khing .container { max-width: 720px; }
+}
+
+@media (min-width: 992px) {
+  .sa-khing .container { max-width: 960px; }
+  .sa-khing .col-lg-6 { width: 50%; }
+  .sa-khing .col-lg-3 { width: 25%; }
+}
+
+@media (min-width: 1200px) {
+  .sa-khing .container { max-width: 1140px; }
+}
+
+@media (min-width: 1400px) {
+  .sa-khing .container { max-width: 1320px; }
+}

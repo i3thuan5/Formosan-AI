@@ -3,9 +3,7 @@
 ## Purpose
 
 針對已部署主機（正式機或測試機）的上線後檢查腳本，確認 asr、asr-kaldi、mt、tts 四個模型與共用靜態檔都正常。只驗「服務活著、格式對、有內容」，不比對辨識或翻譯的文字，也不比對音檔內容：模型會換版，比對內容會讓每次模型升級都要改測試。
-
 ## Requirements
-
 ### Requirement: 可指定受測主機的上線後檢查腳本
 
 `tests/production_tests/` SHALL 提供單一入口 `run_all.py`，以 `BASE_URL` 環境變數指定受測主機，預設為 `https://ai-labs.ilrdf.org.tw`。四個服務的位置為 asr `{BASE_URL}/sapolita/`、asr-kaldi `{BASE_URL}/sapolita-kaldi/`、MT `{BASE_URL}/kari-seejiq-tnpusu-ai-hmjil/`、TTS `{BASE_URL}/hnang-kari-ai-asi-sluhay/`。腳本 SHALL 循序執行所有檢查（不併發），全部通過時 exit code 為 0，任一項失敗時為 1，並在結尾列出每個失敗項目與錯誤訊息。`--services` 參數 SHALL 可限制只跑指定服務（`pages`、`asr`、`asr-kaldi`、`mt`、`tts`），預設全部。既有的 `check_mt_tts_playback.py` SHALL 維持可獨立執行，其檢查由 `run_all.py` 直接 import 使用。
@@ -87,7 +85,7 @@
 
 ### Requirement: 檢查 mt 雙向翻譯輸出
 
-腳本 SHALL 以 asr 素材的一句族語（`sosowalen ako itiya:ayho a ʼorip niyam`）呼叫 mt `/translate`（族語到華語），並以一句華語（`我們以前的生活`）呼叫 `/translate_1`（華語到族語）。兩個方向的語別都是 Radio，呼叫前 MUST 在同一個 session 先切換族別：族語到華語呼叫 `/to_zh_languages`，華語到族語呼叫 `/to_formosan_languages`。語別為阿美_海岸（`ami_Coas`）時，兩個方向 MUST 回傳非空字串且不等於輸入；其他語別只要求回傳字串。語別表 SHALL 讀自 `mt/formosan_languages.py`。
+腳本 SHALL 以 asr 素材的一句族語（`sosowalen ako itiya:ayho a ʼorip niyam`）呼叫 mt `/translate`（族語到華語），並以一句華語（`我們以前的生活`）呼叫 `/translate_1`（華語到族語）。兩個方向的語別都是 Radio，呼叫前 MUST 在同一個 session 先切換族別：族語到華語呼叫 `/to_zh_languages`，華語到族語呼叫 `/to_formosan_languages`。語別為阿美_海岸（`ami_Coas`）時，兩個方向 MUST 回傳非空字串且不等於輸入；其他語別只要求回傳字串。語別表 SHALL 讀自 `common/languages.py`。
 
 #### Scenario: 阿美_海岸雙向翻譯有內容
 
@@ -110,7 +108,7 @@
 
 ### Requirement: 檢查語別都能合成
 
-腳本 SHALL 預設從 `mt/formosan_languages.py` `FORMOSAN_LANGUAGES_MAP` 隨機抽樣 5 個語別，指定 `--all-languages` 參數時改為全部語別，對每個受測語別直接呼叫 TTS `/synthesize`，句子取自 `tts/configs/refs.yaml` 中該語別第一位配音員的 `text`，每個受測語別都要回傳音檔。語別表 SHALL 獨立於 `mt/app.py`，腳本 MUST NOT import `mt/app.py`（避免載入翻譯模型）。
+腳本 SHALL 預設從 `common/languages.py` 的 `FORMOSAN_LANGUAGES_MAP` 隨機抽樣 5 個語別，指定 `--all-languages` 參數時改為全部語別，對每個受測語別直接呼叫 TTS `/synthesize`，句子取自 `tts/configs/refs.yaml` 中該語別第一位配音員的 `text`，每個受測語別都要回傳音檔。語別表 SHALL 獨立於 `mt/app.py`，腳本 MUST NOT import `mt/app.py`（避免載入翻譯模型）。
 
 #### Scenario: 預設隨機抽樣
 
@@ -223,3 +221,23 @@
 
 - **WHEN** 開發者只照 README 操作
 - **THEN** 能在 devcontainer 中以 tox 對指定主機完成一次檢查，並知道警告與失敗的差別
+
+### Requirement: 檢查 asr 的書寫符號正規化
+
+腳本 SHALL 以 `tests/data/kako.wav` 分別對六個語別呼叫 asr `/generate_srt`，並比對辨識出的族語文字：南勢阿美（`ami-x-iams`）與撒奇萊雅（`szy`）MUST 是 `kaku`，秀姑巒、海岸、馬蘭、恆春阿美（`ami-x-skl`、`ami-x-pswl`、`ami-x-frng`、`ami-x-pld`）MUST 是 `kako`。這六個語別每次都測，不隨機抽樣。這是「不比對辨識文字」原則的唯一例外：它驗的是書寫符號正規化，不是模型聽得準不準。
+
+#### Scenario: 南勢與撒奇萊雅
+
+- **WHEN** 以 `ami-x-iams` 或 `szy` 辨識 `kako.wav`
+- **THEN** 族語文字為 `kaku`
+
+#### Scenario: 通用阿美
+
+- **WHEN** 以 `ami-x-skl`、`ami-x-pswl`、`ami-x-frng` 或 `ami-x-pld` 辨識 `kako.wav`
+- **THEN** 族語文字為 `kako`
+
+#### Scenario: 尚未部署正規化的舊版
+
+- **WHEN** 受測主機的 asr 沒有書寫符號正規化，模型對 `kako.wav` 的原始輸出是 `kaku`
+- **THEN** 四個通用阿美語別的檢查失敗，訊息列出期望值與實際值
+

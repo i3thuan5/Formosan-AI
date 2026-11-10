@@ -1,5 +1,6 @@
 import re
 import tempfile
+import threading
 from importlib.resources import files
 from pathlib import Path
 
@@ -11,6 +12,7 @@ from cached_path import cached_path
 from omegaconf import OmegaConf
 
 from ipa.ipa import g2p_object, text_to_ipa
+from languages import ETHNICITIES
 from utils import render_demo
 
 try:
@@ -48,6 +50,12 @@ def gpu_decorator(func):
 
 
 vocoder = load_vocoder()
+
+# F5-TTS 的 DiT 會把 text embedding 快取在 model 上，同時兩個合成會互相用到
+# 對方的快取，出現 "Sizes of tensors must match"。Gradio 的 concurrency_limit
+# 是每個 event listener 各自算，網頁、自己當配音員、mt 呼叫的 synthesize
+# 三個端點會同時執行，所以用全域鎖讓所有合成排同一個隊。
+F5TTS_LOCK = threading.Lock()
 
 
 def load_model(
@@ -127,8 +135,6 @@ examples_config = OmegaConf.to_object(OmegaConf.load("configs/examples.yaml"))
 
 DEFAULT_MODEL_ID = list(models_config.keys())[0]
 
-ETHNICITIES = sorted(set([k.split("_")[0] for k in g2p_object.keys()]))
-
 
 def silent_info(*args, **kwargs):
     # F5-TTS 內部會用 show_info 跳英文提示，但太干擾故不顯示
@@ -159,18 +165,19 @@ def infer(
         ref_audio_orig, ref_text, show_info=show_info
     )
 
-    final_wave, final_sample_rate, combined_spectrogram = infer_process(
-        ref_audio,
-        ref_text,
-        gen_text,
-        model,
-        vocoder,
-        cross_fade_duration=cross_fade_duration,
-        nfe_step=nfe_step,
-        speed=speed,
-        show_info=show_info,
-        progress=gr.Progress(),
-    )
+    with F5TTS_LOCK:
+        final_wave, final_sample_rate, combined_spectrogram = infer_process(
+            ref_audio,
+            ref_text,
+            gen_text,
+            model,
+            vocoder,
+            cross_fade_duration=cross_fade_duration,
+            nfe_step=nfe_step,
+            speed=speed,
+            show_info=show_info,
+            progress=gr.Progress(),
+        )
 
     # Remove silence
     if remove_silence:
@@ -261,6 +268,7 @@ with render_demo(
                     choices=ETHNICITIES,
                     label="步驟一：選擇族別",
                     value="阿美",
+                    elem_classes=["sa-radio-equal"],
                 )
 
                 def get_refs_by_perfix(prefix: str):
@@ -295,6 +303,7 @@ with render_demo(
                     choices=ETHNICITIES,
                     label="步驟一：選擇族別與語別",
                     value="阿美",
+                    elem_classes=["sa-radio-equal"],
                 )
 
                 custom_speaker_language = gr.Radio(

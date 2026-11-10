@@ -20,7 +20,7 @@ RUN --mount=target=/tmp/requirements.txt,source=requirements.txt \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/* && apt-get clean
 
-COPY --from=formosan-ai-common /app/utils.py /app/colors.py /app/
+COPY --from=formosan-ai-common /app/utils.py /app/colors.py /app/languages.py /app/
 COPY --from=formosan-ai-common /app/common_static/ /app/common_static/
 COPY --link app.py DEMO.md /app/
 COPY --link configs/ /app/configs/
