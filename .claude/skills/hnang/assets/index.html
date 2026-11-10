@@ -1,0 +1,392 @@
+<title>{{TITLE}}</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: listening sheet; one tab per language, summary table, then one block per reference with ten numbered sentences */
+:root {
+  --bg: #f6f7f8;
+  --surface: #ffffff;
+  --fg: #1c2328;
+  --muted: #5d6a73;
+  --line: #dde2e6;
+  --accent: #0f6b78;
+  --accent-soft: #e2f0f1;
+  --female: #a8326e;
+  --female-soft: #f8e6ef;
+  --male: #2f5fb3;
+  --male-soft: #e5ecf9;
+  --unsure: #8a6a12;
+  --unsure-soft: #f6efd9;
+  --fail: #b3261e;
+  --fail-soft: #fbe7e5;
+  --font-display: "Noto Serif TC", "Songti TC", serif;
+  --font-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12171a; --surface: #1a2125; --fg: #e3e8eb; --muted: #95a3ac; --line: #2c363c;
+    --accent: #5cc1cc; --accent-soft: #173439;
+    --female: #f08cbd; --female-soft: #3a1f2d; --male: #8fb2f2; --male-soft: #1d2a42;
+    --unsure: #e2c063; --unsure-soft: #352d16;
+    --fail: #ff8a80; --fail-soft: #3d1c1a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12171a; --surface: #1a2125; --fg: #e3e8eb; --muted: #95a3ac; --line: #2c363c;
+  --accent: #5cc1cc; --accent-soft: #173439;
+  --female: #f08cbd; --female-soft: #3a1f2d; --male: #8fb2f2; --male-soft: #1d2a42;
+  --unsure: #e2c063; --unsure-soft: #352d16;
+  --fail: #ff8a80; --fail-soft: #3d1c1a;
+  color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 15px; line-height: 1.6;
+}
+.wrap {
+  max-width: 1040px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 64px;
+  display: flex; flex-direction: column; gap: 28px;
+}
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.3; }
+h1 { font-size: 1.75rem; }
+h2 { font-size: 1.3rem; }
+h3 { font-size: 1.05rem; font-family: var(--font-body); font-weight: 700; }
+p { margin: 0; max-width: 68ch; }
+.muted { color: var(--muted); }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+header { display: flex; flex-direction: column; gap: 10px; }
+.eyebrow { font-size: .78rem; letter-spacing: .08em; color: var(--accent); font-weight: 700; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: .88rem; color: var(--muted); align-items: center; }
+
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.tab {
+  font: inherit; font-weight: 500; background: none; border: 0; color: var(--muted);
+  padding: 10px 16px; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -1px;
+}
+.tab[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--accent); }
+.tab:focus-visible, button:focus-visible, audio:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.panel { display: flex; flex-direction: column; gap: 28px; }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+th { font-size: .76rem; letter-spacing: .06em; color: var(--muted); font-weight: 500; white-space: nowrap; }
+td.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.summary a { color: var(--accent); text-decoration: none; font-weight: 500; }
+.summary a:hover { text-decoration: underline; }
+.bar { display: flex; height: 10px; width: 140px; border-radius: 2px; overflow: hidden; background: var(--line); }
+.bar span { display: block; height: 100%; }
+.bar .f { background: var(--female); } .bar .m { background: var(--male); } .bar .u { background: var(--unsure); }
+
+.chip {
+  display: inline-block; font-size: .76rem; font-weight: 700; padding: 1px 8px; border-radius: 999px;
+  white-space: nowrap; line-height: 1.6;
+}
+.chip.女 { color: var(--female); background: var(--female-soft); }
+.chip.男 { color: var(--male); background: var(--male-soft); }
+.chip.\? { color: var(--unsure); background: var(--unsure-soft); }
+.chip.expected { color: var(--muted); background: none; border: 1px solid var(--line); font-weight: 500; }
+.chip.失敗 { color: var(--fail); background: var(--fail-soft); }
+.chip.警告 { color: var(--unsure); background: var(--unsure-soft); }
+.chip.通過 { color: var(--muted); background: none; font-weight: 500; }
+tr.mismatch td:first-child { box-shadow: inset 3px 0 0 var(--fail); }
+.verdict { display: flex; gap: 4px; flex-wrap: wrap; }
+
+.group { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; display: flex; flex-direction: column; }
+.group-head { padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--line); }
+.group-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
+.ref { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 16px; align-items: center; }
+.ref-text { min-width: 0; }
+.ref-text .ab { font-weight: 500; }
+.ref-text .zh { font-size: .85rem; color: var(--muted); }
+.ref-meta { font-size: .82rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; }
+.ref-meta a { color: var(--accent); }
+audio { height: 34px; width: 240px; max-width: 100%; }
+.group table td:first-child { width: 2.2em; color: var(--muted); }
+.sent { min-width: 14em; }
+.sent .ab { font-weight: 500; }
+.sent .zh { font-size: .82rem; color: var(--muted); }
+
+.judge { display: inline-flex; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+.judge button {
+  font: inherit; font-size: .8rem; background: none; border: 0; color: var(--muted);
+  padding: 2px 9px; cursor: pointer; border-right: 1px solid var(--line);
+}
+.judge button:last-child { border-right: 0; }
+.judge button[aria-pressed="true"][data-v="女"] { background: var(--female-soft); color: var(--female); font-weight: 700; }
+.judge button[aria-pressed="true"][data-v="男"] { background: var(--male-soft); color: var(--male); font-weight: 700; }
+.judge button[aria-pressed="true"][data-v="?"] { background: var(--unsure-soft); color: var(--unsure); font-weight: 700; }
+
+.tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.btn {
+  font: inherit; font-size: .88rem; font-weight: 500; padding: 6px 14px; border-radius: 4px; cursor: pointer;
+  background: var(--accent); color: var(--surface); border: 1px solid var(--accent);
+}
+.btn.ghost { background: none; color: var(--accent); }
+#copy-status { font-size: .85rem; color: var(--muted); }
+textarea#copy-fallback { width: 100%; min-height: 8em; font-family: var(--font-mono); font-size: .8rem; background: var(--surface); color: var(--fg); border: 1px solid var(--line); }
+.note { background: var(--accent-soft); border-radius: 6px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; font-size: .9rem; }
+
+@media (max-width: 640px) {
+  .ref { grid-template-columns: minmax(0, 1fr); }
+  h1 { font-size: 1.45rem; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">族語語音合成・配音員性別檢查</div>
+    <h1>{{TITLE}}</h1>
+    <p class="muted">{{INTRO}}</p>
+    <div class="legend">
+      <span>自動判斷：</span>
+      <span><span class="chip 女">女</span> F0 ≥ 175 Hz</span>
+      <span><span class="chip 男">男</span> F0 ≤ 150 Hz</span>
+      <span><span class="chip ?">?</span> 介於中間，請以耳朵為準</span>
+    </div>
+  </header>
+
+  <div class="note" id="method"></div>
+
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <div id="panels"></div>
+
+  <section class="panel" aria-labelledby="mine-h">
+    <h2 id="mine-h">你的判斷</h2>
+    <p class="muted">每句右側可以標「女／男／?」。標記只存在你這個瀏覽器裡，可以複製成表格貼回給我。</p>
+    <div class="tools">
+      <button class="btn" id="copy-btn" type="button">複製我的判斷（TSV）</button>
+      <button class="btn ghost" id="clear-btn" type="button">清除全部標記</button>
+      <span id="copy-status" role="status"></span>
+    </div>
+    <textarea id="copy-fallback" hidden readonly aria-label="判斷結果文字"></textarea>
+  </section>
+</div>
+
+<script>
+(function () {
+  const STORE_KEY = 'hnang-judgements:' + document.title;
+  let marks = {};
+  try { marks = JSON.parse(localStorage.getItem(STORE_KEY) || '{}') || {}; } catch (e) { marks = {}; }
+  function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(marks)); } catch (e) {} }
+
+  const KIND_LABEL = { current: '目前預設', candidate: '候選參考音檔', speaker: '預設配音員' };
+
+  function el(tag, attrs, children) {
+    const n = document.createElement(tag);
+    if (attrs) {
+      for (const k in attrs) {
+        if (k === 'text') n.textContent = attrs[k];
+        else if (k === 'class') n.className = attrs[k];
+        else n.setAttribute(k, attrs[k]);
+      }
+    }
+    if (children) {
+      for (const c of children) { if (c) n.append(c); }
+    }
+    return n;
+  }
+  function chip(g) { return el('span', { class: 'chip ' + g, text: g }); }
+  // 音檔每組打包成一個 JSON（data URI），該組捲到畫面附近才下載
+  function audio(key) { return el('audio', { controls: '', preload: 'none', 'data-key': key }); }
+  const loadedPacks = new Set();
+  function loadPack(section) {
+    const url = section.dataset.pack;
+    if (!url || loadedPacks.has(url)) return;
+    loadedPacks.add(url);
+    fetch(url).then(r => r.json()).then(pack => {
+      for (const a of section.querySelectorAll('audio[data-key]')) {
+        if (pack[a.dataset.key]) a.src = pack[a.dataset.key];
+      }
+    }).catch(() => { loadedPacks.delete(url); });
+  }
+  const packObserver = 'IntersectionObserver' in window
+    ? new IntersectionObserver(entries => {
+      for (const e of entries) { if (e.isIntersecting) loadPack(e.target); }
+    }, { rootMargin: '800px 0px' })
+    : null;
+  function counts(items) {
+    const c = { '女': 0, '男': 0, '?': 0 };
+    for (const it of items) { c[it.gender] += 1; }
+    return c;
+  }
+  function bar(c, total) {
+    const b = el('div', { class: 'bar', role: 'img', 'aria-label': `女 ${c['女']}、男 ${c['男']}、不確定 ${c['?']}` });
+    const parts = [['f', '女'], ['m', '男'], ['u', '?']];
+    for (const [cls, k] of parts) {
+      if (c[k]) { const s = el('span', { class: cls }); s.style.width = (100 * c[k] / total) + '%'; b.append(s); }
+    }
+    return b;
+  }
+  function f0txt(v) { return v == null ? '—' : v.toFixed(0) + ' Hz'; }
+  function opposite(expected, got) { return expected && got !== '?' && got !== expected; }
+  // 有 status（tests/tts_speakers 和參考音檔比的結果）就以它為準，沒有就看性別是否和名稱相反
+  function isBad(it, expected) { return it.status ? it.status === '失敗' : opposite(expected, it.gender); }
+  function f0cell(it) { return f0txt(it.f0) + (it.ratio != null ? '・' + it.ratio.toFixed(2) + ' 倍' : ''); }
+  function badCount(items, expected) {
+    let n = 0;
+    for (const it of items) { if (isBad(it, expected)) n += 1; }
+    return n;
+  }
+
+  function judge(key) {
+    const wrap = el('div', { class: 'judge', role: 'group', 'aria-label': '你的判斷' });
+    for (const v of ['女', '男', '?']) {
+      const b = el('button', { type: 'button', 'data-v': v, 'aria-pressed': String(marks[key] === v), text: v });
+      b.addEventListener('click', () => {
+        if (marks[key] === v) delete marks[key];
+        else marks[key] = v;
+        save();
+        for (const x of wrap.querySelectorAll('button')) x.setAttribute('aria-pressed', String(marks[key] === x.dataset.v));
+      });
+      wrap.append(b);
+    }
+    return wrap;
+  }
+
+  function renderGroup(g, expected) {
+    const c = counts(g.items);
+    const refMeta = el('div', { class: 'ref-meta' }, [
+      el('span', { text: '參考音檔' }),
+      chip(g.ref.gender),
+      el('span', { class: 'mono', text: f0txt(g.ref.f0) + '・' + g.ref.dur.toFixed(1) + ' 秒' }),
+      g.ref.source ? el('span', { text: g.ref.source }) : null,
+      g.ref.url ? el('a', { href: g.ref.url, target: '_blank', rel: 'noopener', text: '原始音檔' }) : null,
+    ]);
+    const head = el('div', { class: 'group-head' }, [
+      el('div', { class: 'group-title' }, [
+        el('h3', { text: g.label }),
+        el('span', { class: 'muted', text: KIND_LABEL[g.kind] || '' }),
+        expected ? el('span', { class: 'chip expected', text: '應為' + expected + '聲' }) : null,
+        el('span', { class: 'mono muted', text: `自動判斷 女 ${c['女']}・男 ${c['男']}・? ${c['?']}・有問題 ${badCount(g.items, expected)}（共 ${g.items.length} 句）` }),
+      ]),
+      el('div', { class: 'ref' }, [
+        el('div', { class: 'ref-text' }, [
+          el('div', { class: 'ab', text: g.ref.text }),
+          g.ref.zh ? el('div', { class: 'zh', text: g.ref.zh }) : null,
+          refMeta,
+        ]),
+        audio(g.ref.audio),
+      ]),
+    ]);
+    const tbody = el('tbody');
+    for (const it of g.items) {
+      const cls = isBad(it, expected) ? 'mismatch' : '';
+      tbody.append(el('tr', { class: cls }, [
+        el('td', { class: 'num', text: String(it.n).padStart(2, '0') }),
+        el('td', { class: 'sent' }, [
+          el('div', { class: 'ab', text: (it.length ? '［' + it.length + '句］' : '') + it.text }),
+          it.zh ? el('div', { class: 'zh', text: it.zh }) : null,
+        ]),
+        el('td', null, [audio(it.audio)]),
+        el('td', { class: 'num', text: f0cell(it) }),
+        el('td', null, [el('div', { class: 'verdict' }, [chip(it.gender), it.status ? chip(it.status) : null])]),
+        el('td', null, [judge(`${g.id}#${it.n}`)]),
+      ]));
+    }
+    const table = el('table', null, [
+      el('thead', null, [el('tr', null, [
+        el('th', { text: '#' }), el('th', { text: '句子' }), el('th', { text: '試聽' }),
+        el('th', { text: 'F0（參考音檔的幾倍）' }), el('th', { text: '自動' }), el('th', { text: '你的判斷' }),
+      ])]),
+      tbody,
+    ]);
+    const section = el('section', { class: 'group', id: g.id, 'data-pack': g.pack || '' }, [head, el('div', { class: 'scroll' }, [table])]);
+    if (packObserver) packObserver.observe(section);
+    else loadPack(section);
+    return section;
+  }
+
+  function renderSummary(groups, expectedOf) {
+    const tbody = el('tbody');
+    for (const g of groups) {
+      const c = counts(g.items);
+      tbody.append(el('tr', null, [
+        el('td', null, [el('a', { href: '#' + g.id, text: g.label })]),
+        el('td', { text: KIND_LABEL[g.kind] || '' }),
+        el('td', { text: expectedOf(g) ? expectedOf(g) + '聲' : '' }),
+        el('td', { class: 'num', text: f0txt(g.ref.f0) + '・' + g.ref.dur.toFixed(1) + ' 秒' }),
+        el('td', null, [bar(c, g.items.length || 1)]),
+        el('td', { class: 'num', text: `${c['女']} / ${c['男']} / ${c['?']}` }),
+        el('td', { class: 'num', text: String(badCount(g.items, expectedOf(g))) }),
+      ]));
+    }
+    return el('div', { class: 'scroll summary' }, [el('table', null, [
+      el('thead', null, [el('tr', null, [
+        el('th', { text: '配音員／參考音檔' }), el('th', { text: '類別' }), el('th', { text: '應為' }),
+        el('th', { text: '參考音檔' }), el('th', { text: '自動判斷分布' }), el('th', { text: '女 / 男 / ?' }),
+        el('th', { text: '有問題' }),
+      ])]),
+      tbody,
+    ])]);
+  }
+
+  function selectTab(name) {
+    for (const t of document.querySelectorAll('.tab')) t.setAttribute('aria-selected', String(t.dataset.tab === name));
+    for (const p of document.querySelectorAll('#panels > .panel')) p.hidden = p.dataset.tab !== name;
+    try { localStorage.setItem(STORE_KEY + ':tab', name); } catch (e) {}
+  }
+
+  fetch('data.json').then(r => r.json()).then(data => {
+    document.getElementById('method').append(el('strong', { text: '怎麼產生的' }), el('p', { text: data.method }));
+    const expectedOf = g => g.expected || data.expected || '';
+    const tabs = document.getElementById('tabs');
+    const panels = document.getElementById('panels');
+    const names = [];
+    for (const tab of data.tabs) {
+      names.push(tab.name);
+      const t = el('button', { class: 'tab', role: 'tab', type: 'button', 'data-tab': tab.name, text: tab.name });
+      t.addEventListener('click', () => selectTab(tab.name));
+      tabs.append(t);
+      const panel = el('section', { class: 'panel', role: 'tabpanel', 'data-tab': tab.name }, [
+        el('h2', { text: tab.name + '：一覽' }),
+        renderSummary(tab.groups, expectedOf),
+      ]);
+      for (const g of tab.groups) panel.append(renderGroup(g, expectedOf(g)));
+      panels.append(panel);
+    }
+    if (data.tabs.length < 2) tabs.hidden = true;
+    let start = names[0];
+    try { const s = localStorage.getItem(STORE_KEY + ':tab'); if (names.includes(s)) start = s; } catch (e) {}
+    const hash = location.hash.slice(1);
+    for (const tab of data.tabs) { if (tab.groups.some(g => g.id === hash)) start = tab.name; }
+    selectTab(start);
+    if (hash) { const t = document.getElementById(hash); if (t) t.scrollIntoView(); }
+
+    document.getElementById('copy-btn').addEventListener('click', () => {
+      const rows = [['頁籤', '組', '句', '自動', 'F0', '你的判斷'].join('\t')];
+      for (const tab of data.tabs) {
+        for (const g of tab.groups) {
+          for (const it of g.items) {
+            rows.push([tab.name, g.label, it.n, it.gender, it.f0 == null ? '' : it.f0, marks[`${g.id}#${it.n}`] || ''].join('\t'));
+          }
+        }
+      }
+      const text = rows.join('\n');
+      const status = document.getElementById('copy-status');
+      const fb = document.getElementById('copy-fallback');
+      const n = Object.keys(marks).length;
+      navigator.clipboard.writeText(text).then(() => {
+        status.textContent = `已複製（你標了 ${n} 句）`;
+        fb.hidden = true;
+      }).catch(() => {
+        fb.value = text; fb.hidden = false; fb.select();
+        status.textContent = '無法直接複製，請從下方文字框全選複製';
+      });
+    });
+    document.getElementById('clear-btn').addEventListener('click', () => {
+      marks = {}; save();
+      for (const b of document.querySelectorAll('.judge button')) b.setAttribute('aria-pressed', 'false');
+      document.getElementById('copy-status').textContent = '已清除';
+    });
+  });
+})();
+</script>

@@ -1,0 +1,5 @@
+# 連線方式和 production_tests 相同（reporting.py 共用），gradio_client 版本也要一致
+gradio_client==1.13.3
+PyYAML
+# 估 F0（pYIN）
+librosa
