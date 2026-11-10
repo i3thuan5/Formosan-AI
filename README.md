@@ -114,13 +114,13 @@ docker compose -f ZuGi/docker-compose.yml up -d --build nginx-proxy
 
 2. 準備環境變數檔：`cp deploy/.env.template .env`，並把要測試的服務HOST改成`localhost`。
 
-3. 手動編三個共用image：
+3. 手動編image：
 
-   ```bash
-   docker buildx bake -f docker-bake.hcl --load base gpu files
-   ```
+    ```bash
+    docker buildx bake -f docker-bake.hcl --load base gpu files asr asr-kaldi tts mt
+    ```
 
-4. 編image後啟動：`docker compose up -d --build`。
+4. 啟動：`docker compose up -d --pull never`。
 
 ## 更新選單佮 footer
 

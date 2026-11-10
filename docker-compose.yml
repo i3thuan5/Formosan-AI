@@ -1,7 +1,7 @@
 ---
 services:
   asr:
-    build: ./asr/
+    image: ithuan/formosan-ai:asr
     volumes:
       - "./model_cache_asr:/home/nonroot/.cache:rw"
     networks:
@@ -16,7 +16,7 @@ services:
       - GA_MEASUREMENT_ID=${GA_MEASUREMENT_ID:-}
       - GRADIO_ROOT_PATH=/sapolita
   asr-kaldi:
-    build: ./asr-kaldi/
+    image: ithuan/formosan-ai:asr-kaldi
     volumes:
       - "./model_cache_asr_kaldi:/home/nonroot/.cache:rw"
     networks:
@@ -29,7 +29,7 @@ services:
       - GA_MEASUREMENT_ID=${GA_MEASUREMENT_ID:-}
       - GRADIO_ROOT_PATH=/sapolita-kaldi
   tts:
-    build: ./tts/
+    image: ithuan/formosan-ai:tts
     volumes:
       - "./model_cache_tts:/home/nonroot/.cache:rw"
     networks:
@@ -42,7 +42,7 @@ services:
       - GA_MEASUREMENT_ID=${GA_MEASUREMENT_ID:-}
       - GRADIO_ROOT_PATH=/hnang-kari-ai-asi-sluhay
   mt:
-    build: ./mt/
+    image: ithuan/formosan-ai:mt
     volumes:
       - "./model_cache_mt:/home/nonroot/.cache:rw"
     networks:
