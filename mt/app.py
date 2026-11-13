@@ -132,7 +132,7 @@ with render_demo(
             elem_classes=["sa-radio-equal"],
         )
         to_zh_src_lang = gr.Radio(
-            label="語別",
+            label="語言別",
             choices=get_languages_by_ethnicity(to_zh_ethnicity.value),
             value=get_languages_by_ethnicity(to_zh_ethnicity.value)[0][1],
             interactive=len(get_languages_by_ethnicity(
@@ -174,7 +174,7 @@ with render_demo(
             elem_classes=["sa-radio-equal"],
         )
         to_formosan_tgt_lang = gr.Radio(
-            label="語別",
+            label="語言別",
             choices=get_languages_by_ethnicity(to_formosan_ethnicity.value),
             value=get_languages_by_ethnicity(
                 to_formosan_ethnicity.value)[0][1],
@@ -240,7 +240,7 @@ with render_demo(
 
 `/translate`（族語 ⮕ 華語）與 `/translate_1`（華語 ⮕ 族語）沒有變更。
 
-語別選項會隨族別改變，要翻譯或合成阿美以外的語別時，請在同一個 session 先呼叫切換族別的 endpoint，例如：
+語言別選項會隨族別改變，要翻譯或合成阿美以外的語言別時，請在同一個 session 先呼叫切換族別的 endpoint，例如：
 
 ```python
 from gradio_client import Client

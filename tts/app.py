@@ -301,7 +301,7 @@ with render_demo(
             with gr.Column():
                 custom_speaker_ethnicity = gr.Radio(
                     choices=ETHNICITIES,
-                    label="步驟一：選擇族別與語別",
+                    label="步驟一：選擇族別與語言別",
                     value="阿美",
                     elem_classes=["sa-radio-equal"],
                 )
@@ -403,11 +403,11 @@ with render_demo(
         language: str,
         text: str,
     ):
-        # 給其他服務（如 mt）呼叫，用該語別第一位配音員合成。
+        # 給其他服務（如 mt）呼叫，用該語言別第一位配音員合成。
         # 用 Textbox 當輸入，才不會受 Radio choices 限制。
         refs = get_refs_by_perfix(language + "_")
         if len(refs) == 0:
-            raise gr.Error(f"不支援的語別：{language}")
+            raise gr.Error(f"不支援的語言別：{language}")
         return default_speaker_tts(refs[0], text)
 
     synthesize_language_input = gr.Textbox(visible=False)

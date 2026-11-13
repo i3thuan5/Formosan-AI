@@ -71,7 +71,7 @@ with render_demo(
                 choices=LANGUAGE_GROUPS[DEFAULT_GROUP],
                 value=LANGUAGE_GROUPS[DEFAULT_GROUP][0][1],
                 type="value",
-                label="語別",
+                label="語言別",
             )
             video_input = gr.Video(label="族語影片", sources="upload")
             transcribe_button_video = gr.Button("開始辨識", variant="primary")
@@ -90,7 +90,7 @@ with render_demo(
             choices=choices,
             value=choices[0][1],
             type="value",
-            label="語別",
+            label="語言別",
         )
 
     group_input.change(

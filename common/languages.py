@@ -111,8 +111,8 @@ TRANSLATION_LANGUAGE_CODES = {
 }
 
 
-# mt 與 tts 的語別顯示名稱（「族別_語別」）→ 翻譯模型的語言代碼。
-# 名稱要和 tts 的 g2p 語別名稱一致（mt 呼叫 tts 時直接傳這個名稱），順序是 mt 介面的顯示順序。
+# mt 與 tts 的語言別顯示名稱（「族別_語言別」）→ 翻譯模型的語言代碼。
+# 名稱要和 tts 的 g2p 語言別名稱一致（mt 呼叫 tts 時直接傳這個名稱），順序是 mt 介面的顯示順序。
 FORMOSAN_LANGUAGES_MAP = {
     "阿美_海岸": "ami_Coas",
     "阿美_恆春": "ami_Heng",

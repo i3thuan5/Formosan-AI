@@ -1,4 +1,4 @@
-"""族語書寫符號正規化：每個規則是一個小函式，每個語別設定要套用哪幾個。"""
+"""族語書寫符號正規化：每個規則是一個小函式，每個語言別設定要套用哪幾個。"""
 import re
 
 
@@ -91,7 +91,7 @@ def o2u_except_ow_particles(text):
     return _TRUKU_O.sub(_keep_particle_or_o2u, text)
 
 
-# key 的順序照「族語及語言別名稱 - 語言別名稱.csv」的顯示排序先後，沒有規則的語別 list 留空。
+# key 的順序照「族語及語言別名稱 - 語言別名稱.csv」的顯示排序先後，沒有規則的語言別 list 留空。
 LANGUAGE_RULES = {
     'ami-x-iams': [o2u, f2v, b2v, quote_2_u02bc],
     'ami-x-skl': [u2o, v2f, b2f, quote_2_u02bc],
