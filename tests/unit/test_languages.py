@@ -2,7 +2,6 @@ from languages import (
     ETHNICITIES,
     FORMOSAN_LANGUAGES_MAP,
     LANGUAGE_CODES,
-    LANGUAGE_GROUPS,
     TRANSLATION_LANGUAGE_CODES,
 )
 
@@ -23,9 +22,11 @@ def test_south_amis():
     assert LANGUAGE_CODES['ami_Sout'] == 'ami-x-iams'
 
 
-def test_ethnicities_follow_language_groups_order():
-    assert ETHNICITIES[:3] == ['阿美', '泰雅', '排灣']
-    assert len(ETHNICITIES) == len(LANGUAGE_GROUPS)
+def test_ethnicities_order_and_names():
+    assert ETHNICITIES == [
+        '阿美', '泰雅', '排灣', '布農', '卑南', '魯凱', '鄒', '賽夏',
+        '雅美', '邵', '噶瑪蘭', '太魯閣', '撒奇萊雅', '賽德克', '拉阿魯哇', '卡那卡那富',
+    ]
 
 
 def test_ethnicities_are_prefixes_of_formosan_language_names():
