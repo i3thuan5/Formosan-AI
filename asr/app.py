@@ -7,7 +7,7 @@ import torch
 import uvicorn
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from languages import DEFAULT_GROUP, LANGUAGE_GROUPS
+from languages import DEFAULT_GROUP, ETHNICITIES, LANGUAGE_GROUPS
 from orthography import normalize
 from subtitles import render_srt
 from translation import Translator
@@ -62,7 +62,7 @@ with render_demo(
     with gr.Row():
         with gr.Column():
             group_input = gr.Radio(
-                choices=list(LANGUAGE_GROUPS),
+                choices=ETHNICITIES,
                 value=DEFAULT_GROUP,
                 label="族別",
                 elem_classes=["sa-radio-equal"],

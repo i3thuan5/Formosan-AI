@@ -1,14 +1,14 @@
 """Formosan UI labels, language codes and Whisper-to-NLLB language codes."""
 
 LANGUAGE_GROUPS = {
-    "阿美語": [
+    "阿美": [
         ("南勢阿美語", "ami-x-iams"),
         ("秀姑巒阿美語", "ami-x-skl"),
         ("海岸阿美語", "ami-x-pswl"),
         ("馬蘭阿美語", "ami-x-frng"),
         ("恆春阿美語", "ami-x-pld"),
     ],
-    "泰雅語": [
+    "泰雅": [
         ("賽考利克泰雅語", "tay-x-sql"),
         ("澤敖利泰雅語", "tay-x-sul"),
         ("四季泰雅語", "tay-x-cql"),
@@ -16,26 +16,26 @@ LANGUAGE_GROUPS = {
         ("汶水泰雅語", "tay-x-mtuw"),
         ("萬大泰雅語", "tay-x-plngw"),
     ],
-    "排灣語": [
+    "排灣": [
         ("東排灣語", "pwn-x-kcdsn"),
         ("北排灣語", "pwn-x-vnrn"),
         ("中排灣語", "pwn-x-pnvn"),
         ("南排灣語", "pwn-x-ynvl"),
     ],
-    "布農語": [
+    "布農": [
         ("卓群布農語", "bnn-x-td"),
         ("卡群布農語", "bnn-x-bkh"),
         ("丹群布農語", "bnn-x-vtn"),
         ("巒群布農語", "bnn-x-bnz"),
         ("郡群布農語", "bnn-x-isbk"),
     ],
-    "卑南語": [
+    "卑南": [
         ("南王卑南語", "pyu-x-pym"),
         ("知本卑南語", "pyu-x-ktrp"),
         ("西群卑南語", "pyu-x-mkzy"),
         ("建和卑南語", "pyu-x-ksvk"),
     ],
-    "魯凱語": [
+    "魯凱": [
         ("東魯凱語", "dru-x-trmk"),
         ("霧臺魯凱語", "dru-x-ngdr"),
         ("大武魯凱語", "dru-x-lbw"),
@@ -43,20 +43,20 @@ LANGUAGE_GROUPS = {
         ("茂林魯凱語", "dru-x-tldr"),
         ("萬山魯凱語", "dru-x-opnh"),
     ],
-    "鄒語": [("鄒語", "tsu")],
-    "賽夏語": [("賽夏語", "xsy")],
-    "雅美語": [("雅美語", "tao")],
-    "邵語": [("邵語", "ssf")],
-    "噶瑪蘭語": [("噶瑪蘭語", "ckv")],
-    "太魯閣語": [("太魯閣語", "trv-x-truku")],
-    "撒奇萊雅語": [("撒奇萊雅語", "szy")],
-    "賽德克語": [
+    "鄒": [("鄒語", "tsu")],
+    "賽夏": [("賽夏語", "xsy")],
+    "雅美": [("雅美語", "tao")],
+    "邵": [("邵語", "ssf")],
+    "噶瑪蘭": [("噶瑪蘭語", "ckv")],
+    "太魯閣": [("太魯閣語", "trv-x-truku")],
+    "撒奇萊雅": [("撒奇萊雅語", "szy")],
+    "賽德克": [
         ("都達賽德克語", "trv-x-td"),
         ("德固達雅賽德克語", "trv-x-tgdy"),
         ("德鹿谷賽德克語", "trv-x-trk"),
     ],
-    "拉阿魯哇語": [("拉阿魯哇語", "sxr")],
-    "卡那卡那富語": [("卡那卡那富語", "xnb")],
+    "拉阿魯哇": [("拉阿魯哇語", "sxr")],
+    "卡那卡那富": [("卡那卡那富語", "xnb")],
 }
 
 
@@ -165,7 +165,5 @@ for _language_code, _nllb_code in TRANSLATION_LANGUAGE_CODES.items():
     LANGUAGE_CODES[_nllb_code] = _language_code
 
 
-# 族別名稱：LANGUAGE_GROUPS 的組名去掉「語」，和 FORMOSAN_LANGUAGES_MAP 名稱的前綴相同。
-ETHNICITIES = []
-for _group in LANGUAGE_GROUPS:
-    ETHNICITIES.append(_group.removesuffix("語"))
+# 族別名稱：所有模型的 Radio 共用這份，和 FORMOSAN_LANGUAGES_MAP 名稱的前綴相同。
+ETHNICITIES = list(LANGUAGE_GROUPS)
