@@ -111,7 +111,7 @@ TRANSLATION_LANGUAGE_CODES = {
 }
 
 
-# mt 與 tts 的語言別顯示名稱（「族別_語言別」）→ 翻譯模型的語言代碼。
+# mt 與 tts 的語言別顯示名稱（「族語別_語言別」）→ 翻譯模型的語言代碼。
 # 名稱要和 tts 的 g2p 語言別名稱一致（mt 呼叫 tts 時直接傳這個名稱），順序是 mt 介面的顯示順序。
 FORMOSAN_LANGUAGES_MAP = {
     "阿美_海岸": "ami_Coas",
@@ -165,5 +165,5 @@ for _language_code, _nllb_code in TRANSLATION_LANGUAGE_CODES.items():
     LANGUAGE_CODES[_nllb_code] = _language_code
 
 
-# 族別名稱：所有模型的 Radio 共用這份，和 FORMOSAN_LANGUAGES_MAP 名稱的前綴相同。
+# 族語別名稱：所有模型的 Radio 共用這份，和 FORMOSAN_LANGUAGES_MAP 名稱的前綴相同。
 ETHNICITIES = list(LANGUAGE_GROUPS)

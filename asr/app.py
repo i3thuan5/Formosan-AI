@@ -64,7 +64,7 @@ with render_demo(
             group_input = gr.Radio(
                 choices=ETHNICITIES,
                 value=DEFAULT_GROUP,
-                label="族別",
+                label="族語別",
                 elem_classes=["sa-radio-equal"],
             )
             language_input = gr.Radio(

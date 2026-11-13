@@ -266,7 +266,7 @@ with render_demo(
             with gr.Column():
                 default_speaker_ethnicity = gr.Radio(
                     choices=ETHNICITIES,
-                    label="步驟一：選擇族別",
+                    label="步驟一：選擇族語別",
                     value="阿美",
                     elem_classes=["sa-radio-equal"],
                 )
@@ -301,7 +301,7 @@ with render_demo(
             with gr.Column():
                 custom_speaker_ethnicity = gr.Radio(
                     choices=ETHNICITIES,
-                    label="步驟一：選擇族別與語言別",
+                    label="步驟一：選擇族語別與語言別",
                     value="阿美",
                     elem_classes=["sa-radio-equal"],
                 )
