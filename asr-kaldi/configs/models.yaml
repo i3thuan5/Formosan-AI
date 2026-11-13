@@ -20,19 +20,19 @@ formosan-kaldi-250514:
 
   dialect_mapping:
     阿美: formosan_ami
-    賽德克: formosan_sdq
-    太魯閣: formosan_trv
-    排灣: formosan_pwn
     泰雅: formosan_tay
+    排灣: formosan_pwn
     布農: formosan_bnn
     卑南: formosan_pyu
     魯凱: formosan_dru
-    賽夏: formosan_xsy
     鄒: formosan_tsu
+    賽夏: formosan_xsy
     雅美: formosan_tao
-    噶瑪蘭: formosan_ckv
-    撒奇萊雅: formosan_szy
     邵: formosan_ssf
+    噶瑪蘭: formosan_ckv
+    太魯閣: formosan_trv
+    撒奇萊雅: formosan_szy
+    賽德克: formosan_sdq
     拉阿魯哇: formosan_sxr
     卡那卡那富: formosan_xnb
 
@@ -57,18 +57,18 @@ formosan-kaldi-241014:
 
   dialect_mapping:
     阿美: formosan_ami
-    賽德克: formosan_sdq
-    太魯閣: formosan_trv
-    排灣: formosan_pwn
     泰雅: formosan_tay
+    排灣: formosan_pwn
     布農: formosan_bnn
     卑南: formosan_pyu
     魯凱: formosan_dru
-    賽夏: formosan_xsy
     鄒: formosan_tsu
+    賽夏: formosan_xsy
     雅美: formosan_tao
-    噶瑪蘭: formosan_ckv
-    撒奇萊雅: formosan_szy
     邵: formosan_ssf
+    噶瑪蘭: formosan_ckv
+    太魯閣: formosan_trv
+    撒奇萊雅: formosan_szy
+    賽德克: formosan_sdq
     拉阿魯哇: formosan_sxr
     卡那卡那富: formosan_xnb
