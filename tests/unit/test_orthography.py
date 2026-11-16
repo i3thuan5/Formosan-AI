@@ -1,7 +1,7 @@
 import csv
 from pathlib import Path
 
-from languages import LANGUAGE_GROUPS
+from languages import TRANSLATION_LANGUAGE_CODES
 from orthography import (
     LANGUAGE_RULES,
     b2f,
@@ -422,9 +422,5 @@ def test_all_languages_normalize_twice_same_as_once():
 
 
 def test_language_rules_keys_match_language_groups_in_order():
-    codes = []
-    for group in LANGUAGE_GROUPS.values():
-        for _label, code in group:
-            codes.append(code)
-    assert len(codes) == 42
-    assert list(LANGUAGE_RULES) == codes
+    assert len(LANGUAGE_RULES) == 42
+    assert list(LANGUAGE_RULES) == list(TRANSLATION_LANGUAGE_CODES)
