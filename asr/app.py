@@ -129,6 +129,29 @@ with render_demo(
         outputs=srt_output,
     )
 
+    with gr.Accordion("API 變更說明", open=False):
+        gr.Markdown(
+            """
+202611: 所有服務的族語別與語言別選項統一，endpoint 名稱沒有變更。
+
+| 項目 | 原本 | 現在 |
+| --- | --- | --- |
+| `/update_languages` 的族語別 | `阿美語`、`泰雅語`⋯⋯ | `阿美`、`泰雅`⋯⋯ |
+| 語言別選項的顯示名稱 | `海岸阿美語`、`霧臺魯凱語`⋯⋯ | `阿美_海岸`、`魯凱_霧台`⋯⋯ |
+| `/generate_srt` 未指定語言別時的預設值 | `ami-x-iams`（南勢阿美） | `ami-x-pswl`（海岸阿美） |
+
+語言別選項會隨族語別改變，要辨識阿美以外的語言別時，請在同一個 session 先呼叫 `/update_languages`，例如：
+
+```python
+from gradio_client import Client, handle_file
+
+client = Client("https://ai-labs.ilrdf.org.tw/sapolita/")
+client.predict("泰雅", api_name="/update_languages")
+srt = client.predict({"video": handle_file("video.mp4")}, "tay-x-sql", api_name="/generate_srt")
+```
+"""
+        )
+
 
 # create a FastAPI app
 app = FastAPI()
