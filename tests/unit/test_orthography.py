@@ -421,6 +421,6 @@ def test_all_languages_normalize_twice_same_as_once():
         assert normalize(once, language) == once, language
 
 
-def test_language_rules_keys_match_language_groups_in_order():
+def test_language_rules_keys_match_language_codes_in_csv_order():
     assert len(LANGUAGE_RULES) == 42
     assert list(LANGUAGE_RULES) == list(TRANSLATION_LANGUAGE_CODES)
