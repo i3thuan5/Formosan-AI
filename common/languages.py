@@ -1,70 +1,16 @@
 """Formosan UI labels, language codes and Whisper-to-NLLB language codes."""
 
-LANGUAGE_GROUPS = {
-    "阿美": [
-        ("南勢阿美語", "ami-x-iams"),
-        ("秀姑巒阿美語", "ami-x-skl"),
-        ("海岸阿美語", "ami-x-pswl"),
-        ("馬蘭阿美語", "ami-x-frng"),
-        ("恆春阿美語", "ami-x-pld"),
-    ],
-    "泰雅": [
-        ("賽考利克泰雅語", "tay-x-sql"),
-        ("澤敖利泰雅語", "tay-x-sul"),
-        ("四季泰雅語", "tay-x-cql"),
-        ("宜蘭澤敖利泰雅語", "tay-x-kls"),
-        ("汶水泰雅語", "tay-x-mtuw"),
-        ("萬大泰雅語", "tay-x-plngw"),
-    ],
-    "排灣": [
-        ("東排灣語", "pwn-x-kcdsn"),
-        ("北排灣語", "pwn-x-vnrn"),
-        ("中排灣語", "pwn-x-pnvn"),
-        ("南排灣語", "pwn-x-ynvl"),
-    ],
-    "布農": [
-        ("卓群布農語", "bnn-x-td"),
-        ("卡群布農語", "bnn-x-bkh"),
-        ("丹群布農語", "bnn-x-vtn"),
-        ("巒群布農語", "bnn-x-bnz"),
-        ("郡群布農語", "bnn-x-isbk"),
-    ],
-    "卑南": [
-        ("南王卑南語", "pyu-x-pym"),
-        ("知本卑南語", "pyu-x-ktrp"),
-        ("西群卑南語", "pyu-x-mkzy"),
-        ("建和卑南語", "pyu-x-ksvk"),
-    ],
-    "魯凱": [
-        ("東魯凱語", "dru-x-trmk"),
-        ("霧臺魯凱語", "dru-x-ngdr"),
-        ("大武魯凱語", "dru-x-lbw"),
-        ("多納魯凱語", "dru-x-kgdv"),
-        ("茂林魯凱語", "dru-x-tldr"),
-        ("萬山魯凱語", "dru-x-opnh"),
-    ],
-    "鄒": [("鄒語", "tsu")],
-    "賽夏": [("賽夏語", "xsy")],
-    "雅美": [("雅美語", "tao")],
-    "邵": [("邵語", "ssf")],
-    "噶瑪蘭": [("噶瑪蘭語", "ckv")],
-    "太魯閣": [("太魯閣語", "trv-x-truku")],
-    "撒奇萊雅": [("撒奇萊雅語", "szy")],
-    "賽德克": [
-        ("都達賽德克語", "trv-x-td"),
-        ("德固達雅賽德克語", "trv-x-tgdy"),
-        ("德鹿谷賽德克語", "trv-x-trk"),
-    ],
-    "拉阿魯哇": [("拉阿魯哇語", "sxr")],
-    "卡那卡那富": [("卡那卡那富語", "xnb")],
-}
+# 族語別名稱：所有模型的 Radio 共用這份，順序就是介面的顯示順序，和 FORMOSAN_LANGUAGES_MAP 名稱的前綴相同。
+ETHNICITIES = [
+    "阿美", "泰雅", "排灣", "布農", "卑南", "魯凱", "鄒", "賽夏",
+    "雅美", "邵", "噶瑪蘭", "太魯閣", "撒奇萊雅", "賽德克", "拉阿魯哇", "卡那卡那富",
+]
+
+DEFAULT_GROUP = ETHNICITIES[0]
 
 
-DEFAULT_GROUP = next(iter(LANGUAGE_GROUPS))
-
-
-# These are the language tokens used by the NLLB fine-tune. They are different
-# from the Whisper language tokens above and follow the translation Space.
+# asr（Whisper）的語言別代碼 → 翻譯模型（NLLB fine-tune）的語言代碼，兩者不同。
+# key 是「族語及語言別名稱 - 語言別名稱.csv」的語言別代碼。
 TRANSLATION_LANGUAGE_CODES = {
     "ami-x-iams": "ami_Sout",
     "ami-x-skl": "ami_Xiug",
@@ -165,5 +111,11 @@ for _language_code, _nllb_code in TRANSLATION_LANGUAGE_CODES.items():
     LANGUAGE_CODES[_nllb_code] = _language_code
 
 
-# 族語別名稱：所有模型的 Radio 共用這份，和 FORMOSAN_LANGUAGES_MAP 名稱的前綴相同。
-ETHNICITIES = list(LANGUAGE_GROUPS)
+# asr 的語言別選項：族語別 → [(顯示名稱, asr 語言別代碼)]。
+# 顯示名稱與順序直接取自 mt 的 FORMOSAN_LANGUAGES_MAP（如「阿美_海岸」），
+# 值是 asr 自己的語言別代碼（如 ami-x-pswl），兩邊經由 LANGUAGE_CODES 對應。
+LANGUAGE_GROUPS = {}
+for _ethnicity in ETHNICITIES:
+    LANGUAGE_GROUPS[_ethnicity] = []
+for _name, _nllb_code in FORMOSAN_LANGUAGES_MAP.items():
+    LANGUAGE_GROUPS[_name.split("_")[0]].append((_name, LANGUAGE_CODES[_nllb_code]))
