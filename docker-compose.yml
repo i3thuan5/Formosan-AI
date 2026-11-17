@@ -19,6 +19,7 @@ services:
     image: ithuan/formosan-ai:asr-kaldi
     volumes:
       - "./model_cache_asr_kaldi:/home/nonroot/.cache:rw"
+      - "./asr-kaldi/feedbacks:/feedbacks:rw"
     networks:
       - nginx-bridge
       - ai-labs-bridge
@@ -28,6 +29,7 @@ services:
       - SAPOLITA_WEBSITE_HOST=${SAPOLITA_WEBSITE_HOST:-ai-labs.ilrdf.org.tw}
       - GA_MEASUREMENT_ID=${GA_MEASUREMENT_ID:-}
       - GRADIO_ROOT_PATH=/sapolita-kaldi
+      - FEEDBACKS_PATH=/feedbacks
   tts:
     image: ithuan/formosan-ai:tts
     volumes:
@@ -45,6 +47,7 @@ services:
     image: ithuan/formosan-ai:mt
     volumes:
       - "./model_cache_mt:/home/nonroot/.cache:rw"
+      - "./mt/feedbacks:/feedbacks:rw"
     networks:
       - nginx-bridge
       - ai-labs-bridge
@@ -54,6 +57,7 @@ services:
       - SAPOLITA_WEBSITE_HOST=${SAPOLITA_WEBSITE_HOST:-ai-labs.ilrdf.org.tw}
       - GA_MEASUREMENT_ID=${GA_MEASUREMENT_ID:-}
       - GRADIO_ROOT_PATH=/kari-seejiq-tnpusu-ai-hmjil
+      - FEEDBACKS_PATH=/feedbacks
 
 networks:
   ai-labs-bridge:
