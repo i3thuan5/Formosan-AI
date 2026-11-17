@@ -7,7 +7,7 @@ import torch
 import uvicorn
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from languages import DEFAULT_GROUP, ETHNICITIES, LANGUAGE_GROUPS
+from languages import DEFAULT_GROUP, LANGUAGE_GROUPS
 from orthography import normalize
 from subtitles import render_srt
 from translation import Translator
@@ -62,7 +62,7 @@ with render_demo(
     with gr.Row():
         with gr.Column():
             group_input = gr.Radio(
-                choices=ETHNICITIES,
+                choices=list(LANGUAGE_GROUPS),
                 value=DEFAULT_GROUP,
                 label="族語別",
                 elem_classes=["sa-radio-equal"],
@@ -128,41 +128,6 @@ with render_demo(
         ],
         outputs=srt_output,
     )
-
-    with gr.Accordion("API 變更說明", open=False):
-        gr.Markdown(
-            """
-202611: 所有服務的族語別選項統一，endpoint 名稱沒有變更。
-
-| 項目 | 原本 | 現在 |
-| --- | --- | --- |
-| `/update_languages` 的族語別 | `阿美語`、`泰雅語`⋯⋯ | `阿美`、`泰雅`⋯⋯ |
-| 語言別選項的顯示名稱 | `海岸阿美語`、`霧臺魯凱語`⋯⋯ | `阿美_海岸`、`魯凱_霧台`⋯⋯ |
-| `/generate_srt` 未指定語言別時的預設值 | `ami-x-iams`（南勢阿美） | `ami-x-pswl`（海岸阿美） |
-
-以下列出在呼叫 `/update_languages` 後，預設的語言別有異動的族語別：
-
-| 族語別 | 原本 | 現在 |
-| --- | --- | --- |
-| 阿美 | `ami-x-iams`（南勢阿美語） | `ami-x-pswl`（阿美_海岸） |
-| 泰雅 | `tay-x-sql`（賽考利克泰雅語） | `tay-x-cql`（泰雅_四季） |
-| 排灣 | `pwn-x-kcdsn`（東排灣語） | `pwn-x-pnvn`（排灣_中） |
-| 布農 | `bnn-x-td`（卓群布農語） | `bnn-x-isbk`（布農_郡群） |
-| 卑南 | `pyu-x-pym`（南王卑南語） | `pyu-x-ksvk`（卑南_建和） |
-| 魯凱 | `dru-x-trmk`（東魯凱語） | `dru-x-lbw`（魯凱_大武） |
-| 賽德克 | `trv-x-td`（都達賽德克語） | `trv-x-trk`（賽德克_德鹿谷） |
-
-語言別選項會隨族語別改變，要辨識阿美以外的語言別時，請在同一個 session 先呼叫 `/update_languages`，並在 `/generate_srt` 明確傳入語言別代碼，例如：
-
-```python
-from gradio_client import Client, handle_file
-
-client = Client("https://ai-labs.ilrdf.org.tw/sapolita/")
-client.predict("泰雅", api_name="/update_languages")
-srt = client.predict({"video": handle_file("video.mp4")}, "tay-x-sql", api_name="/generate_srt")
-```
-"""
-        )
 
 
 # create a FastAPI app
