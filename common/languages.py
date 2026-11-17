@@ -122,11 +122,19 @@ for _language_code, _nllb_code in TRANSLATION_LANGUAGE_CODES.items():
     LANGUAGE_CODES[_nllb_code] = _language_code
 
 
-# asr 的語言別選項：族語別 → [(顯示名稱, asr 語言別代碼)]。
-# 顯示名稱與順序直接取自 mt 的 FORMOSAN_LANGUAGES_MAP（如「阿美_海岸」），
-# 值是 asr 自己的語言別代碼（如 ami-x-pswl），兩邊經由 LANGUAGE_CODES 對應。
-LANGUAGE_GROUPS = {}
-for _ethnicity in ETHNICITIES:
-    LANGUAGE_GROUPS[_ethnicity] = []
-for _name, _nllb_code in FORMOSAN_LANGUAGES_MAP.items():
-    LANGUAGE_GROUPS[_name.split("_")[0]].append((_name, LANGUAGE_CODES[_nllb_code]))
+# mt 與 tts 的語言別名稱（「族語別_語言別」，如「阿美_南勢」）→ 翻譯模型的語言代碼。
+# 由 LANGUAGE_GROUPS 產生，順序相同：「南勢阿美語」去掉族語別名稱「阿美語」，前面加上 ETHNICITIES 的「阿美_」。
+# 只有一個語言別的族語別，名稱就是 ETHNICITIES 的族語別（如「鄒」）。
+# 名稱要和 tts 的 g2p 語言別名稱一致，mt 呼叫 tts 時直接傳這個名稱。
+FORMOSAN_LANGUAGES_MAP = {}
+for _ethnicity, (_group, _languages) in zip(ETHNICITIES, LANGUAGE_GROUPS.items(), strict=True):
+    if _group != f"{_ethnicity}語":
+        raise ValueError(f"ETHNICITIES 和 LANGUAGE_GROUPS 的順序或名稱不一致：{_ethnicity}、{_group}")
+    for _label, _language_code in _languages:
+        if _label == _group:
+            _name = _ethnicity
+        elif _label.endswith(_group):
+            _name = f"{_ethnicity}_{_label.removesuffix(_group)}"
+        else:
+            raise ValueError(f"語言別名稱要以族語別名稱結尾：{_label}、{_group}")
+        FORMOSAN_LANGUAGES_MAP[_name] = TRANSLATION_LANGUAGE_CODES[_language_code]
