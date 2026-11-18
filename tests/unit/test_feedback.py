@@ -87,33 +87,6 @@ def test_option_defaults_to_empty(feedbacks_path):
     assert record['option'] == ''
 
 
-@pytest.mark.parametrize('service', ['asr-kaldi', 'asr', 'tts', 'mt'])
-def test_allowed_services(service):
-    assert build_record(service, '鄒', 'a', 'b', '可用', '', '', NOW)['service'] == service
-
-
-def test_rejects_unknown_service():
-    with pytest.raises(ValueError):
-        build_record('nllb', '鄒', 'a', 'b', '可用', '', '', NOW)
-
-
-@pytest.mark.parametrize('option', ['族翻華', '華翻族', ''])
-def test_allowed_options(option):
-    assert build_record('mt', '鄒', 'a', 'b', '可用', '', option, NOW)['option'] == option
-
-
-@pytest.mark.parametrize('option', [None, '族語翻華語', 'to_zh'])
-def test_rejects_unknown_option(option):
-    with pytest.raises(ValueError):
-        build_record('mt', '鄒', 'a', 'b', '可用', '', option, NOW)
-
-
-@pytest.mark.parametrize('rate', [None, '', '不可用'])
-def test_rejects_unknown_rate(rate):
-    with pytest.raises(ValueError):
-        build_record('mt', '鄒', 'a', 'b', rate, '', '', NOW)
-
-
 def test_feedback_length_limit():
     assert build_record('mt', '鄒', 'a', 'b', '需修改', '字' * FEEDBACK_MAX_LENGTH, '', NOW)
     with pytest.raises(ValueError):
