@@ -177,6 +177,7 @@ package-lock.json
 
 .env
 model_cache*
+feedbacks/
 venv/
 .claude/
 kithann/

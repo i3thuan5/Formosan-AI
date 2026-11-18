@@ -11,7 +11,7 @@ RUN --mount=target=/tmp/requirements.txt,source=requirements.txt \
     --no-cache-dir \
     -r /tmp/requirements.txt
 
-COPY --from=formosan-ai-common /app/utils.py /app/colors.py /app/
+COPY --from=formosan-ai-common /app/utils.py /app/colors.py /app/feedback.py /app/
 COPY --from=formosan-ai-common /app/common_static/ /app/common_static/
 COPY --link app.py DEMO.md /app/
 COPY --link configs/ /app/configs/

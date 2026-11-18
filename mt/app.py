@@ -5,6 +5,7 @@ import gradio as gr
 import torch
 from gradio_client.exceptions import AppError
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+from feedback import FEEDBACK_MAX_LENGTH, save_feedback
 from languages import ETHNICITIES, FORMOSAN_LANGUAGES_MAP, LANGUAGE_CODES
 from orthography import normalize
 from tts_client import TTS_TIMEOUT_SECONDS, TtsClient
@@ -91,6 +92,121 @@ def synthesize(text: str, tgt_lang: str):
     return audio
 
 
+FEEDBACK_SERVICE = "mt"
+FEEDBACK_TO_ZH = "族翻華"
+FEEDBACK_TO_FORMOSAN = "華翻族"
+FEEDBACK_OPTIONS = (FEEDBACK_TO_ZH, FEEDBACK_TO_FORMOSAN)
+FEEDBACK_RATES = ("可用", "需修改", "我不確定")
+
+
+def build_feedback_survey():
+    # 翻譯了才顯示；snapshot 存翻譯當時ê語別、原文、譯文，
+    # 免得使用者後來改 textbox 內容，存著對袂齊ê資料
+    snapshot = gr.State(None)
+    # 送出了後 form khàm 起來，干焦賰 thanks 一逝
+    with gr.Column(visible=False) as survey:
+        with gr.Group() as form:
+            rate = gr.Radio(
+                label="這個翻譯結果可以用嗎？",
+                choices=list(FEEDBACK_RATES),
+                value=None,
+            )
+            feedback = gr.Textbox(
+                label=f"修改建議（選填，最多 {FEEDBACK_MAX_LENGTH} 字）",
+                lines=3,
+                max_length=FEEDBACK_MAX_LENGTH,
+            )
+            submit_btn = gr.Button("送出回饋")
+        thanks = gr.Markdown("感謝您的回饋！", visible=False)
+
+    submit_btn.click(
+        submit_feedback,
+        inputs=[snapshot, rate, feedback],
+        outputs=[form, thanks],
+        api_name=False,
+        show_api=False,
+    )
+    return {
+        "snapshot": snapshot,
+        "survey": survey,
+        "form": form,
+        "rate": rate,
+        "feedback": feedback,
+        "thanks": thanks,
+    }
+
+
+def show_feedback_survey(survey, option, input_text, lang_code, output_text):
+    # 譯文空白就毋免問
+    snapshot = None
+    if output_text.strip():
+        snapshot = {
+            "option": option,
+            "language": CODE_TO_LANGUAGE[lang_code],
+            "input": input_text,
+            "output": output_text,
+        }
+    return {
+        survey["snapshot"]: snapshot,
+        survey["survey"]: gr.Column(visible=snapshot is not None),
+        survey["form"]: gr.Group(visible=True),
+        survey["rate"]: gr.Radio(value=None),
+        survey["feedback"]: gr.Textbox(value=""),
+        survey["thanks"]: gr.Markdown(visible=False),
+    }
+
+
+def bind_feedback_survey(translate_event, translate_btn, survey, option, input_text, lang_code, output):
+    # 按翻譯時先 khàm 起來，翻譯成功才 koh 顯示新ê問卷
+    translate_btn.click(
+        lambda: gr.Column(visible=False),
+        outputs=survey["survey"],
+        api_name=False,
+        queue=False,
+        show_api=False,
+    )
+    translate_event.success(
+        lambda text, code, result: show_feedback_survey(survey, option, text, code, result),
+        inputs=[input_text, lang_code, output],
+        outputs={
+            survey["snapshot"],
+            survey["survey"],
+            survey["rate"],
+            survey["feedback"],
+            survey["form"],
+            survey["thanks"],
+        },
+        api_name=False,
+        queue=False,
+        show_api=False,
+    )
+
+
+def submit_feedback(snapshot, rate, feedback):
+    if snapshot is None:
+        raise gr.Error("請先翻譯。")
+    if snapshot["option"] not in FEEDBACK_OPTIONS:
+        raise gr.Error("翻譯方向有誤，請重新翻譯。")
+    if rate not in FEEDBACK_RATES:
+        raise gr.Error("請選擇翻譯結果是否可用。")
+    if len(feedback or "") > FEEDBACK_MAX_LENGTH:
+        raise gr.Error(f"修改建議最多 {FEEDBACK_MAX_LENGTH} 字。")
+    try:
+        save_feedback(
+            FEEDBACK_SERVICE,
+            snapshot["language"],
+            snapshot["input"],
+            snapshot["output"],
+            rate,
+            feedback,
+            option=snapshot["option"],
+        )
+    except OSError:
+        raise gr.Error("回饋儲存失敗，請稍候再試。")
+    # 送出了就 khàm 問卷，避免仝一个翻譯重複送
+    return gr.Group(visible=False), gr.Markdown(visible=True)
+
+
 with render_demo(
     demo_md_filename="DEMO.md",
     js="""
@@ -145,6 +261,7 @@ with render_demo(
         with gr.Column(elem_classes=["sa-copy-wrap"]):
             to_zh_output = gr.Textbox(label="翻譯結果", lines=6)
             tsoo_khokpih_button(to_zh_output, "複製譯文", "to-zh-output-kopi")
+        to_zh_survey = build_feedback_survey()
 
         to_zh_ethnicity.change(
             lambda ethnicity: gr.Radio(
@@ -157,10 +274,20 @@ with render_demo(
             api_name="to_zh_languages",
         )
 
-        to_zh_btn.click(
+        to_zh_translate_event = to_zh_btn.click(
             translate,
             inputs=[to_zh_input_text, to_zh_src_lang, to_zh_tgt_lang],
             outputs=to_zh_output,
+        )
+        # 族語 ⮕ 華語：language 記原文ê族語
+        bind_feedback_survey(
+            to_zh_translate_event,
+            to_zh_btn,
+            to_zh_survey,
+            FEEDBACK_TO_ZH,
+            to_zh_input_text,
+            to_zh_src_lang,
+            to_zh_output,
         )
 
     with gr.Tab("華語 ⮕ 族語"):
@@ -189,6 +316,7 @@ with render_demo(
             to_formosan_output = gr.Textbox(label="翻譯結果", lines=6)
             tsoo_khokpih_button(
                 to_formosan_output, "複製譯文", "to-formosan-output-kopi")
+        to_formosan_survey = build_feedback_survey()
         to_formosan_tts_btn = gr.Button("合成語音")
         to_formosan_audio = gr.Audio(
             label="合成結果", show_share_button=False, show_download_button=True
@@ -213,11 +341,21 @@ with render_demo(
             queue=False,
             show_api=False,
         )
-        to_formosan_btn.click(
+        to_formosan_translate_event = to_formosan_btn.click(
             translate,
             inputs=[to_formosan_input_text,
                     to_formosan_src_lang, to_formosan_tgt_lang],
             outputs=to_formosan_output,
+        )
+        # 華語 ⮕ 族語：language 記譯文ê族語
+        bind_feedback_survey(
+            to_formosan_translate_event,
+            to_formosan_btn,
+            to_formosan_survey,
+            FEEDBACK_TO_FORMOSAN,
+            to_formosan_input_text,
+            to_formosan_tgt_lang,
+            to_formosan_output,
         )
 
         to_formosan_tts_btn.click(

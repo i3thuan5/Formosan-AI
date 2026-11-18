@@ -41,6 +41,17 @@
         path: "{{ tsuanan_path }}/model_cache_mt"
         state: directory
         mode: '1777'
+    # 容器內底用 nonroot（uid/gid 1000）寫，交予 1000 就好，毋免開 1777
+    - name: 設定問卷回饋檔案簿仔
+      ansible.builtin.file:
+        path: "{{ tsuanan_path }}/{{ item }}/feedbacks"
+        state: directory
+        owner: '1000'
+        group: '1000'
+        mode: '0750'
+      loop:
+        - asr-kaldi
+        - mt
     - name: Log into DockerHub
       community.docker.docker_login:
         username: "{{ DOCKER_USER }}"
