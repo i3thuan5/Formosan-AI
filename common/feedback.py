@@ -8,9 +8,6 @@ from pathlib import Path
 FEEDBACKS_PATH = getenv('FEEDBACKS_PATH', default='./feedbacks')
 TAIWAN_TIMEZONE = timezone(timedelta(hours=8), 'Asia/Taipei')
 
-SERVICES = ('asr-kaldi', 'asr', 'tts', 'mt')
-OPTIONS = ('族翻華', '華翻族', '')
-RATES = ('可用', '需修改', '我不確定')
 FEEDBACK_MAX_LENGTH = 500
 TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
@@ -25,8 +22,6 @@ def feedbacks_filename(service, now):
 def build_record(
     service, language, input_text, output_text, rate, feedback, option, now,
 ):
-    if option not in OPTIONS:
-        raise ValueError(f'option 只能是 {OPTIONS}：{option!r}')
     feedback = (feedback or '').strip()
     if len(feedback) > FEEDBACK_MAX_LENGTH:
         raise ValueError(f'feedback 最多 {FEEDBACK_MAX_LENGTH} 字')

@@ -5,7 +5,7 @@ import gradio as gr
 import torch
 from gradio_client.exceptions import AppError
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-from feedback import FEEDBACK_MAX_LENGTH, RATES, save_feedback
+from feedback import FEEDBACK_MAX_LENGTH, save_feedback
 from languages import ETHNICITIES, FORMOSAN_LANGUAGES_MAP, LANGUAGE_CODES
 from orthography import normalize
 from tts_client import TTS_TIMEOUT_SECONDS, TtsClient
@@ -93,6 +93,10 @@ def synthesize(text: str, tgt_lang: str):
 
 
 FEEDBACK_SERVICE = "mt"
+FEEDBACK_TO_ZH = "族翻華"
+FEEDBACK_TO_FORMOSAN = "華翻族"
+FEEDBACK_OPTIONS = (FEEDBACK_TO_ZH, FEEDBACK_TO_FORMOSAN)
+FEEDBACK_RATES = ("可用", "需修改", "我不確定")
 
 
 def build_feedback_survey():
@@ -104,7 +108,7 @@ def build_feedback_survey():
         with gr.Group() as form:
             rate = gr.Radio(
                 label="這個翻譯結果可以用嗎？",
-                choices=list(RATES),
+                choices=list(FEEDBACK_RATES),
                 value=None,
             )
             feedback = gr.Textbox(
@@ -181,7 +185,9 @@ def bind_feedback_survey(translate_event, translate_btn, survey, option, input_t
 def submit_feedback(snapshot, rate, feedback):
     if snapshot is None:
         raise gr.Error("請先翻譯。")
-    if rate not in RATES:
+    if snapshot["option"] not in FEEDBACK_OPTIONS:
+        raise gr.Error("翻譯方向有誤，請重新翻譯。")
+    if rate not in FEEDBACK_RATES:
         raise gr.Error("請選擇翻譯結果是否可用。")
     if len(feedback or "") > FEEDBACK_MAX_LENGTH:
         raise gr.Error(f"修改建議最多 {FEEDBACK_MAX_LENGTH} 字。")
@@ -278,7 +284,7 @@ with render_demo(
             to_zh_translate_event,
             to_zh_btn,
             to_zh_survey,
-            "族翻華",
+            FEEDBACK_TO_ZH,
             to_zh_input_text,
             to_zh_src_lang,
             to_zh_output,
@@ -346,7 +352,7 @@ with render_demo(
             to_formosan_translate_event,
             to_formosan_btn,
             to_formosan_survey,
-            "華翻族",
+            FEEDBACK_TO_FORMOSAN,
             to_formosan_input_text,
             to_formosan_tgt_lang,
             to_formosan_output,
