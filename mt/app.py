@@ -132,11 +132,12 @@ def build_feedback_survey():
     }
 
 
-def show_feedback_survey(survey, input_text, lang_code, output_text):
+def show_feedback_survey(survey, option, input_text, lang_code, output_text):
     # 譯文空白就毋免問
     snapshot = None
     if output_text.strip():
         snapshot = {
+            "option": option,
             "language": CODE_TO_LANGUAGE[lang_code],
             "input": input_text,
             "output": output_text,
@@ -151,7 +152,7 @@ def show_feedback_survey(survey, input_text, lang_code, output_text):
     }
 
 
-def bind_feedback_survey(translate_event, translate_btn, survey, input_text, lang_code, output):
+def bind_feedback_survey(translate_event, translate_btn, survey, option, input_text, lang_code, output):
     # 按翻譯時先 khàm 起來，翻譯成功才 koh 顯示新ê問卷
     translate_btn.click(
         lambda: gr.Column(visible=False),
@@ -161,7 +162,7 @@ def bind_feedback_survey(translate_event, translate_btn, survey, input_text, lan
         show_api=False,
     )
     translate_event.success(
-        lambda text, code, result: show_feedback_survey(survey, text, code, result),
+        lambda text, code, result: show_feedback_survey(survey, option, text, code, result),
         inputs=[input_text, lang_code, output],
         outputs={
             survey["snapshot"],
@@ -192,6 +193,7 @@ def submit_feedback(snapshot, rate, feedback):
             snapshot["output"],
             rate,
             feedback,
+            option=snapshot["option"],
         )
     except OSError:
         raise gr.Error("回饋儲存失敗，請稍候再試。")
@@ -276,6 +278,7 @@ with render_demo(
             to_zh_translate_event,
             to_zh_btn,
             to_zh_survey,
+            "族翻華",
             to_zh_input_text,
             to_zh_src_lang,
             to_zh_output,
@@ -343,6 +346,7 @@ with render_demo(
             to_formosan_translate_event,
             to_formosan_btn,
             to_formosan_survey,
+            "華翻族",
             to_formosan_input_text,
             to_formosan_tgt_lang,
             to_formosan_output,

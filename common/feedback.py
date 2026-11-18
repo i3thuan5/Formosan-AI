@@ -9,27 +9,26 @@ FEEDBACKS_PATH = getenv('FEEDBACKS_PATH', default='./feedbacks')
 TAIWAN_TIMEZONE = timezone(timedelta(hours=8), 'Asia/Taipei')
 
 SERVICES = ('asr-kaldi', 'asr', 'tts', 'mt')
+OPTIONS = ('族翻華', '華翻族', '')
 RATES = ('可用', '需修改', '我不確定')
 FEEDBACK_MAX_LENGTH = 500
+TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 # 同一個 process 內的多個 request 同時寫，愛鎖起來才袂兩行黏做伙
 _write_lock = threading.Lock()
-# service → 這個 process 寫ê檔名。process 第一擺寫 service ê回饋時才決定，
-# 了後攏 append 佇仝一个檔；重開服務就開新檔
-_filenames = {}
 
 
-def feedbacks_filename(service, now=None):
-    # service-YYYYMMDDHHmmssSSS.jsonl
-    if now is None:
-        now = datetime.now(TAIWAN_TIMEZONE)
-    timestamp = now.strftime('%Y%m%d%H%M%S') + f'{now.microsecond // 1000:03d}'
-    return f'{service}-{timestamp}.jsonl'
+def feedbacks_filename(service, now):
+    return f'{service}-{now.strftime("%Y%m")}.jsonl'
 
 
-def build_record(service, language, input_text, output_text, rate, feedback):
+def build_record(
+    service, language, input_text, output_text, rate, feedback, option, now,
+):
     if service not in SERVICES:
         raise ValueError(f'service 只能是 {SERVICES}：{service!r}')
+    if option not in OPTIONS:
+        raise ValueError(f'option 只能是 {OPTIONS}：{option!r}')
     if rate not in RATES:
         raise ValueError(f'rate 只能是 {RATES}：{rate!r}')
     feedback = (feedback or '').strip()
@@ -37,23 +36,27 @@ def build_record(service, language, input_text, output_text, rate, feedback):
         raise ValueError(f'feedback 最多 {FEEDBACK_MAX_LENGTH} 字')
     return {
         'service': service,
+        'option': option,
         'language': language,
         'input': input_text,
         'output': output_text,
         'rate': rate,
         'feedback': feedback,
+        'time': now.strftime(TIME_FORMAT),
     }
 
 
-def save_feedback(service, language, input_text, output_text, rate, feedback):
+def save_feedback(
+    service, language, input_text, output_text, rate, feedback, option='',
+):
+    # 檔名佮 time 欄位用仝一个時間，跨月彼一刻才袂一筆分兩月
+    now = datetime.now(TAIWAN_TIMEZONE)
     record = build_record(
-        service, language, input_text, output_text, rate, feedback)
+        service, language, input_text, output_text, rate, feedback, option, now)
     line = json.dumps(record, ensure_ascii=False) + '\n'
     folder = Path(FEEDBACKS_PATH)
     with _write_lock:
         folder.mkdir(parents=True, exist_ok=True)
-        if service not in _filenames:
-            _filenames[service] = feedbacks_filename(service)
-        with open(folder / _filenames[service], 'a', encoding='utf-8') as tong:
+        with open(folder / feedbacks_filename(service, now), 'a', encoding='utf-8') as tong:
             tong.write(line)
     return record
