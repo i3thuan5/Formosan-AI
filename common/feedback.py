@@ -25,12 +25,8 @@ def feedbacks_filename(service, now):
 def build_record(
     service, language, input_text, output_text, rate, feedback, option, now,
 ):
-    if service not in SERVICES:
-        raise ValueError(f'service 只能是 {SERVICES}：{service!r}')
     if option not in OPTIONS:
         raise ValueError(f'option 只能是 {OPTIONS}：{option!r}')
-    if rate not in RATES:
-        raise ValueError(f'rate 只能是 {RATES}：{rate!r}')
     feedback = (feedback or '').strip()
     if len(feedback) > FEEDBACK_MAX_LENGTH:
         raise ValueError(f'feedback 最多 {FEEDBACK_MAX_LENGTH} 字')
