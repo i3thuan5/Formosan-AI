@@ -1,5 +1,11 @@
 """Formosan UI labels, language codes and Whisper-to-NLLB language codes."""
 
+ETHNICITIES = [
+    "阿美", "泰雅", "排灣", "布農", "卑南", "魯凱", "鄒", "賽夏",
+    "雅美", "邵", "噶瑪蘭", "太魯閣", "撒奇萊雅", "賽德克", "拉阿魯哇", "卡那卡那富",
+]
+
+
 LANGUAGE_GROUPS = {
     "阿美語": [
         ("南勢阿美語", "ami-x-iams"),
@@ -58,12 +64,6 @@ LANGUAGE_GROUPS = {
     "拉阿魯哇語": [("拉阿魯哇語", "sxr")],
     "卡那卡那富語": [("卡那卡那富語", "xnb")],
 }
-
-
-ETHNICITIES = [
-    "阿美", "泰雅", "排灣", "布農", "卑南", "魯凱", "鄒", "賽夏",
-    "雅美", "邵", "噶瑪蘭", "太魯閣", "撒奇萊雅", "賽德克", "拉阿魯哇", "卡那卡那富",
-]
 
 
 DEFAULT_GROUP = next(iter(LANGUAGE_GROUPS))
