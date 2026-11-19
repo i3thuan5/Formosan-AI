@@ -96,4 +96,4 @@ def test_formosan_language_names_match_language_groups():
         name_of[LANGUAGE_CODES[nllb_code]] = name
     for group, languages in LANGUAGE_GROUPS.items():
         for label, code in languages:
-            assert f"{name_of[code].split('_')[0]}語" == group, (label, name_of[code])
+            assert group == f"{name_of[code].split('_')[0]}語", (label, name_of[code])
