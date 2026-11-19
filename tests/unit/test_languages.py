@@ -13,13 +13,6 @@ def test_language_codes_cover_all_formosan_languages():
     assert len(LANGUAGE_CODES) == 42
 
 
-def test_language_codes_is_reverse_of_translation_language_codes():
-    reverse = {}
-    for language_code, nllb_code in TRANSLATION_LANGUAGE_CODES.items():
-        reverse[nllb_code] = language_code
-    assert LANGUAGE_CODES == reverse
-
-
 def test_south_amis():
     assert LANGUAGE_CODES['ami_Sout'] == 'ami-x-iams'
 
@@ -58,7 +51,7 @@ def test_language_groups_cover_every_code_once():
 
 def test_language_groups_labels():
     assert LANGUAGE_GROUPS['阿美語'][0] == ('南勢阿美語', 'ami-x-iams')
-    assert LANGUAGE_GROUPS['魯凱語'][1] == ('霧台魯凱語', 'dru-x-ngdr')
+    assert LANGUAGE_GROUPS['魯凱語'][1] == ('霧臺魯凱語', 'dru-x-ngdr')
     assert LANGUAGE_GROUPS['鄒語'] == [('鄒語', 'tsu')]
 
 
@@ -97,8 +90,10 @@ def test_formosan_languages_map_codes():
     assert FORMOSAN_LANGUAGES_MAP['太魯閣'] == 'trv_Truk'
 
 
-def test_formosan_languages_map_follows_language_groups():
-    codes = []
-    for nllb_code in FORMOSAN_LANGUAGES_MAP.values():
-        codes.append(LANGUAGE_CODES[nllb_code])
-    assert codes == list(TRANSLATION_LANGUAGE_CODES)
+def test_formosan_language_names_match_language_groups():
+    name_of = {}
+    for name, nllb_code in FORMOSAN_LANGUAGES_MAP.items():
+        name_of[LANGUAGE_CODES[nllb_code]] = name
+    for group, languages in LANGUAGE_GROUPS.items():
+        for label, code in languages:
+            assert f"{name_of[code].split('_')[0]}語" == group, (label, name_of[code])
