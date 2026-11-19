@@ -69,72 +69,58 @@ LANGUAGE_GROUPS = {
 DEFAULT_GROUP = next(iter(LANGUAGE_GROUPS))
 
 
-# asr（Whisper）的語言別代碼 → 翻譯模型（NLLB fine-tune）的語言代碼，兩者不同。
-TRANSLATION_LANGUAGE_CODES = {
-    "ami-x-iams": "ami_Sout",
-    "ami-x-skl": "ami_Xiug",
-    "ami-x-pswl": "ami_Coas",
-    "ami-x-frng": "ami_Mala",
-    "ami-x-pld": "ami_Heng",
-    "tay-x-sql": "tay_Seko",
-    "tay-x-sul": "tay_Zeao",
-    "tay-x-cql": "tay_Four",
-    "tay-x-kls": "tay_Yzea",
-    "tay-x-mtuw": "tay_Wens",
-    "tay-x-plngw": "tay_Wand",
-    "pwn-x-kcdsn": "pwn_East",
-    "pwn-x-vnrn": "pwn_Nrth",
-    "pwn-x-pnvn": "pwn_Cent",
-    "pwn-x-ynvl": "pwn_Sout",
-    "bnn-x-td": "bnn_Zhuo",
-    "bnn-x-bkh": "bnn_Kaqu",
-    "bnn-x-vtn": "bnn_Tanq",
-    "bnn-x-bnz": "bnn_Luan",
-    "bnn-x-isbk": "bnn_Junq",
-    "pyu-x-pym": "pyu_Nanw",
-    "pyu-x-ktrp": "pyu_Zhib",
-    "pyu-x-mkzy": "pyu_Xiqu",
-    "pyu-x-ksvk": "pyu_Jian",
-    "dru-x-trmk": "dru_East",
-    "dru-x-ngdr": "dru_Wuta",
-    "dru-x-lbw": "dru_Dawu",
-    "dru-x-kgdv": "dru_Dona",
-    "dru-x-tldr": "dru_Maol",
-    "dru-x-opnh": "dru_Wans",
-    "tsu": "tsu_Tsou",
-    "xsy": "xsy_Sais",
-    "tao": "tao_Yami",
-    "ssf": "ssf_Thao",
-    "ckv": "ckv_Kava",
-    "trv-x-truku": "trv_Truk",
-    "szy": "szy_Saki",
-    "trv-x-td": "trv_Duda",
-    "trv-x-tgdy": "trv_Tegu",
-    "trv-x-trk": "trv_Delu",
-    "sxr": "sxr_Saar",
-    "xnb": "xnb_Kana",
+OLD_TRANSLATION_LANGUAGE_CODES = {
+    "ami-x-iams": ("ami_Sout", "阿美_南勢"),
+    "ami-x-skl": ("ami_Xiug", "阿美_秀姑巒"),
+    "ami-x-pswl": ("ami_Coas", "阿美_海岸"),
+    "ami-x-frng": ("ami_Mala", "阿美_馬蘭"),
+    "ami-x-pld": ("ami_Heng", "阿美_恆春"),
+    "tay-x-sql": ("tay_Seko", "泰雅_賽考利克"),
+    "tay-x-sul": ("tay_Zeao", "泰雅_澤敖利"),
+    "tay-x-cql": ("tay_Four", "泰雅_四季"),
+    "tay-x-kls": ("tay_Yzea", "泰雅_宜蘭澤敖利"),
+    "tay-x-mtuw": ("tay_Wens", "泰雅_汶水"),
+    "tay-x-plngw": ("tay_Wand", "泰雅_萬大"),
+    "pwn-x-kcdsn": ("pwn_East", "排灣_東"),
+    "pwn-x-vnrn": ("pwn_Nrth", "排灣_北"),
+    "pwn-x-pnvn": ("pwn_Cent", "排灣_中"),
+    "pwn-x-ynvl": ("pwn_Sout", "排灣_南"),
+    "bnn-x-td": ("bnn_Zhuo", "布農_卓群"),
+    "bnn-x-bkh": ("bnn_Kaqu", "布農_卡群"),
+    "bnn-x-vtn": ("bnn_Tanq", "布農_丹群"),
+    "bnn-x-bnz": ("bnn_Luan", "布農_巒群"),
+    "bnn-x-isbk": ("bnn_Junq", "布農_郡群"),
+    "pyu-x-pym": ("pyu_Nanw", "卑南_南王"),
+    "pyu-x-ktrp": ("pyu_Zhib", "卑南_知本"),
+    "pyu-x-mkzy": ("pyu_Xiqu", "卑南_西群"),
+    "pyu-x-ksvk": ("pyu_Jian", "卑南_建和"),
+    "dru-x-trmk": ("dru_East", "魯凱_東"),
+    "dru-x-ngdr": ("dru_Wuta", "魯凱_霧台"),
+    "dru-x-lbw": ("dru_Dawu", "魯凱_大武"),
+    "dru-x-kgdv": ("dru_Dona", "魯凱_多納"),
+    "dru-x-tldr": ("dru_Maol", "魯凱_茂林"),
+    "dru-x-opnh": ("dru_Wans", "魯凱_萬山"),
+    "tsu": ("tsu_Tsou", "鄒"),
+    "xsy": ("xsy_Sais", "賽夏"),
+    "tao": ("tao_Yami", "雅美"),
+    "ssf": ("ssf_Thao", "邵"),
+    "ckv": ("ckv_Kava", "噶瑪蘭"),
+    "trv-x-truku": ("trv_Truk", "太魯閣"),
+    "szy": ("szy_Saki", "撒奇萊雅"),
+    "trv-x-td": ("trv_Duda", "賽德克_都達"),
+    "trv-x-tgdy": ("trv_Tegu", "賽德克_德固達雅"),
+    "trv-x-trk": ("trv_Delu", "賽德克_德鹿谷"),
+    "sxr": ("sxr_Saar", "拉阿魯哇"),
+    "xnb": ("xnb_Kana", "卡那卡那富"),
 }
 
-
-# 翻譯模型的語言代碼 → 語言別代碼。
-LANGUAGE_CODES = {}
-for _language_code, _nllb_code in TRANSLATION_LANGUAGE_CODES.items():
-    LANGUAGE_CODES[_nllb_code] = _language_code
-
-
-# mt 與 tts 的語言別名稱（「族語別_語言別」，如「阿美_南勢」）→ 翻譯模型的語言代碼。
-# 由 LANGUAGE_GROUPS 產生，順序相同：「南勢阿美語」去掉族語別名稱「阿美語」，前面加上 ETHNICITIES 的「阿美_」。
-# 只有一個語言別的族語別，名稱就是 ETHNICITIES 的族語別（如「鄒」）。
-# 名稱要和 tts 的 g2p 語言別名稱一致，mt 呼叫 tts 時直接傳這個名稱。
+# TRANSLATION_LANGUAGE_CODES：語言別代碼 → 翻譯模型的語言代碼。
+# FORMOSAN_LANGUAGES_MAP：mt 與 tts 的語言別名稱 → 翻譯模型的語言代碼，順序是 mt 介面的顯示順序。
+# LANGUAGE_CODES：翻譯模型的語言代碼 → 語言別代碼。
+TRANSLATION_LANGUAGE_CODES = {}
 FORMOSAN_LANGUAGES_MAP = {}
-for _ethnicity, (_group, _languages) in zip(ETHNICITIES, LANGUAGE_GROUPS.items(), strict=True):
-    if _group != f"{_ethnicity}語":
-        raise ValueError(f"ETHNICITIES 和 LANGUAGE_GROUPS 的順序或名稱不一致：{_ethnicity}、{_group}")
-    for _label, _language_code in _languages:
-        if _label == _group:
-            _name = _ethnicity
-        elif _label.endswith(_group):
-            _name = f"{_ethnicity}_{_label.removesuffix(_group)}"
-        else:
-            raise ValueError(f"語言別名稱要以族語別名稱結尾：{_label}、{_group}")
-        FORMOSAN_LANGUAGES_MAP[_name] = TRANSLATION_LANGUAGE_CODES[_language_code]
+LANGUAGE_CODES = {}
+for _new_code, (_old_code, _old_name) in OLD_TRANSLATION_LANGUAGE_CODES.items():
+    TRANSLATION_LANGUAGE_CODES[_new_code] = _old_code
+    FORMOSAN_LANGUAGES_MAP[_old_name] = _old_code
+    LANGUAGE_CODES[_old_code] = _new_code
