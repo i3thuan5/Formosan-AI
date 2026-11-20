@@ -53,7 +53,7 @@
   wav: ./assets/ref_wav/ilrdf-dictionary-7AB0E3F0-BE16-F011-BD67-00155DB40116.wav
   source:
     來源: 族語辭典 20260702_16族前台上線單字_02泰雅語7227筆(fin)(哈瑪星).xlsx
-    語別: 賽考利克泰雅語
+    語言別: 賽考利克泰雅語
     詞條: psbswak
     詞條ID: F141A89F-6709-F011-BD64-00155DB40116
     釋義: 將噎到
@@ -71,7 +71,7 @@
   wav: ./assets/ref_wav/ilrdf-dictionary-0A7C9E81-9205-5F90-F38E-3A1C7C86B7BD.wav
   source:
     來源: 族語辭典 20260702_16族前台上線單字_02泰雅語7227筆(fin)(哈瑪星).xlsx
-    語別: 賽考利克泰雅語
+    語言別: 賽考利克泰雅語
     詞條: mniru
     詞條ID: A28C3E1B-D26B-7E86-5C37-3A19B0E12F7E
     釋義: 寫作者
@@ -129,7 +129,7 @@
   wav: ./assets/ref_wav/ilrdf-dictionary-BCC42BCF-D818-F011-BD68-00155DB40116.wav
   source:
     來源: 族語辭典 20260702_16族前台上線單字_04布農語8961筆(fin)(哈瑪星).xlsx
-    語別: 郡群布農語
+    語言別: 郡群布農語
     詞條: malkamaaz
     詞條ID: BB68C094-6B09-F011-BD64-00155DB40116
     釋義: 做什麼
@@ -147,7 +147,7 @@
   wav: ./assets/ref_wav/ilrdf-dictionary-44BAEE6C-BE16-F011-BD67-00155DB40116.wav
   source:
     來源: 族語辭典 20260702_16族前台上線單字_04布農語8961筆(fin)(哈瑪星).xlsx
-    語別: 郡群布農語
+    語言別: 郡群布農語
     詞條: indanum
     詞條ID: 9089A1AC-6B09-F011-BD64-00155DB40116
     釋義: 煮（湯）
@@ -254,7 +254,7 @@
   wav: ./assets/ref_wav/ilrdf-dictionary-65188276-EA18-F011-BD68-00155DB40116.wav
   source:
     來源: 族語辭典 20260702_16族前台上線單字_05卑南語9138筆(fin)(哈瑪星).xlsx
-    語別: 南王卑南語
+    語言別: 南王卑南語
     詞條: selralrekangan
     詞條ID: 945C4E9E-6D09-F011-BD64-00155DB40116
     釋義: 要刺激

@@ -107,7 +107,7 @@ with render_demo(
                 choices=[(k, v)
                          for k, v in DEFAULT_MODEL["dialect_mapping"].items()],
                 value=list(DEFAULT_MODEL["dialect_mapping"].values())[0],
-                label="步驟一:選擇族別",
+                label="步驟一:選擇族語別",
                 elem_classes=["sa-radio-equal"],
             )
 

@@ -156,7 +156,7 @@ input[type='radio']:focus {
   content: "開始錄音";
 }
 
-/* 族別等選項：每個選項一樣闊 */
+/* 族語別等選項：每個選項一樣闊 */
 .gradio-container .sa-radio-equal .wrap:has(> label) {
   --sa-radio-min-width: calc(
     6em
