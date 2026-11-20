@@ -14,8 +14,9 @@ APPS = {
     "mt": "kari-seejiq-tnpusu-ai-hmjil",
 }
 
-# common/utils.py 把 common_static 的 favicon 設成 favicon_path、css 併進 theme.css、
-# image 與 pdf 交給 gr.set_static_paths，所以這四個 URL 就是共用檔案有沒有進 image 的證據。
+# common/utils.py 把 common_static 的 favicon 設成 favicon_path、image 與 pdf 交給 gr.set_static_paths，
+# 所以 favicon 與 logo 的 URL 就是共用檔案有沒有進 image 的證據。
+# /theme.css 只有主題與字型：Gradio 6 起 css_paths 的內容改成內嵌在首頁，不在 theme.css 裡。
 PATHS = [
     ("/", None),
     ("/config", "json"),

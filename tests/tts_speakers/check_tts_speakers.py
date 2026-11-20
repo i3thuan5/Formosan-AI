@@ -3,7 +3,7 @@
     $ BASE_URL=https://tshi5v100.ithuankhoki.tw tox -e tts_speakers -- --audio-dir /tmp/tts-speakers
     $ BASE_URL=... python tests/tts_speakers/check_tts_speakers.py --speakers 雅美_女聲,魯凱_萬山_女聲 --samples 3
 
-F5-TTS 每次取樣不同，參考音檔太短或不清楚時，同一位配音員有時會合成出另一個性別，
+TTS 每次取樣不同，參考音檔太短或不清楚時，同一位配音員有時會合成出另一個性別，
 **短句特別容易**（2026-10 雅美舊參考音檔：長例句 20 次都是女聲，短句 20 次有 18 次是男聲）。
 所以每位配音員合成多句、長短句都有，每句各自判斷。
 短句來自 sentences.yaml（族語E樂園的生活百句等，由 build_sentences.py 產生），長句是 examples.yaml 的例句。

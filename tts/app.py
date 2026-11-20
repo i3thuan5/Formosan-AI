@@ -1,18 +1,14 @@
 import re
-import tempfile
 import threading
-from importlib.resources import files
 from pathlib import Path
 
 import gradio as gr
-import soundfile as sf
 import torch
-import torchcodec
-from cached_path import cached_path
+from huggingface_hub import snapshot_download
 from omegaconf import OmegaConf
 
-from ipa.ipa import g2p_object, text_to_ipa
-from languages import ETHNICITIES
+from formosan_tts import FormosanTTS
+from languages import ETHNICITIES, FORMOSAN_LANGUAGES_MAP, LANGUAGE_CODES
 from utils import render_demo
 
 try:
@@ -22,25 +18,6 @@ try:
 except ImportError:
     USING_SPACES = False
 
-from f5_tts.infer.utils_infer import (
-    device,
-    hop_length,
-    infer_process,
-    load_checkpoint,
-    load_vocoder,
-    mel_spec_type,
-    n_fft,
-    n_mel_channels,
-    ode_method,
-    preprocess_ref_audio_text,
-    remove_silence_for_generated_wav,
-    save_spectrogram,
-    target_sample_rate,
-    win_length,
-)
-from f5_tts.model import CFM, DiT
-from f5_tts.model.utils import get_tokenizer
-
 
 def gpu_decorator(func):
     if USING_SPACES:
@@ -49,151 +26,57 @@ def gpu_decorator(func):
         return func
 
 
-vocoder = load_vocoder()
-
-# F5-TTS 的 DiT 會把 text embedding 快取在 model 上，同時兩個合成會互相用到
-# 對方的快取，出現 "Sizes of tensors must match"。Gradio 的 concurrency_limit
-# 是每個 event listener 各自算，網頁、自己當配音員、mt 呼叫的 synthesize
-# 三個端點會同時執行，所以用全域鎖讓所有合成排同一個隊。
-F5TTS_LOCK = threading.Lock()
-
-
-def load_model(
-    model_cls,
-    model_cfg,
-    ckpt_path,
-    mel_spec_type=mel_spec_type,
-    vocab_file="",
-    ode_method=ode_method,
-    use_ema=True,
-    device=device,
-    fp16=False,
-):
-    if vocab_file == "":
-        vocab_file = str(files("f5_tts").joinpath("infer/examples/vocab.txt"))
-    tokenizer = "custom"
-
-    print("\nvocab : ", vocab_file)
-    print("token : ", tokenizer)
-    print("model : ", ckpt_path, "\n")
-
-    vocab_char_map, vocab_size = get_tokenizer(vocab_file, tokenizer)
-    model = CFM(
-        transformer=model_cls(
-            **model_cfg, text_num_embeds=vocab_size, mel_dim=n_mel_channels
-        ),
-        mel_spec_kwargs=dict(
-            n_fft=n_fft,
-            hop_length=hop_length,
-            win_length=win_length,
-            n_mel_channels=n_mel_channels,
-            target_sample_rate=target_sample_rate,
-            mel_spec_type=mel_spec_type,
-        ),
-        odeint_kwargs=dict(
-            method=ode_method,
-        ),
-        vocab_char_map=vocab_char_map,
-    ).to(device)
-
-    dtype = torch.float32 if mel_spec_type == "bigvgan" or not fp16 else None
-    model = load_checkpoint(model, ckpt_path, device,
-                            dtype=dtype, use_ema=use_ema)
-
-    return model
-
-
-def load_f5tts(ckpt_path, vocab_path, old=False, fp16=False):
-    ckpt_path = str(cached_path(ckpt_path))
-    F5TTS_model_cfg = dict(
-        dim=1024,
-        depth=22,
-        heads=16,
-        ff_mult=2,
-        text_dim=512,
-        conv_layers=4,
-        text_mask_padding=not old,
-        pe_attn_head=1 if old else None,
-    )
-    vocab_path = str(cached_path(vocab_path))
-    return load_model(
-        DiT,
-        F5TTS_model_cfg,
-        ckpt_path,
-        vocab_file=vocab_path,
-        use_ema=old,
-        fp16=fp16,
-    )
-
-
-OmegaConf.register_new_resolver("load_f5tts", load_f5tts)
-
 models_config = OmegaConf.to_object(OmegaConf.load("configs/models.yaml"))
-refs_config = OmegaConf.to_object(OmegaConf.load("configs/refs.yaml"))
-examples_config = OmegaConf.to_object(OmegaConf.load("configs/examples.yaml"))
-
-
 DEFAULT_MODEL_ID = list(models_config.keys())[0]
+model_config = models_config[DEFAULT_MODEL_ID]
+
+model_dir = snapshot_download(model_config["repo_id"], revision=model_config["revision"])
+device = "cuda" if torch.cuda.is_available() else "cpu"
+tts_model = FormosanTTS(model_dir, device=device)
+
+# Gradio 的 concurrency_limit 是每個 event listener 各自算，網頁、自己當配音員、
+# mt 呼叫的 synthesize 三個端點最多會同時跑三個合成，所以用全域鎖讓它們排同一個隊。
+#
+# 換成 Chatterbox 之前，這個鎖是為了 F5-TTS 的 DiT 把 text embedding 快取在 model 上，
+# 同時兩個合成會互相用到對方的快取（"Sizes of tensors must match"）。Chatterbox 沒有這個問題：
+# 讀 T3.inference 的程式碼，KV cache 是各請求自己的區域變數，只有 self.patched_model
+# 會被後來的請求蓋掉，但兩個 backend 包同一個 self.tfmr，應該無害。這是讀程式碼的判斷，沒有實測併發。
+#
+# 現在保留它，是怕多個合成同時佔用 GPU 顯存：單張 GPU 上併發也不會比較快，只是排隊的方式不同。
+# 要拿掉的話，先在測試機拿掉鎖、確認顯存夠，再跑 tests/production_tests/check_tts_concurrency.py。
+TTS_LOCK = threading.Lock()
+
+refs_config = OmegaConf.to_object(OmegaConf.load("configs/refs.yaml"))
+
+# 語別名稱（如 "阿美_海岸"）→ 模型用的語別代碼（如 "ami-x-pswl"）
+LANGUAGE_NAME_TO_CODE = {}
+for _name, _nllb_code in FORMOSAN_LANGUAGES_MAP.items():
+    LANGUAGE_NAME_TO_CODE[_name] = LANGUAGE_CODES[_nllb_code]
 
 
-def silent_info(*args, **kwargs):
-    # F5-TTS 內部會用 show_info 跳英文提示，但太干擾故不顯示
-    pass
+def get_languages_by_ethnicity(ethnicity: str):
+    languages = []
+    for name in LANGUAGE_NAME_TO_CODE:
+        if name.split("_")[0] == ethnicity:
+            languages.append(name)
+    return languages
 
 
 @gpu_decorator
-def infer(
-    ref_audio_orig,
-    ref_text,
-    gen_text,
-    model,
-    remove_silence=False,
-    cross_fade_duration=0.15,
-    nfe_step=32,
-    speed=1,
-    show_info=silent_info,
-):
-    if not ref_audio_orig:
-        gr.Warning("請提供參考音檔。")
-        return gr.update(), gr.update(), ref_text
+def infer(ref_audio, gen_text, language):
+    if not ref_audio:
+        raise gr.Error("請先錄製或上傳參考音檔。")
 
-    if not gen_text.strip():
-        gr.Warning("請輸入要合成語音的文字。")
-        return gr.update(), gr.update(), ref_text
+    try:
+        with TTS_LOCK:
+            wav, sample_rate = tts_model.generate(
+                gen_text, LANGUAGE_NAME_TO_CODE[language], ref_audio
+            )
+    except ValueError as e:
+        # FormosanTTS 遇到該語別 G2P 表沒有的字元會丟 ValueError
+        raise gr.Error(f"文字中有無法轉換的字元：{e}")
 
-    ref_audio, ref_text = preprocess_ref_audio_text(
-        ref_audio_orig, ref_text, show_info=show_info
-    )
-
-    with F5TTS_LOCK:
-        final_wave, final_sample_rate, combined_spectrogram = infer_process(
-            ref_audio,
-            ref_text,
-            gen_text,
-            model,
-            vocoder,
-            cross_fade_duration=cross_fade_duration,
-            nfe_step=nfe_step,
-            speed=speed,
-            show_info=show_info,
-            progress=gr.Progress(),
-        )
-
-    # Remove silence
-    if remove_silence:
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as f:
-            sf.write(f.name, final_wave, final_sample_rate)
-            remove_silence_for_generated_wav(f.name)
-            final_wave = torchcodec.decoders.AudioDecoder(
-                f.name).get_all_samples().data
-        final_wave = final_wave.squeeze().cpu().numpy()
-
-    # Save the spectrogram
-    with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as tmp_spectrogram:
-        spectrogram_path = tmp_spectrogram.name
-        save_spectrogram(combined_spectrogram, spectrogram_path)
-
-    return (final_sample_rate, final_wave), spectrogram_path
+    return sample_rate, wav
 
 
 def normalize_gen_text(gen_text_input: str) -> str:
@@ -259,6 +142,8 @@ with render_demo(
         "<button class='sa-btn'>ʉ</button>",
         elem_id="head-html-block",
         elem_classes=["html-no-start-padding"],
+        # Gradio 6 的 padding 預設改成 False；html-no-start-padding 是靠負邊距抵銷 padding，要維持 True
+        padding=True,
     )
 
     with gr.Tab("預設配音員"):
@@ -293,7 +178,7 @@ with render_demo(
 
             with gr.Column():
                 default_speaker_audio_output = gr.Audio(
-                    label="合成結果", show_share_button=False, show_download_button=True
+                    label="合成結果", buttons=["download"]
                 )
 
     with gr.Tab("自己當配音員"):
@@ -307,16 +192,10 @@ with render_demo(
                 )
 
                 custom_speaker_language = gr.Radio(
-                    choices=[
-                        k
-                        for k in g2p_object.keys()
-                        if k.startswith(custom_speaker_ethnicity.value)
-                    ],
-                    value=[
-                        k
-                        for k in g2p_object.keys()
-                        if k.startswith(custom_speaker_ethnicity.value)
-                    ][0],
+                    choices=get_languages_by_ethnicity(
+                        custom_speaker_ethnicity.value),
+                    value=get_languages_by_ethnicity(
+                        custom_speaker_ethnicity.value)[0],
                     show_label=False,
                 )
 
@@ -325,7 +204,7 @@ with render_demo(
                         get_refs_by_perfix(custom_speaker_language.value)[0]
                     ]["text"],
                     interactive=False,
-                    label="步驟二：點選🎙️錄製下方句子，或上傳與句子相符的音檔",
+                    label="步驟二：點選🎙️錄製一段清楚的聲音（建議 3 秒以上，可念下方句子），或上傳音檔",
                     elem_classes="textonly",
                 )
 
@@ -349,7 +228,7 @@ with render_demo(
 
             with gr.Column():
                 custom_speaker_audio_output = gr.Audio(
-                    label="合成結果", show_share_button=False, show_download_button=True
+                    label="合成結果", buttons=["download"]
                 )
 
     default_speaker_ethnicity.change(
@@ -361,34 +240,16 @@ with render_demo(
         outputs=[default_speaker_refs],
     )
 
-    @gpu_decorator
     def default_speaker_tts(
         ref: str,
         gen_text_input: str,
     ):
         language = re.sub(r"_[男女]聲[12]?", "", ref)
-        ref_text_input = refs_config[ref]["text"]
         ref_audio_input = refs_config[ref]["wav"]
 
         gen_text_input = normalize_gen_text(gen_text_input)
 
-        ignore_punctuation = False
-        ipa_with_ng = False
-
-        ref_text_input = text_to_ipa(
-            ref_text_input, language, ignore_punctuation, ipa_with_ng
-        )
-        gen_text_input = text_to_ipa(
-            gen_text_input, language, ignore_punctuation, ipa_with_ng
-        )
-
-        audio_out, _spectrogram_path = infer(
-            ref_audio_input,
-            ref_text_input,
-            gen_text_input,
-            models_config[DEFAULT_MODEL_ID],
-        )
-        return audio_out
+        return infer(ref_audio_input, gen_text_input, language)
 
     default_speaker_generate_btn.click(
         default_speaker_tts,
@@ -426,10 +287,9 @@ with render_demo(
 
     custom_speaker_ethnicity.change(
         lambda ethnicity: gr.Radio(
-            choices=[k for k in g2p_object.keys() if k.startswith(ethnicity)],
-            value=[k for k in g2p_object.keys() if k.startswith(ethnicity)][0],
-            visible=len([k for k in g2p_object.keys()
-                         if k.startswith(ethnicity)]) > 1,
+            choices=get_languages_by_ethnicity(ethnicity),
+            value=get_languages_by_ethnicity(ethnicity)[0],
+            visible=len(get_languages_by_ethnicity(ethnicity)) > 1,
         ),
         inputs=[custom_speaker_ethnicity],
         outputs=[custom_speaker_language],
@@ -443,36 +303,17 @@ with render_demo(
         outputs=[custom_speaker_ref_text_input],
     )
 
-    @gpu_decorator
     def custom_speaker_tts(
         language: str,
         ref_text_input: str,
         ref_audio_input: str,
         gen_text_input: str,
     ):
-        ref_text_input = ref_text_input.strip()
-        if len(ref_text_input) == 0:
-            raise gr.Error("請勿輸入空字串。")
-
+        # ref_text_input 只是顯示給使用者念的句子；chatterbox 不需要參考音檔的逐字稿。
+        # 參數留著是為了維持 /custom_speaker_tts API 不變。
         gen_text_input = normalize_gen_text(gen_text_input)
 
-        ignore_punctuation = False
-        ipa_with_ng = False
-
-        ref_text_input = text_to_ipa(
-            ref_text_input, language, ignore_punctuation, ipa_with_ng
-        )
-        gen_text_input = text_to_ipa(
-            gen_text_input, language, ignore_punctuation, ipa_with_ng
-        )
-
-        audio_out, _spectrogram_path = infer(
-            ref_audio_input,
-            ref_text_input,
-            gen_text_input,
-            models_config[DEFAULT_MODEL_ID],
-        )
-        return audio_out
+        return infer(ref_audio_input, gen_text_input, language)
 
     custom_speaker_generate_btn.click(
         custom_speaker_tts,

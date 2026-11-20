@@ -43,7 +43,7 @@ export default function asrIteration() {
     app: APP,
     model: MODEL,
     apiName: API_NAME,
-    data: [{ video: fileData(up.path, FILENAME) }, LANGUAGE],
+    data: [fileData(up.path, FILENAME), LANGUAGE],
     trends: trends,
     uploadMs: up.ms,
     // 只驗有辨識出字幕，不比對文字：模型換版後辨識結果會變

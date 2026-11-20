@@ -4,9 +4,10 @@ from pathlib import Path
 import gradio as gr
 import torch
 from gradio_client.exceptions import AppError
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+from transformers import AutoModelForSeq2SeqLM
 from feedback import FEEDBACK_MAX_LENGTH, save_feedback
 from languages import ETHNICITIES, FORMOSAN_LANGUAGES_MAP, LANGUAGE_CODES
+from nllb import load_tokenizer, map_sentence_starts
 from orthography import normalize
 from tts_client import TTS_TIMEOUT_SECONDS, TtsClient
 from utils import render_demo, tsoo_khokpih_button
@@ -14,11 +15,11 @@ from utils import render_demo, tsoo_khokpih_button
 
 CODE_TO_LANGUAGE = {v: k for k, v in FORMOSAN_LANGUAGES_MAP.items()}
 
-MODEL_NAME = "ithuan/nllb-600m-formosan-all-finetune-v2"
+MODEL_NAME = "ILRDF/nllb-600m-formosan-all-finetune-v3"
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME).to(device)
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+tokenizer = load_tokenizer(MODEL_NAME)
 
 
 def get_languages_by_ethnicity(ethnicity: str):
@@ -31,25 +32,20 @@ def get_languages_by_ethnicity(ethnicity: str):
 
 def translate(text: str, src_lang: str, tgt_lang: str):
     text = normalize(text, LANGUAGE_CODES.get(src_lang))
+    text = map_sentence_starts(text, src_lang, str.lower)
     tokenizer.src_lang = src_lang
-    tokenizer.tgt_lang = tgt_lang
 
-    input_tokens = (
-        tokenizer(
-            text, return_tensors="pt").input_ids[0].cpu().numpy().tolist()
-    )
+    inputs = tokenizer(text, return_tensors="pt").to(device)
     translated = model.generate(
-        input_ids=torch.tensor([input_tokens]).to(device),
+        **inputs,
         forced_bos_token_id=tokenizer.convert_tokens_to_ids(tgt_lang),
-        max_length=5000,
+        max_new_tokens=512,
         num_return_sequences=1,
         num_beams=5,
-        # repetition blocking works better if this number is below num_beams
-        no_repeat_ngram_size=4,
-        renormalize_logits=True,  # recompute token probabilities after banning the repetitions
     )
 
     translated = tokenizer.decode(translated[0], skip_special_tokens=True)
+    translated = map_sentence_starts(translated, tgt_lang, str.upper)
 
     return normalize(translated, LANGUAGE_CODES.get(tgt_lang))
 
@@ -123,8 +119,7 @@ def build_feedback_survey():
         submit_feedback,
         inputs=[snapshot, rate, feedback],
         outputs=[form, thanks],
-        api_name=False,
-        show_api=False,
+        api_visibility="private",
     )
     return {
         "snapshot": snapshot,
@@ -161,9 +156,8 @@ def bind_feedback_survey(translate_event, translate_btn, survey, option, input_t
     translate_btn.click(
         lambda: gr.Column(visible=False),
         outputs=survey["survey"],
-        api_name=False,
+        api_visibility="private",
         queue=False,
-        show_api=False,
     )
     translate_event.success(
         lambda text, code, result: show_feedback_survey(survey, option, text, code, result),
@@ -176,9 +170,8 @@ def bind_feedback_survey(translate_event, translate_btn, survey, option, input_t
             survey["form"],
             survey["thanks"],
         },
-        api_name=False,
+        api_visibility="private",
         queue=False,
-        show_api=False,
     )
 
 
@@ -319,7 +312,7 @@ with render_demo(
         to_formosan_survey = build_feedback_survey()
         to_formosan_tts_btn = gr.Button("合成語音")
         to_formosan_audio = gr.Audio(
-            label="合成結果", show_share_button=False, show_download_button=True
+            label="合成結果", buttons=["download"]
         )
 
         to_formosan_ethnicity.change(
@@ -337,9 +330,8 @@ with render_demo(
         to_formosan_btn.click(
             lambda: None,
             outputs=to_formosan_audio,
-            api_name=False,
+            api_visibility="private",
             queue=False,
-            show_api=False,
         )
         to_formosan_translate_event = to_formosan_btn.click(
             translate,

@@ -82,7 +82,7 @@ def parse_srt(srt):
 def transcribe(client, language):
     # 語別是 Radio，要先在同一個 session 切換族別，choices 才會包含該語別
     client.predict(group_of(language), api_name=GROUP_API_NAME)
-    return client.predict({"video": handle_file(str(VIDEO))}, language, api_name=API_NAME)
+    return client.predict(handle_file(str(VIDEO)), language, api_name=API_NAME)
 
 
 def check_language(client, language, warnings):
@@ -109,7 +109,7 @@ def check_language(client, language, warnings):
 def check_kako(client, language, expected):
     def run():
         client.predict(group_of(language), api_name=GROUP_API_NAME)
-        srt = client.predict({"video": handle_file(str(KAKO_VIDEO))}, language, api_name=API_NAME)
+        srt = client.predict(handle_file(str(KAKO_VIDEO)), language, api_name=API_NAME)
         cues = parse_srt(srt)
         text = " ".join(cues).strip().lower()
         if text != expected:

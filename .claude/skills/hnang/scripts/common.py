@@ -8,7 +8,6 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[4]
 TTS_DIR = REPO_ROOT / "tts"
 REFS_PATH = TTS_DIR / "configs" / "refs.yaml"
-EXAMPLES_PATH = TTS_DIR / "configs" / "examples.yaml"
 REF_WAV_DIR = TTS_DIR / "assets" / "ref_wav"
 DICT_DIR = REPO_ROOT / "kithann" / "族語辭典"
 SKILL_DIR = Path(__file__).resolve().parents[1]
@@ -32,7 +31,7 @@ def save_json(path, data):
 
 
 def normalize_text(text):
-    """收斂空白、統一喉塞音符號，和 tts/ipa/ipa.py 的做法一致。"""
+    """收斂空白、統一喉塞音符號，和 tts/formosan_tts.py 的 text_to_ipa 做法一致。"""
     text = re.sub(r"\s+", " ", text).strip()
     return re.sub(r"[’']", "ʼ", text)
 

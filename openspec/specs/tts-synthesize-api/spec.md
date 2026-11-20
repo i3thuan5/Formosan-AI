@@ -36,7 +36,7 @@ TTS SHALL 提供名稱固定為 `/synthesize` 的 Gradio API，參數為 `langua
 
 ### Requirement: 合成 API 的前處理與既有網頁合成一致
 
-`/synthesize` SHALL 沿用「預設配音員」的合成流程：空字串檢查、句尾補標點、`text_to_ipa` 轉換、F5-TTS 推論。GPU/CPU 行為 SHALL 與 `default_speaker_tts` 相同：Spaces 環境使用 `spaces.GPU`，其他環境在 `f5_tts` 的 `device` 上執行（有 CUDA 用 CUDA，否則使用 CPU）。
+`/synthesize` SHALL 沿用「預設配音員」的合成流程：空字串檢查、句尾補標點、chatterbox 推論（`FormosanTTS` 內含 G2P 轉成 IPA）。GPU/CPU 行為 SHALL 與 `default_speaker_tts` 相同：Spaces 環境使用 `spaces.GPU`，其他環境在 `device` 上執行（有 CUDA 用 CUDA，否則使用 CPU）。
 
 #### Scenario: 空字串
 
@@ -46,7 +46,7 @@ TTS SHALL 提供名稱固定為 `/synthesize` 的 Gradio API，參數為 `langua
 #### Scenario: 含 G2P 不認得的字元
 
 - **WHEN** 呼叫 `/synthesize`，`text` 含有該語別 G2P 表不認得的字元
-- **THEN** 回傳 Gradio 錯誤，訊息列出不認得的字元
+- **THEN** 回傳 Gradio 錯誤「文字中有無法轉換的字元：…」，訊息列出不認得的字元
 
 ### Requirement: 合成文字先移除引號再補句尾標點
 
@@ -55,17 +55,17 @@ TTS 在「預設配音員」、「自己當配音員」與 `/synthesize` 的合�
 #### Scenario: 文字以引號結尾
 
 - **WHEN** 以 `阿美_海岸` 合成 `Sowal sa ko singsi, "Ano dafak micodad kita."`
-- **THEN** 合成成功，不出現 `Unknown characters: .`
+- **THEN** 合成成功，不出現「無法轉換的字元」錯誤
 
 #### Scenario: 文字含全形引號
 
 - **WHEN** 以 `卑南_知本` 合成 `marengay na sinsi, " temakesi ta nu ʼemanan.」`
-- **THEN** 合成成功，不出現 `Unknown characters: 」`
+- **THEN** 合成成功，不出現「無法轉換的字元」錯誤
 
 #### Scenario: 不含引號的文字結果不變
 
 - **WHEN** 合成不含上述引號字元的文字，例如 `talacowa kiso?`
-- **THEN** 轉出的 IPA 與修正前相同
+- **THEN** 送進模型的文字與修正前相同
 
 ### Requirement: 既有 API 維持不變
 

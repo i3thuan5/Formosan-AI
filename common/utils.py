@@ -115,8 +115,7 @@ def tsoo_khokpih_button(textbox, label, elem_id):
             'elem_id': json.dumps(elem_id),
             'label': json.dumps(label, ensure_ascii=False),
         },
-        api_name=False,
-        show_api=False,
+        api_visibility="private",
         queue=False,
     )
     return button
@@ -140,20 +139,18 @@ def render_demo(demo_md_filename="", js=None, css_paths=[]):
     demo = gr.Blocks(
         title=get_title(demo_md_filename),
         delete_cache=(3600, 3600),
-        css_paths=(common_css_paths + css_paths),
-        head=head,
-        theme=gr.themes.Default(
-            primary_hue=sa_orange_color,
-            neutral_hue=sa_zinc_color,
-            font=(
-                "tauhu-oo",
-                gr.themes.GoogleFont("Source Sans Pro"),
-                "ui-sans-serif",
-                "system-ui",
-                "sans-serif",
-            )
-        ),
-        js=js,
+    )
+    # Gradio 6 起，theme、css、head、js 要交給 launch()，不能放在 Blocks()
+    theme = gr.themes.Default(
+        primary_hue=sa_orange_color,
+        neutral_hue=sa_zinc_color,
+        font=(
+            "tauhu-oo",
+            gr.themes.GoogleFont("Source Sans Pro"),
+            "ui-sans-serif",
+            "system-ui",
+            "sans-serif",
+        )
     )
 
     with demo:
@@ -177,6 +174,10 @@ def render_demo(demo_md_filename="", js=None, css_paths=[]):
             ).then(None, inputs=ga_pv, js='(pv) => window.saKhingGaPv(pv)')
 
     demo.launch(
+        css_paths=(common_css_paths + css_paths),
+        head=head,
+        theme=theme,
+        js=js,
         allowed_paths=[
             'ilrdf-logo.png',
             '族語AI翻譯計畫網站-系統操作教學手冊.pdf',

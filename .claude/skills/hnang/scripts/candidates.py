@@ -36,7 +36,7 @@ KLOKAH_PAGE = "https://web.klokah.tw/extension/con_practice/index.php?d={did}&l=
 KLOKAH_SLEEP = 3
 DICT_SLEEP = 0.3
 
-# 參考音檔 3–8 秒最好：太短聲音特徵不夠，超過 12 秒 F5-TTS 會截掉而對不上文字
+# 參考音檔 3–8 秒最好：太短聲音特徵不夠，超過 10 秒 Chatterbox 只用前 10 秒
 MIN_WORDS = 4
 MAX_WORDS = 12
 GOOD_MIN_SECONDS = 3

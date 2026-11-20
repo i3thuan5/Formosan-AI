@@ -4,9 +4,11 @@ hf-transfer>=0.1.4
 click<8.1
 pydantic
 
-gradio[oauth]==5.49.1
+gradio[oauth]==6.32.0
 gradio_client
 uvicorn>=0.14.0
 
 # torch 系列的版本由 common/requirements.txt 決定
-transformers[torch]
+# v3 的 tokenizer_config.json 是 transformers 5.x 格式，4.x 載不起來
+transformers[torch]>=5
+tokenizers
