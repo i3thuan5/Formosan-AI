@@ -34,9 +34,16 @@ model_dir = snapshot_download(model_config["repo_id"], revision=model_config["re
 device = "cuda" if torch.cuda.is_available() else "cpu"
 tts_model = FormosanTTS(model_dir, device=device)
 
-# 同時兩個合成會搶同一個模型與 GPU。Gradio 的 concurrency_limit 是每個 event
-# listener 各自算，網頁、自己當配音員、mt 呼叫的 synthesize 三個端點會同時執行，
-# 所以用全域鎖讓所有合成排同一個隊。
+# Gradio 的 concurrency_limit 是每個 event listener 各自算，網頁、自己當配音員、
+# mt 呼叫的 synthesize 三個端點最多會同時跑三個合成，所以用全域鎖讓它們排同一個隊。
+#
+# 換成 Chatterbox 之前，這個鎖是為了 F5-TTS 的 DiT 把 text embedding 快取在 model 上，
+# 同時兩個合成會互相用到對方的快取（"Sizes of tensors must match"）。Chatterbox 沒有這個問題：
+# 讀 T3.inference 的程式碼，KV cache 是各請求自己的區域變數，只有 self.patched_model
+# 會被後來的請求蓋掉，但兩個 backend 包同一個 self.tfmr，應該無害。這是讀程式碼的判斷，沒有實測併發。
+#
+# 現在保留它，是怕多個合成同時佔用 GPU 顯存：單張 GPU 上併發也不會比較快，只是排隊的方式不同。
+# 要拿掉的話，先在測試機拿掉鎖、確認顯存夠，再跑 tests/production_tests/check_tts_concurrency.py。
 TTS_LOCK = threading.Lock()
 
 refs_config = OmegaConf.to_object(OmegaConf.load("configs/refs.yaml"))

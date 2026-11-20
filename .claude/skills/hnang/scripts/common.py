@@ -8,7 +8,6 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[4]
 TTS_DIR = REPO_ROOT / "tts"
 REFS_PATH = TTS_DIR / "configs" / "refs.yaml"
-EXAMPLES_PATH = TTS_DIR / "configs" / "examples.yaml"
 REF_WAV_DIR = TTS_DIR / "assets" / "ref_wav"
 DICT_DIR = REPO_ROOT / "kithann" / "族語辭典"
 SKILL_DIR = Path(__file__).resolve().parents[1]

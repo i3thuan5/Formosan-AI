@@ -15,7 +15,7 @@ RUN --mount=target=/tmp/requirements.txt,source=requirements.txt \
 COPY --from=formosan-ai-common /app/utils.py /app/colors.py /app/languages.py /app/
 COPY --from=formosan-ai-common /app/common_static/ /app/common_static/
 COPY --link app.py formosan_tts.py DEMO.md /app/
-COPY --link configs/ /app/configs/
+COPY --link configs/models.yaml configs/refs.yaml /app/configs/
 COPY --link chatterbox/ /app/chatterbox/
 COPY --link assets/ /app/assets/
 COPY --link static/ /app/static/
