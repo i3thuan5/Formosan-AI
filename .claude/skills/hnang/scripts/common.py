@@ -32,7 +32,7 @@ def save_json(path, data):
 
 
 def normalize_text(text):
-    """收斂空白、統一喉塞音符號，和 tts/ipa/ipa.py 的做法一致。"""
+    """收斂空白、統一喉塞音符號，和 tts/formosan_tts.py 的 text_to_ipa 做法一致。"""
     text = re.sub(r"\s+", " ", text).strip()
     return re.sub(r"[’']", "ʼ", text)
 

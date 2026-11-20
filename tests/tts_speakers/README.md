@@ -7,7 +7,7 @@
 
 ## 為什麼要合成多句、而且要有短句
 
-F5-TTS 每次取樣不同。參考音檔太短（約 2 秒）或聲音特徵不明顯時，同一位配音員有時會合成出另一個性別，
+TTS 每次取樣不同（下面的實驗是 F5-TTS 時期的紀錄）。參考音檔太短（約 2 秒）或聲音特徵不明顯時，同一位配音員有時會合成出另一個性別，
 **同一句合成 10 次也會變**，而且**短句特別容易變**。2026-10-15 正式機實驗（雅美、萬山魯凱舊參考音檔）：
 
 | 配音員 | 句子 | 同一句合成 10 次：女／男 |
@@ -25,11 +25,11 @@ F5-TTS 每次取樣不同。參考音檔太短（約 2 秒）或聲音特徵不�
 
 ### 重新產生 sentences.yaml
 
-資料在 `kithann/E樂園/`（不在 git 裡）。每句都用 `tts/ipa` 的 `text_to_ipa` 驗證，轉不了的字不收，
-所以要在 `tts/` 目錄、用 tts 的環境執行：
+資料在 `kithann/E樂園/`（不在 git 裡）。每句都用 `tts/formosan_tts.py` 的 `text_to_ipa` 驗證（G2P 表從模型 repo 下載），轉不了的字不收，
+所以要用 tts 的環境執行：
 
 ```bash
-cd tts && python ../tests/tts_speakers/build_sentences.py
+python tests/tts_speakers/build_sentences.py
 ```
 
 ## 執行

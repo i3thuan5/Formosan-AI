@@ -1,12 +1,12 @@
 """從族語E樂園的資料產生 sentences.yaml：每個語別 8 句不重複的短句，給 check_tts_speakers.py 用。
 
-    cd tts && python ../tests/tts_speakers/build_sentences.py
+    python tests/tts_speakers/build_sentences.py
 
 資料在 kithann/E樂園/（不在 git 裡，要另外放）：
 - 句型篇國中 生活百句（xml/<方言編號>/*.xml 的 sentenceA/B/CAb）：日常短句，優先使用
 - 文化篇（6.文化篇/klokah_cuture_sentence.csv）：生活百句不夠時，從句子依標點切出短句補
 
-每句都用 tts/ipa 的 text_to_ipa 驗證，轉不了的字就不收，所以要在 tts/ 目錄、用 tts 的環境執行。
+每句都用 tts/formosan_tts.py 的 text_to_ipa 驗證（G2P 表從模型 repo 下載），轉不了的字就不收，\n所以要用 tts 的環境執行。
 """
 import argparse
 import csv
@@ -19,13 +19,17 @@ import yaml
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT / "tts"))
-from ipa.ipa import text_to_ipa  # noqa: E402
+sys.path.insert(0, str(REPO_ROOT / "common"))
+from formosan_tts import FormosanTTS, load_g2p  # noqa: E402
+from huggingface_hub import hf_hub_download  # noqa: E402
+from languages import FORMOSAN_LANGUAGES_MAP, LANGUAGE_CODES  # noqa: E402
 
 DATA_DIR = REPO_ROOT / "kithann" / "E樂園"
 SENTENCE_XML_DIR = DATA_DIR / "E樂園 - 句型篇國中" / "xml"
 CULTURE_CSV = DATA_DIR / "6.文化篇" / "klokah_cuture_sentence.csv"
 DIALECT_LIST = DATA_DIR / "E樂園方言編號.txt"
 EXAMPLES_PATH = REPO_ROOT / "tts" / "configs" / "examples.yaml"
+MODELS_PATH = REPO_ROOT / "tts" / "configs" / "models.yaml"
 OUTPUT = Path(__file__).resolve().parent / "sentences.yaml"
 
 # 方言名稱是「方言＋族名＋語」，這些族要拆成「族_方言」
@@ -107,10 +111,23 @@ def culture_clauses(dialect_id, culture_rows):
     return rows
 
 
+class G2POnly:
+    """FormosanTTS.text_to_ipa 只用到 self.g2p，這裡不載入模型權重，只借它的轉換。"""
+
+    def __init__(self):
+        model = next(iter(yaml.safe_load(MODELS_PATH.read_text(encoding="utf-8")).values()))
+        self.g2p = load_g2p(hf_hub_download(model["repo_id"], "g2p.csv", revision=model["revision"]))
+
+
+G2P = G2POnly()
+
+
 def convertible(text, language):
+    # language 是語別名稱（如「阿美_海岸」），模型用的是語別代碼（如 ami-x-pswl）
+    lang_code = LANGUAGE_CODES[FORMOSAN_LANGUAGES_MAP[language]]
     try:
-        text_to_ipa(text, language)
-    except Exception:
+        FormosanTTS.text_to_ipa(G2P, text, lang_code)
+    except ValueError:
         return False
     return True
 

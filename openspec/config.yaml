@@ -10,7 +10,7 @@ context: |
   ## 模組架構
   - `asr/`：基於 OpenAI Whisper 的語音辨識（FastAPI + Gradio）
   - `asr-kaldi/`：基於 Kaldi/Vosk 的語音辨識，支援多語系設定（FastAPI + Gradio + OmegaConf）
-  - `tts/`：基於 F5-TTS 的語音合成，支援 16+ 族語方言，含 IPA 轉換（FastAPI + Gradio）
+  - `tts/`：基於 Chatterbox（ILRDF/chatterbox-formosan-all-finetune）的語音合成，支援 42 個族語語別，含 IPA 轉換（Gradio）
   - `mt/`：基於 HuggingFace Transformers Seq2Seq 的機器翻譯（FastAPI + Gradio）
   - `common/`：共用工具、靜態資源（顏色主題、Gradio 工具函式、tauhu-oo 字型），
     以及三個共用 image 的 Dockerfile 與 torch 系列的 requirements
@@ -23,7 +23,7 @@ context: |
   - Web 框架：FastAPI + Gradio 5.x（含 OAuth 支援）
   - ML 框架：PyTorch 2.8.0（pip 的 nvidia-*-cu12 提供 CUDA 12.8 / cuDNN 9）、HuggingFace Transformers
   - 語音辨識：WhisperX、Faster-Whisper、CTranslate2、Pyannote-Audio
-  - 語音合成：F5-TTS、Encodec、Vocos、Librosa
+  - 語音合成：Chatterbox（T3 + S3Gen）、Librosa
   - 容器化：Docker（多階段建置）、Docker Compose、python:3.10-slim base image（不用 nvidia/cuda）
   - CI/CD：Travis CI（Docker Hub 推送；CD 目前停用，需人工發佈）
   - 套件管理：uv pip compile（requirements.in → requirements.txt），

@@ -1,8 +1,6 @@
-datasets
 huggingface-hub>=0.19
 hf_xet>=1.0.0,<2.0.0
 hf-transfer>=0.1.4
-click<8.1
 pydantic
 
 gradio[oauth]==5.49.1
@@ -10,6 +8,18 @@ uvicorn>=0.14.0
 spaces==0.36.0
 
 omegaconf
-opencc
-torchcodec
-f5-tts @ git+https://github.com/SWivid/F5-TTS.git@695c7357378c03f25d607cca45f5eb967592ce1a
+
+# chatterbox 的模型程式碼已複製在 tts/chatterbox/（MIT，commit 5de7a54，只含 models/，
+# 沒改過），不裝 chatterbox-tts 套件：它把 torch、transformers、gradio 都釘死舊版，
+# 還要裝 resemble-perth（從 git master 安裝）等用不到的套件。
+# 下面是 chatterbox 模型程式碼與 ILRDF/chatterbox-formosan-all-finetune 的
+# formosan_tts.py 實際會 import 的套件。
+transformers==5.20.2
+diffusers==0.41.0
+conformer==0.3.2
+s3tokenizer
+librosa==0.11.0
+numpy<2
+einops
+scipy
+safetensors

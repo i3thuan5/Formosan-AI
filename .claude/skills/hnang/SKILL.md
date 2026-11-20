@@ -13,7 +13,7 @@ metadata:
 
 ## 背景
 
-F5-TTS 每次取樣不同。參考音檔太短（約 2 秒）或聲音特徵不明顯時，同一位配音員有時會合成出另一個性別。
+TTS 每次取樣不同。參考音檔太短（約 2 秒）或聲音特徵不明顯時，同一位配音員有時會合成出另一個性別。
 2026-10 萬山魯凱、雅美女聲被回報，換參考音檔前 10 句分別有 7、9 句是男聲，換成 3–5 秒、清楚的女聲後 10 句都是女聲。
 
 ## 準備環境
@@ -33,9 +33,8 @@ uv venv --managed-python --python 3.12 $SCRATCH/tts-cpu
 grep -vE "^(torch|torchaudio|torchcodec|nvidia|triton)" tts/requirements.txt | grep -E "^[A-Za-z0-9_.-]+==" > $SCRATCH/constraints.txt
 uv pip install --python $SCRATCH/tts-cpu/bin/python -c $SCRATCH/constraints.txt \
     --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple --index-strategy unsafe-best-match \
-    torch==2.8.0 torchaudio==2.8.0 torchcodec==0.7.0 \
-    "f5-tts @ git+https://github.com/SWivid/F5-TTS.git@695c7357378c03f25d607cca45f5eb967592ce1a" \
-    cached-path omegaconf pyyaml gradio==5.49.1 datasets pyarrow transformers vocos
+    torch==2.8.0 torchaudio==2.8.0 \
+    huggingface-hub pyyaml soundfile transformers diffusers conformer s3tokenizer librosa einops scipy safetensors omegaconf
 ```
 
 ## 流程：換參考音檔
@@ -72,7 +71,7 @@ $PY synthesize.py --work WORK --speaker 雅美_女聲 --refs id1,id2,id3
 - 「目前預設配音員」是**受測主機已部署的版本**，不一定是工作目錄的 refs.yaml。
 - 服務掛掉、或 `/custom_speaker_tts` 回 `AppError` 時（2026-10-15 正式機就是這樣），
   `jobs.json` 已經寫好，改用本機 CPU：`$SCRATCH/tts-cpu/bin/python local_synthesize.py --work WORK`
-  （一句約 1 分鐘，70 句約 1 小時，請在背景執行）。
+  （CPU 合成很慢，請在背景執行）。
 - 已存在的音檔會跳過，中斷後重跑會接著做。
 - 會用到受測主機的 GPU，循序呼叫、不併發。
 

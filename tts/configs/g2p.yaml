@@ -1,2 +1,0 @@
----
-g2p: ${load_g2p:${hf_download:hf://ILRDF/f5-tts-formosan-all-finetune-v3/g2p_250402.csv}}

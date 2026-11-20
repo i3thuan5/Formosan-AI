@@ -1,2 +1,7 @@
 ---
-all-formosan-v3-step-877212: ${load_f5tts:hf://ILRDF/f5-tts-formosan-all-finetune-v3/model_877212.safetensors,hf://ILRDF/f5-tts-formosan-all-finetune-v3/vocab.txt,false,false}
+# 第一個是預設模型（app.py 的 DEFAULT_MODEL_ID）。
+# revision 釘住權重與 g2p.csv 等資料的版本。tts/formosan_tts.py 是同一個 revision 的
+# formosan_tts.py（沒改過），升版時兩邊要一起換，不然 G2P 與模型會對不上。
+chatterbox-formosan-all-finetune:
+  repo_id: ILRDF/chatterbox-formosan-all-finetune
+  revision: 194d172f02db6e0cd7d3ce60371d4fc27072150a
