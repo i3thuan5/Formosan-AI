@@ -135,6 +135,8 @@ with render_demo(
         "<button class='sa-btn'>ʉ</button>",
         elem_id="head-html-block",
         elem_classes=["html-no-start-padding"],
+        # Gradio 6 的 padding 預設改成 False；html-no-start-padding 是靠負邊距抵銷 padding，要維持 True
+        padding=True,
     )
 
     with gr.Tab("預設配音員"):
@@ -169,7 +171,7 @@ with render_demo(
 
             with gr.Column():
                 default_speaker_audio_output = gr.Audio(
-                    label="合成結果", show_share_button=False, show_download_button=True
+                    label="合成結果", buttons=["download"]
                 )
 
     with gr.Tab("自己當配音員"):
@@ -219,7 +221,7 @@ with render_demo(
 
             with gr.Column():
                 custom_speaker_audio_output = gr.Audio(
-                    label="合成結果", show_share_button=False, show_download_button=True
+                    label="合成結果", buttons=["download"]
                 )
 
     default_speaker_ethnicity.change(

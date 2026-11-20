@@ -1,4 +1,4 @@
-gradio[oauth,mcp]==5.35.0
+gradio[oauth,mcp]==6.32.0
 whisperx==3.8.7rc1
 faster-whisper==1.2.1
 transformers==5.17.0

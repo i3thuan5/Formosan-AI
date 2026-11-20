@@ -119,8 +119,7 @@ def build_feedback_survey():
         submit_feedback,
         inputs=[snapshot, rate, feedback],
         outputs=[form, thanks],
-        api_name=False,
-        show_api=False,
+        api_visibility="private",
     )
     return {
         "snapshot": snapshot,
@@ -157,9 +156,8 @@ def bind_feedback_survey(translate_event, translate_btn, survey, option, input_t
     translate_btn.click(
         lambda: gr.Column(visible=False),
         outputs=survey["survey"],
-        api_name=False,
+        api_visibility="private",
         queue=False,
-        show_api=False,
     )
     translate_event.success(
         lambda text, code, result: show_feedback_survey(survey, option, text, code, result),
@@ -172,9 +170,8 @@ def bind_feedback_survey(translate_event, translate_btn, survey, option, input_t
             survey["form"],
             survey["thanks"],
         },
-        api_name=False,
+        api_visibility="private",
         queue=False,
-        show_api=False,
     )
 
 
@@ -315,7 +312,7 @@ with render_demo(
         to_formosan_survey = build_feedback_survey()
         to_formosan_tts_btn = gr.Button("合成語音")
         to_formosan_audio = gr.Audio(
-            label="合成結果", show_share_button=False, show_download_button=True
+            label="合成結果", buttons=["download"]
         )
 
         to_formosan_ethnicity.change(
@@ -333,9 +330,8 @@ with render_demo(
         to_formosan_btn.click(
             lambda: None,
             outputs=to_formosan_audio,
-            api_name=False,
+            api_visibility="private",
             queue=False,
-            show_api=False,
         )
         to_formosan_translate_event = to_formosan_btn.click(
             translate,
