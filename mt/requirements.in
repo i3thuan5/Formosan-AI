@@ -9,4 +9,6 @@ gradio_client
 uvicorn>=0.14.0
 
 # torch 系列的版本由 common/requirements.txt 決定
-transformers[torch]
+# v3 的 tokenizer_config.json 是 transformers 5.x 格式，4.x 載不起來
+transformers[torch]>=5
+tokenizers

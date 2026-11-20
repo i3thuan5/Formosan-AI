@@ -1,11 +1,12 @@
 """NLLB loading and batched Formosan-to-Chinese translation."""
 
 import torch
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+from transformers import AutoModelForSeq2SeqLM
 
 from languages import TRANSLATION_LANGUAGE_CODES
+from nllb import load_tokenizer, map_sentence_starts
 
-TRANSLATION_MODEL_ID = "ILRDF/nllb-600m-formosan-all-finetune-v2"
+TRANSLATION_MODEL_ID = "ILRDF/nllb-600m-formosan-all-finetune-v3"
 TRANSLATION_TARGET_LANGUAGE = "zho_Hant"
 
 
@@ -17,7 +18,7 @@ class Translator:
             raise ValueError("TRANSLATION_BATCH_SIZE must be positive")
         self.batch_size = batch_size
         self.device = torch.device(device)
-        self.tokenizer = AutoTokenizer.from_pretrained(TRANSLATION_MODEL_ID)
+        self.tokenizer = load_tokenizer(TRANSLATION_MODEL_ID)
         self.model = (
             AutoModelForSeq2SeqLM.from_pretrained(
                 TRANSLATION_MODEL_ID,
@@ -36,7 +37,9 @@ class Translator:
                 f"No NLLB language token mapping for Whisper language: {whisper_language}"
             ) from error
 
-        texts = [segment["text"].strip() for segment in segments]
+        texts = []
+        for segment in segments:
+            texts.append(map_sentence_starts(segment["text"].strip(), source_language, str.lower))
         if not texts:
             return []
         if self.batch_size < 1:
@@ -63,8 +66,6 @@ class Translator:
                     ),
                     max_new_tokens=256,
                     num_beams=5,
-                    no_repeat_ngram_size=4,
-                    renormalize_logits=True,
                 )
             translated_texts.extend(
                 tokenizer.batch_decode(translated, skip_special_tokens=True)
