@@ -2,14 +2,12 @@
 
 import re
 
+from huggingface_hub import hf_hub_download
+from tokenizers import Tokenizer
+from transformers import AutoTokenizer
+
 
 def load_tokenizer(name: str):
-    # 重量級套件在這裡才 import，tox 的單元測試環境只裝 pytest，
-    # map_sentence_starts 才測得到。
-    from huggingface_hub import hf_hub_download
-    from tokenizers import Tokenizer
-    from transformers import AutoTokenizer
-
     # v3 的 tokenizer 有 byte fallback。AutoTokenizer 自己解析 tokenizer.json 時會
     # 把 byte fallback 丟掉，詞表外的字（蕉、猴、橘…）會變成 <unk>，
     # 所以先用 tokenizers 載好再交給它。
