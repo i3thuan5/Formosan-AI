@@ -67,7 +67,7 @@ def test_formosan_languages_map_names_and_order():
         '排灣_東', '排灣_北', '排灣_中', '排灣_南',
         '布農_卓群', '布農_卡群', '布農_丹群', '布農_巒群', '布農_郡群',
         '卑南_南王', '卑南_知本', '卑南_西群', '卑南_建和',
-        '魯凱_東', '魯凱_霧台', '魯凱_大武', '魯凱_多納', '魯凱_茂林', '魯凱_萬山',
+        '魯凱_東', '魯凱_霧臺', '魯凱_大武', '魯凱_多納', '魯凱_茂林', '魯凱_萬山',
         '鄒',
         '賽夏',
         '雅美',
@@ -84,7 +84,7 @@ def test_formosan_languages_map_names_and_order():
 def test_formosan_languages_map_codes():
     assert FORMOSAN_LANGUAGES_MAP['阿美_南勢'] == 'ami_Sout'
     assert FORMOSAN_LANGUAGES_MAP['阿美_海岸'] == 'ami_Coas'
-    assert FORMOSAN_LANGUAGES_MAP['魯凱_霧台'] == 'dru_Wuta'
+    assert FORMOSAN_LANGUAGES_MAP['魯凱_霧臺'] == 'dru_Wuta'
     assert FORMOSAN_LANGUAGES_MAP['賽德克_德鹿谷'] == 'trv_Delu'
     assert FORMOSAN_LANGUAGES_MAP['鄒'] == 'tsu_Tsou'
     assert FORMOSAN_LANGUAGES_MAP['太魯閣'] == 'trv_Truk'

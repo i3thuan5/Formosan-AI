@@ -95,7 +95,7 @@ OLD_TRANSLATION_LANGUAGE_CODES = {
     "pyu-x-mkzy": ("pyu_Xiqu", "卑南_西群"),
     "pyu-x-ksvk": ("pyu_Jian", "卑南_建和"),
     "dru-x-trmk": ("dru_East", "魯凱_東"),
-    "dru-x-ngdr": ("dru_Wuta", "魯凱_霧台"),
+    "dru-x-ngdr": ("dru_Wuta", "魯凱_霧臺"),
     "dru-x-lbw": ("dru_Dawu", "魯凱_大武"),
     "dru-x-kgdv": ("dru_Dona", "魯凱_多納"),
     "dru-x-tldr": ("dru_Maol", "魯凱_茂林"),

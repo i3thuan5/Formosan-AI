@@ -1,4 +1,4 @@
-# 族語基礎翻譯系統beta - 族語AI成果網站
+# 族語基礎翻譯系統
 
 \
 這是「族語華語對譯系統」，請按照下方步驟操作，或查看[操作手冊](gradio_api/file=common_static/pdf/族語AI網站-系統操作教學手冊-20261106.pdf)及[操作影片](https://youtu.be/yFESHbX1g8U)。\
