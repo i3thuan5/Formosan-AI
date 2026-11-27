@@ -328,7 +328,7 @@
     date: 2026-10-15
     result: 通過
     note: 本機 10 句、兩組試聽句都自動判斷通過，人工抽聽正常
-魯凱_霧台_女聲:
+魯凱_霧臺_女聲:
   text: mawlayngata kai madradredrele.
   wav: ./assets/ref_wav/con_practice-0000243@0000000-0003474.wav
   gender_checked:
